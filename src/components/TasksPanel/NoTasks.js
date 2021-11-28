@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./NoTasks.module.scss"
 import { ReactComponent as LoadingSpinner } from "../../assets/infinity-1s-200px.svg"
-import { ReactComponent as EmptyTasksIllustration } from "../../assets/undraw_Add_notes_re_ln36.svg"
+import { ReactComponent as EmptyTasksIllustration } from "../../assets/undraw_note_list_re_r4u9.svg"
 import { ReactComponent as OfflineIllustration } from "../../assets/undraw_signal_searching_bhpc.svg"
 import { ReactComponent as NoResultsIllustration } from "../../assets/infinity-1s-200px.svg"
 

@@ -109,7 +109,7 @@ const WatcherChooser = (props) => {
             disabled={isBusy}
             onClick={() => handleAddWatcher(x)}
           >
-            <Avatar user={x} size={32} circular />
+            <Avatar user={users[x]} size={32} circular />
             <div>
               <span>{`${users[x].firstName} ${users[x].lastName}`}</span>
               <span>@{x}</span>
