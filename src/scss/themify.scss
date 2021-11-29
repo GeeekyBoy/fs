@@ -17,11 +17,11 @@
       "hover": #F5F5F5
     ),
     "dark": (
-      "primary": color.scale($variant, $lightness: 40%),
+      "primary": color.scale($variant, $lightness: 70%),
       "primaryDark": color.scale($variant, $lightness: 20%),
       "primaryLight": color.scale($variant, $lightness: 80%),
       "primaryLightSurface": #444746,
-      "onPrimaryColor": $onPrimaryColor,
+      "onPrimaryColor": color.scale($variant, $lightness: -60%),
       "txtColor": #FFFFFF,
       "primaryBg": #1F1F1F,
       "secondaryBg": #282A2D,
@@ -33,15 +33,15 @@
 }
 
 $themes: (
-  "red": construct-theme(#FB1515, #FFFFFF),
-  "rose": construct-theme(#FF969C, #000000),
-  "orange": construct-theme(#FE6000, #FFFFFF),
-  "green": construct-theme(#15fb3b, #000000),
-  "turquoise": construct-theme(#15fbd9, #000000),
-  "cyan": construct-theme(#15dcfb, #000000),
-  "blue": construct-theme(#1560FB, #FFFFFF),
-  "pink": construct-theme(#fb15b2, #FFFFFF),
-  "purple": construct-theme(#5615fb, #FFFFFF),
+  "red": construct-theme(#C10000, #FFFFFF),
+  "rose": construct-theme(#9C4149, #FFFFFF),
+  "orange": construct-theme(#A73B00, #FFFFFF),
+  "green": construct-theme(#006E0A, #FFFFFF),
+  "turquoise": construct-theme(#006B5A, #FFFFFF),
+  "cyan": construct-theme(#006879, #FFFFFF),
+  "blue": construct-theme(#0050E4, #FFFFFF),
+  "pink": construct-theme(#B4007C, #FFFFFF),
+  "purple": construct-theme(#5F2AFF, #FFFFFF),
   "black": construct-theme(#000000, #FFFFFF),
 );
 

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./Assign.module.scss"
 import { connect } from "react-redux";
-import { graphqlOperation } from "@aws-amplify/api";
+import * as usersActions from "../../actions/users";
 import * as appActions from "../../actions/app"
 import * as tasksActions from "../../actions/tasks"
 import { AuthState } from "../../constants";
 import Avatar from '../UI/Avatar';
-import execGraphQL from '../../utils/execGraphQL';
 
 const Assign = (props) => {
   const {
@@ -15,6 +14,7 @@ const Assign = (props) => {
     },
     commandParam,
     user,
+    users,
     dispatch
   } = props
 
@@ -26,35 +26,9 @@ const Assign = (props) => {
     dispatch(appActions.setCommand(""))
   }
   useEffect(() => {
-    if (user.state === AuthState.SignedIn && commandParam) {
-      const firstLastName = commandParam.split(/\s+/)
-      const query = `
-        query SearchUsers($filter: SearchableUserFilterInput!) {
-          searchUsers(filter: $filter) {
-            items {
-              username
-              firstName
-              lastName
-              email
-              avatar
-            }
-          }
-        }
-      `
-      const filter = {or: [
-        { username: { matchPhrasePrefix: commandParam } },
-        ...((firstLastName.length !== 2 && [{
-          firstName: { matchPhrasePrefix: commandParam }
-        }]) || []),
-        ...((firstLastName.length === 2 && [{
-          and: [
-            { firstName: { matchPhrasePrefix: firstLastName[0] } },
-            { lastName: { matchPhrasePrefix: firstLastName[1] } },
-          ]
-        }]) || []),
-        { email: { matchPhrasePrefix: commandParam } }
-      ]}
-      execGraphQL(graphqlOperation(query, { filter })).then(res => setResults(res.data.searchUsers.items || []))
+    const nextKeyword = commandParam?.trim()
+    if (user.state === AuthState.SignedIn && nextKeyword) {
+      dispatch(usersActions.handleSearchUsers(nextKeyword)).then(res => setResults(res))
     } else {
       setResults([])
     }
@@ -118,10 +92,10 @@ const Assign = (props) => {
           onMouseEnter={() => setSelection(i + 1)}
           onClick={() => handleAssignTask(`user:${x.username}`)}
         >
-          <Avatar user={x} size={32} circular />
+          <Avatar user={users[x]} size={32} circular />
           <div>
-            <span>{`${x.firstName} ${x.lastName}`}</span>
-            <span>{x.email}</span>
+            <span>{`${users[x].firstName} ${users[x].lastName}`}</span>
+            <span>{users[x].email}</span>
           </div>
         </div>
       ))}
@@ -131,5 +105,6 @@ const Assign = (props) => {
 
 export default connect((state) => ({
 	app: state.app,
-	user: state.user
+	user: state.user,
+	users: state.users
 }))(Assign);

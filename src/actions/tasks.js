@@ -51,13 +51,13 @@ const fetchCachedTasks = (tasks) => ({
 });
 
 export const handleCreateTask = (taskState) => (dispatch, getState) => {
-  const { user, tasks } = getState()
+  const { app, user, projects } = getState()
   if (user.state === AuthState.SignedIn) {
     const dataToSend = prepareTaskToBeSent(taskState, user.data.username)
     if (taskState.projectID === getState().app.selectedProject) {
       dispatch(createTask({
         watchers: [],
-        permalink: Object.values(tasks).sort((a, b) => b.permalink - a.permalink)[0].permalink + 1,
+        permalink: projects[app.selectedProject].tasksCount + 1,
         owner: user.data.username,
         isVirtual: true,
         ...taskState
