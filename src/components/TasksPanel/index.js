@@ -58,26 +58,25 @@ const TasksPanel = (props) => {
             searchKeyword={searchKeyword}
             setSearchKeyword={setSearchKeyword}
           />
-          {/* <ProjectToolbar /> */}
           {status.tasks === LOADING ? (
             <NoTasks msgID="LOADING" />
           ) : (
             <>
               <ProjectHeader />
-              
-                {searchKeyword.trim() ? (
-                  <TasksSearch searchKeyword={searchKeyword} />
-                ) : Object.keys(tasks).length ? (
-                  <SimpleBar name="TasksView" className={styles.TasksView}>
-                    {React.createElement(sortedTasks[tasksSortingCriteria])}
-                  </SimpleBar>
-                 ) : isSynced ? (
-                  <NoTasks msgID="EMPTY" />
-                 ) : (
-                   <NoTasks msgID="OFFLINE" />
-                 )}
+              {searchKeyword.trim() ? (
+                <TasksSearch searchKeyword={searchKeyword} />
+              ) : Object.keys(tasks).length ? (
+                <SimpleBar name="TasksView" className={styles.TasksView}>
+                  {React.createElement(sortedTasks[tasksSortingCriteria])}
+                </SimpleBar>
+              ) : isSynced ? (
+                <NoTasks msgID="EMPTY" />
+              ) : (
+                  <NoTasks msgID="OFFLINE" />
+              )}
             </>
           )}
+          <ProjectToolbar />
         </>
       ) : <ProjectNotSelected />}
     </div>
