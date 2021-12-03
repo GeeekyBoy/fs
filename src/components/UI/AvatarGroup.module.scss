@@ -7,6 +7,7 @@
   display: inline;
   border-radius: 100%;
   border: 2px solid;
+  transition: border-color 0.2s;
   @include themify(border-color, "primaryBg");
 }
 
@@ -17,6 +18,7 @@
   border-radius: 100%;
   line-height: 0;
   border: 2px solid;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   @include themify(color, "primary");
   @include themify(background-color, "primaryLight");
   @include themify(border-color, "primaryBg");
@@ -26,6 +28,7 @@
   display: inline-flex;
   border-radius: 100%;
   border: 2px solid;
+  transition: background-color 0.2s, border-color 0.2s;
   @include themify(background-color, "primaryLight");
   @include themify(border-color, "primaryBg");
 }

@@ -1,31 +1,31 @@
 @use "sass:map";
 @use "sass:color";
 
-@function construct-theme($variant, $onPrimaryColor) {
+@function construct-theme($primaryLight, $primaryDark) {
   @return (
     "light": (
-      "primary": $variant,
-      "primaryDark": color.scale($variant, $lightness: -10%),
-      "primaryLight": color.scale($variant, $lightness: 80%),
-      "primaryLightSurface": color.scale($variant, $lightness: 80%),
-      "onPrimaryColor": $onPrimaryColor,
-      "txtColor": color.scale($variant, $lightness: -80%),
-      "primaryBg": color.scale($variant, $lightness: 95%),
-      "secondaryBg": color.scale($variant, $lightness: 90%),
-      "fieldBg": color.scale($variant, $lightness: 99%),
+      "primary": $primaryLight,
+      "primaryDark": color.scale($primaryLight, $lightness: -10%),
+      "primaryLight": color.scale($primaryLight, $lightness: 80%),
+      "primaryLightSurface": color.scale($primaryLight, $lightness: 80%),
+      "onPrimaryColor": #FFFFFF,
+      "txtColor": #000000,
+      "primaryBg": #F9F9F9,
+      "secondaryBg": #F3F3F3,
+      "fieldBg": #FFFFFF,
       "outline": #79747E,
       "hover": #F5F5F5
     ),
     "dark": (
-      "primary": color.scale($variant, $lightness: 70%),
-      "primaryDark": color.scale($variant, $lightness: 20%),
-      "primaryLight": color.scale($variant, $lightness: 80%),
+      "primary": $primaryDark,
+      "primaryDark": color.scale($primaryLight, $lightness: 20%),
+      "primaryLight": color.scale($primaryLight, $lightness: 80%),
       "primaryLightSurface": #444746,
-      "onPrimaryColor": color.scale($variant, $lightness: -60%),
+      "onPrimaryColor": #000000,
       "txtColor": #FFFFFF,
-      "primaryBg": #1F1F1F,
-      "secondaryBg": #282A2D,
-      "fieldBg": #444746,
+      "primaryBg": #1C1C1C,
+      "secondaryBg": #272727,
+      "fieldBg": #323232,
       "outline": #938F99,
       "hover": #444746
     )
@@ -33,15 +33,15 @@
 }
 
 $themes: (
-  "red": construct-theme(#C10000, #FFFFFF),
-  "rose": construct-theme(#9C4149, #FFFFFF),
-  "orange": construct-theme(#A73B00, #FFFFFF),
-  "green": construct-theme(#006E0A, #FFFFFF),
-  "turquoise": construct-theme(#006B5A, #FFFFFF),
-  "cyan": construct-theme(#006879, #FFFFFF),
-  "blue": construct-theme(#0050E4, #FFFFFF),
-  "pink": construct-theme(#B4007C, #FFFFFF),
-  "purple": construct-theme(#5F2AFF, #FFFFFF),
+  "red": construct-theme(#D20E1E, #F46762),
+  "rose": construct-theme(#E19D00, #FFD52A),
+  "orange": construct-theme(#E05307, #FB9A44),
+  "green": construct-theme(#0E6D0E, #45E532),
+  "turquoise": construct-theme(#009FAA, #29F7FF),
+  "cyan": construct-theme(#586579, #ADBBC5),
+  "blue": construct-theme(#0067C0, #4CC2FF),
+  "pink": construct-theme(#CD007B, #FF4FCB),
+  "purple": construct-theme(#4F4DCE, #B5ADEB),
   "black": construct-theme(#000000, #FFFFFF),
 );
 

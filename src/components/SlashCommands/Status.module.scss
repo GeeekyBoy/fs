@@ -17,10 +17,11 @@
       font-size: 18px;
     }
     & > span:nth-child(2) {
-      @include themify(color, "txtColor");
       font-weight: 600;
       font-size: 14px;
       text-transform: lowercase;
+      transition: color 0.2s;
+      @include themify(color, "txtColor");
       &::first-letter {
         text-transform: capitalize;
       }

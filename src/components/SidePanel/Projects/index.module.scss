@@ -17,9 +17,10 @@
 }
 
 .PanelPageTitle {
-  @include themify(color, "txtColor");
   font-size: 18px;
   font-weight: 600;
+  transition: color 0.2s;
+  @include themify(color, "txtColor");
 }
 
 .ProjectItems {
@@ -52,6 +53,7 @@
   margin: 0;
   background-color: transparent;
   cursor: pointer;
+  transition: color 0.2s;
   @include themify(color, "primary");
   &:disabled {
     cursor: not-allowed;

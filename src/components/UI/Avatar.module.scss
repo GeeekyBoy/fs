@@ -6,7 +6,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.2s, color 0.2s;
+  line-height: 0;
   @include themify(color, "primary");
   @include themify(background-color, "primaryLight");
-  line-height: 0;
 }

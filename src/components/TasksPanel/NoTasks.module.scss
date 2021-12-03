@@ -18,6 +18,7 @@
   & > svg {
     width: 250px;
     height: 250px;
+    transition: color 0.2s;
     @include themify(color, "primary");
   }
   & > div {
@@ -28,11 +29,11 @@
     & > span {
       font-weight: bold;
       font-size: 28px;
+      transition: color 0.2s;
+      transition: color 0.2s;
       @include themify(color, "txtColor");
     }
     & > button {
-      @include themify(color, "primary");
-      @include themify(background-color, "primaryLight");
       border-radius: 8px;
       max-width: fit-content;
       outline: none;
@@ -41,6 +42,9 @@
       padding: 5px 10px;
       font-weight: 600;
       font-size: 18px;
+      transition: background-color 0.2s, color 0.2s;
+      @include themify(color, "primary");
+      @include themify(background-color, "primaryLight");
     }
     & > *:not(:last-child) {
       margin-bottom: 40px;

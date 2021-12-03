@@ -35,12 +35,12 @@
   }
 }
 .ToggleHandle {
-  @include themify(background-color, "primaryLight");
   border-radius: 50px;
   width: 45px;
   padding: 5px;
   transition: background-color 0.2s ease-in-out;
   cursor: pointer;
+  @include themify(background-color, "primaryLight");
   &.selected {
     @include themify(background-color, "primary");
     & > div {

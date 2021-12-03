@@ -7,6 +7,7 @@
   align-items: center;
   font-size: 14px;
   background-color: transparent;
+  transition: background-color 0.2s;
   &.active {
     @include themify(background-color, "hover");
   }
@@ -23,5 +24,6 @@
   font-size: 14px;
   align-items: center;
   justify-content: center;
+  transition: color 0.2s;
   @include themify(color, "txtColor");
 }

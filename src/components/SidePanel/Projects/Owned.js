@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
+import styles from "./Owned.module.scss";
 import {
   closestCenter,
   DndContext,
@@ -23,6 +24,7 @@ import * as projectsActions from "../../../actions/projects"
 import ProjectItem from "./ProjectItem"
 import parseLinkedList from "../../../utils/parseLinkedList"
 import filterObj from "../../../utils/filterObj";
+import { ReactComponent as NoOwnedIllustartion } from "../../../assets/undraw_businessman_re_mlee.svg"
 
 const Sortable = (props) => {
 
@@ -150,12 +152,16 @@ const Owned = (props) => {
         }))
     }
   };
-  return (
+  const getOwnedProjects = (projects) => {
+    return parseLinkedList(filterObj(projects, x => x.isOwned), "prevProject", "nextProject")
+  }
+  const ownedProjects = useMemo(() => getOwnedProjects(projects), [projects])
+  return ownedProjects.length ? (
     <Sortable
-      items={parseLinkedList(filterObj(projects, x => x.isOwned), "prevProject", "nextProject").map(({ id }) => id)}
+      items={ownedProjects.map(({ id }) => id)}
       onDragEnd={onSortEnd}
     >
-      {parseLinkedList(filterObj(projects, x => x.isOwned), "prevProject", "nextProject").map((value, index) => (
+      {ownedProjects.map((value, index) => (
         <SortableItem
           key={value.id}
           index={index}
@@ -164,6 +170,13 @@ const Owned = (props) => {
         />
       ))}
     </Sortable>
+  ) : (
+    <div className={styles.NoOwnedProjects}>
+      <NoOwnedIllustartion />
+      <span>
+        No Projects Owned By You
+      </span>
+    </div>
   );  
 }
 

@@ -79,17 +79,28 @@ const AppSettings = (props) => {
                 "purple",
                 "black",
               ]}
-              colors={[
-                "#FB1515",
-                "#FF969C",
-                "#FE6000",
-                "#15fb3b",
-                "#15fbd9",
-                "#15dcfb",
-                "#1560FB",
-                "#fb15b2",
-                "#5615fb",
+              colors={!appSettings.isDarkMode ? [
+                "#D20E1E",
+                "#E19D00",
+                "#E05307",
+                "#0E6D0E",
+                "#009FAA",
+                "#586579",
+                "#0067C0",
+                "#CD007B",
+                "#4F4DCE",
                 "#000000",
+              ] : [
+                "#F46762",
+                "#FFD52A",
+                "#FB9A44",
+                "#45E532",
+                "#29F7FF",
+                "#ADBBC5",
+                "#4CC2FF",
+                "#FF4FCB",
+                "#B5ADEB",
+                "#FFFFFF",
               ]}
             />
             <Toggle

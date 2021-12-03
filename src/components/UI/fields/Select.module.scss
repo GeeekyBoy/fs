@@ -34,9 +34,9 @@
   font-weight: 600;
   font-size: 14px;
   border-radius: 100000000000000px;
+  transition: color 0.2s, background-color 0.2s;
   @include themify(color, "txtColor");
   @include themify(background-color, "primaryLightSurface");
-  transition: color 0.2s, background-color 0.2s;
   &.selected {
     cursor: default;
     @include themify(color, "onPrimaryColor", true);

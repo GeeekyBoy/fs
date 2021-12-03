@@ -6,6 +6,7 @@
   flex-direction: row;
   align-items: center;
   background-color: transparent;
+  transition: background-color 0.2s;
   &.active {
     @include themify(background-color, "hover");
   }
@@ -24,10 +25,11 @@
   font-size: 14px;
   width: fit-content;
   height: fit-content;
-  @include themify(color, "primary");
-  @include themify(background-color, "primaryLight");
   flex-direction: row;
   align-items: center;
+  transition: background-color 0.2s, color 0.2s;
+  @include themify(color, "primary");
+  @include themify(background-color, "primaryLight");
 }
 
 .NoTags {
@@ -36,5 +38,6 @@
   font-size: 14px;
   align-items: center;
   justify-content: center;
+  transition: color 0.2s;
   @include themify(color, "txtColor");
 }

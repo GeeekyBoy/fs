@@ -7,10 +7,11 @@
   border-radius: 10px;
   position: relative;
   border: 4px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
   @include themify(background-color, "primary");
   &.selected {
     border: 4px solid;
-    @include themify(color, "txtColor");
+    @include themify(border-color, "txtColor");
   }
 }
 
@@ -54,6 +55,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  transition: color 0.2s;
   @include themify(color, "onPrimaryColor");
 }
 
@@ -64,6 +66,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  transition: color 0.2s;
   @include themify(color, "onPrimaryColor");
 }
 
@@ -121,6 +124,7 @@
   outline: none;
   cursor: pointer;
   padding: 1px 6px;
+  transition: color 0.2s;
   @include themify(color, "onPrimaryColor");
 }
 
@@ -133,6 +137,7 @@
   opacity: 0.15;
   z-index: 1;
   & > svg {
+    transition: color 0.2s, fill 0.2s;
     @include themify(color, "onPrimaryColor");
     @include themify(fill, "onPrimaryColor");
   }
@@ -145,5 +150,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  transition: color 0.2s;
   @include themify(color, "onPrimaryColor");
 }

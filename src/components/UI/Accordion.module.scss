@@ -4,6 +4,7 @@
   margin-top: 10px;
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   overflow: hidden;
+  transition: background-color 0.2s;
   @include themify(background-color, "fieldBg");
   @media only screen and (max-width: 768px) {
     padding: 5px;
@@ -20,6 +21,7 @@
   padding: 0 12px;
   font-weight: 600;
   font-size: 24px;
+  transition: color 0.2s;
   @include themify(color, "txtColor");
   & > svg {
     cursor: pointer;

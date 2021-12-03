@@ -32,7 +32,7 @@
     padding: 0 3px;
     margin: 2.5px 0 2.5px -3px;
     transform-origin: bottom left;
-    transition: transform 150ms cubic-bezier(0.4,0,0.2,1);
+    transition: transform 150ms cubic-bezier(0.4,0,0.2,1), background-color 0.2s;
     @include themify(color, "outline");
     @include themify(background-color, "secondaryBg");
   }
@@ -127,5 +127,6 @@
   cursor: text;
   flex: 1;
   z-index: 1;
+  transition: color 0.2s;
   @include themify(color, "txtColor");
 }

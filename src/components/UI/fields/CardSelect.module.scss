@@ -4,11 +4,12 @@
   align-items: flex-start;
   justify-content: center;
   & > label {
-    @include themify(color, "txtColor");
     margin-bottom: 0;
     width: max-content;
     font-size: 14px;
     font-weight: 600;
+    transition: color 0.2s;
+    @include themify(color, "txtColor");
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -28,12 +29,13 @@
   outline: none;
   cursor: pointer;
   border-radius: 8px;
-  @include themify(background-color, "fieldBg");
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   transition: color 0.2s, border-color 0.2s;
+  @include themify(background-color, "fieldBg");
   & > span:nth-child(1) {
     font-size: 24px;
     font-weight: 600;
+    transition: color 0.2s;
     @include themify(color, "primaryLight");
   }
   & > span:nth-child(2) {

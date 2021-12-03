@@ -4,11 +4,11 @@
   align-items: flex-start;
   justify-content: center;
   & > label {
-    @include themify(color, "txtColor");
     margin-bottom: 0;
     width: max-content;
     font-size: 14px;
     font-weight: 600;
+    @include themify(color, "txtColor");
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -31,25 +31,25 @@
   cursor: pointer;
   margin-left: 5px;
   border-radius: 8px;
-  @include themify(background-color, "fieldBg");
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
+  @include themify(background-color, "fieldBg");
   & > div {
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 0;
     border-radius: 100%;
-    @include themify(color, "onPrimaryColor");
-    @include themify(background-color, "primary");
     min-width: 32px;
     min-height: 32px;
     width: 32px;
     height: 32px;
+    @include themify(color, "onPrimaryColor");
+    @include themify(background-color, "primary");
   }
   & > span {
-    @include themify(color, "primary");
     font-weight: 600;
     font-size: 14px;
+    @include themify(color, "primary");
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -100,9 +100,9 @@
   border-radius: 8px;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   @include themify(background-color, "fieldBg");
   @include themify(color, "txtColor");
-  box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   &:last-child {
     margin-right: 5px;
   }

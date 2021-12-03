@@ -54,16 +54,16 @@ const TasksPanel = (props) => {
     >
       {selectedProject ? (
         <>
-          <ProjectToolbar />
+          <TasksToolbar
+            searchKeyword={searchKeyword}
+            setSearchKeyword={setSearchKeyword}
+          />
+          {/* <ProjectToolbar /> */}
           {status.tasks === LOADING ? (
             <NoTasks msgID="LOADING" />
           ) : (
             <>
               <ProjectHeader />
-              <TasksToolbar
-                searchKeyword={searchKeyword}
-                setSearchKeyword={setSearchKeyword}
-              />
               
                 {searchKeyword.trim() ? (
                   <TasksSearch searchKeyword={searchKeyword} />

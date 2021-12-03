@@ -8,9 +8,10 @@
 }
 
 .PanelPageTitle {
-  @include themify(color, "txtColor");
   font-size: 18px;
   font-weight: 600;
+  transition: color 0.2s;
+  @include themify(color, "txtColor");
 }
 
 .PanelPageToolbarAction {
@@ -24,7 +25,7 @@
   margin: 0;
   background-color: transparent;
   cursor: pointer;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, color 0.2s;
   @include themify(color, "primary");
   &:disabled {
     opacity: 0.6;
@@ -41,7 +42,7 @@
   margin: 0 25px;
   font-size: 14px;
   font-weight: 400;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, background-color 0.2s, color 0.2s;
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   @include themify(color, "txtColor");
   @include themify(background-color, "fieldBg");
@@ -77,10 +78,12 @@
     flex-direction: column;
     & > span:nth-child(1) {
       font-weight: bold;
+      transition: color 0.2s;
       @include themify(color, "txtColor");
     }
     & > span:nth-child(2) {
       font-style: italic;
+      transition: color 0.2s;
       @include themify(color, "txtColor");
     }
   }
@@ -106,11 +109,13 @@
   & > svg {
     width: 250px;
     height: auto;
+    transition: color 0.2s;
     @include themify(color, "primary");
   }
   & > span {
     font-weight: bold;
     font-size: 18px;
+    transition: color 0.2s;
     @include themify(color, "txtColor");
   }
   & > *:not(:last-child) {

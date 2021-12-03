@@ -1,12 +1,12 @@
 .Button {
   padding: 15px 0;
-  @include themify(background-color, "primary");
-  @include themify(color, "onPrimaryColor");
   border-radius: 100000000000000px;
   outline: none;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.2s;
+  @include themify(background-color, "primary");
+  @include themify(color, "onPrimaryColor");
   &:hover {
     @include themify(background-color, "primaryDark");
   }

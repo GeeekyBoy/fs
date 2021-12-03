@@ -12,8 +12,8 @@
     pointer-events: all;
     opacity: 1;
   }
+  transition: background-color 0.2s, opacity 0.3s;
   @include themify(background-color, "primaryBg");
-  transition: background-color 0.2s ease, opacity 0.3s;
   @media only screen and (max-width: 768px) {
     padding: 0px;
     width: 100%;

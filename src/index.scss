@@ -29,6 +29,12 @@ label,
   user-select: none !important;
 }
 
+
+
+input::selection.noselect {
+  color:transparent;
+}
+
 input:read-only {
   color: transparent;
   text-shadow: 0 0 0 #222222;

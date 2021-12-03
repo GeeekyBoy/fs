@@ -8,11 +8,12 @@
     margin-bottom: 5px;
   }
   & > label {
-    @include themify(color, "txtColor");
     margin-bottom: 0;
     width: max-content;
     font-size: 14px;
     font-weight: 600;
+    transition: color 0.2s;
+    @include themify(color, "txtColor");
   }
   & > span {
     color: #FF0000;
@@ -33,6 +34,7 @@
   font-weight: 400;
   border: 1px solid transparent;
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
+  transition: background-color 0.2s;
   @include themify(background-color, "fieldBg");
   & > * {
     align-self: center;

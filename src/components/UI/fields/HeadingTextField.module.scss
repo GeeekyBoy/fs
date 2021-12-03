@@ -6,13 +6,6 @@
     & > *:not(:last-child) {
       margin-bottom: 5px;
     }
-    & > label {
-      @include themify(color, "txtColor");
-      margin-bottom: 0;
-      width: max-content;
-      font-size: 14px;
-      font-weight: 600;
-    }
     & > span {
       color: #FF0000;
       font-size: 12px;
@@ -26,12 +19,13 @@
     align-items: center;
     justify-content: flex-start;
     width: calc(100% - 20px);
-    padding: 5px 10px;
-    border-radius: 8px;
+    padding: 10px 10px;
+    border-radius: 100px;
     font-size: 14px;
     font-weight: 400;
     border: 1px solid transparent;
     box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
+    transition: background-color 0.2s;
     @include themify(background-color, "fieldBg");
     & > span {
       color: #C0C0C0;
@@ -50,6 +44,7 @@
       outline: none;
       padding: 0;
       width: 100%;
+      transition: background-color 0.2s, color 0.2s;
       @include themify(color, "txtColor");
       @include themify(background-color, "fieldBg");
       &:disabled {

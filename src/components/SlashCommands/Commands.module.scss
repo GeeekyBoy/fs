@@ -10,6 +10,7 @@
     @include themify(background-color, "hover");
   }
   & > svg {
+    transition: background-color 0.2s, fill 0.2s;
     @include themify(color, "primary");
     @include themify(fill, "primary");
   }
@@ -22,10 +23,11 @@
       align-items: center;
       justify-content: flex-start;
       & > span:nth-child(1) {
-        @include themify(color, "txtColor");
+        transition: color 0.2s;
         font-weight: 600;
         font-size: 14px;
         text-transform: lowercase;
+        @include themify(color, "txtColor");
         &::first-letter {
           text-transform: capitalize;
         }
@@ -37,22 +39,24 @@
         align-items: center;
         justify-content: center;
         width: 14px;
-        @include themify(color, "primary");
-        @include themify(background-color, "primaryLight");
         font-weight: 600;
         padding: 2px;
         border-radius: 4px;
         font-size: 12px;
         text-transform: lowercase;
+        transition: background-color 0.2s, color 0.2s;
+        @include themify(color, "primary");
+        @include themify(background-color, "primaryLight");
       }
       & > *:not(:last-child) {
         margin-right: 5px;
       }
     }
     & > span:nth-child(2) {
-      @include themify(color, "txtColor");
       font-weight: 400;
       font-size: 12px;
+      transition: color 0.2s;
+      @include themify(color, "txtColor");
     }
   }
   & > *:not(:last-child) {
@@ -68,5 +72,6 @@
   justify-content: center;
   align-items: center;
   padding: 10px 0;
+  transition: color 0.2s;
   @include themify(color, "txtColor");
 }

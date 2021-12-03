@@ -4,17 +4,20 @@
   width: 100%;
   height: 100%;
   position: fixed;
-  @include themify(background-color, "primaryBg");
   align-items: center;
   justify-content: center;
+  transition: background-color 0.2s;
+  @include themify(background-color, "primaryBg");
   & > span:nth-child(1) {
     font-weight: bold;
     font-size: 42px;
+    transition: color 0.2s;
     @include themify(color, "primary");
   }
   & > span:nth-child(3) {
     font-weight: bold;
     font-size: 18px;
+    transition: color 0.2s;
     @include themify(color, "txtColor");
   }
   & > div {

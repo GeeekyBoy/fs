@@ -4,14 +4,14 @@
   flex-direction: column;
   height: 100vh;
   flex: 1;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
   width: 365px;
   max-width: 365px;
   min-width: 365px;
-  @include themify(background-color, "secondaryBg");
   transform: translateX(-365px);
   margin: 0 -365px 0 0;
   overflow: hidden;
+  @include themify(background-color, "secondaryBg");
   &.right.opened, &.opened {
     transform: initial;
     margin: 0;

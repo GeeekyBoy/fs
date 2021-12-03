@@ -26,9 +26,10 @@
 }
 
 .PanelPageTitle {
-  @include themify(color, "txtColor");
   font-size: 18px;
   font-weight: 600;
+  transition: color 0.2s;
+  @include themify(color, "txtColor");
 }
 
 .PanelPageToolbarAction {
@@ -42,6 +43,7 @@
   margin: 0;
   background-color: transparent;
   cursor: pointer;
+  transition: color 0.2s;
   @include themify(color, "primary");
   &:disabled {
     cursor: not-allowed;
@@ -63,14 +65,16 @@
     width: 250px;
     height: 163px;
     margin-top: 25px;
+    transition: color 0.2s;
     @include themify(color, "primary");
   }
   & > span {
     font-weight: bold;
     font-size: 18px;
-    @include themify(color, "txtColor");
+    transition: color 0.2s;
     margin-top: 25px;
     width: max-content;
+    @include themify(color, "txtColor");
   }
   & > *:not(:last-child) {
     margin-bottom: 10px;

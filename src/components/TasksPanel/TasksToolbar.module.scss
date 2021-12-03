@@ -2,18 +2,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-direction: row;
-  margin: 0 12px 12px 12px;
+  flex-direction: column;
+  margin: 0 12px 0px 12px;
   padding: 10px 0;
-  border-radius: 15px;
-  & > span {
-    font-size: 12px;
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    & > span {
+      font-size: 12px;
+    }
+    & > *:not(:last-child) {
+      margin-right: 10px;
+    }
+    @media only screen and (max-width: 768px) {
+      margin: 0 20px 9px 20px;
+      & > *:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
   }
   & > *:not(:last-child) {
-    margin-right: 10px;
+    margin-bottom: 10px;
   }
   @media only screen and (max-width: 768px) {
-    margin: 0 20px 9px 20px;
+    margin: 0 20px 0px 20px;
   }
 }
 
@@ -24,29 +39,30 @@
   justify-content: center;
   font-size: 14px;
   & > span {
+    transition: color 0.2s;
     @include themify(color, "txtColor");
   }
   & > div {
-    width: 90px;
+    width: 105px;
   }
   & > *:not(:last-child) {
     margin-right: 8px;
   }
 }
 
-.PasteBtn {
+.ToolbarActionBtn {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  padding: 5px;
   line-height: 0;
-  padding: 8px 15px;
+  padding: 8px 10px;
   border: none;
   outline: none;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 50px;
+  transition: background-color 0.2s, color 0.2s;
   @include themify(color, "onPrimaryColor");
   @include themify(background-color, "primary");
   & > *:not(:last-child) {
