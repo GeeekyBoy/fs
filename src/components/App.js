@@ -53,19 +53,19 @@ const App = (props) => {
 
   useEffect(() => {
     const availColors = {
-      "red": "#FB1515",
-      "rose": "#FF969C",
-      "orange": "#FE6000",
-      "green": "#15fb3b",
-      "turquoise": "#15fbd9",
-      "cyan": "#15dcfb",
-      "blue": "#1560FB",
-      "pink": "#fb15b2",
-      "purple": "#5615fb",
+      "red": "#D20E1E",
+      "gold": "#E19D00",
+      "orange": "#E05307",
+      "green": "#0E6D0E",
+      "turquoise": "#009FAA",
+      "blue": "#0067C0",
+      "pink": "#CD007B",
+      "purple": "#4F4DCE",
+      "grey": "#586579",
       "black": "#000000",
     }
     document.documentElement.className = appSettings.theme + " " + (appSettings.isDarkMode ? "dark" : "light");
-    document.querySelector('meta[name="theme-color"]').setAttribute('content', availColors[appSettings.theme])
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', appSettings.isDarkMode ? "#272727" : availColors[appSettings.theme])
   }, [appSettings.theme, appSettings.isDarkMode]);
   return useRoutes([
     {

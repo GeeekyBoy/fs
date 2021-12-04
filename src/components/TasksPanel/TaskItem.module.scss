@@ -80,6 +80,8 @@
   &.sorting {
     opacity: 0.5;
   }
+  @include themify(background-color, "fieldBg");
+  box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   &:not(.focused):not(.dragging):not(.sorting):hover {
     box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
     @include themify(background-color, "fieldBg");

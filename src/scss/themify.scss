@@ -34,14 +34,14 @@
 
 $themes: (
   "red": construct-theme(#D20E1E, #F46762),
-  "rose": construct-theme(#E19D00, #FFD52A),
+  "gold": construct-theme(#E19D00, #FFD52A),
   "orange": construct-theme(#E05307, #FB9A44),
   "green": construct-theme(#0E6D0E, #45E532),
   "turquoise": construct-theme(#009FAA, #29F7FF),
-  "cyan": construct-theme(#586579, #ADBBC5),
   "blue": construct-theme(#0067C0, #4CC2FF),
   "pink": construct-theme(#CD007B, #FF4FCB),
   "purple": construct-theme(#4F4DCE, #B5ADEB),
+  "grey": construct-theme(#586579, #ADBBC5),
   "black": construct-theme(#000000, #FFFFFF),
 );
 

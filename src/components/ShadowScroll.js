@@ -15,21 +15,23 @@ const ShadowScroll = (props) => {
     };
     onScroll();
     const node = ref.current;
+    const resizeObserver = new ResizeObserver(onScroll);
+    resizeObserver.observe(node);
     node.addEventListener('scroll', onScroll);
-    node.addEventListener('resize', onScroll);
     node.addEventListener("wheel", (e) => {
       e.preventDefault();
       node.scrollLeft += e.deltaY;
     });
     return () => {
+      resizeObserver.unobserve(node);
       node.removeEventListener('scroll', onScroll);
-      node.removeEventListener('resize', onScroll);
       node.removeEventListener('wheel', onScroll);
     };
   }, []);
 
   return (
     <div
+      style={props.style}
       className={[
         styles.Shadow,
         ...(showStart && [styles.showStart] || []),

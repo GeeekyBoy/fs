@@ -68,7 +68,7 @@ const ProjectToolbar = (props) => {
   }
   return (
     <div className={styles.ToolbarContainer}>
-      <ShadowScroll>
+      <ShadowScroll style={{ maxWidth: "fit-content" }}>
         <button
           className={styles.ToolbarActionBtn}
           onClick={pasteTask}

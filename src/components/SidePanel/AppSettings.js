@@ -69,14 +69,14 @@ const AppSettings = (props) => {
               onChange={handleChange}
               options={[
                 "red",
-                "rose",
+                "gold",
                 "orange",
                 "green",
                 "turquoise",
-                "cyan",
                 "blue",
                 "pink",
                 "purple",
+                "grey",
                 "black",
               ]}
               colors={!appSettings.isDarkMode ? [
@@ -85,10 +85,10 @@ const AppSettings = (props) => {
                 "#E05307",
                 "#0E6D0E",
                 "#009FAA",
-                "#586579",
                 "#0067C0",
                 "#CD007B",
                 "#4F4DCE",
+                "#586579",
                 "#000000",
               ] : [
                 "#F46762",
