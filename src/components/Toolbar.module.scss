@@ -10,7 +10,7 @@
   width: 40px;
   height: calc(100vh - 60px);
   transition: background-color 0.2s;
-  @include themify(background-color, "secondaryBg");
+  @include themify(background-color, "auxiliarySurface");
   @media only screen and (max-width: 768px) {
     padding: 15px 0;
     flex-direction: row;
@@ -76,7 +76,7 @@
   padding: 10px;
   border-radius: 8px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
   background-color: transparent;
   cursor: pointer;
   @include themify(color, "txtColor");
@@ -85,17 +85,24 @@
     width: 52px;
     border-radius: 50px;
   }
+  &:not(.selected):hover {
+    @include themify(background-color, "onAuxiliarySurfaceElev0");
+  }
+  &.selected:hover {
+    @include themify(background-color, "onAuxiliarySurfaceElev0HoverDark");
+  }
   &.selected {
-    & > svg {
-      @include themify(color, "onPrimaryColor");
-      @include themify(background-color, "primary");
-    }
+    @include themify(background-color, "onAuxiliarySurfaceElev0");
   }
   &.LoginBtn {
     width: 46px;
     height: 46px;
+    transition: background-color 0.2s;
     @include themify(background-color, "primary");
     @include themify(color, "onPrimaryColor");
+    &:hover {
+      @include themify(background-color, "primaryHover");
+    }
   }
 }
 

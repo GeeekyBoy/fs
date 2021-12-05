@@ -17,7 +17,7 @@
   padding: 20px;
   border-radius: 20px 20px 0 0;
   transition: background-color 0.2s;
-  @include themify(background-color, "secondaryBg");
+  @include themify(background-color, "auxiliarySurface");
   & > *:not(:last-child) {
     margin-bottom: 10px;
   }

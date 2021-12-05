@@ -35,7 +35,7 @@
   border: 1px solid transparent;
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   transition: background-color 0.2s;
-  @include themify(background-color, "fieldBg");
+  @include themify(background-color, "onAuxiliarySurfaceElev1");
   & > * {
     align-self: center;
     justify-self: center;

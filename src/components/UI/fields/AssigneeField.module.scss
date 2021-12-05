@@ -34,7 +34,7 @@
   border-radius: 8px;
   transition: background-color 0.2s;
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
-  @include themify(background-color, "fieldBg");
+  @include themify(background-color, "onAuxiliarySurfaceElev1");
   & > div {
     display: flex;
     align-items: center;
@@ -73,7 +73,7 @@
   outline: none;
   height: fit-content;
   transition: background-color 0.2s;
-  @include themify(background-color, "fieldBg");
+  @include themify(background-color, "onAuxiliarySurfaceElev1");
   & > span {
     font-weight: 600;
     font-size: 14px;
@@ -109,7 +109,7 @@
   border-radius: 8px;
   transition: background-color 0.2s, color 0.2s;
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
-  @include themify(background-color, "fieldBg");
+  @include themify(background-color, "onAuxiliarySurfaceElev1");
   @include themify(color, "txtColor");
   &:last-child {
     margin-right: 5px;

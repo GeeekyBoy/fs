@@ -14,7 +14,7 @@
   border-radius: 50px;
   padding: 5px 10px;
   cursor: pointer;
-  @include themify(background-color, "fieldBg");
+  @include themify(background-color, "onMainSurfaceElev1");
   &.opened {
     @include themify(border-color, "primary");
   }
@@ -25,7 +25,7 @@
     font-size: 12px;
     cursor: pointer;
     @include themify(color, "txtColor");
-    @include themify(background-color, "fieldBg");
+    @include themify(background-color, "onMainSurfaceElev1");
   }
 }
 
@@ -40,7 +40,7 @@
   border-radius: 8px;
   z-index: 10;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  @include themify(background-color, "secondaryBg");
+  @include themify(background-color, "auxiliarySurface");
   & > span {
     padding: 8px;
     cursor: pointer;

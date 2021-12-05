@@ -57,7 +57,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   border-radius: 10px;
   padding: 8px 12px;
   margin: 4px 0;
@@ -80,11 +80,11 @@
   &.sorting {
     opacity: 0.5;
   }
-  @include themify(background-color, "fieldBg");
+  @include themify(background-color, "onMainSurfaceElev1");
   box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   &:not(.focused):not(.dragging):not(.sorting):hover {
     box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
-    @include themify(background-color, "fieldBg");
+    @include themify(background-color, "onMainSurfaceElev1Hover");
     & .TaskItemActions {
       opacity: 1;
       width: auto;

@@ -9,7 +9,7 @@
   @include themify(background-color, "primary");
   @include themify(color, "onPrimaryColor", true);
   &:hover {
-    @include themify(background-color, "primaryDark");
+    @include themify(background-color, "primaryHover");
   }
   &:disabled {
     background-color: #CCCCCC!important;

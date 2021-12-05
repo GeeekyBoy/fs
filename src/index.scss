@@ -13,7 +13,7 @@ body {
   width: 100vw;
   height: 100%;
   margin: 0;
-  @include themify-global(background-color, "primaryBg");
+  @include themify-global(background-color, "mainSurface");
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

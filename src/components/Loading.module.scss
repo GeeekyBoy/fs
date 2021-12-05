@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
-  @include themify(background-color, "primaryBg");
+  @include themify(background-color, "mainSurface");
   & > span:nth-child(1) {
     font-weight: bold;
     font-size: 42px;

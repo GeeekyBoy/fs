@@ -96,10 +96,10 @@ const AppSettings = (props) => {
                 "#FB9A44",
                 "#45E532",
                 "#29F7FF",
-                "#ADBBC5",
                 "#4CC2FF",
                 "#FF4FCB",
                 "#B5ADEB",
+                "#ADBBC5",
                 "#FFFFFF",
               ]}
             />

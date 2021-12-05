@@ -8,7 +8,7 @@
   border-radius: 100%;
   border: 2px solid;
   transition: border-color 0.2s;
-  @include themify(border-color, "primaryBg");
+  @include themify(border-color, "mainSurface");
 }
 
 .LetterAvatar {
@@ -20,8 +20,8 @@
   border: 2px solid;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   @include themify(color, "primary");
-  @include themify(background-color, "primaryLight");
-  @include themify(border-color, "primaryBg");
+  @include themify(background-color, "onMainSurfaceElev2");
+  @include themify(border-color, "onMainSurfaceElev1");
 }
 
 .DumpAvatar {
@@ -29,6 +29,6 @@
   border-radius: 100%;
   border: 2px solid;
   transition: background-color 0.2s, border-color 0.2s;
-  @include themify(background-color, "primaryLight");
-  @include themify(border-color, "primaryBg");
+  @include themify(background-color, "onMainSurfaceElev2");
+  @include themify(border-color, "onMainSurfaceElev1");
 }

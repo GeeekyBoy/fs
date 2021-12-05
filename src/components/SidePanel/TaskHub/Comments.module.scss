@@ -79,7 +79,7 @@
     & .CommentBox {
       border-radius: 16px 16px 0 16px;
       transition: background-color 0.2s, color 0.2s;
-      @include themify(background-color, "primaryLight");
+      @include themify(background-color, "onAuxiliarySurfaceElev1");
       @include themify(color, "primary");
     }
   }
@@ -104,7 +104,7 @@
   width: 100%;
   border-radius: 8px;
   transition: border 0.3s, height 0.3s, background-color 0.2s, color 0.2s;
-  @include themify(background-color, "fieldBg");
+  @include themify(background-color, "onAuxiliarySurfaceElev1");
   @include themify(color, "txtColor");
 }
 
@@ -142,7 +142,7 @@
         @include themify(background-color, "primary");
         @include themify(color, "onPrimaryColor");
         &:hover {
-          @include themify(background-color, "primaryDark");
+          @include themify(background-color, "primaryHover");
         }
         &:disabled {
           @include themify(background-color, "primaryLight");

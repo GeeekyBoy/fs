@@ -4,7 +4,7 @@
   border-radius: 100px;
   max-width: 100%;
   transition: background-color 0.2s;
-  @include themify(background-color, "primaryLight");
+  @include themify(background-color, "onMainSurfaceElev1");
   & > div {
     height: 5px;
     border-radius: 100px;

@@ -13,7 +13,7 @@
   width: fit-content;
   border-radius: 24px;
   position: relative;
-  @include themify(background-color, "primaryLightSurface");
+  @include themify(background-color, "onAuxiliarySurfaceElev1");
   & > *:not(:last-child) {
     margin-right: 5px;
   }

@@ -22,7 +22,7 @@
   transition: background-color 0.2s;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   animation: openAnim 0.3s ease;
-  @include themify(background-color, "secondaryBg");
+  @include themify(background-color, "auxiliarySurface");
   @media only screen and (max-width: 768px) {
     left: 0;
     max-height: 200px;
