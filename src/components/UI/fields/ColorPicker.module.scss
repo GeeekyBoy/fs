@@ -13,7 +13,7 @@
     font-size: 14px;
     font-weight: 600;
     transition: color 0.2s;
-    @include themify(color, "txtColor");
+    @include themify(color, "color-fill-color-text-primary");
   }
   & > span {
     color: #FF0000;
@@ -34,8 +34,8 @@
   font-weight: 400;
   border: 1px solid;
   transition: background-color 0.2s;
-  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
-  @include themify(background-color, "onAuxiliarySurfaceElev1");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   & > * {
     align-self: center;
     justify-self: center;
@@ -63,7 +63,7 @@
     transition: width 0.3s, height 0.3s, margin 0.3s;
   }
   &.selected {
-    @include themify(border-color, "txtColor");
+    @include themify(border-color, "color-fill-color-text-primary");
     & > div {
       width: 38px;
       height: 38px;

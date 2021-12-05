@@ -11,7 +11,7 @@
   font-size: 18px;
   font-weight: 600;
   transition: color 0.2s;
-  @include themify(color, "txtColor");
+  @include themify(color, "color-fill-color-text-primary");
 }
 
 .PanelPageToolbarAction {
@@ -45,9 +45,9 @@
   transition: opacity 0.3s;
   border-radius: 8px;
   transition: background-color 0.2s ,color 0.2s;
-  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
-  @include themify(color, "txtColor");
-  @include themify(background-color, "onAuxiliarySurfaceElev1");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(color, "color-fill-color-text-primary");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   &::placeholder {
     color: #c0c0c0;
   }
@@ -81,12 +81,12 @@
     & > span:nth-child(1) {
       font-weight: bold;
       transition: color 0.2s;
-      @include themify(color, "txtColor");
+      @include themify(color, "color-fill-color-text-primary");
     }
     & > span:nth-child(2) {
       font-style: italic;
       transition: color 0.2s;
-      @include themify(color, "txtColor");
+      @include themify(color, "color-fill-color-text-primary");
     }
   }
   &:not(:disabled):hover {
@@ -118,7 +118,7 @@
     font-weight: bold;
     font-size: 18px;
     transition: color 0.2s;
-    @include themify(color, "txtColor");
+    @include themify(color, "color-fill-color-text-primary");
   }
   & > *:not(:last-child) {
     margin-bottom: 40px;

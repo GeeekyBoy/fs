@@ -6,14 +6,14 @@
 
 .Calendar {
   @include themify-global(--cl-color-primary, "primary", true);
-  @include themify-global(--cl-color-primary-light, "primaryLight", true);
+  @include themify-global(--cl-color-primary-light, "color-fill-color-subtle-secondary", true);
 }
 
 body {
   width: 100vw;
   height: 100%;
   margin: 0;
-  @include themify-global(background-color, "mainSurface");
+  @include themify-global(background-color, "auxiliarySurface", true);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

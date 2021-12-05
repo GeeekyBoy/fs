@@ -28,7 +28,7 @@
   text-align: center;
   font-weight: bold;
   transition: color 0.2s;
-  @include themify(color, "txtColor");
+  @include themify(color, "color-fill-color-text-primary");
 }
 
 .Actions {
@@ -52,9 +52,9 @@
   cursor: pointer;
   outline: none;
   transition: background-color 0.2s, color 0.2s;
-  @include themify(color, "txtColor");
-  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
-  @include themify(background-color, "onAuxiliarySurfaceElev1");
+  @include themify(color, "color-fill-color-text-primary");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   & > *:not(:last-child) {
     margin-right: 5px;
   }
@@ -70,5 +70,5 @@
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
   @include themify(background-color, "primary");
-  @include themify(color, "onPrimaryColor");
+  @include themify(color, "color-fill-color-text-on-accent-primary");
 }

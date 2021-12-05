@@ -9,5 +9,5 @@
   transition: background-color 0.2s, color 0.2s;
   line-height: 0;
   @include themify(color, "primary");
-  @include themify(background-color, "primaryLight");
+  @include themify(background-color, "color-fill-color-subtle-secondary");
 }

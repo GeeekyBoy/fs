@@ -15,14 +15,15 @@
   justify-content: flex-start;
   z-index: 999;
   border-radius: 10px;
-  border: none;
+  border: 1px solid;
   padding: 15px 0;
   width: 320px;
   max-height: 300px;
   transition: background-color 0.2s;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
   animation: openAnim 0.3s ease;
-  @include themify(background-color, "auxiliarySurface");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-layer-default");
   @media only screen and (max-width: 768px) {
     left: 0;
     max-height: 200px;

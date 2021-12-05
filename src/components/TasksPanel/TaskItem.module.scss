@@ -33,7 +33,7 @@
   &:hover {
     @include themify(background-color, "primary");
     & > svg {
-      @include themify(color, "onPrimaryColor", true);
+      @include themify(color, "color-fill-color-text-on-accent-primary", true);
     }
   }
 }
@@ -63,13 +63,13 @@
   margin: 4px 0;
   overflow: hidden;
   transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
-  @include themify(border-color, "onMainSurfaceElev1Border");
-  @include themify(background-color, "onMainSurfaceElev1");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   & > *:not(:last-child) {
     margin-right: 10px;
   }
   &.focused {
-    @include themify(border-color, "primary");
+    @include themify(border-color, "primary", true);
     & .TaskItemActions {
       opacity: 1;
       width: auto;
@@ -83,13 +83,13 @@
     opacity: 0.5;
   }
   &.categorized {
-    @include themify(border-color, "onMainSurfaceElev2Border");
-    @include themify(background-color, "onMainSurfaceElev2");
+    @include themify(border-color, "color-stroke-color-card-stroke-default");
+    @include themify(background-color, "color-background-fill-color-card-background-default");
   }
   &:not(.focused):not(.dragging):not(.sorting):hover {
-    @include themify(background-color, "onMainSurfaceElev1Hover");
+    @include themify(background-color, "color-background-fill-color-card-background-secondary");
     &.categorized {
-      @include themify(background-color, "onMainSurfaceElev2Hover");
+      @include themify(background-color, "color-background-fill-color-card-background-secondary");
     }
     & .TaskItemActions {
       opacity: 1;
@@ -163,12 +163,12 @@
   flex: 1;
   text-decoration: none;
   transition: color 0.2s;
-  @include themify(color, "txtColor");
+  @include themify(color, "color-fill-color-text-primary");
   &.done {
     text-decoration: line-through;
   }
   &.placeholder {
-    @include themify(color, "secondaryTxtColor", true);
+    @include themify(color, "color-fill-color-text-secondary", true);
   }
 }
 
@@ -183,9 +183,9 @@
     margin: 0;
     font-weight: 400;
     transition: color 0.2s;
-    @include themify(color, "txtColor");
+    @include themify(color, "color-fill-color-text-primary");
     &::placeholder {
-      @include themify(color, "secondaryTxtColor", true);
+      @include themify(color, "color-fill-color-text-secondary", true);
     }
   }
 }
@@ -201,7 +201,7 @@
   border-radius: 10px;
   padding: 3px 10px;
   transition: background-color 0.2s, color 0.2s;
-  @include themify(color, "onPrimaryColor");
+  @include themify(color, "color-fill-color-text-on-accent-primary");
   @include themify(background-color, "primary");
   @media only screen and (max-width: 768px) {
     width: 48px;
@@ -223,7 +223,7 @@
   height: 30px;
   & > svg {
     transition: fill 0.2s;
-    @include themify(fill, "txtColor");
+    @include themify(fill, "color-fill-color-text-primary");
   }
 }
 
@@ -267,8 +267,8 @@
   padding: 2.5px;
   cursor: pointer;
   transition: border-color 0.2s;
-  @include themify(border-color, "txtColor");
-  @include themify(color, "onPrimaryColor");
+  @include themify(border-color, "color-fill-color-text-primary");
+  @include themify(color, "color-fill-color-text-on-accent-primary");
   &.done {
     @include themify(border-color, "primary");
     @include themify(background-color, "primary");

@@ -8,7 +8,7 @@
     width: max-content;
     font-size: 14px;
     font-weight: 600;
-    @include themify(color, "txtColor");
+    @include themify(color, "color-fill-color-text-primary");
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -31,8 +31,8 @@
   cursor: pointer;
   margin-left: 5px;
   border-radius: 8px;
-  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
-  @include themify(background-color, "onAuxiliarySurfaceElev1");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   & > div {
     display: flex;
     align-items: center;
@@ -43,7 +43,7 @@
     min-height: 32px;
     width: 32px;
     height: 32px;
-    @include themify(color, "onPrimaryColor");
+    @include themify(color, "color-fill-color-text-on-accent-primary");
     @include themify(background-color, "primary");
   }
   & > span {
@@ -68,12 +68,12 @@
   border-radius: 8px;
   outline: none;
   height: fit-content;
-  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
-  @include themify(background-color, "onAuxiliarySurfaceElev1");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   & > span {
     font-weight: 600;
     font-size: 14px;
-    @include themify(color, "txtColor");
+    @include themify(color, "color-fill-color-text-primary");
   }
   & > button {
     position: relative;
@@ -84,7 +84,7 @@
     font-weight: 600;
     font-size: 12px;
     cursor: pointer;
-    @include themify(color, "onPrimaryColor");
+    @include themify(color, "color-fill-color-text-on-accent-primary");
     @include themify(background-color, "primary");
   }
   & > *:not(:last-child) {
@@ -102,9 +102,9 @@
   border-radius: 8px;
   flex-direction: column;
   align-items: center;
-  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
-  @include themify(background-color, "onAuxiliarySurfaceElev1");
-  @include themify(color, "txtColor");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
+  @include themify(color, "color-fill-color-text-primary");
   &:last-child {
     margin-right: 5px;
   }
@@ -145,6 +145,6 @@
   padding: 0;
   border-radius: 100%;
   cursor: pointer;
-  @include themify(color, "onPrimaryColor");
+  @include themify(color, "color-fill-color-text-on-accent-primary");
   @include themify(background-color, "primary");
 }

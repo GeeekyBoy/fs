@@ -7,7 +7,7 @@
   cursor: pointer;
   transition: background-color 0.3s;
   @include themify(background-color, "primary");
-  @include themify(color, "onPrimaryColor", true);
+  @include themify(color, "color-fill-color-text-on-accent-primary", true);
   &:hover {
     @include themify(background-color, "primaryHover");
   }

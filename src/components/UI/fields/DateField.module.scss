@@ -67,12 +67,12 @@
     background-color: transparent;
     z-index: 1;
     transition: color 0.2s;
-    @include themify(color, "txtColor");
+    @include themify(color, "color-fill-color-text-primary");
     &:disabled {
       background-color: transparent;
     }
     &::placeholder {
-      @include themify(color, "secondaryTxtColor");
+      @include themify(color, "color-fill-color-text-secondary");
     }
   }
 }
@@ -103,5 +103,5 @@
   line-height: 0;
   cursor: pointer;
   transition: color 0.2s;
-  @include themify(color, "txtColor");
+  @include themify(color, "color-fill-color-text-primary");
 }

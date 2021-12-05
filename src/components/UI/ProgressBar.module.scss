@@ -5,8 +5,8 @@
   border-radius: 100px;
   max-width: 100%;
   transition: background-color 0.2s;
-  @include themify(border-color, "onMainSurfaceElev1Border");
-  @include themify(background-color, "onMainSurfaceElev1");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   & > div {
     height: 5px;
     border-radius: 100px;

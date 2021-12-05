@@ -32,7 +32,7 @@
       font-size: 28px;
       transition: color 0.2s;
       transition: color 0.2s;
-      @include themify(color, "txtColor");
+      @include themify(color, "color-fill-color-text-primary");
     }
     & > button {
       border-radius: 8px;
@@ -45,7 +45,7 @@
       font-size: 18px;
       transition: background-color 0.2s, color 0.2s;
       @include themify(color, "primary");
-      @include themify(background-color, "primaryLight");
+      @include themify(background-color, "color-fill-color-subtle-secondary");
     }
     & > *:not(:last-child) {
       margin-bottom: 40px;

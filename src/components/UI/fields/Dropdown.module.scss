@@ -13,8 +13,8 @@
   border-radius: 50px;
   padding: 5px 10px;
   cursor: pointer;
-  @include themify(border-color, "onMainSurfaceElev1Border");
-  @include themify(background-color, "onMainSurfaceElev1");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   &.opened {
     @include themify(border-color, "primary", true);
   }
@@ -24,8 +24,8 @@
     border: none;
     font-size: 12px;
     cursor: pointer;
-    @include themify(color, "txtColor");
-    @include themify(background-color, "onMainSurfaceElev1");
+    @include themify(color, "color-fill-color-text-primary");
+    @include themify(background-color, "color-background-fill-color-card-background-default");
   }
 }
 
@@ -44,7 +44,7 @@
   & > span {
     padding: 8px;
     cursor: pointer;
-    @include themify(color, "txtColor");
+    @include themify(color, "color-fill-color-text-primary");
   }
   & > span:first-child {
     border-radius: 8px 8px 0 0;
@@ -57,6 +57,6 @@
   }
   & > span.selected {
     @include themify(color, "primary");
-    @include themify(background-color, "primaryLight");
+    @include themify(background-color, "color-fill-color-subtle-secondary");
   }
 }

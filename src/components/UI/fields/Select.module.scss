@@ -35,13 +35,13 @@
   font-size: 14px;
   border-radius: 100000000000000px;
   transition: color 0.2s, background-color 0.2s;
-  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
-  @include themify(color, "secondaryTxtColor");
-  @include themify(background-color, "onAuxiliarySurfaceElev1");
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
+  @include themify(color, "color-fill-color-text-secondary");
+  @include themify(background-color, "color-background-fill-color-card-background-default");
   &.selected {
     cursor: default;
     @include themify(border-color, "primary", true);
-    @include themify(color, "onPrimaryColor", true);
+    @include themify(color, "color-fill-color-text-on-accent-primary", true);
     @include themify(background-color, "primary");
   }
 }

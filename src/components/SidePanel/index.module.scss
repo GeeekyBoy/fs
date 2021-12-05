@@ -21,12 +21,12 @@
     border-left: 1px solid;
     transform: translateX(366px);
     margin: 0 0 0 -365px;
-    @include themify(border-color, "mainSurfaceBorder");
+    @include themify(border-color, "color-stroke-color-card-stroke-default");
   }
   
   &:not(.right) {
     border-right: 1px solid;
-    @include themify(border-color, "mainSurfaceBorder");
+    @include themify(border-color, "color-stroke-color-card-stroke-default");
   }
   & > *:not(:last-child) {
     margin-bottom: 25px;

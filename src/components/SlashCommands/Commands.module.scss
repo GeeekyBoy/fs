@@ -27,7 +27,7 @@
         font-weight: 600;
         font-size: 14px;
         text-transform: lowercase;
-        @include themify(color, "txtColor");
+        @include themify(color, "color-fill-color-text-primary");
         &::first-letter {
           text-transform: capitalize;
         }
@@ -41,12 +41,14 @@
         width: 14px;
         font-weight: 600;
         padding: 2px;
+        border: 1px solid;
         border-radius: 4px;
         font-size: 12px;
         text-transform: lowercase;
         transition: background-color 0.2s, color 0.2s;
         @include themify(color, "primary");
-        @include themify(background-color, "primaryLight");
+        @include themify(border-color, "color-stroke-color-card-stroke-default");
+        @include themify(background-color, "color-background-fill-color-card-background-default");
       }
       & > *:not(:last-child) {
         margin-right: 5px;
@@ -56,7 +58,7 @@
       font-weight: 400;
       font-size: 12px;
       transition: color 0.2s;
-      @include themify(color, "txtColor");
+      @include themify(color, "color-fill-color-text-secondary");
     }
   }
   & > *:not(:last-child) {
@@ -73,5 +75,5 @@
   align-items: center;
   padding: 10px 0;
   transition: color 0.2s;
-  @include themify(color, "txtColor");
+  @include themify(color, "color-fill-color-text-primary");
 }

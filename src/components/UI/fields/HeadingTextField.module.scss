@@ -25,10 +25,10 @@
     font-weight: 400;
     border: 1px solid;
     transition: background-color 0.2s;
-    @include themify(border-color, "onMainSurfaceElev1Border");
-    @include themify(background-color, "onMainSurfaceElev1");
+    @include themify(border-color, "color-stroke-color-card-stroke-default");
+    @include themify(background-color, "color-background-fill-color-card-background-default");
     & > span {
-      @include themify(color, "secondaryTxtColor");
+      @include themify(color, "color-fill-color-text-secondary");
     }
     &.error {
       border-color: #FF0000;
@@ -40,9 +40,9 @@
       background-color: #FFFFFF2E;
     }
     &:not(.focused):hover {
-      @include themify(background-color, "onMainSurfaceElev1Hover");
+      @include themify(background-color, "color-background-fill-color-card-background-secondary");
       & > input {
-        @include themify(background-color, "onMainSurfaceElev1Hover");
+        @include themify(background-color, "color-background-fill-color-card-background-secondary");
       }
     }
     & > input {
@@ -50,17 +50,17 @@
       outline: none;
       padding: 0;
       width: 100%;
-      transition: background-color 0.2s, color 0.2s;
-      @include themify(color, "txtColor");
-      @include themify(background-color, "onMainSurfaceElev1");
+      background-color: transparent;
+      transition: color 0.2s;
+      @include themify(color, "color-fill-color-text-primary");
       &:disabled {
         background-color: transparent;
       }
       &::placeholder {
-        @include themify(color, "secondaryTxtColor");
+        @include themify(color, "color-fill-color-text-secondary");
       }
     }
     & *:not(input) {
-      @include themify(color, "secondaryTxtColor", true);
+      @include themify(color, "color-fill-color-text-secondary", true);
     }
   }

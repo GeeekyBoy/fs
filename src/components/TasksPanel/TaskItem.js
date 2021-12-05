@@ -232,7 +232,7 @@ const TaskItem = (props) => {
           ...(isSorting && [styles.sorting] || []),
           ...(isDragging && [styles.dragging] || []),
           ...(collaboration.taskViewers[item.id] && [styles.collaborativeFocused] || []),
-          ...((tasksSortingCriteria !== "BY_DEFAULT" || tasksSortingCriteria !== "BY_DUE") && [styles.categorized] || []),
+          ...((tasksSortingCriteria !== "BY_DEFAULT" && tasksSortingCriteria !== "BY_DUE") && [styles.categorized] || []),
           ...(item.id === selectedTask && [styles.focused] || [])
         ].join(" ")}
         style={{
