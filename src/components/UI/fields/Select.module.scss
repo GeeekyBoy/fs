@@ -30,15 +30,17 @@
 .Selection {
   position: relative;
   padding: 3px 10px;
-  border: 2px solid transparent;
+  border: 1px solid;
   font-weight: 600;
   font-size: 14px;
   border-radius: 100000000000000px;
   transition: color 0.2s, background-color 0.2s;
-  @include themify(color, "txtColor");
+  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
+  @include themify(color, "secondaryTxtColor");
   @include themify(background-color, "onAuxiliarySurfaceElev1");
   &.selected {
     cursor: default;
+    @include themify(border-color, "primary", true);
     @include themify(color, "onPrimaryColor", true);
     @include themify(background-color, "primary");
   }

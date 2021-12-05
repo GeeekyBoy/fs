@@ -23,12 +23,12 @@
     border-radius: 100px;
     font-size: 14px;
     font-weight: 400;
-    border: 1px solid transparent;
-    box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
+    border: 1px solid;
     transition: background-color 0.2s;
+    @include themify(border-color, "onMainSurfaceElev1Border");
     @include themify(background-color, "onMainSurfaceElev1");
     & > span {
-      color: #C0C0C0;
+      @include themify(color, "secondaryTxtColor");
     }
     &.error {
       border-color: #FF0000;
@@ -57,10 +57,10 @@
         background-color: transparent;
       }
       &::placeholder {
-        color: #C0C0C0;
+        @include themify(color, "secondaryTxtColor");
       }
     }
     & *:not(input) {
-      color: #C0C0C0!important;
+      @include themify(color, "secondaryTxtColor", true);
     }
   }

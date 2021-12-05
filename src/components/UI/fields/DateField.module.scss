@@ -72,7 +72,7 @@
       background-color: transparent;
     }
     &::placeholder {
-      color: #C0C0C0;
+      @include themify(color, "secondaryTxtColor");
     }
   }
 }

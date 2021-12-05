@@ -57,12 +57,14 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 3px solid transparent;
+  border: 1px solid;
   border-radius: 10px;
   padding: 8px 12px;
   margin: 4px 0;
   overflow: hidden;
   transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+  @include themify(border-color, "onMainSurfaceElev1Border");
+  @include themify(background-color, "onMainSurfaceElev1");
   & > *:not(:last-child) {
     margin-right: 10px;
   }
@@ -80,11 +82,15 @@
   &.sorting {
     opacity: 0.5;
   }
-  @include themify(background-color, "onMainSurfaceElev1");
-  box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
+  &.categorized {
+    @include themify(border-color, "onMainSurfaceElev2Border");
+    @include themify(background-color, "onMainSurfaceElev2");
+  }
   &:not(.focused):not(.dragging):not(.sorting):hover {
-    box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
     @include themify(background-color, "onMainSurfaceElev1Hover");
+    &.categorized {
+      @include themify(background-color, "onMainSurfaceElev2Hover");
+    }
     & .TaskItemActions {
       opacity: 1;
       width: auto;
@@ -163,7 +169,7 @@
     text-decoration: line-through;
   }
   &.placeholder {
-    color: #C0C0C0!important;
+    @include themify(color, "secondaryTxtColor", true);
   }
 }
 
@@ -180,7 +186,7 @@
     transition: color 0.2s;
     @include themify(color, "txtColor");
     &::placeholder {
-      color: #C0C0C0!important;
+      @include themify(color, "secondaryTxtColor", true);
     }
   }
 }

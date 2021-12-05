@@ -41,7 +41,7 @@
     @include themify(background-color, "auxiliarySurface");
   }
   & > span {
-    color: #C0C0C0;
+    @include themify(color, "secondaryTxtColor");
   }
   & > input {
     font-size: 14px;
@@ -56,7 +56,7 @@
       background-color: transparent;
     }
     &::placeholder {
-      color: #C0C0C0;
+      @include themify(color, "secondaryTxtColor");
     }
   }
   &.focused:not(.readOnly:not(.filled)), &.filled {

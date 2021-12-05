@@ -18,7 +18,7 @@
   transition: color 0.2s;
   @include themify(color, "txtColor");
   &.placeholder {
-    color: #C0C0C0!important;
+    @include themify(color, "secondaryTxtColor", true);
   }
   @media only screen and (max-width: 768px) {
     padding: 0;

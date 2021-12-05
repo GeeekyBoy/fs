@@ -3,12 +3,13 @@
   flex-direction: column;
   margin: 40px 0;
   justify-content: center;
-  border: 1px solid #2A2026;
+  border: 1px solid;
   border-radius: 25px;
   height: fit-content;
   width: 350px;
   padding: 35px;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s;
+  @include themify(border-color, "onMainSurfaceElev1Border");
   @include themify(background-color, "onMainSurfaceElev1");
   & > *:not(:last-child) {
     margin-bottom: 15px;

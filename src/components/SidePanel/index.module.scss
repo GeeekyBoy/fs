@@ -18,8 +18,15 @@
     overflow: auto;
   }
   &.right {
-    transform: translateX(365px);
+    border-left: 1px solid;
+    transform: translateX(366px);
     margin: 0 0 0 -365px;
+    @include themify(border-color, "mainSurfaceBorder");
+  }
+  
+  &:not(.right) {
+    border-right: 1px solid;
+    @include themify(border-color, "mainSurfaceBorder");
   }
   & > *:not(:last-child) {
     margin-bottom: 25px;

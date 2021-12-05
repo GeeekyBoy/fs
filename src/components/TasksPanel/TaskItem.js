@@ -36,6 +36,9 @@ const TaskItem = (props) => {
       lockedTaskField,
       command
     },
+    appSettings: {
+      tasksSortingCriteria
+    },
     nextTask,
     prevTask,
     listeners,
@@ -229,6 +232,7 @@ const TaskItem = (props) => {
           ...(isSorting && [styles.sorting] || []),
           ...(isDragging && [styles.dragging] || []),
           ...(collaboration.taskViewers[item.id] && [styles.collaborativeFocused] || []),
+          ...((tasksSortingCriteria !== "BY_DEFAULT" || tasksSortingCriteria !== "BY_DUE") && [styles.categorized] || []),
           ...(item.id === selectedTask && [styles.focused] || [])
         ].join(" ")}
         style={{
@@ -338,6 +342,7 @@ export default connect((state) => ({
   user: state.user,
   tasks: state.tasks,
   app: state.app,
+  appSettings: state.appSettings,
   users: state.users,
   projects: state.projects,
   collaboration: state.collaboration

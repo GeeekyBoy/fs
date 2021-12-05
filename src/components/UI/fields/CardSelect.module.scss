@@ -25,18 +25,18 @@
   width: 100%;
   text-align: left;
   padding: 12px;
-  border: 2px solid transparent;
+  border: 1px solid;
   outline: none;
   cursor: pointer;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   transition: color 0.2s, border-color 0.2s;
+  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
   @include themify(background-color, "onAuxiliarySurfaceElev1");
   & > span:nth-child(1) {
     font-size: 24px;
     font-weight: 600;
     transition: color 0.2s;
-    @include themify(color, "primaryLight");
+    @include themify(color, "secondaryTxtColor");
   }
   & > span:nth-child(2) {
     font-size: 14px;
@@ -44,12 +44,12 @@
     color: #aaa8ac;
   }
   &.selected {
-    @include themify(border-color, "primary");
+    @include themify(border-color, "primary", true);
     & > span:nth-child(1) {
       @include themify(color, "primary");
     }
     & > span:nth-child(2) {
-      color: #5d6969;
+      @include themify(color, "txtColor");
     }
   }
 }

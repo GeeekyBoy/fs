@@ -45,10 +45,11 @@
   padding: 15px;
   width: calc(100% - 80px);
   margin: 0 25px;
+  border: 1px solid;
   border-radius: 8px;
-  box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   transition: background-color 0.2s, color 0.2s;
   animation: 0.4s ease-in-out forwards;
+  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
   @include themify(background-color, "onAuxiliarySurfaceElev1");
   @include themify(color, "txtColor");
   &.entering {

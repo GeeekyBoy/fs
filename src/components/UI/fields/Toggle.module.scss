@@ -14,11 +14,11 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
+  border: 1px solid;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 400;
-  border: 1px solid transparent;
-  box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
+  @include themify(border-color, "onAuxiliarySurfaceElev1Border");
   @include themify(background-color, "onAuxiliarySurfaceElev1");
   & > label {
     @include themify(color, "txtColor");
@@ -28,7 +28,7 @@
     font-weight: 600;
   }
   &.error {
-    border-color: #FF0000;
+    border-color: #FF0000!important;
   }
   &.disabled {
     background-color: #FFFFFF2E;
@@ -36,15 +36,18 @@
 }
 .ToggleHandle {
   border-radius: 50px;
-  width: 45px;
-  padding: 5px;
+  width: 35px;
+  padding: 3px 5px;
+  border: 1px solid transparent;
   transition: background-color 0.2s ease-in-out;
   cursor: pointer;
-  @include themify(background-color, "primaryLight");
+  @include themify(border-color, "txtColor");
   &.selected {
+    @include themify(border-color, "primary");
     @include themify(background-color, "primary");
     & > div {
-      transform: translateX(200%);
+      transform: translateX(calc(100% + 7.5px));
+      @include themify(background-color, "onPrimaryColor");
     }
   }
   & > div {
@@ -53,6 +56,6 @@
     border-radius: 100%;
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
-    @include themify(background-color, "onPrimaryColor");
+    @include themify(background-color, "txtColor");
   }
 }

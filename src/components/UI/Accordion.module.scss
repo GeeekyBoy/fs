@@ -1,10 +1,11 @@
 .AccordionContainer {
   padding: 15px;
+  border: 1px solid;
   border-radius: 15px;
   margin-top: 10px;
-  box-shadow: 0px 2px 4px rgb(0 0 0 / 6%);
   overflow: hidden;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s;
+  @include themify(border-color, "onMainSurfaceElev1Border");
   @include themify(background-color, "onMainSurfaceElev1");
   @media only screen and (max-width: 768px) {
     padding: 5px;
