@@ -17,6 +17,7 @@
   & > span:nth-child(3) {
     font-weight: bold;
     font-size: 18px;
+    text-align: center;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-primary");
   }

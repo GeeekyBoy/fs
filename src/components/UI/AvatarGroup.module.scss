@@ -20,7 +20,7 @@
   border: 2px solid;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   @include themify(color, "primary");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  @include themify(background-color, "color-fill-color-control-alt-quarternary");
   @include themify(border-color, "color-background-fill-color-card-background-default");
 }
 
@@ -29,6 +29,6 @@
   border-radius: 100%;
   border: 2px solid;
   transition: background-color 0.2s, border-color 0.2s;
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  @include themify(background-color, "color-fill-color-control-alt-quarternary");
   @include themify(border-color, "color-background-fill-color-card-background-default");
 }

@@ -41,7 +41,8 @@
   border: 1px solid transparent;
   transition: background-color 0.2s ease-in-out;
   cursor: pointer;
-  @include themify(border-color, "color-fill-color-text-primary");
+  @include themify(background-color, "color-fill-color-control-alt-secondary");
+  @include themify(border-color, "color-stroke-color-control-strong-stroke-default");
   &.selected {
     @include themify(border-color, "primary");
     @include themify(background-color, "primary");
@@ -56,6 +57,6 @@
     border-radius: 100%;
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
-    @include themify(background-color, "color-fill-color-text-primary");
+    @include themify(background-color, "color-fill-color-text-secondary");
   }
 }

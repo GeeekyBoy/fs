@@ -81,7 +81,7 @@
       border-radius: 16px 16px 0 16px;
       transition: background-color 0.2s, color 0.2s;
       @include themify(border-color, "color-stroke-color-card-stroke-default");
-      @include themify(background-color, "color-background-fill-color-card-background-default");
+      @include themify(background-color, "color-background-fill-color-card-background-default", true);
       @include themify(color, "primary");
     }
   }

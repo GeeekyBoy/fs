@@ -1,16 +1,27 @@
 .ProgressBarContainer {
+  position: relative;
   height: 5px;
   width: 500px;
-  border: 1px solid;
   border-radius: 100px;
   max-width: 100%;
   transition: background-color 0.2s;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
-  & > div {
+  & > div:nth-child(2) {
+    position: absolute;
     height: 5px;
     border-radius: 100px;
+    z-index: 2;
     transition: width 0.5s linear, background-color 0.2s;
     @include themify(background-color, "primary");
+  }
+  & > div:nth-child(1) {
+    position: absolute;
+    top: 1.5px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    border-radius: 100px;
+    z-index: 1;
+    transition: width 0.5s linear, background-color 0.2s;
+    @include themify(background-color, "color-stroke-color-control-strong-stroke-default");
   }
 }

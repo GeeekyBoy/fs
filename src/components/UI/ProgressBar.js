@@ -9,6 +9,7 @@ const ProgressBar = (props) => {
       progress={value / max * 100}
       style={style}
     >
+      <div />
       <div style={{width: `${(value / max * 100) || 0}%`}} />
     </div>
   );
