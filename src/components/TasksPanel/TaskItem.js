@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from "react"
 import { connect } from "react-redux";
 import styles from "./TaskItem.module.scss"
-import useWindowSize from "../../utils/useWindowSize";
+import { useWindowSize } from "../../components/WindowSizeListener";
 import formatDate from "../../utils/formatDate"
 import copyTaskCore from "../../utils/copyTask"
 import * as appActions from "../../actions/app";
@@ -14,7 +14,7 @@ import { ReactComponent as DuplicateIcon } from "../../assets/duplicate-outline.
 import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
 import { ReactComponent as DetailsIcon } from "../../assets/information-circle-outline.svg";
 import SlashCommands from "../SlashCommands";
-import { useGlobalModalContext } from "../ModalManager";
+import { useModal } from "../ModalManager";
 import { OK, initTaskState, AuthState } from "../../constants";
 import AvatarGroup from "../UI/AvatarGroup";
 import modals from '../modals';
@@ -50,7 +50,7 @@ const TaskItem = (props) => {
   } = props;
 
   const { width } = useWindowSize();
-  const { showModal } = useGlobalModalContext();
+  const { showModal } = useModal();
 
   const inputRef = useRef(null)
 

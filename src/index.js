@@ -15,18 +15,21 @@ import { Auth } from "@aws-amplify/auth";
 import awsconfig from './aws-exports';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import ModalManager from "./components/ModalManager";
+import WindowSizeListener from "./components/WindowSizeListener";
 
 API.configure(awsconfig);
 Auth.configure(awsconfig);
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <ModalManager>
-        <App />
-      </ModalManager>
-    </BrowserRouter>
-  </Provider>
+  <WindowSizeListener>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ModalManager>
+          <App />
+        </ModalManager>
+      </BrowserRouter>
+    </Provider>
+  </WindowSizeListener>
 );
 serviceWorkerRegistration.register();

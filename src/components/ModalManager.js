@@ -5,8 +5,8 @@ const initalState = {
   hideModal: () => {},
 };
 
-const GlobalModalContext = createContext(initalState);
-export const useGlobalModalContext = () => useContext(GlobalModalContext);
+const ModalContext = createContext(initalState);
+export const useModal = () => useContext(ModalContext);
 
 const ModalManager = ({ children }) => {
   const [modal, setModal] = useState(null);
@@ -20,10 +20,10 @@ const ModalManager = ({ children }) => {
   };
 
   return (
-    <GlobalModalContext.Provider value={{ showModal, hideModal }}>
+    <ModalContext.Provider value={{ showModal, hideModal }}>
       {modal}
       {children}
-    </GlobalModalContext.Provider>
+    </ModalContext.Provider>
   );
 };
 

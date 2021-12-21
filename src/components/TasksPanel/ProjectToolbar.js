@@ -16,7 +16,7 @@ import { ReactComponent as UndoIcon } from "../../assets/arrow-undo-outline.svg"
 import { ReactComponent as RedoIcon } from "../../assets/arrow-redo-outline.svg"
 import Dropdown from '../UI/fields/Dropdown';
 import ShadowScroll from '../ShadowScroll';
-import { useGlobalModalContext } from '../ModalManager';
+import { useModal } from '../ModalManager';
 import modals from '../modals';
 
 const ProjectToolbar = (props) => {
@@ -32,7 +32,7 @@ const ProjectToolbar = (props) => {
     },
     dispatch,
   } = props;
-  const { showModal } = useGlobalModalContext();
+  const { showModal } = useModal();
   const openProjectSettings = () => {
     if (!isLeftPanelOpened || (isLeftPanelOpened && leftPanelPage !== panelPages.PROJECT_SETTINGS)) {
       dispatch(appActions.setLeftPanelPage(panelPages.PROJECT_SETTINGS))

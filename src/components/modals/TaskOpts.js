@@ -11,7 +11,7 @@ import { ReactComponent as DetailsIcon } from "../../assets/information-circle-o
 import { ReactComponent as CheckmarkIcon } from "../../assets/checkmark-circle-outline.svg";
 import styles from "./TaskOpts.module.scss"
 import Modal from '../UI/Modal/';
-import { useGlobalModalContext } from '../ModalManager';
+import { useModal } from '../ModalManager';
 
 const TaskOpts = (props) => {
   
@@ -25,7 +25,7 @@ const TaskOpts = (props) => {
     dispatch
   } = props
 
-  const { hideModal } = useGlobalModalContext();
+  const { hideModal } = useModal();
 
   const copyTask = () => {
     hideModal()

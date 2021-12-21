@@ -1,5 +1,5 @@
 import React from "react";
-import useWindowSize from "../../../utils/useWindowSize";
+import { useWindowSize } from "../../../components/WindowSizeListener";
 import Sheet from "./Sheet";
 import Dialog from "./Dialog";
 import styles from "./index.module.scss"

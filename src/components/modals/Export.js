@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import useWindowSize from "../../utils/useWindowSize";
-import { useGlobalModalContext } from "../ModalManager";
+import { useWindowSize } from "../../components/WindowSizeListener";
+import { useModal } from "../ModalManager";
 import CardSelect from "../UI/fields/CardSelect";
 import Modal from "../UI/Modal/";
 
 const Export = (props) => {
   const [fileType, setFileType] = useState("csv");
-  const { hideModal } = useGlobalModalContext();
+  const { hideModal } = useModal();
   const { width } = useWindowSize();
 
   return (
