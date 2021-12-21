@@ -12,7 +12,9 @@ const CardSelect = (props) => {
 		onChange,
     label,
     readOnly,
-    style
+    style,
+    row,
+    center
 	} = props;
 
 	const onSelect = (nextVal) => {
@@ -31,7 +33,13 @@ const CardSelect = (props) => {
           {label}
         </label>
       )}
-      <div className={styles.SelectContainer}>
+      <div
+        className={[
+          styles.SelectContainer,
+          ...(row && [styles.row] || []),
+          ...(center && [styles.center] || [])
+        ].join(" ")}
+      >
         {values.map((x, i) => (
           <button
             className={[

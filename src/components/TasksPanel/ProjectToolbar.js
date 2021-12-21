@@ -15,7 +15,9 @@ import { ReactComponent as ImportIcon } from "../../assets/cloud-upload-outline.
 import { ReactComponent as UndoIcon } from "../../assets/arrow-undo-outline.svg"
 import { ReactComponent as RedoIcon } from "../../assets/arrow-redo-outline.svg"
 import Dropdown from '../UI/fields/Dropdown';
-import ShadowScroll from '../ShadowScroll'
+import ShadowScroll from '../ShadowScroll';
+import { useGlobalModalContext } from '../ModalManager';
+import modals from '../modals';
 
 const ProjectToolbar = (props) => {
   const {
@@ -30,11 +32,18 @@ const ProjectToolbar = (props) => {
     },
     dispatch,
   } = props;
+  const { showModal } = useGlobalModalContext();
   const openProjectSettings = () => {
     if (!isLeftPanelOpened || (isLeftPanelOpened && leftPanelPage !== panelPages.PROJECT_SETTINGS)) {
       dispatch(appActions.setLeftPanelPage(panelPages.PROJECT_SETTINGS))
       dispatch(appActions.handleSetLeftPanel(true))
     }
+  }
+  const openExportModal = () => {
+    showModal(modals.EXPORT)
+  }
+  const openImportModal = () => {
+    showModal(modals.IMPORT)
   }
   const pasteTask = () => {
     const tasksClipboardData = window.localStorage.getItem("tasksClipboard")
@@ -101,7 +110,7 @@ const ProjectToolbar = (props) => {
         </button>
         <button
           className={styles.ToolbarActionBtn}
-          onClick={pasteTask}
+          onClick={openImportModal}
         >
           <ImportIcon
             width={14}
@@ -111,7 +120,7 @@ const ProjectToolbar = (props) => {
         </button>
         <button
           className={styles.ToolbarActionBtn}
-          onClick={pasteTask}
+          onClick={openExportModal}
         >
           <ExportIcon
             width={14}

@@ -14,6 +14,7 @@ import { API } from "@aws-amplify/api";
 import { Auth } from "@aws-amplify/auth";
 import awsconfig from './aws-exports';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import ModalManager from "./components/ModalManager";
 
 API.configure(awsconfig);
 Auth.configure(awsconfig);
@@ -22,7 +23,9 @@ const root = ReactDOM.createRoot(container);
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <ModalManager>
+        <App />
+      </ModalManager>
     </BrowserRouter>
   </Provider>
 );

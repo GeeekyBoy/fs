@@ -1,13 +1,12 @@
-.ActionSheetShell {
+.TaskOptsShell {
   display: block;
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: #222222aa;
   z-index: 99999;
 }
 
-.ActionSheetContainer {
+.TaskOptsContainer {
   position: fixed;
   display: flex;
   touch-action: none;
@@ -23,7 +22,7 @@
   }
 }
 
-.ActionSheetHeader {
+.TaskOptsHeader {
   width: 100%;
   text-align: center;
   font-weight: bold;
@@ -72,3 +71,4 @@
   @include themify(background-color, "primary");
   @include themify(color, "color-fill-color-text-on-accent-primary");
 }
+  

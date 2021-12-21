@@ -29,16 +29,19 @@
   outline: none;
   cursor: pointer;
   border-radius: 8px;
+  text-align: inherit;
   transition: color 0.2s, border-color 0.2s;
   @include themify(border-color, "color-stroke-color-card-stroke-default");
   @include themify(background-color, "color-background-fill-color-card-background-default");
   & > span:nth-child(1) {
+    width: inherit;
     font-size: 24px;
     font-weight: 600;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-secondary");
   }
   & > span:nth-child(2) {
+    width: inherit;
     font-size: 14px;
     font-weight: 400;
     color: #aaa8ac;
@@ -62,6 +65,16 @@
   transition: opacity 0.3s;
   & > *:not(:last-child) {
     margin-bottom: 5px;
+  }
+  &.row {
+    flex-direction: row;
+    & > *:not(:last-child) {
+      margin-bottom: 0;
+      margin-right: 5px;
+    }
+  }
+  &.center {
+    text-align: center;
   }
   &.disabled {
     opacity: 0.6;

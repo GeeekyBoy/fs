@@ -11,7 +11,6 @@ import styles from "./Home.module.scss"
 import TasksPanel from "./TasksPanel";
 import Loading from "./Loading";
 import Toolbar from "./Toolbar";
-import ActionSheet from "./ActionSheet"
 import SidePanel from "./SidePanel";
 import Notifications from "./Notifications";
 import execGraphQL from "../utils/execGraphQL";
@@ -98,7 +97,6 @@ const Home = (props) => {
       ) : (
 				<>
           <SyncManager />
-					<ActionSheet />
 					<Toolbar />
 					<div className={styles.MainPage}>
 						<SidePanel isRight={false} />

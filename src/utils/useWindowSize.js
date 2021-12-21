@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { singletonHook } from 'react-singleton-hook';
 
-export default function useWindowSize() {
+const useWindowSize = () => {
   const isSSR = typeof window !== "undefined";
   const [windowSize, setWindowSize] = useState({
     width: isSSR ? 1200 : window.innerWidth,
@@ -22,3 +23,5 @@ export default function useWindowSize() {
 
   return windowSize;
 }
+
+export default singletonHook({}, useWindowSize);

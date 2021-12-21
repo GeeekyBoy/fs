@@ -1,0 +1,7 @@
+.FileFieldContainer {
+  border: 5px dashed;
+  text-align: center;
+  padding: 70px 0;
+  font-weight: 600;
+  @include themify(border-color, "color-fill-color-text-tertiary");
+}

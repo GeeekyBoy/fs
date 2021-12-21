@@ -14,8 +14,10 @@ import { ReactComponent as DuplicateIcon } from "../../assets/duplicate-outline.
 import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
 import { ReactComponent as DetailsIcon } from "../../assets/information-circle-outline.svg";
 import SlashCommands from "../SlashCommands";
+import { useGlobalModalContext } from "../ModalManager";
 import { OK, initTaskState, AuthState } from "../../constants";
 import AvatarGroup from "../UI/AvatarGroup";
+import modals from '../modals';
 
 const TaskItem = (props) => {
 
@@ -48,6 +50,7 @@ const TaskItem = (props) => {
   } = props;
 
   const { width } = useWindowSize();
+  const { showModal } = useGlobalModalContext();
 
   const inputRef = useRef(null)
 
@@ -168,9 +171,7 @@ const TaskItem = (props) => {
     dispatch(
       appActions.handleSetTask(item.id)
     )
-    dispatch(
-      appActions.setActionSheet(true)
-    )
+    showModal(modals.TASK_OPTS)
   }
 
   const selectItem = (item) => {

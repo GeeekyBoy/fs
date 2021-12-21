@@ -1,0 +1,48 @@
+
+.ModalHeaderBody {
+  padding: 20px;
+  @include themify(background-color, "color-background-fill-color-layer-alt");
+}
+
+.ModalHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+  @include themify(color, "color-fill-color-text-primary");
+}
+
+.ModalFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 20px;
+  & > *:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.ModalButton {
+  position: relative;
+  outline: none;
+  border: none;
+  padding: 5px 10px;
+  font-weight: 600;
+  font-size: 12px;
+  flex: 1;
+  padding: 10px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+  &.primary {
+    @include themify(color, "color-fill-color-text-on-accent-primary");
+    @include themify(background-color, "primary");
+  }
+  &.secondary {
+    border: 1px solid;
+    @include themify(border-color, "color-stroke-color-card-stroke-default");
+    @include themify(color, "color-fill-color-text-primary");
+    @include themify(background-color, "color-fill-color-control-default");
+  }
+}
