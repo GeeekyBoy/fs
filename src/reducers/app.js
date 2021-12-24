@@ -1,4 +1,4 @@
-import { SET_PROJECT, SET_TASK, SET_COMMAND, SET_PROJECT_ADDING_STATUS, SET_TASK_ADDING_STATUS, SET_NAVIGATE, SET_PROJECT_PANEL, SET_DETAILS_PANEL, SET_ACTION_SHEET, SET_PROJECT_TITLE, SET_LOCKED_TASK_FIELD, SET_RIGHT_PANEL_PAGE, SET_LEFT_PANEL_PAGE, SET_OFFLINE, SET_SYNCED } from "../actions/app"
+import { SET_PROJECT, SET_TASK, SET_COMMAND, SET_PROJECT_ADDING_STATUS, SET_TASK_ADDING_STATUS, SET_NAVIGATE, SET_PROJECT_PANEL, SET_DETAILS_PANEL, SET_PROJECT_TITLE, SET_LOCKED_TASK_FIELD, SET_RIGHT_PANEL_PAGE, SET_LEFT_PANEL_PAGE, SET_OFFLINE, SET_SYNCED } from "../actions/app"
 import { panelPages, OK } from "../constants"
 
 const initState = {
@@ -13,7 +13,6 @@ const initState = {
   isSynced: true,
   isLeftPanelOpened: false,
   isRightPanelOpened: false,
-  isActionSheetOpened: false,
   isProjectTitleSelected: false,
   lockedTaskField: null,
   rightPanelPage: panelPages.TASK_HUB,
@@ -32,8 +31,6 @@ export default function (state = initState, action) {
       return {...state, isLeftPanelOpened: action.status}
     case SET_DETAILS_PANEL:
       return {...state, isRightPanelOpened: action.status}
-    case SET_ACTION_SHEET:
-      return {...state, isActionSheetOpened: action.status}
     case SET_PROJECT_TITLE:
       return {...state, isProjectTitleSelected: action.status}
     case SET_PROJECT_ADDING_STATUS:

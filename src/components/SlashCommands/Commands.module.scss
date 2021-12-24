@@ -7,7 +7,7 @@
   transition: background-color 0.2s;
   cursor: pointer;
   &.selected {
-    @include themify(background-color, "hover");
+    @include themify(background-color, "color-fill-color-subtle-secondary");
   }
   & > svg {
     transition: background-color 0.2s, fill 0.2s;

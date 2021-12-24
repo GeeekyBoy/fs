@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import { useDrag } from '@use-gesture/react'
 import { animated, useSpring, config } from '@react-spring/web'
+import { useModal } from "../../ModalManager";
 import styles from "./Sheet.module.scss"
 
 const Sheet = forwardRef(({ content }, ref) => {
 
+    const { hideModal } = useModal();
     const containerRef = useRef(null);
     const [containerHeight, setContainerHeight] = useState(0)
     useEffect(() => {
@@ -42,7 +44,7 @@ const Sheet = forwardRef(({ content }, ref) => {
             }
             if (last) {
                 my > 312 * 0.5 || vy > 0.5 ?
-                closeSheet() :
+                hideModal() :
                 openSheet({ canceled })
             } else {
                 api.start({ y: my, immediate: true })

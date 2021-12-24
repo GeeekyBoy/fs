@@ -33,7 +33,6 @@ const TaskItem = (props) => {
       selectedProject,
       taskAddingStatus,
       isRightPanelOpened,
-      isActionSheetOpened,
       isSynced,
       lockedTaskField,
       command
@@ -49,8 +48,8 @@ const TaskItem = (props) => {
     dispatch
   } = props;
 
-  const { width } = useWindowSize();
-  const { showModal } = useModal();
+  const { isMobile, width } = useWindowSize();
+  const { isModalOpened, showModal } = useModal();
 
   const inputRef = useRef(null)
 
@@ -175,7 +174,10 @@ const TaskItem = (props) => {
   }
 
   const selectItem = (item) => {
-    return dispatch(appActions.handleSetTask(item.id))
+    dispatch(appActions.handleSetTask(item.id))
+    if (isMobile) {
+      showModal(modals.TASK_EDIT)
+    }
   }
 
   const openRightPanel = (item) => {
@@ -234,7 +236,7 @@ const TaskItem = (props) => {
           ...(isDragging && [styles.dragging] || []),
           ...(collaboration.taskViewers[item.id] && [styles.collaborativeFocused] || []),
           ...((tasksSortingCriteria !== "BY_DEFAULT" && tasksSortingCriteria !== "BY_DUE") && [styles.categorized] || []),
-          ...(item.id === selectedTask && [styles.focused] || [])
+          ...((item.id === selectedTask && !isMobile) && [styles.focused] || [])
         ].join(" ")}
         style={{
           borderColor: collaboration.taskViewers[item.id] && users[collaboration.taskViewers[item.id][0]].color,
@@ -256,7 +258,7 @@ const TaskItem = (props) => {
                 />
               )}
             </button>
-            {selectedTask === item.id ? (
+            {(selectedTask === item.id && !isMobile) ? (
               <div className={styles.TaskItemInput}>
                 <input
                   type="text"
@@ -267,7 +269,11 @@ const TaskItem = (props) => {
                   onKeyUp={handleKeyUp}
                   onKeyDown={handleKeyDown}
                   onChange={onChange}
-                  autoFocus={!(isRightPanelOpened || isActionSheetOpened)}
+                  autoFocus={!(
+                    isRightPanelOpened ||
+                    isModalOpened ||
+                    isMobile
+                  )}
                   contentEditable={false}
                   readOnly={readOnly}
                 />
@@ -316,7 +322,7 @@ const TaskItem = (props) => {
         <div
           className={[
             styles.TaskItemRightPart,
-            ...(item.id === selectedTask && [styles.focused] || []),
+            ...((item.id === selectedTask && !isMobile) && [styles.focused] || []),
           ].join(" ")}
         >
           <span className={styles.TaskItemDueDate}>
@@ -329,7 +335,7 @@ const TaskItem = (props) => {
           />
         </div>
       </div>
-      {(command && selectedTask === item.id) && (
+      {(command && selectedTask === item.id && !isMobile) && (
         <SlashCommands
           onChooseSuggestion={onChooseSuggestion}
           posInfo={slashCommandsPos}

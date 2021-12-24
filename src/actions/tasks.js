@@ -97,10 +97,10 @@ export const handleCreateTask = (taskState) => (dispatch, getState) => {
 export const handleUpdateTask = (update) => (dispatch, getState) => {
   const { user, tasks } = getState()
   const prevTaskState = {...tasks[update.id]}
-  if (update.task) {
-    const tREADYens = /^(.*?)(\/.*||)$/m.exec(update.task)
-    update.task = tREADYens[1];
-    dispatch(appActions.setCommand(tREADYens[2]))
+  if (update.task !== null && update.task !== undefined) {
+    const tokens = /^(.*?)(\/.*||)$/m.exec(update.task)
+    update.task = tokens[1];
+    dispatch(appActions.setCommand(tokens[2]))
   }
   if (tasks[update.id]) {
     dispatch(updateTask(update))

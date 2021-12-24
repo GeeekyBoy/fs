@@ -14,7 +14,6 @@ export const SET_OFFLINE = "SET_OFFLINE";
 export const SET_SYNCED = "SET_SYNCED";
 export const SET_PROJECT_PANEL = "SET_PROJECT_PANEL";
 export const SET_DETAILS_PANEL = "SET_DETAILS_PANEL";
-export const SET_ACTION_SHEET = "SET_ACTION_SHEET";
 export const SET_PROJECT_TITLE = "SET_PROJECT_TITLE";
 export const SET_LOCKED_TASK_FIELD = "SET_LOCKED_TASK_FIELD";
 export const SET_RIGHT_PANEL_PAGE = "SET_RIGHT_PANEL_PAGE";
@@ -90,11 +89,6 @@ export const setNavigate = (navigate) => ({
   navigate
 });
 
-export const setActionSheet = (status) => ({
-  type: SET_ACTION_SHEET,
-  status
-});
-
 export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getState) => {
   const { user, app, projects } = getState()
   if (app.selectedProject !== id) {
@@ -133,6 +127,7 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
   dispatch(observersActions.handleClearCommentsObservers())
   dispatch(commentsActions.emptyComments())
   dispatch(setProjectTitle(false))
+  if (id !== app.selectedTask) dispatch(setCommand(""))
   if (!id && app.selectedTask) {
     if (user.state === AuthState.SignedIn) {
       dispatch(collaborationActions.handleSendAction({
@@ -148,7 +143,6 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
         app.navigate(`/${projects[app.selectedProject].permalink}`)
       }
     }
-    dispatch(setCommand(""))
     dispatch(setTask(null))
   } else if (!id) {
     if (app.isRightPanelOpened) {

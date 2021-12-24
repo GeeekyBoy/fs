@@ -11,7 +11,7 @@ const Import = (props) => {
 
   return (
     <Modal
-      title="Import Project"
+      title="Import Tasks"
       primaryButtonText="Import"
       secondaryButtonText="Cancel"
       onPrimaryButtonClick={() => {}}

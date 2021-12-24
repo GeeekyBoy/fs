@@ -33,6 +33,8 @@ const Description = (props) => {
   useEffect(() => {
     const handleKeyUp = (e) => {
       if (e.key === "Enter") {
+        e.preventDefault()
+        e.stopPropagation()
         chooseDescription() 
       }
     }

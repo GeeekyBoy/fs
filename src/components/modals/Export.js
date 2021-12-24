@@ -50,7 +50,7 @@ const Export = (props) => {
 
   return (
     <Modal
-      title="Export Project"
+      title="Export Tasks"
       primaryButtonText="Export"
       secondaryButtonText="Cancel"
       onPrimaryButtonClick={() => handleExport()}

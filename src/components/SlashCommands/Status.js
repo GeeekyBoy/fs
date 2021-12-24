@@ -54,8 +54,12 @@ const Status = (props) => {
       const scrollableElem = scrollableNodeRef?.current
       const scrollableElemHeight = scrollableElem?.getBoundingClientRect().height
       if (e.key === "Enter") {
+        e.preventDefault()
+        e.stopPropagation()
         chooseStatus(suggestedStatus[selection][0].toUpperCase()) 
       } else if (e.key === "ArrowUp") {
+        e.preventDefault()
+        e.stopPropagation()
         if (selection > 0) {
           const minHeight = scrollableElem?.scrollTop - 47 * (selection - 1) + scrollableElemHeight - 15
           if (scrollableElemHeight < minHeight) {
@@ -64,6 +68,8 @@ const Status = (props) => {
           setSelection(selection - 1)
         }
       } else if (e.key === "ArrowDown") {
+        e.preventDefault()
+        e.stopPropagation()
         if (selection < suggestedStatus.length - 1) {
           const minHeight = 15 + 47 * (selection + 2) - scrollableElem?.scrollTop
           if (scrollableElemHeight < minHeight) {

@@ -23,12 +23,23 @@
   box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
   animation: openAnim 0.3s ease;
   @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-layer-default");
+  @include themify(background-color, "auxiliarySurface");
   @media only screen and (max-width: 768px) {
-    left: 0;
-    max-height: 200px;
-    width: 100vw;
-    border-radius: 0px;
-    box-shadow: none;
+    &:not(.isMobile) {
+      left: 0!important;
+      max-height: 200px;
+      width: 100vw;
+      border-radius: 0px;
+      border: none;
+    }
+    &.isMobile {
+      position: relative!important;
+      width: 100%;
+      max-height: 200px;
+      box-shadow: none;
+      border: none;
+      margin-top: 15px;
+      background-color: transparent!important;
+    }
   }
 }

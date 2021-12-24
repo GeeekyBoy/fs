@@ -15,7 +15,8 @@ const TextField = (props) => {
     suffix,
     readOnly,
     disabled,
-    style
+    style,
+    inputRef
   } = props
   const [isFocused, setIsFocused] = useState(false)
   return (
@@ -56,6 +57,7 @@ const TextField = (props) => {
           onBlur={() => setIsFocused(false)}
           readOnly={readOnly}
           disabled={disabled}
+          ref={inputRef}
         />
         {suffix && React.createElement(suffix)}
       </div>

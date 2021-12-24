@@ -37,16 +37,22 @@ const Assign = (props) => {
   useEffect(() => {
     const handleKeyUp = (e) => {
       if (e.key === "Enter") {
+        e.preventDefault()
+        e.stopPropagation()
         if (selection === 0) {
           handleAssignTask(`anonymous:${commandParam}`) 
         } else {
           handleAssignTask(`user:${results[selection - 1].username}`) 
         }
       } else if (e.key === "ArrowUp") {
+        e.preventDefault()
+        e.stopPropagation()
         if (selection > 0) {
           setSelection(selection - 1)
         }
       } else if (e.key === "ArrowDown") {
+        e.preventDefault()
+        e.stopPropagation()
         if (selection < results.length) {
           setSelection(selection + 1)
         }
