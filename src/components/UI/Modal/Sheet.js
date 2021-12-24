@@ -19,8 +19,14 @@ const Sheet = ({ content }) => {
     }
     
     const closeSheet = () => {
-        //dispatch(appActions.setSheet(false))
-        api.start({ y: 312, immediate: false, config: { ...config.stiff } })
+        api.start({
+            y: 312,
+            immediate: false,
+            config: { ...config.stiff },
+            onResolve: () => {
+                console.log('resolved')
+            }
+        })
     }
   
     const bind = useDrag(
