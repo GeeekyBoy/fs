@@ -12,6 +12,7 @@ const Modal = (props) => {
         children,
         onPrimaryButtonClick,
         onSecondaryButtonClick,
+        modalRef
     } = props
     const { width } = useWindowSize();
     const ModalContent = (
@@ -49,9 +50,9 @@ const Modal = (props) => {
         </>
     )
     return width > 768 ? (
-        <Dialog content={ModalContent} />
+        <Dialog ref={modalRef} content={ModalContent} />
     ) : (
-        <Sheet content={ModalContent} />
+        <Sheet ref={modalRef} content={ModalContent} />
     );
 }
 

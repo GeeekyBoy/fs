@@ -1,14 +1,18 @@
 import {
   createStore,
   combineReducers,
-  applyMiddleware 
+  applyMiddleware,
+  compose
 } from "redux"
 
 import thunk from "redux-thunk"
 import caching from "./middleware/caching"
 import reducers from "./reducers"
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default createStore(
   combineReducers(reducers),
-  applyMiddleware(thunk, caching)
+  composeEnhancers(
+    applyMiddleware(thunk, caching)
+  )
 )

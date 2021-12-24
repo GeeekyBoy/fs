@@ -25,7 +25,7 @@ const TaskOpts = (props) => {
     dispatch
   } = props
 
-  const { hideModal } = useModal();
+  const { modalRef, hideModal } = useModal();
 
   const copyTask = () => {
     hideModal()
@@ -88,6 +88,7 @@ const TaskOpts = (props) => {
       title="Task Actions"
       primaryButtonText="Cancel"
       onPrimaryButtonClick={hideModal}
+      modalRef={modalRef}
     >
       <div className={styles.Actions}>
         <button

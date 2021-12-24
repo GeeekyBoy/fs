@@ -6,7 +6,7 @@ import Modal from "../UI/Modal/";
 
 const Import = (props) => {
   const [fileType, setFileType] = useState("csv");
-  const { hideModal } = useModal();
+  const { modalRef, hideModal } = useModal();
   const { width } = useWindowSize();
 
   return (
@@ -16,6 +16,7 @@ const Import = (props) => {
       secondaryButtonText="Cancel"
       onPrimaryButtonClick={() => {}}
       onSecondaryButtonClick={() => hideModal()}
+      modalRef={modalRef}
     >
       <FileField />
     </Modal>

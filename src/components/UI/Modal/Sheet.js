@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import { useDrag } from '@use-gesture/react'
 import { animated, useSpring, config } from '@react-spring/web'
 import styles from "./Sheet.module.scss"
 
-const Sheet = ({ content }) => {
+const Sheet = forwardRef(({ content }, ref) => {
 
     const containerRef = useRef(null);
     const [containerHeight, setContainerHeight] = useState(0)
@@ -18,16 +18,22 @@ const Sheet = ({ content }) => {
         api.start({ y: 0, immediate: false, config: canceled ? config.wobbly : config.stiff })
     }
     
-    const closeSheet = () => {
+    const closeSheet = () => new Promise((resolve) => {
         api.start({
             y: 312,
             immediate: false,
             config: { ...config.stiff },
             onResolve: () => {
-                console.log('resolved')
+                resolve()
             }
         })
-    }
+    })
+
+    useImperativeHandle(ref, () => ({
+        close() {
+          return closeSheet()
+        }
+    }));
   
     const bind = useDrag(
         ({ last, velocity: [, vy], movement: [, my], cancel, canceled }) => {
@@ -71,6 +77,8 @@ const Sheet = ({ content }) => {
             </animated.div>
         </animated.div>
     )
-}
+})
+
+Sheet.displayName = "Sheet";
 
 export default Sheet

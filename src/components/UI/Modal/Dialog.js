@@ -1,7 +1,18 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import styles from "./Dialog.module.scss"
 
-const Dialog = ({ content }) => {
+const Dialog = forwardRef(({ content }, ref) => {
+
+    const closeDialog = () => new Promise((resolve) => {
+        resolve()
+    })
+
+    useImperativeHandle(ref, () => ({
+        close() {
+          return closeDialog()
+        }
+    }));
+
     return (
         <div className={styles.DialogShell}>
             <div className={styles.DialogContainer}>
@@ -9,6 +20,8 @@ const Dialog = ({ content }) => {
             </div>
         </div>
     )
-}
+})
+
+Dialog.displayName = "Dialog"
 
 export default Dialog
