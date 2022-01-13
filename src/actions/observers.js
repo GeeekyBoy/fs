@@ -196,7 +196,7 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
         if (!mutationID.isLocal(incoming.mutationID)) {
           if (Object.keys(ownedProjects).includes(incoming.id)) {
             const lastMutationDate = projects[incoming.id].mutatedAt || null
-            const mutationDate = parseInt(/.?_(\d+)_.*/.exec(incoming.mutationID)?.[1], 10)
+            const mutationDate = new Date(incoming.updatedAt).getTime()
             if (!mutationDate || (mutationDate && lastMutationDate < mutationDate)) {
               dispatch(projectsActions.updateProject({
                 ...incoming,
@@ -250,7 +250,7 @@ export const handleSetProjectObservers = (projectID) => async (dispatch, getStat
         if (projects[incoming.id]) {
           if (!mutationID.isLocal(incoming.mutationID)) {
             const lastMutationDate = projects[incoming.id].mutatedAt || null
-            const mutationDate = parseInt(/.?_(\d+)_.*/.exec(incoming.mutationID)?.[1], 10)
+            const mutationDate = new Date(incoming.updatedAt).getTime()
             if (!mutationDate || (mutationDate && lastMutationDate < mutationDate)) {
               const prevPermalink = projects[incoming.id].permalink
               dispatch(projectsActions.updateProject({
@@ -321,10 +321,11 @@ export const handleSetTasksObservers = (projectID) => async (dispatch, getState)
       next: async (e) => {
         const { tasks } = getState()
         const incoming = e.value.data.onUpdateTaskByProjectID
+        console.log(incoming)
         if (!mutationID.isLocal(incoming.mutationID)) {
           if (Object.keys(tasks).includes(incoming.id)) {
             const lastMutationDate = tasks[incoming.id].mutatedAt || null
-            const mutationDate = parseInt(/.?_(\d+)_.*/.exec(incoming.mutationID)?.[1], 10)
+            const mutationDate = new Date(incoming.updatedAt).getTime()
             if (!mutationDate || (mutationDate && lastMutationDate < mutationDate)) {
               const usersToBeFetched = [...new Set([
                 ...(incoming.assignees?.filter(x => /^user:.*$/.test(x))?.map(x => x.replace(/^user:/, "")) || []),
@@ -394,7 +395,7 @@ export const handleSetCommentsObservers = (taskID) => async (dispatch, getState)
         if (!mutationID.isLocal(incoming.mutationID)) {
           if (Object.keys(comments).includes(incoming.id)) {
             const lastMutationDate = comments[incoming.id].mutatedAt || null
-            const mutationDate = parseInt(/.?_(\d+)_.*/.exec(incoming.mutationID)?.[1], 10)
+            const mutationDate = new Date(incoming.updatedAt).getTime()
             if (!mutationDate || (mutationDate && lastMutationDate < mutationDate)) {
               dispatch(commentsActions.updateComment({
                 ...incoming,

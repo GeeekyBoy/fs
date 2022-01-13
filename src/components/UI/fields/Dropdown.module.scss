@@ -23,23 +23,23 @@
     width: 100%;
     border: none;
     font-size: 12px;
+    background-color: transparent;
     cursor: pointer;
     @include themify(color, "color-fill-color-text-primary");
-    @include themify(background-color, "color-background-fill-color-card-background-default");
   }
 }
 
 .Options {
-  position: relative;
+  position: fixed;
   display: flex;
-  top: 5px;
   flex-direction: column;
-  border: 1px solid #c0c0c0;
-  width: 100%;
+  border: 1px solid;
+  width: max-content;
   font-size: 12px;
   border-radius: 8px;
   z-index: 10;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
+  @include themify(border-color, "color-stroke-color-card-stroke-default");
   @include themify(background-color, "auxiliarySurface");
   & > span {
     padding: 8px;

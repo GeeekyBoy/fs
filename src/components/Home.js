@@ -47,7 +47,7 @@ const Home = (props) => {
 
   useEffect(() => {
     (async () => {
-    if (routeParams && !app.isLoading) {
+    if (routeParams && !isLoading) {
       const {
         username, projectPermalink, taskPermalink
       } = routeParams;

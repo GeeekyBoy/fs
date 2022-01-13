@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useWindowSize } from "../../components/WindowSizeListener";
 import parseLinkedList from "../../utils/parseLinkedList";
 import { useModal } from "../ModalManager";
-import { stringify } from 'csv-stringify/browser/esm/index.js';
+import { stringify } from 'csv-stringify/browser/esm';
 import CardSelect from "../UI/fields/CardSelect";
 import Modal from "../UI/Modal/";
 

@@ -1,7 +1,23 @@
 .FileFieldContainer {
   border: 2px dashed;
-  text-align: center;
   padding: 70px 0;
-  font-weight: 600;
   @include themify(border-color, "color-fill-color-text-tertiary");
+  & > input {
+    display: none;
+  }
+}
+
+.FieldLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  & > span:nth-child(1) {
+    font-weight: 600;
+  }
+  & > span:nth-child(2) {
+    font-weight: 600;
+    @include themify(color, "color-fill-color-text-secondary");
+  }
 }

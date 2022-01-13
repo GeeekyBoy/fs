@@ -78,7 +78,7 @@ const ProjectToolbar = (props) => {
   return (
     <div className={styles.ToolbarContainer}>
       <ShadowScroll style={{ maxWidth: "fit-content" }}>
-        <button
+        {/* <button
           className={styles.ToolbarActionBtn}
           onClick={pasteTask}
         >
@@ -97,7 +97,7 @@ const ProjectToolbar = (props) => {
             height={14}
           />
           <span>Redo</span>
-        </button>
+        </button> */}
         <button
           className={styles.ToolbarActionBtn}
           onClick={pasteTask}
@@ -108,7 +108,7 @@ const ProjectToolbar = (props) => {
           />
           <span>Paste</span>
         </button>
-        <button
+        {/* <button
           className={styles.ToolbarActionBtn}
           onClick={openImportModal}
         >
@@ -117,7 +117,7 @@ const ProjectToolbar = (props) => {
             height={14}
           />
           <span>Import</span>
-        </button>
+        </button> */}
         <button
           className={styles.ToolbarActionBtn}
           onClick={openExportModal}

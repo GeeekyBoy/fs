@@ -1,6 +1,7 @@
 import * as usersActions from "./users"
 
 export const SET_SESSION = "SET_SESSION";
+export const IS_JOINED = "IS_JOINED";
 export const JOIN_PROEJCT = "JOIN_PROEJCT";
 export const LEAVE_PROJECT = "LEAVE_PROJECT";
 export const FOCUS_TASK = "FOCUS_TASK";
@@ -11,6 +12,11 @@ export const RESET_COLLAB_DATA = "RESET_COLLAB_DATA";
 const setSession = (session) => ({
   type: SET_SESSION,
   session
+});
+
+const setIsJoined = (isJoined) => ({
+  type: IS_JOINED,
+  isJoined
 });
 
 const setJoinedProject = (projectID, username) => ({
@@ -107,6 +113,7 @@ export const handleJoinProject = (projectID) => async (dispatch, getState) => {
   dispatch(setJoinedProject(projectID, userData.username))
   const session = getState().collaboration.session;
   if (session?.readyState === WebSocket.OPEN) {
+    dispatch(setIsJoined(false))
     const dataToSend = {
       action: "joinproject",
       data: {
@@ -115,12 +122,16 @@ export const handleJoinProject = (projectID) => async (dispatch, getState) => {
       }
     }
     session.send(JSON.stringify(dataToSend));
+    setTimeout(() => {
+      dispatch(setIsJoined(true))
+    }, 1000)
   }
 }
 
 export const handleSendAction = (data) => async (dispatch, getState) => {
   const session = getState().collaboration.session;
-  if (session?.readyState === WebSocket.OPEN) {
+  const isJoined = getState().collaboration.isJoined;
+  if (session?.readyState === WebSocket.OPEN && isJoined) {
     const dataToSend = {
       action: "sendmessage",
       data: data
@@ -133,6 +144,7 @@ export const handleCloseSession = () => async (dispatch, getState) => {
   const session = getState().collaboration.session;
   if (session?.readyState === WebSocket.OPEN) {
     dispatch(setSession(null))
+    dispatch(setIsJoined(false))
     await session.close();
   }
 }

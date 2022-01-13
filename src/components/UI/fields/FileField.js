@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from "./FileField.module.scss"
 
 const FileField = (props) => {
 
   const {
-    multiple
+    multiple,
+    onChange
   } = props;
 
   const [inDropZone, setInDropZone] = useState(false);
   const [fileList, setFileList] = useState([]);
+  const inputFile = useRef(null);
 
   const handleDragEnter = (event) => {
     event.preventDefault();
@@ -23,7 +25,9 @@ const FileField = (props) => {
 
   const handleDrop = (event) => {
     event.preventDefault();
-    const files = [...event.dataTransfer.files];
+    const files = event.dataTransfer ?
+      [...event.dataTransfer.files] :
+      [...event.target.files];
     if (files) {
       setFileList(multiple ? fileList.concat(files) : files);
       setInDropZone(false);
@@ -37,10 +41,7 @@ const FileField = (props) => {
       reader.readAsDataURL(latestFile);
       reader.onloadend = function () {
         const base64data = reader.result;
-        console.log(base64data);
-        props?.changeInputFile({
-          file: base64data
-        });
+        onChange && onChange(base64data);
       };
     }
   }, [fileList]);
@@ -52,12 +53,15 @@ const FileField = (props) => {
       onDrop={(event) => handleDrop(event)}
       onDragOver={(event) => handleDragOver(event)}
       onDragEnter={(event) => handleDragEnter(event)}
+      onClick={() => inputFile.current.click()}
     >
       <div>
-        <div>
-          Drag and drop file here
+        <div className={styles.FieldLabel}>
+          <span>Drag and drop file here</span>
+          <span>or click to select file</span>
         </div>
       </div>
+      <input type='file' ref={inputFile} onChange={handleDrop} />
     </div>
   );
 }

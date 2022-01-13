@@ -1,7 +1,8 @@
-import { SET_SESSION, JOIN_PROEJCT, LEAVE_PROJECT, FOCUS_TASK, UNFOCUS_TASK, SET_TXT_CURSOR, RESET_COLLAB_DATA } from "../actions/collaboration"
+import { SET_SESSION, JOIN_PROEJCT, LEAVE_PROJECT, FOCUS_TASK, UNFOCUS_TASK, SET_TXT_CURSOR, RESET_COLLAB_DATA, IS_JOINED } from "../actions/collaboration"
 
 const initState = {
   session: null,
+  isJoined: false,
   projectViewers: [],
   taskViewers: {}
 }
@@ -10,6 +11,8 @@ export default function (state = initState, action) {
   switch(action.type) {
     case SET_SESSION:
       return {...state, session: action.session}
+    case IS_JOINED:
+      return {...state, isJoined: action.isJoined}
     case JOIN_PROEJCT:
       return {...state, projectViewers: [...new Set([ action.username, ...state.projectViewers ])]}
     case LEAVE_PROJECT:

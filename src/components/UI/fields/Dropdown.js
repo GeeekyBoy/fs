@@ -7,6 +7,7 @@ import { ReactComponent as ChevronDownIcon } from "../../../assets/chevron-down-
 const Dropdown = (props) => {
   const { readOnly } = props
   const selectRef = useRef(null)
+  const optionsRef = useRef(null)
   const [isDropdownOpened, setIsDropdownOpened] = useState(false)
   const toggleDropdown = (e) => {
     if (!readOnly) {
@@ -53,27 +54,37 @@ const Dropdown = (props) => {
           />
         )}
       </div>
-      {isDropdownOpened && <div className={styles.Options}>
-        {Object.entries(props.options).map(x => (
-          <span
-            key={x[0]}
-            className={[
-              "noselect",
-              ...(x[0] === (props.value || props.defaultValue) && [styles.selected] || [])
-            ].join(" ")}
-            onClick={() => {
-                toggleDropdown()
-                props.onChange({ target: {
-                  value: x[0],
-                  name: props.name
-                }})
+      {isDropdownOpened && (
+        <div
+          ref={optionsRef}
+          className={styles.Options}
+          style={{
+            bottom: window.innerHeight -  selectRef.current.getBoundingClientRect().top + 5,
+            left: selectRef.current.getBoundingClientRect().left,
+            width: selectRef.current.getBoundingClientRect().width
+          }}
+        >
+          {Object.entries(props.options).map(x => (
+            <span
+              key={x[0]}
+              className={[
+                "noselect",
+                ...(x[0] === (props.value || props.defaultValue) && [styles.selected] || [])
+              ].join(" ")}
+              onClick={() => {
+                  toggleDropdown()
+                  props.onChange({ target: {
+                    value: x[0],
+                    name: props.name
+                  }})
+                }
               }
-            }
-          >
-            {x[1]}
-          </span>
-        ))}
-      </div>}
+            >
+              {x[1]}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
