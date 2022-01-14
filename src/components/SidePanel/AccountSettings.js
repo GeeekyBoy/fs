@@ -23,8 +23,6 @@ const AccountSettings = (props) => {
         firstName,
         lastName,
         email,
-        gender,
-        birthdate,
         plan,
         avatar,
         abbr
@@ -40,44 +38,28 @@ const AccountSettings = (props) => {
   const [newFirstName, setNewFirstName] = useState(firstName)
   const [newLastName, setNewLastName] = useState(lastName)
   const [newEmail, setNewEmail] = useState(email)
-  const [newGender, setNewGender] = useState(gender)
-  const [newBirthdate, setNewBirthdate] = useState(birthdate)
   const [newAvatar, setNewAvatar] = useState(avatar)
 
   const checkIsChanaged = (
     newFirstName,
     newLastName,
-    newBirthdate,
-    newGender,
     firstName,
     lastName,
-    birthdate,
-    gender
   ) => (
     !(newFirstName === firstName &&
-    newLastName === lastName &&
-    newBirthdate === birthdate &&
-    newGender === gender)
+    newLastName === lastName)
   )
 
   const isChanged = useMemo(() => checkIsChanaged(
     newFirstName,
     newLastName,
-    newBirthdate,
-    newGender,
     firstName,
-    lastName,
-    birthdate,
-    gender
+    lastName
   ), [
     newFirstName,
     newLastName,
-    newBirthdate,
-    newGender,
     firstName,
-    lastName,
-    birthdate,
-    gender
+    lastName
   ])
   
   const closePanel = () => {
@@ -92,9 +74,7 @@ const AccountSettings = (props) => {
       input: {
         username,
         ...(newFirstName !== firstName && { firstName: newFirstName }),
-        ...(newLastName !== lastName && { lastName: newLastName }),
-        ...(newBirthdate !== birthdate && { birthdate: newBirthdate }),
-        ...(newGender !== gender && { gender: newGender })
+        ...(newLastName !== lastName && { lastName: newLastName })
       }
     })).then((res) => {
       setIsBusy(false)
@@ -160,23 +140,6 @@ const AccountSettings = (props) => {
             disabled
             onChange={(e) => setNewEmail(e.target.value)}
             value={newEmail}
-            readOnly={!isSynced}
-          />
-          <DateField
-            name="dateOfBirth"
-            label="Date Of Birth"
-            onChange={(e) => setNewBirthdate(new Date(e.target.value).toISOString().substring(0, 10))}
-            placeholder="no date selected"
-            value={newBirthdate}
-            readOnly={!isSynced}
-          />
-          <Select
-            name="gender"
-            label="Gender"
-            values={["male", "female"]}
-            options={["Male", "Female"]}
-            onChange={(e) => setNewGender(e.target.value)}
-            value={newGender}
             readOnly={!isSynced}
           />
         </form>

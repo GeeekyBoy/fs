@@ -18,8 +18,6 @@ type User
 	username: String!
 	firstName: String!
 	lastName: String!
-	gender: Gender!
-	birthdate: String!
 	email: AWSEmail!
 	plan: Plan!
 	avatar: String
@@ -276,8 +274,6 @@ input PushUserUpdateInput {
 	username: String!
 	firstName: String
 	lastName: String
-	gender: Gender
-	birthdate: String
 	email: AWSEmail
 	plan: Plan
 	avatar: String
@@ -422,8 +418,6 @@ input UpdateUserInput {
 	username: String!
 	firstName: String
 	lastName: String
-	gender: Gender
-	birthdate: String
 }
 
 type UserUpdate
@@ -432,8 +426,6 @@ type UserUpdate
 	username: String!
 	firstName: String
 	lastName: String
-	gender: Gender
-	birthdate: String
 	email: AWSEmail
 	plan: Plan
 	avatar: String
@@ -665,11 +657,6 @@ enum Permissions {
 enum Plan {
 	free
 	pro
-}
-
-enum Gender {
-	male
-	female
 }
 
 enum NotificationType {

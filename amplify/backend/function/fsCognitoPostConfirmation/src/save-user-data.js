@@ -20,8 +20,6 @@ exports.handler = async (event) => {
       username: event.userName,
       firstName: event.request.userAttributes.given_name,
       lastName: event.request.userAttributes.family_name,
-      gender: event.request.userAttributes.gender,
-      birthdate: event.request.userAttributes.birthdate,
       email: event.request.userAttributes.email,
       plan: "free",
       avatar: event.request.userAttributes.picture,

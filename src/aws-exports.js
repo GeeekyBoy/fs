@@ -14,10 +14,8 @@ const awsmobile = {
     "aws_cognito_username_attributes": [],
     "aws_cognito_social_providers": [],
     "aws_cognito_signup_attributes": [
-        "BIRTHDATE",
         "EMAIL",
         "FAMILY_NAME",
-        "GENDER",
         "GIVEN_NAME",
         "PHONE_NUMBER"
     ],

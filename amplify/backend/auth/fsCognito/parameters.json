@@ -19,29 +19,23 @@
     "Requires Symbols"
   ],
   "requiredAttributes": [
-    "birthdate",
     "email",
     "family_name",
-    "gender",
     "given_name",
     "phone_number"
   ],
   "userpoolClientGenerateSecret": false,
   "userpoolClientRefreshTokenValidity": "30",
   "userpoolClientWriteAttributes": [
-    "birthdate",
     "email",
     "family_name",
-    "gender",
     "given_name",
     "phone_number",
     "picture"
   ],
   "userpoolClientReadAttributes": [
-    "birthdate",
     "email",
     "family_name",
-    "gender",
     "given_name",
     "phone_number",
     "picture"
