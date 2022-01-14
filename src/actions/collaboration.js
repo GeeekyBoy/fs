@@ -61,7 +61,7 @@ export const handleInitSession = () => async (dispatch, getState) => {
   if (session?.readyState !== WebSocket.OPEN) {
     await (() => new Promise((resolve, reject) => {
       if (isOffline) resolve({ errors: [{ message: "Network Error" }] })
-      const nextSession = new WebSocket(`wss://0ly6ezq1tc.execute-api.us-east-1.amazonaws.com/Prod`)
+      const nextSession = new WebSocket(`wss://18gbulyifd.execute-api.us-east-1.amazonaws.com/Prod`)
       nextSession.onopen = () => {
         console.log("Websocket opened")
         dispatch(setSession(nextSession))
