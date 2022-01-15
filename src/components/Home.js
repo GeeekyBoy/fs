@@ -100,7 +100,7 @@ const Home = (props) => {
 				<>
           <SyncManager />
 					{!isKeyboard && <Toolbar />}
-					<div className={styles.MainPage}>
+					<div className={`${styles.MainPage} ${isKeyboard ? styles.isKeyboard : ''}`}>
 						<SidePanel isRight={false} />
 						<TasksPanel />
 						<SidePanel isRight={true} />
