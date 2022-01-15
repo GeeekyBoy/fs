@@ -21,6 +21,7 @@
     "draft-js": "0.11.7",
     "draft-js-export-html": "1.4.1",
     "fuse.js": "^6.5.3",
+    "firebase": "^9.6.3",
     "history": "^5.2.0",
     "nanoid": "^3.1.32",
     "on-screen-keyboard-detector": "^2.3.0",
