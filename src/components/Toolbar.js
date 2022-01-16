@@ -37,7 +37,7 @@ const Toolbar = (props) => {
     return navigate("/login")
   }
   return (
-    <div className={styles.ToolbarContainer}>
+    <div className={`${styles.ToolbarContainer} no-keyboard`}>
       <div className={styles.TopControls}>
         <span className={styles.Logo}>/.</span>
         <div className={styles.Spacer} />
