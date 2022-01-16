@@ -19,16 +19,6 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import ModalManager from "./components/ModalManager";
 import WindowSizeListener from "./components/WindowSizeListener";
 
-document.write([
- "<style>",
-   ".no-keyboard { visibility: hidden !important; }",
-   "@media screen and (orientation: portrait) and (min-height: " + (Math.max(window.innerWidth, window.innerHeight) - 10) + "px)",
-   "{ .no-keyboard { visibility: visible !important; } }",
-   "@media screen and (orientation: landscape) and (min-height: " + (Math.min(window.innerWidth, window.innerHeight) - 30) + "px)",
-   "{ .no-keyboard { visibility: visible !important; } }",
- "</style>"
-].join(" "));
-
 const firebaseConfig = {
   apiKey: "AIzaSyA5qtc5aQFVBclDwYalib-qXn7DdK-tLEk",
   authDomain: "forwardslash.firebaseapp.com",
