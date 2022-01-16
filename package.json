@@ -24,7 +24,6 @@
     "firebase": "^9.6.3",
     "history": "^5.2.0",
     "nanoid": "^3.1.32",
-    "on-screen-keyboard-detector": "^2.3.0",
     "react": "^18.0.0-rc.0-next-9a7e6bf0d-20220111",
     "react-dom": "^18.0.0-rc.0-next-9a7e6bf0d-20220111",
     "react-outer-click": "3.7.0",
