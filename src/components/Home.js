@@ -7,7 +7,6 @@ import * as tasksActions from "../actions/tasks";
 import * as appActions from "../actions/app";
 import * as queries from "../graphql/queries"
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { useWindowSize } from "./WindowSizeListener";
 import styles from "./Home.module.scss"
 import TasksPanel from "./TasksPanel";
 import Loading from "./Loading";
@@ -28,7 +27,6 @@ const Home = (props) => {
   const navigate = useNavigate();
   const routeParams = useParams();
   const routeLocation = useLocation();
-  const { isKeyboard } = useWindowSize();
 
   const fetchLocalProjects = () => {
     if (user.state !== AuthState.SignedIn) {
@@ -99,7 +97,7 @@ const Home = (props) => {
       ) : (
 				<>
           <SyncManager />
-					{!isKeyboard && <Toolbar />}
+					<Toolbar />
 					<div className={`${styles.MainPage} ${isKeyboard ? styles.isKeyboard : ''}`}>
 						<SidePanel isRight={false} />
 						<TasksPanel />
