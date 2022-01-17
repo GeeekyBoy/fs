@@ -140,7 +140,7 @@ const TaskOpts = (props) => {
             width={24}
             height={24}
           />
-          <span>Mark As Done</span>
+          <span>Done</span>
         </button>
         <button
           className={styles.Action}

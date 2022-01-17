@@ -5,7 +5,7 @@
   justify-content: flex-start;
   flex-direction: row;
   align-items: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   background-color: transparent;
   transition: background-color 0.2s;
   &.active {
@@ -21,7 +21,7 @@
 .NoDescription {
   display: flex;
   width: 100%;
-  font-size: 14px;
+  font-size: 0.875rem;
   align-items: center;
   justify-content: center;
   transition: color 0.2s;

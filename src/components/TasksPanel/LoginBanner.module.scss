@@ -1,0 +1,15 @@
+.BannerContainer {
+  text-align: center;
+  width: calc(100% + 40px);
+  padding: 8px 20px;
+  font-size: 0.875rem;
+  margin-top: -20px;
+  margin-left: -40px;
+  cursor: pointer;
+  @include themify(color, "color-fill-color-text-on-accent-primary");
+  @include themify(background-color, "primary");
+  @media only screen and (max-width: 768px) {
+    margin: 0;
+    width: calc(100% - 40px);
+  }
+}

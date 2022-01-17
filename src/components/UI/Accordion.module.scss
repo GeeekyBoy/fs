@@ -9,7 +9,7 @@
   @include themify(background-color, "color-background-fill-color-card-background-default");
   @media only screen and (max-width: 768px) {
     padding: 5px;
-    font-size: 16.5px;
+    font-size: 1.031rem;
     border-radius: 0;
   }
 }
@@ -20,7 +20,7 @@
   justify-content: space-between;
   padding: 0 12px;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.5rem;
   transition: color 0.2s;
   @include themify(color, "color-fill-color-text-primary");
   & > svg {
@@ -28,6 +28,6 @@
   }
   @media only screen and (max-width: 768px) {
     padding: 5px 20px 5px 20px;
-    font-size: 16.5px;
+    font-size: 1.031rem;
   }
 }

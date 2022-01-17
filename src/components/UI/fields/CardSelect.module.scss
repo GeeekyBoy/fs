@@ -6,7 +6,7 @@
   & > label {
     margin-bottom: 0;
     width: max-content;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-primary");
@@ -35,14 +35,14 @@
   @include themify(background-color, "color-background-fill-color-card-background-default");
   & > span:nth-child(1) {
     width: inherit;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 600;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-secondary");
   }
   & > span:nth-child(2) {
     width: inherit;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 400;
     color: #aaa8ac;
   }

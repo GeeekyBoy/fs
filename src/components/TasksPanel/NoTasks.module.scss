@@ -29,7 +29,7 @@
     flex-direction: column;
     & > span {
       font-weight: bold;
-      font-size: 28px;
+      font-size: 1.75rem;
       transition: color 0.2s;
       transition: color 0.2s;
       @include themify(color, "color-fill-color-text-primary");
@@ -42,7 +42,7 @@
       cursor: pointer;
       padding: 5px 10px;
       font-weight: 600;
-      font-size: 18px;
+      font-size: 1.125rem;
       transition: background-color 0.2s, color 0.2s;
       @include themify(color, "primary");
       @include themify(background-color, "color-fill-color-subtle-secondary");
@@ -61,10 +61,10 @@
     }
     & > div {
       & > span {
-        font-size: 20px;
+        font-size: 1.25rem;
       }
       & > button {
-        font-size: 16px;
+        font-size: 1rem;
       }
     }
   }

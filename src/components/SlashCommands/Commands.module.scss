@@ -25,7 +25,7 @@
       & > span:nth-child(1) {
         transition: color 0.2s;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 0.875rem;
         text-transform: lowercase;
         @include themify(color, "color-fill-color-text-primary");
         &::first-letter {
@@ -43,7 +43,7 @@
         padding: 2px;
         border: 1px solid;
         border-radius: 4px;
-        font-size: 12px;
+        font-size: 0.75rem;
         text-transform: lowercase;
         transition: background-color 0.2s, color 0.2s;
         @include themify(color, "primary");
@@ -56,7 +56,7 @@
     }
     & > span:nth-child(2) {
       font-weight: 400;
-      font-size: 12px;
+      font-size: 0.75rem;
       transition: color 0.2s;
       @include themify(color, "color-fill-color-text-secondary");
     }
@@ -69,7 +69,7 @@
 .NoIntent {
   display: flex;
   width: 100%;
-  font-size: 14px;
+  font-size: 0.875rem;
   align-items: center;
   justify-content: center;
   align-items: center;

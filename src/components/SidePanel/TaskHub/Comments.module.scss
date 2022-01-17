@@ -42,7 +42,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  font-size: 14px;
+  font-size: 0.875rem;
   width: calc(100% - 20px);
   padding: 10px;
 }
@@ -117,7 +117,7 @@
   outline: none;
   width: 100%;
   padding: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   overflow: auto;
   &.expanded {
     min-height: 50px;
@@ -136,7 +136,7 @@
     &:nth-child(2) {
       & > button {
         padding: 8px 12px;
-        font-size: 14px;
+        font-size: 0.875rem;
         border-radius: 8px;
         cursor: pointer;
         border: none;
@@ -163,13 +163,13 @@
   bottom: 5px;
   right: 10px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 0.75rem;
   width: fit-content;
 }
 
 .CommentDay {
   font-weight: 600;
-  font-size: 12px;
+  font-size: 0.75rem;
   text-align: center;
   width: 100%;
   transition: color 0.2s;
@@ -178,7 +178,7 @@
 
 .CommentNotAllowed {
   font-weight: 600;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #c0c0c0;
   text-align: center;
   width: 100%;
@@ -198,7 +198,7 @@
   }
   & > span {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 1.125rem;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-primary");
   }

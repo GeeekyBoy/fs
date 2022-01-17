@@ -15,7 +15,7 @@
     left: 10px;
     margin-bottom: 0;
     width: max-content;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     padding: 0 3px;
     margin-left: -3px;
@@ -32,7 +32,7 @@
   padding: 3px 10px;
   border: 1px solid;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 0.875rem;
   border-radius: 100000000000000px;
   transition: color 0.2s, background-color 0.2s;
   @include themify(border-color, "color-stroke-color-card-stroke-default");

@@ -18,7 +18,7 @@ const WindowSizeListener = ({ children }) => {
     setWindowSize({
       width: window.innerWidth,
       height: window.innerHeight,
-      //isMobile: 'ontouchstart' in document.documentElement && window.innerWidth < 768
+      isMobile: 'ontouchstart' in document.documentElement && window.innerWidth < 768
     });
   }
 

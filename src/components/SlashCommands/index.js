@@ -9,7 +9,6 @@ import STATUS from "./Status"
 import TAGS from "./Tags"
 import DUE from "./Due"
 import DESCRIPTION from "./Description"
-import { useWindowSize } from '../WindowSizeListener';
 
 const slashCommandsPages = {
   ASSIGN,
@@ -30,7 +29,6 @@ const SlashCommands = (props) => {
 
   const supportedIntents = Object.keys(supportedCommands)
   const scrollableNodeRef = createRef()
-  const { isMobile } = useWindowSize();
 
   const tokenizeCommand = (command) => {
     const tokens =  /^\/(\w*\s{0,1})\s*(.*)\s*$/m.exec(command)
@@ -43,16 +41,11 @@ const SlashCommands = (props) => {
 
   return slashCommandsPages[commandIntent] && (
     <SimpleBar
-      className={[
-        styles.DropdownContainer,
-        ...(isMobile && [styles.isMobile] || [])
-      ].join(" ")}
-      style={!isMobile ? (
-        {
-          top: posInfo.top,
-          left: posInfo.left
-        }
-      ): null}
+      className={styles.DropdownContainer}
+      style={{
+        top: posInfo.top,
+        left: posInfo.left
+      }}
       scrollableNodeProps={{ ref: scrollableNodeRef }}
     >
       {React.createElement(slashCommandsPages[commandIntent], {commandIntent, commandParam, scrollableNodeRef })}

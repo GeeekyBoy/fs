@@ -4,7 +4,8 @@
   position: relative;
   flex: 2;
   padding: 20px 40px 20px 40px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   min-height: calc(100vh - 80px);
   pointer-events: none;
   opacity: 0.5;

@@ -27,7 +27,7 @@
   & > label {
     margin-bottom: 0;
     width: max-content;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-primary");
@@ -42,7 +42,7 @@
   padding: 10px 10px;
   border: 1px solid #c0c0c0;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
   &:disabled {
     background-color: #fafafa;
@@ -62,7 +62,7 @@
 }
 
 .PanelPageTitle {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   transition: color 0.2s;
   @include themify(color, "color-fill-color-text-primary");

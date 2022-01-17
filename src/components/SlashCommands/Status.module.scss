@@ -14,11 +14,11 @@
     flex-direction: row;
     align-items: center;
     & > span:nth-child(1) {
-      font-size: 18px;
+      font-size: 1.125rem;
     }
     & > span:nth-child(2) {
       font-weight: 600;
-      font-size: 14px;
+      font-size: 0.875rem;
       text-transform: lowercase;
       transition: color 0.2s;
       @include themify(color, "color-fill-color-text-primary");

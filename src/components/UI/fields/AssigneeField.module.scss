@@ -6,7 +6,7 @@
   & > label {
     margin-bottom: 0;
     width: max-content;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-primary");
@@ -23,7 +23,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 1.25rem;
   border: 1px solid;
   outline: none;
   height: 91.8px;
@@ -51,7 +51,7 @@
   }
   & > span {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 0.875rem;
     transition: color 0.2s;
     @include themify(color, "primary");
   }
@@ -77,7 +77,7 @@
   @include themify(background-color, "color-background-fill-color-card-background-default");
   & > span {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 0.875rem;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-primary");
   }
@@ -87,7 +87,7 @@
     border: none;
     padding: 5px 10px;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 0.75rem;
     cursor: pointer;
     border-radius: 100000000000000px;
     transition: background-color 0.2s, color 0.2s;
@@ -134,11 +134,11 @@
     line-height: 1.2;
   }
   & > span:nth-child(1) {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
   }
   & > span:nth-child(2) {
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 400;
   }
 }

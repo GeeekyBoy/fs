@@ -10,14 +10,14 @@
   & > label {
     margin-bottom: 0;
     width: max-content;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     transition: color 0.2s;
     @include themify(color, "color-fill-color-text-primary");
   }
   & > span {
     color: #FF0000;
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 }
   
@@ -30,7 +30,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
   border: 1px solid;
   transition: background-color 0.2s;

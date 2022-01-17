@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import parseLinkedList from "../../utils/parseLinkedList";
 import ProjectNotSelected from "./ProjectNotSelected";
 import * as tasksActions from "../../actions/tasks";
-import { READY, LOADING, initTaskState } from "../../constants";
+import { READY, LOADING, initTaskState, AuthState } from "../../constants";
 import sortedTasks from './sortedTasks';
 import ProjectToolbar from './ProjectToolbar';
 import TasksToolbar from './TasksToolbar';
@@ -12,6 +12,7 @@ import NoTasks from './NoTasks';
 import TasksSearch from './TasksSearch';
 import ProjectHeader from './ProjectHeader';
 import SimpleBar from 'simplebar-react';
+import LoginBanner from './LoginBanner';
 
 const TasksPanel = (props) => {
   const {
@@ -22,6 +23,7 @@ const TasksPanel = (props) => {
     appSettings: {
       tasksSortingCriteria
     },
+    user,
     status,
     tasks,
     dispatch,
@@ -54,6 +56,7 @@ const TasksPanel = (props) => {
     >
       {selectedProject ? (
         <>
+          {user.state !== AuthState.SignedIn && <LoginBanner />}
           <TasksToolbar
             searchKeyword={searchKeyword}
             setSearchKeyword={setSearchKeyword}
@@ -86,6 +89,7 @@ const TasksPanel = (props) => {
 export default connect((state) => ({
   tasks: state.tasks,
   app: state.app,
+  user: state.user,
   status: state.status,
   appSettings: state.appSettings
 }))(TasksPanel);

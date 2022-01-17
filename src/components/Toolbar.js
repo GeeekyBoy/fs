@@ -6,7 +6,7 @@ import { panelPages, AuthState } from "../constants"
 import { ReactComponent as ProjectsIcon } from "../assets/albums-outline.svg"
 import { ReactComponent as NotificationIcon } from "../assets/notifications-outline.svg"
 import { ReactComponent as SettingsIcon } from "../assets/settings-outline.svg"
-import { ReactComponent as LoginIcon } from "../assets/log-in-outline.svg"
+import { ReactComponent as LoginIcon } from "../assets/person-circle-outline.svg"
 import Avatar from './UI/Avatar';
 import { useNavigate } from 'react-router-dom';
 
@@ -99,8 +99,8 @@ const Toolbar = (props) => {
               onClick={goToLoginPage}
             >
               <LoginIcon
-                width={24}
-                height={24}
+                width={32}
+                height={32}
               />
             </button>
           )}

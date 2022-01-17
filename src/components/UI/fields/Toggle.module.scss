@@ -2,7 +2,7 @@
   width: calc(100% - 20px);
   & > span {
     color: #FF0000;
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 }
   
@@ -16,7 +16,7 @@
   flex-direction: row;
   border: 1px solid;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
   @include themify(border-color, "color-stroke-color-card-stroke-default");
   @include themify(background-color, "color-background-fill-color-card-background-default");
@@ -24,7 +24,7 @@
     @include themify(color, "color-fill-color-text-primary");
     margin-bottom: 0;
     width: max-content;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
   }
   &.error {

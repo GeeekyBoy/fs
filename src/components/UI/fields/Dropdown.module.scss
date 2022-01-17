@@ -22,7 +22,7 @@
     pointer-events: none;
     width: 100%;
     border: none;
-    font-size: 12px;
+    font-size: 0.75rem;
     background-color: transparent;
     cursor: pointer;
     @include themify(color, "color-fill-color-text-primary");
@@ -35,7 +35,7 @@
   flex-direction: column;
   border: 1px solid;
   width: max-content;
-  font-size: 12px;
+  font-size: 0.75rem;
   border-radius: 8px;
   z-index: 10;
   box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
