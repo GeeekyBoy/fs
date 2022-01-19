@@ -29,7 +29,7 @@ export const supportedCommands = {
   },
   STATUS: {
     description: "Change status of the task",
-    alias: null
+    alias: "st"
   },
   DESCRIPTION: {
     description: "Add a long description to the task",
@@ -37,7 +37,7 @@ export const supportedCommands = {
   },
   DUE: {
     description: "Set a deadline date for the task",
-    alias: null
+    alias: "du"
   },
   TAGS: {
     description: "Add comma separated tags",

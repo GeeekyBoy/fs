@@ -77,6 +77,7 @@ const Notifications = (props) => {
           <Notification
             key={x.id}
             notificationData={x}
+            onOpen={closePanel}
             onDismiss={(e) => dismissNotification(e, x.id)}
           />
         )) : (

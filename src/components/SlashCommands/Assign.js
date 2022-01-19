@@ -42,7 +42,7 @@ const Assign = (props) => {
         if (selection === 0) {
           handleAssignTask(`anonymous:${commandParam}`) 
         } else {
-          handleAssignTask(`user:${results[selection - 1].username}`) 
+          handleAssignTask(`user:${results[selection - 1]}`) 
         }
       } else if (e.key === "ArrowUp") {
         e.preventDefault()
@@ -94,9 +94,9 @@ const Assign = (props) => {
             styles.AssigneeSuggestion,
             ...(selection === i + 1 && [styles.selected] || [])
           ].join(" ")}
-          key={x.username}
+          key={x}
           onMouseEnter={() => setSelection(i + 1)}
-          onClick={() => handleAssignTask(`user:${x.username}`)}
+          onClick={() => handleAssignTask(`user:${x}`)}
         >
           <Avatar user={users[x]} size={32} circular />
           <div>

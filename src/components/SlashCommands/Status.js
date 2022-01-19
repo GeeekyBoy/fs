@@ -97,7 +97,7 @@ const Status = (props) => {
           ].join(" ")}
           key={x}
           onMouseEnter={() => setSelection(i)}
-          onClick={() => chooseStatus(x)}
+          onClick={() => chooseStatus(x[0].toUpperCase())}
         >
           <div>
             <span style={{ color: x[1], marginRight: 10 }}>⬤</span>

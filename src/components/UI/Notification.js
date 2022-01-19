@@ -12,12 +12,18 @@ const UnconnectedNotification = (props) => {
     notificationRef,
     anim,
     headsUp,
+    onOpen,
     onDismiss,
     notificationData,
     users
   } = props
   const navigate = useNavigate();
-  const openLink = (link) => link && navigate("/" + link);
+  const openLink = (link) => {
+    if (link) {
+      if (onOpen) onOpen();
+      navigate("/" + link);
+    }
+  }
   const [isExpanded, setIsExpanded] = useState(false);
   return (
     <div
