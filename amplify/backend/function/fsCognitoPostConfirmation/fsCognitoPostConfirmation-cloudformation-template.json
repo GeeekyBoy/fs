@@ -6,10 +6,6 @@
       "Type": "String",
       "Default": ""
     },
-    "SENDGRID_API_KEY": {
-      "Type": "String",
-      "Default": "sendgrid_api_key"
-    },
     "modules": {
       "Type": "String",
       "Default": "",
@@ -107,9 +103,6 @@
             },
             "GROUP": {
               "Ref": "GROUP"
-            },
-            "SENDGRID_API_KEY": {
-              "Ref": "SENDGRID_API_KEY"
             },
             "API_FSCOREAPI_USERTABLE_NAME": {
               "Fn::ImportValue": {

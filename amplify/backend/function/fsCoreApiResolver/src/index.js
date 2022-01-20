@@ -4,7 +4,6 @@ const sgMail = require('@sendgrid/mail');
 const https = require('https');
 const urlParse = require("url").URL;
 const getEmailContent = require("./email/index").getContent;
-require('dotenv').config();
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 const cognitoClient = new AWS.CognitoIdentityServiceProvider();

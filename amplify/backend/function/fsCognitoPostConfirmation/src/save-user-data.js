@@ -3,7 +3,6 @@
 const aws = require('aws-sdk');
 const sgMail = require('@sendgrid/mail');
 const getEmailContent = require("./email/index").getContent;
-require('dotenv').config();
 
 const docClient = new aws.DynamoDB.DocumentClient();
 const cognitoidentityserviceprovider = new aws.CognitoIdentityServiceProvider({
