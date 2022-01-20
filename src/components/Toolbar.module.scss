@@ -12,7 +12,7 @@
   transition: background-color 0.2s;
   @include themify(background-color, "auxiliarySurface");
   @media only screen and (max-width: 768px) {
-    padding: 10px 0;
+    padding: 4px 0;
     flex-direction: row;
     bottom: 0;
     top: auto;
