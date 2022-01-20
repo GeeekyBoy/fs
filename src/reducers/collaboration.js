@@ -12,7 +12,7 @@ export default function (state = initState, action) {
     case SET_SESSION:
       return {...state, session: action.session}
     case IS_JOINED:
-      return {...state, isJoined: action.isJoined}
+      return {...state, isJoined: action.isJoined, projectViewers: action.projectViewers, taskViewers: {}}
     case JOIN_PROEJCT:
       return {...state, projectViewers: [...new Set([ action.username, ...state.projectViewers ])]}
     case LEAVE_PROJECT:

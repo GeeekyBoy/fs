@@ -88,6 +88,13 @@ exports.handler = async (event, context, callback) => {
         try {
           if (id !== connectionId) {
             await apigwManagementApi.postToConnection({ ConnectionId: id, Data: postData }).promise();
+          } else {
+            const joinAck = JSON.stringify({
+              action: "JOIN_PROJECT_ACK",
+              projectID: projectID,
+              usernames: JSON.stringify([...new Set(availConnections.Items.map(({ username }) => username))])
+            });
+            await apigwManagementApi.postToConnection({ ConnectionId: id, Data: joinAck }).promise();
           }
         } catch (e) {
           if (e.statusCode === 410) {

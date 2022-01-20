@@ -14,9 +14,10 @@ const setSession = (session) => ({
   session
 });
 
-const setIsJoined = (isJoined) => ({
+const setIsJoined = (isJoined, projectViewers = []) => ({
   type: IS_JOINED,
-  isJoined
+  isJoined,
+  projectViewers
 });
 
 const setJoinedProject = (projectID, username) => ({
@@ -90,6 +91,15 @@ export const handleInitSession = () => async (dispatch, getState) => {
               dispatch(setTxtCursor(data.taskID, data.pos, username))
               break;
           }
+        } else if (action.includes("ACK")) {
+          const usernames = JSON.parse(data.usernames)
+          await dispatch(usersActions.handleAddUsers(usernames))
+          switch (action) {
+            case "JOIN_PROJECT_ACK":
+              console.log(setIsJoined(true, usernames))
+              dispatch(setIsJoined(true, usernames))
+              break;
+          }
         }
         console.log("Websocket message", JSON.parse(event.data))
       }
@@ -122,9 +132,6 @@ export const handleJoinProject = (projectID) => async (dispatch, getState) => {
       }
     }
     session.send(JSON.stringify(dataToSend));
-    setTimeout(() => {
-      dispatch(setIsJoined(true))
-    }, 1000)
   }
 }
 
