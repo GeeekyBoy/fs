@@ -31,4 +31,10 @@
     cursor: not-allowed;
     color: #CCCCCC!important;
   }
+  &:first-child {
+      transform: rotate(180deg);
+    @media only screen and (max-width: 768px) {
+    transform: rotate(0);
+    }
+  }
 }

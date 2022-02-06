@@ -9,6 +9,7 @@ import * as tasksActions from "../../actions/tasks";
 import copyTask from "../../utils/copyTask";
 import { connect } from "react-redux";
 import parseLinkedList from "../../utils/parseLinkedList";
+import store from "../../store";
 
 const Import = (props) => {
   const {
@@ -47,7 +48,7 @@ const Import = (props) => {
             copyTask(
               taskToImport,
               selectedProject,
-              parseLinkedList(tasks, "prevTask", "nextTask").reverse()[0]?.id
+              parseLinkedList(store.getState().tasks, "prevTask", "nextTask").reverse()[0]?.id
             )
           )
         )

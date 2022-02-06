@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react"
+import React, { useRef, useMemo, useEffect } from "react"
 import { connect } from "react-redux";
 import styles from "./TaskItem.module.scss"
 import { useWindowSize } from "../../components/WindowSizeListener";
@@ -38,7 +38,13 @@ const TaskItem = (props) => {
       command
     },
     appSettings: {
-      tasksSortingCriteria
+      tasksSortingCriteria,
+      showDueDate,
+      showAssignees,
+      showDoneIndicator,
+      showCopyButton,
+      showDuplicateButton,
+      showShareButton
     },
     nextTask,
     prevTask,
@@ -52,6 +58,18 @@ const TaskItem = (props) => {
   const { isModalOpened, showModal } = useModal();
 
   const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (selectedTask === item.id) {
+      setTimeout(() => {
+        if (!(isRightPanelOpened || isModalOpened)) {
+          inputRef.current?.focus()
+        } else {
+          inputRef.current?.blur()
+        }
+      }, 0)
+    }
+  }, [isRightPanelOpened, isModalOpened, selectedTask])
 
   const processAssingees = (value, users) => {
     const result = []
@@ -138,16 +156,16 @@ const TaskItem = (props) => {
         }
       } else if (e.key === "ArrowUp") {
         if (!prevTask) {
-          return dispatch(appActions.handleSetProjectTitle(true))
+          dispatch(appActions.handleSetProjectTitle(true))
         } else {
-          return dispatch(appActions.handleSetTask(prevTask))
+          dispatch(appActions.handleSetTask(prevTask))
         }
       } else if (e.key === "ArrowDown") {
         if (nextTask) {
-          return dispatch(appActions.handleSetTask(nextTask))
+          dispatch(appActions.handleSetTask(nextTask))
         }
       } else if (e.key === "Escape") {
-        return dispatch(appActions.handleSetTask(null))
+        dispatch(appActions.handleSetTask(null))
       }
     }
   };
@@ -241,20 +259,22 @@ const TaskItem = (props) => {
       >
         <div className={styles.TaskItemLeftPart}>
           <div className={styles.TaskItemLeftLeftPart}>
-            <button
-              className={[
-                styles.TaskItemStatusToggle,
-                ...(item.status === "done" && [styles.done] || [])
-              ].join(" ")}
-              onClick={() => toggleStatus(item)}
-            >
-              {item.status === "done" && (
-                <CheckmarkIcon
-                  width={24}
-                  height={24}
-                />
-              )}
-            </button>
+            {showDoneIndicator && (
+              <button
+                className={[
+                  styles.TaskItemStatusToggle,
+                  ...(item.status === "done" && [styles.done] || [])
+                ].join(" ")}
+                onClick={() => toggleStatus(item)}
+              >
+                {item.status === "done" && (
+                  <CheckmarkIcon
+                    width={24}
+                    height={24}
+                  />
+                )}
+              </button>
+            )}
             {(selectedTask === item.id) ? (
               <div className={styles.TaskItemInput}>
                 <input
@@ -266,10 +286,6 @@ const TaskItem = (props) => {
                   onKeyUp={handleKeyUp}
                   onKeyDown={handleKeyDown}
                   onChange={onChange}
-                  autoFocus={!(
-                    isRightPanelOpened ||
-                    isModalOpened
-                  )}
                   contentEditable={false}
                   readOnly={readOnly}
                 />
@@ -290,17 +306,21 @@ const TaskItem = (props) => {
           <div className={styles.TaskItemLeftRightPart}>
             {width > 768 ?
             <div className={styles.TaskItemActions}>
-              <button className={styles.TaskItemAction} onClick={() => copyTask(item)}>
-                <CopyIcon height={18} />
-              </button>
-              {!readOnly && (
+              {((item.id === selectedTask && showCopyButton) || item.id !== selectedTask) && (
+                <button className={styles.TaskItemAction} onClick={() => copyTask(item)}>
+                  <CopyIcon height={18} />
+                </button>
+              )}
+              {!readOnly && ((item.id === selectedTask && showDuplicateButton) || item.id !== selectedTask) && (
                 <button className={styles.TaskItemAction} onClick={() => duplicateTask(item)}>
                   <DuplicateIcon height={18} />
                 </button>
               )}
-              <button className={styles.TaskItemAction} onClick={() => shareTask(item)}>
-                <ShareIcon height={18} />
-              </button>
+              {((item.id === selectedTask && showShareButton) || item.id !== selectedTask) && (
+                <button className={styles.TaskItemAction} onClick={() => shareTask(item)}>
+                  <ShareIcon height={18} />
+                </button>
+              )}
               {!readOnly && (
                 <button className={styles.TaskItemAction} onClick={() => removeTask(item)}>
                   <RemoveIcon height={18} />
@@ -321,14 +341,18 @@ const TaskItem = (props) => {
             ...((item.id === selectedTask) && [styles.focused] || []),
           ].join(" ")}
         >
-          <span className={styles.TaskItemDueDate}>
-            {item.due ? formatDate(item.due) : "No Due"}
-          </span>
-          <AvatarGroup
-            max={4}
-            users={processedAssingees}
-            size={ width > 768 ? 24 : 18 }
-          />
+          {showDueDate && (
+            <span className={styles.TaskItemDueDate}>
+              {item.due ? formatDate(item.due) : "No Due"}
+            </span>
+          )}
+          {showAssignees && (
+            <AvatarGroup
+              max={4}
+              users={processedAssingees}
+              size={ width > 768 ? 24 : 18 }
+            />
+          )}
         </div>
       </div>
       {(command && selectedTask === item.id) && (

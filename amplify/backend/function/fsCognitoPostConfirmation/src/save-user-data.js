@@ -1,5 +1,7 @@
 /* eslint-disable-line */ 
 
+require('dotenv').config()
+
 const aws = require('aws-sdk');
 const sgMail = require('@sendgrid/mail');
 const getEmailContent = require("./email/index").getContent;

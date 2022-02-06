@@ -41,14 +41,17 @@
 .TaskItemShell {
   display: flex;
   flex-direction: column;
-  & > *:not(:last-child) {
-    margin-bottom: 10px;
-  }
   &.sorting {
     z-index: -1;
+    & * {
+      cursor: grab !important;
+    }
   }
   &.dragging {
     z-index: 99;
+    & * {
+      cursor: grab !important;
+    }
   }
 }
 
@@ -101,7 +104,7 @@
     padding: 6px 20px;
     border: none;
     border-radius: 0;
-    background-color: transparent;
+    background-color: transparent !important;
     & > *:not(:last-child) {
       margin-right: 2px;
     }
@@ -134,7 +137,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  width: 170px;
   transition: width 0.3s ease-in-out;
   & > *:not(:last-child) {
     margin-right: 5px;
@@ -144,7 +146,6 @@
   }
   @media only screen and (max-width: 768px) {
     flex-direction: column;
-    width: 68px;
     & > *:not(:last-child) {
       margin-right: 0;
       margin-bottom: 2px;
@@ -267,10 +268,14 @@
   padding: 2.5px;
   cursor: pointer;
   transition: border-color 0.2s;
-  @include themify(border-color, "color-fill-color-text-primary");
-  @include themify(color, "color-fill-color-text-on-accent-primary");
+  @include themify(border-color, "color-stroke-color-control-strong-stroke-default");
+  @include themify(background-color, "color-fill-color-control-alt-secondary");
   &.done {
+    @include themify(color, "color-fill-color-text-on-accent-primary");
     @include themify(border-color, "primary");
     @include themify(background-color, "primary");
+    & > svg * {
+      stroke-width: 64px;
+    }
   }
 }

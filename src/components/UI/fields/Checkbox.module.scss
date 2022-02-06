@@ -1,0 +1,48 @@
+.CheckboxShell {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5px 10px;
+  border: none;
+  background-color: transparent;
+  @include themify(border-color, "outline");
+  & > *:not(:last-child) {
+    margin-right: 10px;
+  }
+  & > label {
+    margin-bottom: 0;
+    width: max-content;
+    font-size: 0.875rem;
+    font-weight: 400;
+    @include themify(color, "color-fill-color-text-primary");
+  }
+}
+
+.CheckToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border: 2px solid;
+  background-color: transparent;
+  border-radius: 3px;
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  min-width: 18px;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  @include themify(border-color, "color-stroke-color-control-strong-stroke-default");
+  @include themify(background-color, "color-fill-color-control-alt-secondary");
+  &.checked {
+  @include themify(color, "color-fill-color-text-on-accent-primary");
+    @include themify(border-color, "primary");
+    @include themify(background-color, "primary");
+    & > svg * {
+      stroke-width: 64px;
+    }
+  }
+}

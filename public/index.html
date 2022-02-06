@@ -26,7 +26,16 @@
     -->
     <script type="text/javascript">
       var appSettings = window.localStorage.getItem("appSettings")
-      appSettings = appSettings ? JSON.parse(appSettings) : { theme: "blue", isDarkMode: false }
+      appSettings = appSettings ? JSON.parse(appSettings) : {
+        theme: "blue",
+        isDarkMode: false,
+        showDueDate: true,
+        showAssignees: true,
+        showDoneIndicator: true,
+        showCopyButton: true,
+        showDuplicateButton: true,
+        showShareButton: true,
+      }
       const availColors = {
         "red": "#D20E1E",
         "gold": "#E19D00",

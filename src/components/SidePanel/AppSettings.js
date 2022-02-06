@@ -23,6 +23,24 @@ const AppSettings = (props) => {
       case "darkMode":
         dispatch(appSettingsActions.handleSetIsDarkMode(e.target.value))
         break
+      case "dueDate":
+        dispatch(appSettingsActions.handleSetShowDueDate(e.target.value))
+        break
+      case "assignees":
+        dispatch(appSettingsActions.handleSetShowAssignees(e.target.value))
+        break
+      case "doneIndicator":
+        dispatch(appSettingsActions.handleSetShowDoneIndicator(e.target.value))
+        break
+      case "copyButton":
+        dispatch(appSettingsActions.handleSetShowCopyButton(e.target.value))
+        break
+      case "duplicateButton":
+        dispatch(appSettingsActions.handleSetShowDuplicateButton(e.target.value))
+        break
+      case "shareButton":
+        dispatch(appSettingsActions.handleSetShowShareButton(e.target.value))
+        break
       default:
         break
     }
@@ -61,7 +79,6 @@ const AppSettings = (props) => {
       </div>
       <SimpleBar className={styles.AppSettingsForm}>
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className={styles.AppSetting}>
             <ColorPicker
               label="Theme"
               name="theme"
@@ -109,8 +126,51 @@ const AppSettings = (props) => {
               value={appSettings.isDarkMode}
               onChange={handleChange}
             />
+            <div className={styles.AppSetting}>
+            <span>Task Item Customization</span>
+            <span className={styles.AppSettingSectionHeader}>
+              When Not Selected
+            </span>
+            <Toggle
+              label="Due Date"
+              name="dueDate"
+              value={appSettings.showDueDate}
+              onChange={handleChange}
+            />
+            <Toggle
+              label="Assignees"
+              name="assignees"
+              value={appSettings.showAssignees}
+              onChange={handleChange}
+            />
+            <Toggle
+              label="Done Indicator"
+              name="doneIndicator"
+              value={appSettings.showDoneIndicator}
+              onChange={handleChange}
+            />
+            <span className={styles.AppSettingSectionHeader}>
+              When Selected
+            </span>
+            <Toggle
+              label="Copy Button"
+              name="copyButton"
+              value={appSettings.showCopyButton}
+              onChange={handleChange}
+            />
+            <Toggle
+              label="Duplicate Button"
+              name="duplicateButton"
+              value={appSettings.showDuplicateButton}
+              onChange={handleChange}
+            />
+            <Toggle
+              label="Share Button"
+              name="shareButton"
+              value={appSettings.showShareButton}
+              onChange={handleChange}
+            />
           </div>
-          <input type="submit" name="submit" value="Submit"></input>
         </form>
       </SimpleBar>
     </>

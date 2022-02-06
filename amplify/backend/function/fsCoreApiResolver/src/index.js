@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { v4: uuidv4 } = require('uuid');
 const AWS = require("aws-sdk");
 const sgMail = require('@sendgrid/mail');
