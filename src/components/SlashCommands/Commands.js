@@ -126,20 +126,19 @@ const Commands = (props) => {
       onMouseEnter={() => setSelection(i)}
       onClick={() => chooseCommand(x)}
     >
-      {x === "ASSIGN" && <AssignIcon height={24} />}
-      {x === "DUE" && <CalenderIcon height={24} />}
-      {x === "TAGS" && <TagsIcon height={24} />}
-      {x === "DESCRIPTION" && <DescriptionIcon height={24} />}
-      {x === "STATUS" && <StatusIcon height={24} />}
-      {x === "DELETE" && <RemoveIcon height={24} />}
-      {x === "COPY" && <CopyIcon height={24} />}
-      {x === "DUPLICATE" && <DuplicateIcon height={24} />}
+      {x === "ASSIGN" && <AssignIcon height={18} />}
+      {x === "DUE" && <CalenderIcon height={18} />}
+      {x === "TAGS" && <TagsIcon height={18} />}
+      {x === "DESCRIPTION" && <DescriptionIcon height={18} />}
+      {x === "STATUS" && <StatusIcon height={18} />}
+      {x === "DELETE" && <RemoveIcon height={18} />}
+      {x === "COPY" && <CopyIcon height={18} />}
+      {x === "DUPLICATE" && <DuplicateIcon height={18} />}
       <div>
         <div>
           <span>{x}</span>
           {supportedCommands[x].alias && <span>{supportedCommands[x].alias}</span>}
         </div>
-        <span>{supportedCommands[x].description}</span>
       </div>
     </div>
   )) : (

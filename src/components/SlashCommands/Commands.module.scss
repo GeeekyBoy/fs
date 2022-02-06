@@ -3,7 +3,7 @@
   flex-direction: row;
   align-items: center;
   background-color: transparent;
-  padding: 10px 20px;
+  padding: 8px 20px;
   transition: background-color 0.2s;
   cursor: pointer;
   &.selected {
@@ -53,12 +53,6 @@
       & > *:not(:last-child) {
         margin-right: 5px;
       }
-    }
-    & > span:nth-child(2) {
-      font-weight: 400;
-      font-size: 0.75rem;
-      transition: color 0.2s;
-      @include themify(color, "color-fill-color-text-secondary");
     }
   }
   & > *:not(:last-child) {

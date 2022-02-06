@@ -348,7 +348,7 @@ const TaskItem = (props) => {
           )}
           {showAssignees && (
             <AvatarGroup
-              max={4}
+              max={width > 768 ? 4 : 3}
               users={processedAssingees}
               size={ width > 768 ? 24 : 18 }
             />
