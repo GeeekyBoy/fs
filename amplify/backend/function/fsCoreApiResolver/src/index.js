@@ -300,6 +300,13 @@ exports.handler = async function (ctx) {
     }
   }
 
+  async function getEffectiveWatchers(taskID, exclusion = []) {
+    const task = await getTask(taskID)
+    const watchers = task.watchers
+    const assignees = task.assignees
+    return [...new Set([...watchers, ...assignees])].filter(x => !exclusion.includes(x))
+  }
+
   async function isProjectSharedWithClient(projectID, client) {
     try {
       const { privacy, members, owner } = await getProject(projectID)
@@ -763,6 +770,7 @@ exports.handler = async function (ctx) {
         await docClient.put(params).promise();
         cachedComments[commentData.id] = {...commentData}
         const taskData = await getTask(taskID)
+        const effectiveWatchers = await getEffectiveWatchers(taskID, [client]);
         await _pushNotification({
           type: "NEW_COMMENT",
           payload: `{
@@ -770,7 +778,7 @@ exports.handler = async function (ctx) {
             "link": "${cachedProjects[taskData.projectID].permalink}/${taskData.permalink}"
           }`,
           sender: client,
-          owners: [...taskData.watchers]
+          owners: [...effectiveWatchers]
         })
         return { ...commentData, mutationID };
       } catch (err) {
@@ -786,9 +794,15 @@ exports.handler = async function (ctx) {
     const projectID = updateData.id
     const mutationID = updateData.mutationID || null
     const client = ctx.identity.username
-    if (await isProjectOwner(projectID, client)) {
-      delete updateData.id
-      delete updateData.mutationID
+    delete updateData.id
+    delete updateData.mutationID
+    if ((await isProjectOwner(projectID, client)) ||
+      (
+        await isProjectEditableByClient(projectID, client) &&
+        Object.keys(updateData).length === 1 &&
+        updateData.title !== undefined
+      )
+    ) {
       const expAttrVal = {}
       const expAttrNames = {}
       const nullAttrs = []
@@ -931,6 +945,7 @@ exports.handler = async function (ctx) {
           await updateTaskCount(taskID, updateData.status)
         }
         const data = await docClient.update(taskUpdateParams).promise();
+        const effectiveWatchers = await getEffectiveWatchers(taskID, [client]);
         if (updateData.due) {
           await _pushNotification({
             type: "DUE_CHANGE",
@@ -940,7 +955,7 @@ exports.handler = async function (ctx) {
               "link": "${cachedProjects[data.Attributes.projectID].permalink}/${data.Attributes.permalink}"
             }`,
             sender: client,
-            owners: [...data.Attributes.watchers]
+            owners: [...effectiveWatchers]
           })
         }
         if (updateData.status) {
@@ -952,7 +967,7 @@ exports.handler = async function (ctx) {
               "link": "${cachedProjects[data.Attributes.projectID].permalink}/${data.Attributes.permalink}"
             }`,
             sender: client,
-            owners: [...data.Attributes.watchers]
+            owners: [...effectiveWatchers]
           })
         }
         if (updateData.status) {
@@ -964,7 +979,7 @@ exports.handler = async function (ctx) {
               "link": "${cachedProjects[data.Attributes.projectID].permalink}/${data.Attributes.permalink}"
             }`,
             sender: client,
-            owners: [...data.Attributes.watchers]
+            owners: [...effectiveWatchers]
           })
         }
         return {
@@ -1125,6 +1140,7 @@ exports.handler = async function (ctx) {
           };
           try {
             const updatedTask = await docClient.update(taskUpdateParams).promise();
+            cachedTasks[taskID] = {...updatedTask.Attributes}
             if (isUser) {
               const userUpdate = await docClient.update(userUpdateParams).promise();
               const emailToBeSentToAssignee = getEmailContent("assignment", {
@@ -1140,7 +1156,8 @@ exports.handler = async function (ctx) {
                 TASK_PERMALINK: `https://forwardslash.ch/${cachedProjects[updatedTask.Attributes.projectID].permalink}/${updatedTask.Attributes.permalink}`,
               })
               let watchersEmails = []
-              for (const watcher of updatedTask.Attributes.watchers) {
+              const effectiveWatchers = await getEffectiveWatchers(taskID, [assigneeID, client]);
+              for (const watcher of effectiveWatchers) {
                 try {
                   const watcherEmail = (await getUserByUsername({
                     arguments: {
@@ -1168,11 +1185,12 @@ exports.handler = async function (ctx) {
               await _pushNotification({
                 type: "ASSIGNMENT",
                 payload: `{
+                  "assignee": "${assigneeID}",
                   "link": "${cachedProjects[updatedTask.Attributes.projectID].permalink}/${updatedTask.Attributes.permalink}"
                 }`,
                 sender: client,
                 owners: [
-                  ...updatedTask.Attributes.watchers,
+                  ...effectiveWatchers,
                   assigneeID
                 ]
               })

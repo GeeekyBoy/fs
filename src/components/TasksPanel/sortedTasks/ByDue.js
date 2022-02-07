@@ -61,9 +61,9 @@ const ByDue = (props) => {
           ))}
           <TaskPlaceholder
             content={
-              x[0] === "Untagged" ?
-              "Tap to create new task with no due date" :
-              "Tap to create new task due '" + formatDate(x[0]) + "'"
+              x[0] ?
+              "Tap to create new task due '" + formatDate(x[0]) + "'" :
+              "Tap to create new task with no due date"
             }
             preset={{due: x[0] ? x[0] : null}}
           />

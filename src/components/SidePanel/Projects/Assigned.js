@@ -14,21 +14,23 @@ const Projects = (props) => {
   const assignedProjects = useMemo(() => getAssignedProjects(projects), [projects])
   return (
     <div>
-      {assignedProjects.length ? assignedProjects.map(project => (
-        <div key={project.id}>
-          <ProjectItem
-            project={project}
-            readOnly={true}
-          />
-        </div>
-      )) : (
-        <div className={styles.NoAssignedProjects}>
-          <NoAssignedIllustartion />
-          <span>
-            No Projects Assigned To You
-          </span>
-        </div>
-      )}
+      <div>
+        {assignedProjects.length ? assignedProjects.map(project => (
+          <div key={project.id}>
+            <ProjectItem
+              project={project}
+              readOnly={true}
+            />
+          </div>
+        )) : (
+          <div className={styles.NoAssignedProjects}>
+            <NoAssignedIllustartion />
+            <span>
+              No Projects Assigned To You
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   );  
 }

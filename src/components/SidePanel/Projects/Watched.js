@@ -13,7 +13,7 @@ const Projects = (props) => {
   }
   const watchedProjects = useMemo(() => getWatchedProjects(projects), [projects])
   return (
-    <div>
+    <div><div>
       {watchedProjects.length ? watchedProjects.map(project => (
         <div key={project.id}>
           <ProjectItem
@@ -29,7 +29,7 @@ const Projects = (props) => {
           </span>
         </div>
       )}
-    </div>
+    </div></div>
   );  
 }
 
