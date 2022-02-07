@@ -15,11 +15,11 @@
       "function": {
         "fsCognitoPostConfirmation": {
           "deploymentBucketName": "amplify-fstestttt-experiment-115527-deployment",
-          "s3Key": "amplify-builds/fsCognitoPostConfirmation-526b366b4e454e58526d-build.zip"
+          "s3Key": "amplify-builds/fsCognitoPostConfirmation-6376317353596a6c7777-build.zip"
         },
         "fsCoreApiResolver": {
           "deploymentBucketName": "amplify-fstestttt-experiment-115527-deployment",
-          "s3Key": "amplify-builds/fsCoreApiResolver-71426f71445876366f75-build.zip"
+          "s3Key": "amplify-builds/fsCoreApiResolver-7831486d74364646376d-build.zip"
         },
         "fsCognitoPostConfirmationInvoker": {
           "deploymentBucketName": "amplify-fstestttt-experiment-115527-deployment",
@@ -39,7 +39,7 @@
         },
         "fsJoinProject": {
           "deploymentBucketName": "amplify-fstestttt-experiment-115527-deployment",
-          "s3Key": "amplify-builds/fsJoinProject-647266325278636f724d-build.zip"
+          "s3Key": "amplify-builds/fsJoinProject-476b374b435345635635-build.zip"
         },
         "fsLeaveProject": {
           "deploymentBucketName": "amplify-fstestttt-experiment-115527-deployment",
