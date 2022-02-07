@@ -299,7 +299,7 @@ const TaskItem = (props) => {
                   ...(item.status === "done" && [styles.done] || [])
                 ].join(" ")}
               >
-                {item.task || "Task…"}
+                {item.task || "Untitled Task"}
               </span>
             )}
           </div>

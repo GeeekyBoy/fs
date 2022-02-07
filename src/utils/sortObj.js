@@ -1,7 +1,7 @@
-export default (obj) => {
+export default (obj, numerical = false) => {
   const result = {}
-  const keys = Object.keys(obj)
-  keys.sort()
+  const keys = numerical ? Object.keys(obj).map(x => parseInt(x, 10)) : Object.keys(obj);
+  keys.sort();
   for (const key of keys) {
     result[key] = obj[key]
   }

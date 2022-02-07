@@ -1,0 +1,13 @@
+.TaskPlaceholder {
+  padding: 2px 12px;
+  margin: 2px 0;
+  cursor: text;
+  @include themify(color, "color-fill-color-text-tertiary", true);
+  &:hover {
+    @include themify(color, "color-fill-color-text-secondary", true);
+  }
+  @media only screen and (max-width: 768px) {
+    margin: 0;
+    padding: 2px 20px;
+  }
+}

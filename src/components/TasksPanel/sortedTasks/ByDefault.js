@@ -23,6 +23,7 @@ import parseLinkedList from "../../../utils/parseLinkedList";
 import TaskItem from "../TaskItem";
 import * as tasksActions from "../../../actions/tasks";
 import { AuthState } from "../../../constants";
+import TaskPlaceholder from '../TaskPlaceholder';
 
 const Sortable = (props) => {
 
@@ -169,21 +170,24 @@ const ByDefault = (props) => {
   const getSortedTasks = (tasks) => parseLinkedList(tasks, "prevTask", "nextTask")
   const sortedTasks = useMemo(() => getSortedTasks(tasks), [tasks])
   return (
-    <Sortable
-      items={parseLinkedList(tasks, "prevTask", "nextTask").map(({ id }) => id)}
-      onDragEnd={onSortEnd}
-    >
-      {sortedTasks.map((value, index) => (
-        <SortableItem
-          key={value.id}
-          index={index}
-          value={value}
-          nextTask={value.nextTask}
-          prevTask={value.prevTask}
-          sortable={!readOnly}
-        />
-      ))}
-    </Sortable>
+    <>
+      <Sortable
+        items={parseLinkedList(tasks, "prevTask", "nextTask").map(({ id }) => id)}
+        onDragEnd={onSortEnd}
+      >
+        {sortedTasks.map((value, index) => (
+          <SortableItem
+            key={value.id}
+            index={index}
+            value={value}
+            nextTask={value.nextTask}
+            prevTask={value.prevTask}
+            sortable={!readOnly}
+          />
+        ))}
+      </Sortable>
+      <TaskPlaceholder />
+    </>
   )
 }
 

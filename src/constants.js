@@ -85,18 +85,18 @@ export const initProjectState = (prevProject = null, nextProject = null) => {
   }
 }
 
-export const initTaskState = (projectID, prevTask = null, nextTask = null) => ({
+export const initTaskState = (projectID, prevTask = null, nextTask = null, preset = {}) => ({
   id: generateID(),
   projectID: projectID,
-  task: "",
+  task: preset.task || "",
   prevTask: prevTask,
   nextTask: nextTask,
-  description: null,
-  due: null,
-  tags: [],
+  description: preset.description || null,
+  due: preset.due || null,
+  tags: preset.tags || [],
   assignees: [],
-  status: "todo",
-  priority: "normal"
+  status: preset.status || "todo",
+  priority: preset.priority || "normal"
 })
 
 export const AuthState = {

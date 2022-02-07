@@ -5,6 +5,7 @@ import parseLinkedList from "../../../utils/parseLinkedList";
 import sortObj from '../../../utils/sortObj';
 import Accordion from '../../UI/Accordion';
 import TaskItem from "../TaskItem";
+import TaskPlaceholder from '../TaskPlaceholder';
 
 const ByTag = (props) => {
   const { tasks } = props;
@@ -55,6 +56,14 @@ const ByTag = (props) => {
               />
             </div>
           ))}
+          <TaskPlaceholder
+            content={
+              x[0] === "Untagged" ?
+              "Tap to create new untagged task" :
+              "Tap to create new task tagged with '" + x[0] + "'"
+            }
+            preset={{tags: x[0] === "Untagged" ? [] : [x[0]]}}
+          />
         </Accordion>
       ))}
     </>
