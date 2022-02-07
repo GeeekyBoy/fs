@@ -15,3 +15,21 @@
     }
   }
 }
+
+.backBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  font-size: 0.875rem;
+  border: none;
+  outline: none;
+  position: fixed;
+  top: 15px;
+  left: 10px;
+  padding: 5px;
+  z-index: 1;
+  cursor: pointer;
+  @include themify(color, "primary");
+}

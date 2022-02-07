@@ -304,7 +304,7 @@ const TaskItem = (props) => {
             )}
           </div>
           <div className={styles.TaskItemLeftRightPart}>
-            {width > 768 ?
+            {width > 768 &&
             <div className={styles.TaskItemActions}>
               {((item.id === selectedTask && showCopyButton) || item.id !== selectedTask) && (
                 <button className={styles.TaskItemAction} onClick={() => copyTask(item)}>
@@ -329,10 +329,7 @@ const TaskItem = (props) => {
               <button className={styles.TaskItemAction} onClick={() => openRightPanel(item)}>
                 <DetailsIcon height={18} />
               </button>
-            </div> :
-            <button className={styles.TaskItemOptsBtn} onClick={() => openActionSheet(item)}>
-              <OptionsIcon width={18} />
-            </button>}
+            </div>}
           </div>
         </div>
         <div
@@ -341,11 +338,6 @@ const TaskItem = (props) => {
             ...((item.id === selectedTask) && [styles.focused] || []),
           ].join(" ")}
         >
-          {showDueDate && (
-            <span className={styles.TaskItemDueDate}>
-              {item.due ? formatDate(item.due) : "No Due"}
-            </span>
-          )}
           {showAssignees && (
             <AvatarGroup
               max={width > 768 ? 4 : 3}
@@ -353,7 +345,17 @@ const TaskItem = (props) => {
               size={ width > 768 ? 24 : 18 }
             />
           )}
+          {showDueDate && (
+            <span className={styles.TaskItemDueDate}>
+              {item.due ? formatDate(item.due) : "No Due"}
+            </span>
+          )}
         </div>
+        {width <= 768 && (
+          <button className={styles.TaskItemOptsBtn} onClick={() => openActionSheet(item)}>
+            <OptionsIcon width={18} />
+          </button>
+        )}
       </div>
       {(command && selectedTask === item.id) && (
         <SlashCommands

@@ -13,7 +13,7 @@ const AvatarGroup = (props) => {
       className={styles.AvatarGroupContainer}
 			style={{
         minHeight: size,
-        minWidth: size + (max * (size - size * 0.398))
+        minWidth: (users.length ? size : 0) + (users.length > 1 ? ((users.length > max ? max : users.length) * (size - size * 0.398)) : 0)
       }}
 		>
 			{users.slice(0, users.length > max ? max - 1 : max).map(({ avatar, abbr, name, color }, i) => (
@@ -48,21 +48,6 @@ const AvatarGroup = (props) => {
             </div>
 					}
 				</Fragment>
-			))}
-			{users.length <= max && new Array(max - users.length).fill(0).map((_, i) => (
-        <div 
-          className={styles.DumpAvatar}
-          style={{
-            minWidth: size,
-            minHeight: size,
-            width: size,
-            height: size,
-            ...(i < max - 1 && {
-              marginRight: -(size * 0.42)
-            })
-          }}
-          key={i}
-        />
 			))}
 			{users.length > max && (
         <div 

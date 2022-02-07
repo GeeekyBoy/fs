@@ -23,12 +23,3 @@
   @include themify(background-color, "auxiliarySurface");
   @include themify(border-color, "color-background-fill-color-card-background-default");
 }
-
-.DumpAvatar {
-  display: inline-flex;
-  border-radius: 100%;
-  border: 2px solid;
-  transition: background-color 0.2s, border-color 0.2s;
-  @include themify(background-color, "auxiliarySurface");
-  @include themify(border-color, "color-background-fill-color-card-background-default");
-}

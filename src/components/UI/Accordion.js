@@ -16,7 +16,12 @@ const Accordion = (props) => {
   }, [props.height]);
 
   return (
-    <div className={styles.AccordionContainer}>
+    <div
+      className={[
+        styles.AccordionContainer,
+        ...[(props.contained && styles.contained) || []],
+      ].join(" ")}
+    >
       <div
         className={[styles.AccordionHeader, "noselect"].join(" ")}
         onClick={handleClick}
@@ -36,9 +41,11 @@ const Accordion = (props) => {
           />
         )}
       </div>
-      <div style={{ height: isAccordionOpened ? height : 0 }}>
-        {props.children}
-      </div>
+      {isAccordionOpened && (
+        <div className={styles.AccordionContent} style={{ height }}>
+          {props.children}
+        </div>
+      )}
     </div>
   );
 };
