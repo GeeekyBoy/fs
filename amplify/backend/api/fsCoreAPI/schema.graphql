@@ -1,5 +1,11 @@
 type Connection
   @model(queries: null, mutations: null, subscriptions: null)
+  @auth(
+    rules: [
+      { allow: public, provider: iam }
+      { allow: private, provider: userPools }
+    ]
+  )
   @aws_iam
   @aws_cognito_user_pools
   @key(name: "byOwner", fields: ["owner"])
@@ -116,6 +122,12 @@ type Comment
 
 type Notification
   @model(queries: null, mutations: null, subscriptions: null)
+  @auth(
+    rules: [
+      { allow: public, provider: iam }
+      { allow: private, provider: userPools }
+    ]
+  )
   @aws_iam
   @aws_cognito_user_pools
   @key(name: "byOwner", fields: ["owner"])
@@ -197,18 +209,42 @@ type Query {
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
     @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   listUsersByUsernames(usernames: [String!]!): UsersList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
     @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   getProjectByID(projectID: ID!): Project
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
     @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   getProjectByPermalink(permalink: String!): Project
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
     @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   getNotificationByID(notificationID: String!): Notification
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
@@ -231,10 +267,22 @@ type Query {
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
     @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   listCommentsForTask(taskID: ID!): CommentsList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
     @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
 }
 
 type Subscription {
@@ -270,14 +318,35 @@ type Subscription {
     @aws_subscribe(mutations: ["updateProject", "pushProjectUpdate"])
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   onDeleteProject(id: String!): DeletedProject
     @aws_subscribe(mutations: ["deleteProjectAndTasks"])
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   onCreateTaskByProjectID(projectID: ID!): CreatedTask
     @aws_subscribe(mutations: ["createTask"])
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   onUpdateTaskByProjectID(projectID: ID!): TaskUpdate
     @aws_subscribe(
       mutations: [
@@ -290,22 +359,57 @@ type Subscription {
     )
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   onDeleteTaskByProjectID(projectID: ID!): DeletedTask
     @aws_subscribe(mutations: ["deleteTaskAndComments"])
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   onCreateCommentByTaskID(taskID: ID!): CreatedComment
     @aws_subscribe(mutations: ["createComment"])
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   onUpdateCommentByTaskID(taskID: ID!): CommentUpdate
     @aws_subscribe(mutations: ["updateComment"])
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   onDeleteCommentByTaskID(taskID: ID!): DeletedComment
     @aws_subscribe(mutations: ["deleteComment"])
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
 }
 
 input PushUserUpdateInput {
