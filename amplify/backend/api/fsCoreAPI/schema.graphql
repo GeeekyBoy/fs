@@ -172,15 +172,19 @@ type Query {
 	getUserByUsername(username: String!): User
 		@function(name: "fsCoreApiResolver-${env}")
 		@aws_cognito_user_pools
+		@aws_iam
 	listUsersByUsernames(usernames: [String!]!): UsersList
 		@function(name: "fsCoreApiResolver-${env}")
 		@aws_cognito_user_pools
+		@aws_iam
 	getProjectByID(projectID: ID!): Project
 		@function(name: "fsCoreApiResolver-${env}")
 		@aws_cognito_user_pools
+		@aws_iam
 	getProjectByPermalink(permalink: String!): Project
 		@function(name: "fsCoreApiResolver-${env}")
 		@aws_cognito_user_pools
+		@aws_iam
 	getNotificationByID(notificationID: String!): Notification
 		@function(name: "fsCoreApiResolver-${env}")
 		@aws_cognito_user_pools
@@ -202,9 +206,11 @@ type Query {
 	listTasksForProject(projectID: ID!): TasksList
 		@function(name: "fsCoreApiResolver-${env}")
 		@aws_cognito_user_pools
+		@aws_iam
 	listCommentsForTask(taskID: ID!): CommentsList
 		@function(name: "fsCoreApiResolver-${env}")
 		@aws_cognito_user_pools
+		@aws_iam
 }
 
 type Subscription {

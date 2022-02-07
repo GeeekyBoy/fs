@@ -9,29 +9,26 @@ const TaskPlaceholder = (props) => {
   const {
     preset = {},
     content = "Tap to create new task…",
-    app: {
-      selectedProject,
-      isSynced
-    },
+    app: { selectedProject, isSynced },
     status,
     tasks,
     dispatch,
   } = props;
   const addNewTask = () => {
     status.tasks === READY &&
-    isSynced &&
-    dispatch(
-      tasksActions.handleCreateTask(
-        initTaskState(
-          selectedProject,
-          parseLinkedList(tasks, "prevTask", "nextTask").reverse()[0]?.id,
-          null,
-          preset
+      isSynced &&
+      dispatch(
+        tasksActions.handleCreateTask(
+          initTaskState(
+            selectedProject,
+            parseLinkedList(tasks, "prevTask", "nextTask").reverse()[0]?.id,
+            null,
+            preset
+          )
         )
-      )
-    )
-  }
-  return (
+      );
+  };
+  return status.tasks === READY && isSynced ? (
     <span
       name="TaskPlaceholder"
       className={[styles.TaskPlaceholder, "noselect"].join(" ")}
@@ -39,7 +36,7 @@ const TaskPlaceholder = (props) => {
     >
       {content}
     </span>
-  );
+  ) : null;
 };
 
 export default connect((state) => ({
@@ -47,5 +44,5 @@ export default connect((state) => ({
   app: state.app,
   user: state.user,
   status: state.status,
-  appSettings: state.appSettings
+  appSettings: state.appSettings,
 }))(TaskPlaceholder);
