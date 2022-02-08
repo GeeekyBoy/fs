@@ -153,7 +153,11 @@ const Comments = (props) => {
       </div>
       {readOnly ? (
         <span className={styles.CommentNotAllowed}>
-          You can&#39;t comment on this Task
+          {user.state !== AuthState.SignedIn ?
+          "Login to comment on this task" :
+          !isSynced ?
+          "Intenret connection is lost" :
+          "You don't have permission to comment on this task"}
         </span>
       ) : (
         <div className={styles.NewComment}>
