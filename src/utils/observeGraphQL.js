@@ -4,10 +4,10 @@ import { AuthState } from "../constants";
 
 export default async (options, callback) => {
   return await API.graphql({
-    ...options,
     authMode:
-      store.getState().user.state === AuthState.SignedIn
-        ? "AMAZON_COGNITO_USER_POOLS"
-        : "AWS_IAM",
+      store.getState().user.state === AuthState.SignedIn ?
+      "AMAZON_COGNITO_USER_POOLS" :
+      "AWS_IAM",
+    ...options
   }).subscribe(callback);
 };

@@ -58,13 +58,14 @@ export const handleSetData = (userData) => (dispatch, getState) => {
 export const handleFetchUser = () => async (dispatch, getState) => {
   if (await isLoggedIn() || cacheController.getUser().state === AuthState.SignedIn) {
     try {
-      const userData = (await execGraphQL(
-        graphqlOperation(
+      const userData = (await execGraphQL({
+        ...graphqlOperation(
           queries.getUserByUsername, {
             username: (await Auth.currentAuthenticatedUser()).username
           }
-        )
-      )).data.getUserByUsername
+        ),
+        authMode: "AMAZON_COGNITO_USER_POOLS"
+      })).data.getUserByUsername
       const jwt = (await Auth.currentSession()).getAccessToken().getJwtToken();
       userData.jwt = jwt
       dispatch(handleSetData(userData))

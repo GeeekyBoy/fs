@@ -7,11 +7,11 @@ export default (options) => {
   return new Promise((resolve, reject) => {
     if (!store.getState().app.isOffline) {
       API.graphql({
-        ...options,
         authMode:
           store.getState().user.state === AuthState.SignedIn ?
           "AMAZON_COGNITO_USER_POOLS" :
-          "AWS_IAM"
+          "AWS_IAM",
+        ...options
       })
         .then(resolve)
         .catch((err) => {
