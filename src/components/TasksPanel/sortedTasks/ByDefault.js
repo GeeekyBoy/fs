@@ -162,9 +162,10 @@ const ByDefault = (props) => {
     }
   };
   const getReadOnly = (user, projects, selectedProject, isSynced) => {
-    return user.state === AuthState.SignedIn &&
+    return (user.state === AuthState.SignedIn &&
     ((projects[selectedProject]?.owner !== user.data.username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)
+    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
+    (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
   }
   const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
   const getSortedTasks = (tasks) => parseLinkedList(tasks, "prevTask", "nextTask")

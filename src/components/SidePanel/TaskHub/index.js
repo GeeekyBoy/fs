@@ -13,8 +13,10 @@ const TaskHub = (props) => {
   const {
     user,
     app: {
-      lockedTaskField
+      lockedTaskField,
+      selectedProject
     },
+    projects,
     dispatch
   } = props;
   
@@ -64,7 +66,7 @@ const TaskHub = (props) => {
           />
         </button>
       </div>
-      {user.state === AuthState.SignedIn && (
+      {(user.state === AuthState.SignedIn || (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)) && (
         <PanelTabs
           tabs={[
             ["details", "Details"],
@@ -85,5 +87,6 @@ export default connect((state) => ({
   tasks: state.tasks,
   app: state.app,
   comments: state.comments,
+  projects: state.projects,
   users: state.users
 }))(TaskHub);

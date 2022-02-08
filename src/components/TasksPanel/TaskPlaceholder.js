@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import * as tasksActions from "../../actions/tasks";
 import { connect } from "react-redux";
-import { initTaskState, READY } from "../../constants";
+import { AuthState, initTaskState, READY } from "../../constants";
 import styles from "./TaskPlaceholder.module.scss";
 import parseLinkedList from "../../utils/parseLinkedList";
 
@@ -11,11 +11,24 @@ const TaskPlaceholder = (props) => {
     content = "Tap to create new task…",
     app: { selectedProject, isSynced },
     status,
+    projects,
     tasks,
+    user,
     dispatch,
   } = props;
+
+  const getReadOnly = (user, projects, selectedProject, isSynced) => {
+    return (user.state === AuthState.SignedIn &&
+    ((projects[selectedProject]?.owner !== user.data.username &&
+    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
+    (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
+  }
+
+  const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
+
   const addNewTask = () => {
-    status.tasks === READY &&
+      !readOnly &&
+      status.tasks === READY &&
       isSynced &&
       dispatch(
         tasksActions.handleCreateTask(
@@ -28,7 +41,7 @@ const TaskPlaceholder = (props) => {
         )
       );
   };
-  return status.tasks === READY && isSynced ? (
+  return !readOnly && status.tasks === READY && isSynced ? (
     <span
       name="TaskPlaceholder"
       className={[styles.TaskPlaceholder, "noselect"].join(" ")}
@@ -43,6 +56,7 @@ export default connect((state) => ({
   tasks: state.tasks,
   app: state.app,
   user: state.user,
+  projects: state.projects,
   status: state.status,
   appSettings: state.appSettings,
 }))(TaskPlaceholder);

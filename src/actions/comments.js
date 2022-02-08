@@ -109,8 +109,8 @@ export const handleRemoveComment = (commentState) => (dispatch, getState) => {
 }
 
 export const handleFetchComments = (taskID) => async (dispatch, getState) => {
-  const { user } = getState()
-  if (user.state === AuthState.SignedIn) {
+  const { user, app, projects } = getState()
+  if (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp) {
     try {
       const res = await execGraphQL(graphqlOperation(listCommentsForTask, { taskID }))
       const items = res.data.listCommentsForTask.items;

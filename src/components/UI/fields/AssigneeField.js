@@ -80,15 +80,17 @@ const AssigneeField = (props) => {
           )}
           {processedValue.map(x => (
             <span className={styles.AssigneeItem} key={x.raw}>
-              <button
-                className={styles.RemoveBtn}
-                onClick={() => handleUnassignTask(x.raw)}
-              >
-                <RemoveIcon
-                  height={16}
-                  width={16}
-                />
-              </button>
+              {!readOnly && (
+                <button
+                  className={styles.RemoveBtn}
+                  onClick={() => handleUnassignTask(x.raw)}
+                >
+                  <RemoveIcon
+                    height={16}
+                    width={16}
+                  />
+                </button>
+              )}
               <Avatar user={x} size={36} circular />
               <div className={styles.AssigneeDetails}>
                 <span>{x.firstName || x.name}</span>

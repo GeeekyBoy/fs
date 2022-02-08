@@ -81,16 +81,18 @@ const TagField = (props) => {
           {(value || []).map(x => (
             <span className={styles.TagItem} key={x}>
               <span onClick={handleTagClick}>{x}</span>
-              <span onClick={() => {
-                const tagsSet = new Set(value || [])
-                tagsSet.delete(x)
-                onChange({ target: {
-                  value: Array.from(tagsSet),
-                  name: name
-                }})
-              }}>
-                ×
-              </span>
+              {!readOnly && (
+                <span onClick={() => {
+                  const tagsSet = new Set(value || [])
+                  tagsSet.delete(x)
+                  onChange({ target: {
+                    value: Array.from(tagsSet),
+                    name: name
+                  }})
+                }}>
+                  ×
+                </span>
+              )}
             </span>
           ))}
           <span

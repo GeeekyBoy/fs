@@ -99,7 +99,7 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
       if (projects[id]) {
         dispatch(setProject(id))
         if (shouldChangeURL) {
-          if (user.state === AuthState.SignedIn) {
+          if (user.state === AuthState.SignedIn || projects[id].isTemp) {
             app.navigate(`/${projects[id].permalink}`)
           } else {
             app.navigate(`/local/${projects[id].permalink}`)
@@ -108,8 +108,10 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
       }
       if (!getState().projects[id].isVirtual) {
         dispatch(tasksActions.handleFetchTasks(id))
-        if (user.state === AuthState.SignedIn) {
-          dispatch(collaborationActions.handleJoinProject(id))
+        if (user.state === AuthState.SignedIn || projects[id].isTemp) {
+          if (user.state === AuthState.SignedIn) {
+            dispatch(collaborationActions.handleJoinProject(id))
+          }
           dispatch(observersActions.handleSetTasksObservers(id))
         }
       }
@@ -139,7 +141,7 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
       dispatch(setRightPanel(false))
     }
     if (shouldChangeURL) {
-      if (app.selectedProject && user.state === AuthState.SignedIn) {
+      if (app.selectedProject && (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp)) {
         app.navigate(`/${projects[app.selectedProject].permalink}`)
       }
     }
@@ -154,7 +156,7 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
       dispatch(setRightPanelPage(panelPages.TASK_HUB))
     }
     if (shouldChangeURL) {
-      if (app.selectedProject && user.state === AuthState.SignedIn) {
+      if (app.selectedProject && (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp)) {
         app.navigate(`/${projects[app.selectedProject].permalink}/${tasks[id].permalink}`)
       }
     }

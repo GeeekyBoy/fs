@@ -51,7 +51,7 @@ const Home = (props) => {
       const {
         username, projectPermalink, taskPermalink
       } = routeParams;
-      if (user.state === AuthState.SignedIn && username && projectPermalink) {
+      if (username && projectPermalink) {
         let reqProject = Object.values(projects).filter(x => x.permalink === `${username}/${projectPermalink}`)[0]
         if (!reqProject) {
           try {

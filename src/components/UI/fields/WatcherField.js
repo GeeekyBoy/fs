@@ -61,15 +61,17 @@ const WatcherField = (props) => {
           )}
           {value.map(x => (
             <span className={styles.WatcherItem} key={x}>
-              <button
-                className={styles.RemoveBtn}
-                onClick={() => handleRemoveWatcher(x)}
-              >
-                <RemoveIcon
-                  height={16}
-                  width={16}
-                />
-              </button>
+              {!readOnly && (
+                <button
+                  className={styles.RemoveBtn}
+                  onClick={() => handleRemoveWatcher(x)}
+                >
+                  <RemoveIcon
+                    height={16}
+                    width={16}
+                  />
+                </button>
+              )}
               <Avatar user={users[x]} size={36} circular />
               <div className={styles.WatcherDetails}>
                 <span>{users[x].firstName}</span>

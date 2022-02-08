@@ -56,8 +56,33 @@ const Loading = (props) => {
     } else if (routeParams.projectPermalink &&
       routeParams.username &&
       currUser.state === AuthState.SignedOut) {
-        setShouldLogin(true)
-        return 0
+      let reqProject = null;
+      try {
+        reqProject = (await execGraphQL(graphqlOperation(queries.getProjectByPermalink, {
+          permalink: `${routeParams.username}/${routeParams.projectPermalink}`
+        }))).data.getProjectByPermalink
+        dispatch(projectsActions.createProject(reqProject, "temp"))
+      } catch {
+        reqProject = null
+        if (routeParams.taskPermalink) {
+          navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, { replace: true })
+        }
+      }
+      if (reqProject) {
+        dispatch(appActions.handleSetProject(reqProject.id, false))
+        setLoadingMsg("We Are Getting The Requested Tasks")
+        const tasks = await dispatch(tasksActions.handleFetchTasks(reqProject.id, true))
+        if (routeParams.taskPermalink) {
+          const reqTask = Object.values(tasks).filter(x => x.permalink === parseInt(routeParams.taskPermalink, 10))[0]
+          if (reqTask) {
+            dispatch(appActions.handleSetTask(reqTask.id, false))
+            dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
+            dispatch(appActions.handleSetRightPanel(true))
+          }
+        } else {
+          navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, { replace: true })
+        }
+      }
     } else if (routeParams.projectPermalink &&
       routeParams.username &&
       currUser.state === AuthState.SignedIn) {

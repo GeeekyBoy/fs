@@ -26,9 +26,10 @@ const Details = (props) => {
   } = props;
 
   const getReadOnly = (user, projects, selectedProject, isSynced) => {
-    return user.state === AuthState.SignedIn &&
+    return (user.state === AuthState.SignedIn &&
     ((projects[selectedProject]?.owner !== user.data.username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)
+    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
+    (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
   }
 
   const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
@@ -51,7 +52,7 @@ const Details = (props) => {
           value={tasks[selectedTask].assignees}
           readOnly={readOnly}
         />
-        {user.state === AuthState.SignedIn && (
+        {(user.state === AuthState.SignedIn || (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)) && (
           <WatcherField
             name="watchers"
             label="Watched By"

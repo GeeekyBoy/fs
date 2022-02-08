@@ -257,11 +257,11 @@ export const handleRemoveWatcher = (taskID, username) => async (dispatch, getSta
 }
 
 export const handleFetchTasks = (projectID, isInitial = false) => async (dispatch, getState) => {
-  const { user } = getState()
+  const { user, projects } = getState()
   if (!isInitial) {
     dispatch(appActions.handleSetTask(null))
   }
-  if (user.state === AuthState.SignedIn) {
+  if (user.state === AuthState.SignedIn || projects[projectID].isTemp) {
     try {
       dispatch(statusActions.setTasksStatus(LOADING))
       const res = await execGraphQL(graphqlOperation(listTasksForProject, { projectID }))
