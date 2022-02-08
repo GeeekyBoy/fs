@@ -301,10 +301,8 @@ exports.handler = async function (ctx) {
   }
 
   async function getEffectiveWatchers(taskID, exclusion = []) {
-    const task = await getTask(taskID)
-    const watchers = task.watchers
-    const assignees = task.assignees
-    return [...new Set([...watchers, ...assignees])].filter(x => !exclusion.includes(x))
+    const { watchers, assignees, owner } = await getTask(taskID)
+    return [...new Set([...watchers, ...assignees, owner])].filter(x => !exclusion.includes(x))
   }
 
   async function isProjectSharedWithClient(projectID, client) {
