@@ -11,6 +11,7 @@ const Textarea = (props) => {
     error,
     label,
     disabled,
+    className,
     style
   } = props
   const [isFocused, setIsFocused] = useState(false)
@@ -25,14 +26,16 @@ const Textarea = (props) => {
   }, [value])
   return (
     <div
-      style={style}
       className={[
         styles.TextareaContainer,
         ...(error && [styles.error] || []),
         ...(isFocused && [styles.focused] || []),
         ...(readOnly && [styles.readOnly] || []),
-        ...(value && [styles.filled] || [])
+        ...(disabled && [styles.disabled] || []),
+        ...(value && [styles.filled] || []),
+        className || ""
       ].join(" ")}
+      style={style}
     >
       <div>
         {label && (

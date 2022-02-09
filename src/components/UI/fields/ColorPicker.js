@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import styles from "./ColorPicker.module.scss"
 
 const ColorPicker = (props) => {
@@ -12,11 +12,29 @@ const ColorPicker = (props) => {
     name,
     readOnly,
     disabled,
+    className,
     style
   } = props
-  const [isFocused, setIsFocused] = useState(false)
+
+  const handlePick = (nextVal) => {
+    if (!(readOnly || disabled)) {
+      onChange({
+        target: {
+          value: nextVal,
+          name: name,
+        },
+      });
+    }
+  };
+
   return (
-    <div className={styles.ColorPickerShell} style={style}>
+    <div
+      className={[
+        styles.ColorPickerShell,
+        className || ""
+      ].join(" ")}
+      style={style}
+    >
       {label && (
         <label htmlFor={name}>
           {label}
@@ -27,7 +45,7 @@ const ColorPicker = (props) => {
           styles.ColorPickerContainer,
           ...(disabled && [styles.disabled] || []),
           ...(error && [styles.error] || []),
-          ...(isFocused && [styles.focused] || [])
+          className || "",
         ].join(" ")}
       >
         {colors.map((color, index) => (
@@ -35,14 +53,11 @@ const ColorPicker = (props) => {
             key={index}
             className={[
               styles.ColorPickerOption,
-              ...[options[index] === value && styles.selected || []]
+              ...[options[index] === value && styles.selected || []],
+              ...(readOnly && [styles.readOnly] || []),
+              ...(disabled && [styles.disabled] || []),
             ].join(" ")}
-            onClick={() => onChange({
-              target: {
-                name: name,
-                value: options[index]
-              }
-            })}
+            onClick={() => handlePick(options[index])}
           >
             <div style={{ backgroundColor: color }} />
           </div>

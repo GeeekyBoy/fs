@@ -1,26 +1,44 @@
-import React, { useState } from "react"
+import React from "react"
 import styles from "./Toggle.module.scss"
 
 const Toggle = (props) => {
   const {
-    value = "",
+    value = false,
     onChange,
     error,
     label,
     name,
     readOnly,
     disabled,
+    className,
     style
   } = props
-  const [isFocused, setIsFocused] = useState(false)
+
+  const handleToggle = (nextVal) => {
+    if (!(readOnly || disabled)) {
+      onChange({
+        target: {
+          value: nextVal,
+          name: name,
+        },
+      });
+    }
+  };
+
   return (
-    <div className={styles.ToggleShell} style={style}>
+    <div
+      className={[
+        styles.ToggleShell,
+        ...(disabled && [styles.disabled] || []),
+        className || ""
+      ].join(" ")}
+      style={style}
+    >
       <div
         className={[
           styles.ToggleContainer,
-          ...(disabled && [styles.disabled] || []),
           ...(error && [styles.error] || []),
-          ...(isFocused && [styles.focused] || [])
+          ...(readOnly && [styles.readOnly] || [])
         ].join(" ")}
       >
         {label && (
@@ -33,12 +51,7 @@ const Toggle = (props) => {
             styles.ToggleHandle,
             ...[value && styles.selected || []]
           ].join(" ")}
-          onClick={() => onChange({
-            target: {
-              name: name,
-              value: !value
-            }
-          })}
+          onClick={() => handleToggle(!value)}
         >
           <div />
         </div>

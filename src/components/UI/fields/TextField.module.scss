@@ -9,6 +9,12 @@
     font-size: 0.75rem;
     margin-left: 10px;
   }
+  &.disabled {
+    opacity: 0.6;
+    &, & * {
+      cursor: not-allowed;
+    }
+  }
 }
 
 .TextFieldContainer {
@@ -75,9 +81,6 @@
     & > label {
       color: #FF0000!important;
     }
-  }
-  &.disabled {
-    background-color: #FFFFFF2E!important;
   }
   & *:not(input):not(label) {
     @include themify(color, "outline");

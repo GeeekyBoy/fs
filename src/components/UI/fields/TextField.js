@@ -15,6 +15,7 @@ const TextField = (props) => {
     suffix,
     readOnly,
     disabled,
+    className,
     style,
     inputRef
   } = props
@@ -26,14 +27,14 @@ const TextField = (props) => {
         ...(disabled && [styles.disabled] || []),
         ...(error && [styles.error] || []),
         ...(isFocused && [styles.focused] || []),
-        ...(value && [styles.filled] || [])
+        ...(value && [styles.filled] || []),
+        className || ""
       ].join(" ")}
       style={style}
     >
       <div
         className={[
           styles.TextFieldContainer,
-          ...(disabled && [styles.disabled] || []),
           ...(error && [styles.error] || []),
           ...(isFocused && [styles.focused] || []),
           ...(readOnly && [styles.readOnly] || []),
@@ -45,7 +46,11 @@ const TextField = (props) => {
             {label}
           </label>
         )}
-        {prefix && React.createElement(prefix)}
+        {prefix && (
+          typeof prefix === 'string' ?
+          (<span>{prefix}</span>) :
+          React.createElement(prefix)
+        )}
         <input
           type={type}
           name={name}
@@ -59,7 +64,11 @@ const TextField = (props) => {
           disabled={disabled}
           ref={inputRef}
         />
-        {suffix && React.createElement(suffix)}
+        {suffix && (
+          typeof suffix === 'string' ?
+          (<span>{suffix}</span>) :
+          React.createElement(suffix)
+        )}
       </div>
       {error && <span>{error}</span>}
     </div>

@@ -3,10 +3,19 @@ import styles from "./Checkbox.module.scss";
 import { ReactComponent as CheckmarkIcon } from "../../../assets/checkmark-outline.svg";
 
 const Checkbox = (props) => {
-  const { name, onChange, label, value, readOnly, style } = props;
+  const {
+    name,
+    onChange,
+    label,
+    value = false,
+    readOnly,
+    disabled,
+    className,
+    style
+  } = props;
 
-  const onCheck = (nextVal) => {
-    if (!readOnly) {
+  const handleCheck = (nextVal) => {
+    if (!(readOnly || disabled)) {
       onChange({
         target: {
           value: nextVal,
@@ -17,18 +26,26 @@ const Checkbox = (props) => {
   };
 
   return (
-    <div className={styles.CheckboxShell} style={style}>
+    <div
+      className={[
+        styles.CheckboxShell,
+        ...(disabled && [styles.disabled] || []),
+        ...(readOnly && [styles.readOnly] || []),
+        className || ""
+      ].join(" ")}
+      style={style}
+    >
       <button
         className={[
           styles.CheckToggle,
           ...((value && [styles.checked]) || []),
         ].join(" ")}
-        onClick={() => onCheck(!value)}
+        onClick={() => handleCheck(!value)}
       >
         {value && <CheckmarkIcon width={24} height={24} />}
       </button>
       {label && (
-        <label htmlFor={name} onClick={() => onCheck(!value)}>
+        <label htmlFor={name} onClick={() => handleCheck(!value)}>
           {label}
         </label>
       )}

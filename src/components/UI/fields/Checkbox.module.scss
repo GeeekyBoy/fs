@@ -16,7 +16,17 @@
     width: max-content;
     font-size: 0.875rem;
     font-weight: 400;
+    cursor: pointer;
     @include themify(color, "color-fill-color-text-primary");
+  }
+  &.disabled {
+    opacity: 0.6;
+    & * {
+      cursor: not-allowed;
+    }
+  }
+  &.readOnly * {
+    cursor: default;
   }
 }
 

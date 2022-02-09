@@ -37,9 +37,6 @@
     & > textarea {
       resize: none;
       overflow: hidden;
-      &:disabled {
-        background-color: #fafafa;
-      }
       &::placeholder {
         color: #c0c0c0;
       }
@@ -63,6 +60,12 @@
       & > label {
         color: #FF0000!important;
       }
+    }
+  }
+  &.disabled {
+    opacity: 0.6;
+    &, & * {
+      cursor: not-allowed;
     }
   }
   &.focused:not(.readOnly:not(.filled)), &.filled {

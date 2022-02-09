@@ -4,6 +4,7 @@
   outline: none;
   border: none;
   cursor: pointer;
+  width: 100px;
   transition: background-color 0.3s, color 0.2s;
   @include themify(background-color, "primary");
   @include themify(color, "color-fill-color-text-on-accent-primary");
