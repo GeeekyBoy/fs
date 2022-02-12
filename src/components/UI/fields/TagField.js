@@ -81,7 +81,6 @@ const TagField = (props) => {
           ...(isFocused && [styles.focused] || []),
           ...((value || []).length && [styles.filled] || []),
           ...(error && [styles.error] || []),
-          ...(readOnly && [styles.readOnly] || []),
           className
         ].join(" ")}
         style={style}

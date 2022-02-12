@@ -18,8 +18,8 @@ frontend:
         - npm install immutable --force
     build:
       commands:
-        - if [ "${AWS_BRANCH}" = "main" ]; then npm run build; fi
-        - if [ "${AWS_BRANCH}" = "storybook" ]; then npm run build-storybook; fi
+        - npm run build
+        - npm run build-storybook
   artifacts:
     baseDirectory: build
     files:
