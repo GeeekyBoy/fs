@@ -28,7 +28,7 @@ const Select = (props) => {
 	return (
     <div
       className={[
-        styles.SelectShell,,
+        styles.SelectShell,
         ...(readOnly && [styles.readOnly] || []),
         ...(disabled && [styles.disabled] || []),
         className || ""
