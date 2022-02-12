@@ -1,4 +1,5 @@
 import React from "react";
+import { useArgs } from "@storybook/client-api";
 import { withPerformance } from "storybook-addon-performance";
 
 import TextField from "../components/UI/fields/TextField";
@@ -15,7 +16,11 @@ export default {
   },
 };
 
-const Template = (args) => <TextField {...args} />;
+const Template = (args) => {
+  const [_, updateArgs] = useArgs();
+  const handleChange = (e) => updateArgs({ value: e.target.value });
+  return <TextField onChange={handleChange} {...args} />;
+};
 
 export const Default = Template.bind({});
 Default.args = {

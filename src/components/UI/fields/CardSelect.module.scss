@@ -24,13 +24,14 @@
   justify-content: center;
   width: 100%;
   text-align: left;
+  opacity: 1;
   padding: 12px;
   border: 1px solid;
   outline: none;
   cursor: pointer;
   border-radius: 8px;
   text-align: inherit;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.2s, border-color 0.2s, opacity 0.3s;
   @include themify(border-color, "color-stroke-color-card-stroke-default");
   @include themify(background-color, "color-background-fill-color-card-background-default");
   & > span:nth-child(1) {
@@ -47,6 +48,7 @@
     color: #aaa8ac;
   }
   &.selected {
+    cursor: default;
     @include themify(border-color, "primary", true);
     & > span:nth-child(1) {
       @include themify(color, "primary");
@@ -55,14 +57,19 @@
       @include themify(color, "color-fill-color-text-primary");
     }
   }
+  &.readOnly {
+    cursor: default;
+  }
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 .SelectContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
-  opacity: 1;
-  transition: opacity 0.3s;
   & > *:not(:last-child) {
     margin-bottom: 5px;
   }
@@ -73,10 +80,7 @@
       margin-right: 5px;
     }
   }
-  &.center {
+  &.centeredText {
     text-align: center;
-  }
-  &.disabled {
-    opacity: 0.6;
   }
 }

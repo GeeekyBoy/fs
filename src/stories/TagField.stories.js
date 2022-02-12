@@ -2,26 +2,33 @@ import React from "react";
 import { useArgs } from "@storybook/client-api";
 import { withPerformance } from "storybook-addon-performance";
 
-import Checkbox from "../components/UI/fields/Checkbox";
+import TagField from "../components/UI/fields/TagField";
 
 export default {
-  title: "ForwardSlash/Fields/Checkbox",
-  component: Checkbox,
+  title: "ForwardSlash/Fields/Tag Field",
+  component: TagField,
   decorators: [withPerformance()]
 };
 
 const Template = (args) => {
   const [_, updateArgs] = useArgs();
   const handleChange = (e) => updateArgs({ value: e.target.value });
-  return <Checkbox onChange={handleChange} {...args} />;
+  return <TagField onChange={handleChange} {...args} />;
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  value: false,
-  label: "label",
+  value: ["bug", "urgent", "important"],
+  label: "Tags",
+  error: "",
   readOnly: false,
   disabled: false,
+};
+
+export const Error = Template.bind({});
+Error.args = {
+  ...Default.args,
+  error: "error message",
 };
 
 export const ReadOnly = Template.bind({});

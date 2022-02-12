@@ -12,13 +12,15 @@ const CardSelect = (props) => {
 		onChange,
     label,
     readOnly,
-    style,
+    disabled,
     row,
-    center
+    centeredText,
+    className,
+    style
 	} = props;
 
 	const onSelect = (nextVal) => {
-    if (!readOnly) {
+    if (!(readOnly || disabled)) {
       onChange({ target: {
         value: nextVal,
         name: name
@@ -27,7 +29,13 @@ const CardSelect = (props) => {
 	};
 
 	return (
-    <div className={styles.SelectShell} style={style}>
+    <div
+      className={[
+        styles.SelectShell,
+        className || ""
+      ].join(" ")}
+      style={style}
+    >
       {label && (
         <label htmlFor={name}>
           {label}
@@ -37,14 +45,16 @@ const CardSelect = (props) => {
         className={[
           styles.SelectContainer,
           ...(row && [styles.row] || []),
-          ...(center && [styles.center] || [])
+          ...(centeredText && [styles.centeredText] || [])
         ].join(" ")}
       >
         {values.map((x, i) => (
           <button
             className={[
               styles.Selection,
-              ...(value === x && [styles.selected] || [])
+              ...(value === x && [styles.selected] || []),
+              ...(readOnly && [styles.readOnly] || []),
+              ...(disabled && [styles.disabled] || [])
             ].join(" ")}
             key={x}
             onClick={() => onSelect(x)}

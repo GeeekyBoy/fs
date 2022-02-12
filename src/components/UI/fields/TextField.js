@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid"
 import React, { useState } from "react"
 import styles from "./TextField.module.scss"
 
@@ -19,6 +20,7 @@ const TextField = (props) => {
     style,
     inputRef
   } = props
+  const [ id ] = useState("TextField_" + nanoid(11))
   const [isFocused, setIsFocused] = useState(false)
   return (
     <div
@@ -42,7 +44,7 @@ const TextField = (props) => {
         ].join(" ")}
       >
         {label && (
-          <label htmlFor={name}>
+          <label htmlFor={id}>
             {label}
           </label>
         )}
@@ -52,6 +54,7 @@ const TextField = (props) => {
           React.createElement(prefix)
         )}
         <input
+          id={id}
           type={type}
           name={name}
           autoComplete={autoComplete}

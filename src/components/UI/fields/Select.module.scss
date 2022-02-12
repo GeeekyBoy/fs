@@ -25,6 +25,17 @@
     @include themify(color, "outline");
     @include themify(background-color, "auxiliarySurface");
   }
+  &.readOnly {
+    &, & .Selection {
+      cursor: default;
+    }
+  }
+  &.disabled {
+    opacity: 0.6;
+    &, & * {
+      cursor: not-allowed;
+    }
+  }
 }
 
 .Selection {
@@ -34,6 +45,7 @@
   font-weight: 600;
   font-size: 0.875rem;
   border-radius: 100000000000000px;
+  cursor: pointer;
   transition: color 0.2s, background-color 0.2s;
   @include themify(border-color, "color-stroke-color-card-stroke-default");
   @include themify(color, "color-fill-color-text-secondary");
@@ -49,12 +61,6 @@
 .SelectContainer {
   display: flex;
   flex-direction: row;
-  & > .Selection {
-    cursor: pointer;
-  }
-  &.readOnly > .Selection {
-    cursor: default;
-  }
   & > *:not(:last-child) {
     margin-right: 5px;
   }

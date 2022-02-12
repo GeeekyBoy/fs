@@ -2,26 +2,28 @@ import React from "react";
 import { useArgs } from "@storybook/client-api";
 import { withPerformance } from "storybook-addon-performance";
 
-import Checkbox from "../components/UI/fields/Checkbox";
+import Select from "../components/UI/fields/Select";
 
 export default {
-  title: "ForwardSlash/Fields/Checkbox",
-  component: Checkbox,
-  decorators: [withPerformance()]
+  title: "ForwardSlash/Fields/Select",
+  component: Select,
+  decorators: [withPerformance()],
 };
 
 const Template = (args) => {
   const [_, updateArgs] = useArgs();
   const handleChange = (e) => updateArgs({ value: e.target.value });
-  return <Checkbox onChange={handleChange} {...args} />;
+  return <Select onChange={handleChange} {...args} />;
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  value: false,
-  label: "label",
+  value: "todo",
+  label: "Status",
+  values: ["todo", "pending", "done"],
+  options: ["Todo", "Pending", "Done"],
   readOnly: false,
-  disabled: false,
+  disabled: false
 };
 
 export const ReadOnly = Template.bind({});

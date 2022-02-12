@@ -1,4 +1,5 @@
 import React from "react";
+import { useArgs } from "@storybook/client-api";
 import { withPerformance } from "storybook-addon-performance";
 
 import Toggle from "../components/UI/fields/Toggle";
@@ -9,7 +10,11 @@ export default {
   decorators: [withPerformance()]
 };
 
-const Template = (args) => <Toggle {...args} />;
+const Template = (args) => {
+  const [_, updateArgs] = useArgs();
+  const handleChange = (e) => updateArgs({ value: e.target.value });
+  return <Toggle onChange={handleChange} {...args} />;
+};
 
 export const Default = Template.bind({});
 Default.args = {

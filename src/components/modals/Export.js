@@ -69,7 +69,7 @@ const Export = (props) => {
         onChange={(e) => setFileType(e.target.value)}
         row={width > 768}
         readOnly={false}
-        center={true}
+        centeredText={true}
       />
     </Modal>
   );

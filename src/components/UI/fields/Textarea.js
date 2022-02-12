@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid"
 import React, { useEffect, useRef, useState } from "react"
 import styles from "./Textarea.module.scss"
 
@@ -14,6 +15,7 @@ const Textarea = (props) => {
     className,
     style
   } = props
+  const [ id ] = useState("Textarea" + nanoid(11))
   const [isFocused, setIsFocused] = useState(false)
   const textareaRef = useRef(null)
   const adjustSize = ({ target }) => {
@@ -39,11 +41,12 @@ const Textarea = (props) => {
     >
       <div>
         {label && (
-          <label htmlFor={name}>
+          <label htmlFor={id}>
             {label}
           </label>
         )}
         <textarea
+          id={id}
           name={name}
           value={value || ""}
           rows={1}

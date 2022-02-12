@@ -11,11 +11,13 @@ const Select = (props) => {
 		onChange,
     label,
     readOnly,
+    disabled,
+    className,
     style
 	} = props;
 
 	const onSelect = (nextVal) => {
-    if (!readOnly) {
+    if (!(readOnly || disabled)) {
       onChange({ target: {
         value: nextVal,
         name: name
@@ -24,7 +26,15 @@ const Select = (props) => {
 	};
 
 	return (
-    <div className={styles.SelectShell} style={style}>
+    <div
+      className={[
+        styles.SelectShell,,
+        ...(readOnly && [styles.readOnly] || []),
+        ...(disabled && [styles.disabled] || []),
+        className || ""
+      ].join(" ")}
+      style={style}
+    >
       {label && (
         <label htmlFor={name}>
           {label}

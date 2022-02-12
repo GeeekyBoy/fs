@@ -1,4 +1,5 @@
 import React from "react";
+import { useArgs } from "@storybook/client-api";
 import { withPerformance } from "storybook-addon-performance";
 
 import Textarea from "../components/UI/fields/Textarea";
@@ -9,7 +10,11 @@ export default {
   decorators: [withPerformance()]
 };
 
-const Template = (args) => <Textarea {...args} />;
+const Template = (args) => {
+  const [_, updateArgs] = useArgs();
+  const handleChange = (e) => updateArgs({ value: e.target.value });
+  return <Textarea onChange={handleChange} {...args} />;
+};
 
 export const Default = Template.bind({});
 Default.args = {

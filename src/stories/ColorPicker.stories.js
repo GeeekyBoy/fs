@@ -1,4 +1,5 @@
 import React from "react";
+import { useArgs } from "@storybook/client-api";
 import { withPerformance } from "storybook-addon-performance";
 
 import ColorPicker from "../components/UI/fields/ColorPicker";
@@ -15,7 +16,11 @@ export default {
   },
 };
 
-const Template = (args) => <ColorPicker {...args} />;
+const Template = (args) => {
+  const [_, updateArgs] = useArgs();
+  const handleChange = (e) => updateArgs({ value: e.target.value });
+  return <ColorPicker onChange={handleChange} {...args} />;
+};
 
 export const Default = Template.bind({});
 Default.args = {
