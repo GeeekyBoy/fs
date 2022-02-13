@@ -3,7 +3,7 @@ import styles from "./AvatarGroup.module.scss"
 
 const AvatarGroup = (props) => {
 	const {
-		max,
+		max = Infinity,
 		users,
 		size
 	} = props
@@ -29,11 +29,13 @@ const AvatarGroup = (props) => {
                   marginRight: -(size * 0.42)
                 })
               }}
+              alt={name}
               src={avatar}
             /> :
 						<div 
               className={styles.LetterAvatar}
               style={{
+                borderColor: color,
                 fontSize: size / 2.4,
                 minWidth: size,
                 minHeight: size,
@@ -53,6 +55,7 @@ const AvatarGroup = (props) => {
         <div 
           className={styles.LetterAvatar}
           style={{
+            borderColor: "#0067C0",
             fontSize: size / 2.4,
             minWidth: size,
             minHeight: size,

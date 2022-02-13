@@ -6,9 +6,9 @@
 .ImageAvatar {
   display: inline;
   border-radius: 100%;
-  border: 2px solid;
+  border: 2.5px solid;
   transition: border-color 0.2s;
-  @include themify(border-color, "color-background-fill-color-layer-default");
+  @include themify(border-color, "primary");
 }
 
 .LetterAvatar {
@@ -17,9 +17,9 @@
   justify-content: center;
   border-radius: 100%;
   line-height: 0;
-  border: 2px solid;
+  border: 2.5px solid;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   @include themify(color, "primary");
   @include themify(background-color, "auxiliarySurface");
-  @include themify(border-color, "color-background-fill-color-card-background-default");
+  @include themify(border-color, "primary");
 }

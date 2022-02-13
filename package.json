@@ -55,7 +55,7 @@
     "test": "cross-env AUTOPREFIXER_GRID=autoplace craco test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o ./build/storybook"
+    "build-storybook": "build-storybook"
   },
   "babel": {
     "presets": [
@@ -91,22 +91,21 @@
     "@babel/core": "^7.17.0",
     "@babel/eslint-parser": "^7.17.0",
     "@craco/craco": "^6.4.3",
+    "@storybook/addon-a11y": "^6.5.0-alpha.39",
     "@storybook/addon-actions": "^6.5.0-alpha.39",
     "@storybook/addon-essentials": "^6.5.0-alpha.39",
     "@storybook/addon-interactions": "^6.5.0-alpha.39",
     "@storybook/addon-links": "^6.5.0-alpha.39",
     "@storybook/builder-webpack5": "^6.5.0-alpha.39",
+    "@storybook/client-api": "^6.5.0-alpha.39",
     "@storybook/manager-webpack5": "^6.5.0-alpha.39",
     "@storybook/node-logger": "^6.5.0-alpha.39",
     "@storybook/preset-create-react-app": "^4.0.1",
     "@storybook/react": "^6.5.0-alpha.39",
-    "@storybook/client-api": "^6.5.0-alpha.39",
-    "@storybook/addon-a11y": "^6.5.0-alpha.39",
-    "storybook-addon-breakpoints": "^1.0.0",
-    "storybook-addon-performance": "^0.16.1",
     "autoprefixer": "^10.4.2",
     "babel-loader": "^8.2.3",
     "buffer": "^6.0.3",
+    "chromatic": "^6.4.3",
     "compression-webpack-plugin": "^9.2.0",
     "core-js": "^3.21.0",
     "craco-sass-resources-loader": "^1.1.0",
@@ -118,6 +117,8 @@
     "prettier": "^2.5.1",
     "sass": "^1.49.7",
     "smap": "^0.2.0",
+    "storybook-addon-breakpoints": "^1.0.0",
+    "storybook-addon-performance": "^0.16.1",
     "stream-browserify": "3.0.0",
     "webpack-bundle-analyzer": "^4.5.0"
   }

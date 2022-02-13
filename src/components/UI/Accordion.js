@@ -43,7 +43,7 @@ const Accordion = (props) => {
       </div>
       {isAccordionOpened && (
         <div className={styles.AccordionContent} style={{ height }}>
-          {props.children}
+          {props.children || props.content}
         </div>
       )}
     </div>

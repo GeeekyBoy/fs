@@ -25,7 +25,7 @@ const ProgressRing = (props) => {
       />
       <circle
         className={styles.OuterRing}
-        stroke={`hsl(${progress},100%,50%)`}
+        stroke={`hsl(${progress},100%,44%)`}
         fill="transparent"
         strokeWidth={stroke}
         strokeLinecap="round"
@@ -40,7 +40,7 @@ const ProgressRing = (props) => {
         y="50%"
         textAnchor="middle"
         fontWeight={600}
-        fill={`hsl(${progress},100%,50%)`}
+        fill={`hsl(${progress},100%,44%)`}
         stroke="none"
         dy=".3em"
       >

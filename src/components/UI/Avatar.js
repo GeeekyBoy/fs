@@ -19,6 +19,7 @@ const Avatar = (props) => {
         width: size,
         height: size
       }}
+      alt={name}
       src={avatar}
     />
   ) : (

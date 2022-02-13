@@ -19,7 +19,7 @@ frontend:
     build:
       commands:
         - npm run build
-        - npm run build-storybook
+        - npx chromatic --project-token $CHROMATIC_TOKEN
   artifacts:
     baseDirectory: build
     files:
