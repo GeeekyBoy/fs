@@ -7,19 +7,19 @@ import Notification from './UI/Notification';
 const Notifications = (props) => {
   const {
     notifications,
+    users,
     dispatch
   } = props;
-  const notificationElem = useRef(null)
   const dismissTimer = useRef(null)
   const [anim, setAnim] = useState(0)
   const dismissNotification = (e) => {
     if (e) e.stopPropagation()
     clearTimeout(dismissTimer.current)
     setAnim(1)
-    notificationElem.current.addEventListener("animationend", () => {
-      dispatch(notificationsActions.dismiss(notifications.pushed[0]?.id))
-      setAnim(0)
-    })
+  }
+  const handleAnimationEnd = () => {
+    dispatch(notificationsActions.dismiss(notifications.pushed[0]?.id))
+    setAnim(0)
   }
   useEffect(() => {
     clearTimeout(dismissTimer.current)
@@ -32,11 +32,15 @@ const Notifications = (props) => {
       {notifications.pushed[0] && (
         <Notification
           key={notifications.pushed[0]}
-          ref={notificationElem}
-          headsUp={true}
           notificationData={notifications.pushed[0]}
-          anim={anim}
           onDismiss={dismissNotification}
+          onAnimationEnd={handleAnimationEnd}
+          senderData={users[notifications.pushed[0].sender]}
+          className={[
+            styles.NotificationOverride,
+            ...(anim === 0 && [styles.entering] || []),
+            ...(anim === 1 && [styles.exiting] || [])
+          ].join(" ")}
         />
       )}
     </div>
@@ -44,5 +48,6 @@ const Notifications = (props) => {
 };
 
 export default connect((state) => ({
-  notifications: state.notifications
+  notifications: state.notifications,
+  users: state.users,
 }))(Notifications);

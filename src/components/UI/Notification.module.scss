@@ -1,90 +1,30 @@
-@keyframes enteringAnim {
-  from {
-    margin-right: -330px;
-  }
-
-  to {
-    margin-right: 10px;
-  }
-}
-
-@keyframes exitingAnim {
-  from {
-    margin-right: 10px;
-  }
-
-  to {
-    margin-right: -330px;
-  }
-}
-
-@keyframes enteringAnimMobile {
-  from {
-    margin-top: -48px;
-  }
-
-  to {
-    margin-top: 10px;
-  }
-}
-
-@keyframes exitingAnimMobile {
-  from {
-    margin-top: 10px;
-  }
-
-  to {
-    margin-top: -48px;
-  }
-}
-
 .NotificationShell {
+  width: 100%;
+}
+
+.NotificationContainer {
   position: relative;
   display: flex;
   flex-direction: column;
   padding: 15px;
-  width: calc(100% - 80px);
-  margin: 0 25px;
+  width: calc(100% - 32px);
   border: 1px solid;
   border-radius: 8px;
   transition: background-color 0.2s, color 0.2s;
-  animation: 0.4s ease-in-out forwards;
   @include themify(border-color, "color-stroke-color-card-stroke-default");
   @include themify(background-color, "color-background-fill-color-card-background-default");
   @include themify(color, "color-fill-color-text-primary");
-  &.entering {
-    animation-name: enteringAnim;
-  }
-  &.exiting {
-    animation-name: exitingAnim;
-  }
   &.clickable {
     cursor: pointer;
     &:hover {
       background-color: rgba(255, 255, 255, 0.9);
     }
   }
-  &.headsUp {
-    width: 300px;
-    margin: 10px 10px 10px 0;
-  }
   &.expanded {
     & .NotificationBottomPart > span {
       white-space: normal;
       overflow: hidden;
       text-overflow: initial;
-    }
-  }
-  @media only screen and (max-width: 768px) {
-    &.headsUp {
-      width: calc(100% - 50px);
-      margin: auto;
-    }
-    &.entering {
-      animation-name: enteringAnimMobile;
-    }
-    &.exiting {
-      animation-name: exitingAnimMobile;
     }
   }
 }
@@ -120,7 +60,7 @@
   @include themify(color, "color-fill-color-text-primary");
 }
 
-.NotificationContainer {
+.NotificationContent {
   display: flex;
   flex-direction: row;
   align-items: flex-start;

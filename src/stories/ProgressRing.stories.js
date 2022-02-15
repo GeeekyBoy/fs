@@ -9,10 +9,7 @@ export default {
   decorators: [withPerformance()],
   argTypes: {
     progress: {
-      min: 0,
-      max: 100,
-      step: 1,
-      control: { type: "range" },
+      control: { type: "range", min: 0, max: 100, step: 1 },
     },
   },
 };

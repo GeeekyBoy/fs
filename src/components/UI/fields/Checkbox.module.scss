@@ -7,6 +7,7 @@
   padding: 5px 10px;
   border: none;
   background-color: transparent;
+  width: fit-content;
   @include themify(border-color, "outline");
   & > *:not(:last-child) {
     margin-right: 10px;

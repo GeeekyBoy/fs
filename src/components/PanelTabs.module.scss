@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: fit-content;
+  height: fit-content;
 }
 
 .PanelTabsContainer {
@@ -9,14 +11,20 @@
   flex-direction: row;
   padding: 5px;
   border: 1px solid;
-  height: fit-content;
-  width: fit-content;
+  height: calc(100% - 12px);
+  width: calc(100% - 12px);
   border-radius: 24px;
   position: relative;
   @include themify(border-color, "color-stroke-color-card-stroke-default");
   @include themify(background-color, "color-background-fill-color-card-background-default");
   & > *:not(:last-child) {
     margin-right: 5px;
+  }
+  &.disabled {
+    opacity: 0.6;
+    &, & * {
+      cursor: not-allowed!important;
+    }
   }
 }
 

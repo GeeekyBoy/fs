@@ -15,6 +15,7 @@ import execGraphQL from '../../utils/execGraphQL';
 const Notifications = (props) => {
   const {
     notifications,
+    users,
     app: {
       isSynced
     },
@@ -79,6 +80,7 @@ const Notifications = (props) => {
             notificationData={x}
             onOpen={closePanel}
             onDismiss={(e) => dismissNotification(e, x.id)}
+            senderData={users[x.sender]}
           />
         )) : (
           <div className={styles.NoNotifications}>
@@ -96,4 +98,5 @@ const Notifications = (props) => {
 export default connect((state) => ({
   app: state.app,
   notifications: state.notifications,
+  users: state.users,
 }))(Notifications);

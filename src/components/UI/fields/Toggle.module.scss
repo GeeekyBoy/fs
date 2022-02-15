@@ -1,5 +1,5 @@
 .ToggleShell {
-  width: calc(100% - 20px);
+  width: 100%;
   & > span {
     color: #FF0000;
     font-size: 0.75rem;
@@ -15,7 +15,7 @@
   
 .ToggleContainer {
   position: relative;
-  width: 100%;
+  width: calc(100% - 22px);
   padding: 10px;
   display: flex;
   justify-content: space-between;

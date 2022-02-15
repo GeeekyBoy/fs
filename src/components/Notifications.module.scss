@@ -1,4 +1,42 @@
+@keyframes enteringAnim {
+  from {
+    margin-right: -330px;
+  }
 
+  to {
+    margin-right: 10px;
+  }
+}
+
+@keyframes exitingAnim {
+  from {
+    margin-right: 10px;
+  }
+
+  to {
+    margin-right: -330px;
+  }
+}
+
+@keyframes enteringAnimMobile {
+  from {
+    margin-top: -48px;
+  }
+
+  to {
+    margin-top: 10px;
+  }
+}
+
+@keyframes exitingAnimMobile {
+  from {
+    margin-top: 10px;
+  }
+
+  to {
+    margin-top: -48px;
+  }
+}
 
 .NotificationsContainer {
   position: fixed;
@@ -10,5 +48,29 @@
   z-index: 9999999;
   @media only screen and (max-width: 768px) {
     width: 100%;
+  }
+}
+
+.NotificationOverride {
+  width: 300px;
+  margin: 10px 10px 10px 0;
+  animation: 0.4s ease-in-out forwards;
+  &.entering {
+    animation-name: enteringAnim;
+  }
+  &.exiting {
+    animation-name: exitingAnim;
+  }
+  @media only screen and (max-width: 768px) {
+    &.headsUp {
+      width: calc(100% - 50px);
+      margin: auto;
+    }
+    &.entering {
+      animation-name: enteringAnimMobile;
+    }
+    &.exiting {
+      animation-name: exitingAnimMobile;
+    }
   }
 }
