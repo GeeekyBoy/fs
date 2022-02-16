@@ -11,6 +11,7 @@ import { ReactComponent as RemoveIcon } from "../../../assets/trash-outline.svg"
 import * as commentsActions from "../../../actions/comments";
 import Avatar from '../../UI/Avatar';
 import generateID from '../../../utils/generateID';
+import Illustration from '../../UI/Illustration';
 
 const Comments = (props) => {
   const {
@@ -143,12 +144,17 @@ const Comments = (props) => {
           )
         ))}
         {!processedComments && (
-          <div className={styles.NoComments}>
-            <CommentsIllustartion />
-            <span>
-              No Comments On This Task
-            </span>
-          </div>
+          // <div className={styles.NoComments}>
+          //   <CommentsIllustartion />
+          //   <span>
+          //     No Comments On This Task
+          //   </span>
+          // </div>
+          <Illustration
+            illustration={CommentsIllustartion}
+            title="No Comments On This Task"
+            secondary={true}
+          />
         )}
       </div>
       {readOnly ? (

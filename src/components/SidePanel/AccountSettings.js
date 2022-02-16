@@ -1,21 +1,17 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { connect } from "react-redux";
 import { graphqlOperation } from "@aws-amplify/api";
 import * as mutations from "../../graphql/mutations"
 import * as appActions from "../../actions/app";
 import * as userActions from "../../actions/user";
 import styles from "./AccountSettings.module.scss"
-import SimpleBar from 'simplebar-react';
-import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
 import { ReactComponent as LogOutIcon } from "../../assets/log-out-outline.svg"
-import DateField from '../UI/fields/DateField';
 import Button from '../UI/Button';
-import Select from '../UI/fields/Select';
 import TextField from '../UI/fields/TextField';
 import Avatar from '../UI/Avatar';
 import execGraphQL from '../../utils/execGraphQL';
 
-const AccountSettings = (props) => {
+const AccountSettings = forwardRef((props, ref) => {
   const {
     user: {
       data: {
@@ -82,80 +78,76 @@ const AccountSettings = (props) => {
       setIsBusy(false)
     })
   }
+  useImperativeHandle(ref, () => ({
+    panelProps: {
+      title: "Account Settings",
+      actionIcon: LogOutIcon,
+      submitLabel: isBusy
+        ? "Saving Changes"
+        : isSynced
+        ? "Save Changes"
+        : "No Connection!",
+      submitDisabled: isBusy || !isChanged || !isSynced,
+      header: (
+        <div className={styles.AccountSettingsHeader}>
+          <Avatar user={props.user.data} size={128} />
+          <span>
+            {firstName} {lastName}
+          </span>
+          <span>@{username}</span>
+        </div>
+      ),
+      onClose: () => {
+        closePanel();
+      },
+      onAction: () => {
+        logOut();
+      },
+      onSubmit: () => {
+        saveChanges();
+      },
+    },
+  }));
   return (
-    <>
-      <div className={styles.PanelPageToolbar}>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={closePanel}
-        >
-          <BackArrowIcon
-            width={24}
-            height={24}
-          />
-        </button>
-        <span className={styles.PanelPageTitle}>
-          Account Settings
-        </span>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={logOut}
-          >
-          <LogOutIcon
-            width={24}
-            height={24}
-          />
-        </button>
-      </div>
-      <div className={styles.AccountSettingsHeader}>
-        <Avatar user={props.user.data} size={128} />
-        <span>{firstName} {lastName}</span>
-        <span>@{username}</span>
-      </div>
-      <SimpleBar className={styles.AccountSettingsForm}>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <TextField
-            type="text"
-            name="firstName"
-            label="First Name"
-            placeholder="first name…"
-            onChange={(e) => setNewFirstName(e.target.value)}
-            value={newFirstName}
-            readOnly={!isSynced}
-          />
-          <TextField
-            type="text"
-            name="lastName"
-            label="Last Name"
-            placeholder="last name…"
-            onChange={(e) => setNewLastName(e.target.value)}
-            value={newLastName}
-            readOnly={!isSynced}
-          />
-          <TextField
-            type="email"
-            name="email"
-            label="Email"
-            placeholder="email…"
-            disabled
-            onChange={(e) => setNewEmail(e.target.value)}
-            value={newEmail}
-            readOnly={!isSynced}
-          />
-        </form>
-      </SimpleBar>
-      <Button
-        style={{ margin: "0 25px 25px 25px" }}
-        onClick={saveChanges}
-        disabled={isBusy || !isChanged || !isSynced}
-      >
-        {isBusy ? "Saving Changes" : isSynced ? "Save Changes" : "No Connection!"}
-      </Button>
-    </>
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      className={styles.AccountSettingsForm}
+    >
+      <TextField
+        type="text"
+        name="firstName"
+        label="First Name"
+        placeholder="first name…"
+        onChange={(e) => setNewFirstName(e.target.value)}
+        value={newFirstName}
+        readOnly={!isSynced}
+      />
+      <TextField
+        type="text"
+        name="lastName"
+        label="Last Name"
+        placeholder="last name…"
+        onChange={(e) => setNewLastName(e.target.value)}
+        value={newLastName}
+        readOnly={!isSynced}
+      />
+      <TextField
+        type="email"
+        name="email"
+        label="Email"
+        placeholder="email…"
+        disabled
+        onChange={(e) => setNewEmail(e.target.value)}
+        value={newEmail}
+        readOnly={!isSynced}
+      />
+    </form>
   );
-};
+});
+
+AccountSettings.displayName = "AccountSettings";
 
 export default connect((state) => ({
   user: state.user,
   app: state.app
-}))(AccountSettings);
+}), null, null, { forwardRef: true })(AccountSettings);

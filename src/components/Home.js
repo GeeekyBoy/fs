@@ -99,9 +99,9 @@ const Home = (props) => {
           <SyncManager />
 					<Toolbar />
 					<div className={`${styles.MainPage} no-keyboard-portrait-padding-bottom-90`}>
-						<SidePanel isRight={false} />
+						<SidePanel right={false} />
 						<TasksPanel />
-						<SidePanel isRight={true} />
+						<SidePanel right={true} />
 					</div>
 				</>
       )}

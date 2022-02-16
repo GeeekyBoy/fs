@@ -1,40 +1,5 @@
-.PanelPageToolbar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 25px;
-  padding-top: 25px;
-}
-
-.PanelPageTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
-}
-
-.PanelPageToolbarAction {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 100%;
-  outline: none;
-  padding: 5px;
-  margin: 0;
-  background-color: transparent;
-  cursor: pointer;
-  transition: opacity 0.3s, color 0.2s;
-  @include themify(color, "primary");
-  &:disabled {
-    opacity: 0.6;
-    cursor: default;
-  }
-}
-
 .KeywordField {
-  width: calc(100% - 70px);
+  width: calc(100% - 22px);
   outline: none;
   border: 1px solid;
   padding: 10px;
@@ -96,29 +61,5 @@
   }
   & > *:not(:last-child) {
     margin-right: 10px;
-  }
-}
-
-.AssigneeChooserIllustartion {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  margin-top: -25px;
-  & > svg {
-    width: 250px;
-    height: auto;
-    transition: color 0.2s;
-    @include themify(color, "primary");
-  }
-  & > span {
-    font-weight: bold;
-    font-size: 1.125rem;
-    transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
-  }
-  & > *:not(:last-child) {
-    margin-bottom: 40px;
   }
 }

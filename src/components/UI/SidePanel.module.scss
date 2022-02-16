@@ -1,0 +1,243 @@
+@keyframes openingAnimLeft {
+  from {
+    transform: translate3d(-366px, 0, 0);
+    margin: 0 -365px 0 0;
+  }
+
+  to {
+    transform: initial;
+    margin: 0;
+  }
+}
+
+@keyframes closingAnimLeft {
+  from {
+    transform: initial;
+    margin: 0;
+  }
+
+  to {
+    transform: translate3d(-366px, 0, 0);
+    margin: 0 -365px 0 0;
+  }
+}
+
+@keyframes openingAnimRight {
+  from {
+    transform: translate3d(366px, 0, 0);
+    margin: 0 0 0 -365px;
+  }
+
+  to {
+    transform: initial;
+    margin: 0;
+  }
+}
+
+@keyframes closingAnimRight {
+  from {
+    transform: initial;
+    margin: 0;
+  }
+
+  to {
+    transform: translate3d(366px, 0, 0);
+    margin: 0 0 0 -365px;
+  }
+}
+
+@keyframes openingAnimLeftMobile {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    margin: 0;
+  }
+
+  to {
+    transform: initial;
+    margin: 0;
+  }
+}
+
+@keyframes closingAnimLeftMobile {
+  from {
+    transform: initial;
+    margin: 0;
+  }
+
+  to {
+    transform: translate3d(-100%, 0, 0);
+    margin: 0;
+  }
+}
+
+@keyframes openingAnimRightMobile {
+  from {
+    transform: translate3d(100%, 0, 0);
+    margin: 0;
+  }
+
+  to {
+    transform: initial;
+    margin: 0;
+  }
+}
+
+@keyframes closingAnimRightMobile {
+  from {
+    transform: initial;
+    margin: 0;
+  }
+
+  to {
+    transform: translate3d(100%, 0, 0);
+    margin: 0;
+  }
+}
+
+.SidePanelShell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 0;
+  height: calc(100vh - 50px);
+  flex: 1;
+  transition: all 0.2s;
+  width: 365px;
+  max-width: 365px;
+  min-width: 365px;
+  will-change: transform;
+  overflow: hidden;
+  animation: 0.2s ease-in-out forwards;
+  animation-name: closingAnimLeft;
+  @include themify(background-color, "auxiliarySurface");
+  &.opened {
+    overflow: auto;
+    animation-name: openingAnimLeft;
+  }
+  &.right {
+    border-left: 1px solid;
+    animation-name: closingAnimRight;
+    @include themify(border-color, "color-stroke-color-card-stroke-default");
+    &.opened {
+      animation-name: openingAnimRight;
+    }
+  }
+
+  &:not(.right) {
+    border-right: 1px solid;
+    @include themify(border-color, "color-stroke-color-card-stroke-default");
+  }
+  & > *:not(:last-child) {
+    margin-bottom: 25px;
+  }
+  @media only screen and (max-width: 768px) {
+    position: fixed;
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    padding: 25px 0 calc(25px + 68px) 0;
+    height: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    will-change: transform;
+    animation-name: closingAnimLeftMobile;
+    &.opened {
+      animation-name: openingAnimLeftMobile;
+    }
+    &.right {
+      animation-name: closingAnimRightMobile;
+      &.opened {
+        animation-name: openingAnimRightMobile;
+      }
+    }
+  }
+  z-index: 9999;
+  &.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    & > * {
+      opacity: 0.6;
+    }
+  }
+}
+
+.SidePanelToolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 25px;
+}
+
+.SidePanelTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: color 0.2s;
+  @include themify(color, "color-fill-color-text-primary");
+}
+
+.SidePanelToolbarAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 100%;
+  outline: none;
+  padding: 5px;
+  margin: 0;
+  background-color: transparent;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  transition: color 0.2s;
+  @include themify(color, "primary");
+  &:disabled {
+    cursor: not-allowed;
+    color: #cccccc !important;
+  }
+  & > svg {
+    width: 24px;
+    height: 24px;
+  }
+  &:first-child {
+    transform: rotate(180deg);
+    @media only screen and (max-width: 768px) {
+      transform: rotate(0);
+    }
+  }
+}
+
+.SidePanelToolbarDumpAction {
+  width: 34px;
+  height: 34px;
+}
+
+.SidePanelContent {
+  overflow: auto;
+  flex: 1;
+  height: 0;
+  min-height: 0;
+  & :global(.simplebar-content-wrapper) {
+    min-height: 100%;
+  }
+  & :global(.simplebar-content) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 25px !important;
+    height: 100%;
+    box-sizing: border-box!important;
+    min-height: 100%;
+    position: absolute;
+    width: 100%;
+    & > * {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.SidePanelSubmit {
+  margin: 0 25px !important;
+  width: calc(100% - 50px) !important;
+}

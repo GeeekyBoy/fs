@@ -1,17 +1,17 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useImperativeHandle, forwardRef } from 'react';
 import { connect } from "react-redux";
 import * as appActions from "../../actions/app";
 import * as usersActions from "../../actions/users";
 import styles from "./AssigneeChooser.module.scss"
 import * as tasksActions from "../../actions/tasks"
 import { panelPages, AuthState } from "../../constants";
-import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
 import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
 import { ReactComponent as AssigneeSearchIllustartion } from "../../assets/undraw_People_search_re_5rre.svg"
 import { ReactComponent as NoResultsIllustartion } from "../../assets/undraw_not_found_60pq.svg"
 import Avatar from '../UI/Avatar';
+import Illustration from '../UI/Illustration';
 
-const AssigneeChooser = (props) => {
+const AssigneeChooser = forwardRef((props, ref) => {
   const {
     app: {
       selectedTask
@@ -65,33 +65,20 @@ const AssigneeChooser = (props) => {
       const linkToBeCopied = window.location.href
       navigator.clipboard.writeText(linkToBeCopied)
   }
+  useImperativeHandle(ref, () => ({
+    panelProps: {
+      title: "Add Assignee",
+      actionIcon: ShareIcon,
+      onClose: () => {
+        closeChooser()
+      },
+      onAction: () => {
+        shareTask();
+      }
+    }
+  }));
   return (
     <>
-      <div className={styles.PanelPageToolbar}>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={closeChooser}
-          disabled={isBusy}
-        >
-          <BackArrowIcon
-            width={24}
-            height={24}
-          />
-        </button>
-        <span className={styles.PanelPageTitle}>
-          Add Assignee
-        </span>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={shareTask}
-          disabled={isBusy}
-        >
-          <ShareIcon
-            width={24}
-            height={24}
-          />
-        </button>
-      </div>
       <input
         className={styles.KeywordField}
         type="text"
@@ -133,32 +120,32 @@ const AssigneeChooser = (props) => {
           </button>
         ))}
         {!keyword && (
-          <div className={styles.AssigneeChooserIllustartion}>
-            <AssigneeSearchIllustartion />
-            <span>
-              Search For A User To Assign
-            </span>
-          </div>
+          <Illustration
+            illustration={AssigneeSearchIllustartion}
+            title="Search For A User To Assign"
+            secondary={true}
+          />
         )}
         {keyword &&
         !filteredResults.length &&
         pendingUser !== `anonymous:${keyword.trim()}` &&
         tasks[selectedTask].assignees.includes(`anonymous:${keyword.trim()}`) && (
-          <div className={styles.AssigneeChooserIllustartion}>
-            <NoResultsIllustartion />
-            <span>
-              No Results Found
-            </span>
-          </div>
+          <Illustration
+            illustration={NoResultsIllustartion}
+            title="No Results Found"
+            secondary={true}
+          />
         )}
       </div>
     </>
   );
-};
+});
+
+AssigneeChooser.displayName = "AssigneeChooser";
 
 export default connect((state) => ({
   user: state.user,
   tasks: state.tasks,
   app: state.app,
   users: state.users
-}))(AssigneeChooser);
+}), null, null, { forwardRef: true })(AssigneeChooser);

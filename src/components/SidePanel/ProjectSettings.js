@@ -1,17 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, forwardRef, useImperativeHandle } from 'react';
 import { connect } from "react-redux";
 import * as appActions from "../../actions/app";
 import * as projectsActions from "../../actions/projects";
 import { AuthState } from "../../constants";
 import styles from "./ProjectSettings.module.scss"
 import SimpleBar from 'simplebar-react';
-import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
 import Button from '../UI/Button';
 import TextField from '../UI/fields/TextField';
 import CardSelect from '../UI/fields/CardSelect';
 
-const ProjectSettings = (props) => {
+const ProjectSettings = forwardRef((props, ref) => {
   const {
     app: {
       selectedProject,
@@ -86,6 +85,18 @@ const ProjectSettings = (props) => {
   const removeProject = () => {
     dispatch(projectsActions.handleRemoveProject(projects[selectedProject]))
   }
+  useImperativeHandle(ref, () => ({
+    panelProps: {
+      title: "Project Settings",
+      actionIcon: RemoveIcon,
+      onClose: () => {
+        closePanel()
+      },
+      onAction: () => {
+        removeProject();
+      }
+    }
+  }));
   const saveChanges = () => {
     dispatch(projectsActions.handleUpdateProject({
       id,
@@ -97,30 +108,6 @@ const ProjectSettings = (props) => {
   }
   return (
     <>
-      <div className={styles.PanelPageToolbar}>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={closePanel}
-        >
-          <BackArrowIcon
-            width={24}
-            height={24}
-          />
-        </button>
-        <span className={styles.PanelPageTitle}>
-          Project Settings
-        </span>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={removeProject}
-          disabled={readOnly}
-        >
-          <RemoveIcon
-            width={24}
-            height={24}
-          />
-        </button>
-      </div>
       <SimpleBar className={styles.ProjectSettingsForm}>
         <form onSubmit={(e) => e.preventDefault()}>
           <TextField
@@ -189,10 +176,12 @@ const ProjectSettings = (props) => {
       </Button>
     </>
   );
-};
+});
+
+ProjectSettings.displayName = "ProjectSettings";
 
 export default connect((state) => ({
   app: state.app,
   projects: state.projects,
   user: state.user
-}))(ProjectSettings);
+}), null, null, { forwardRef: true })(ProjectSettings);

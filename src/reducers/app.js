@@ -15,8 +15,8 @@ const initState = {
   isRightPanelOpened: false,
   isProjectTitleSelected: false,
   lockedTaskField: null,
-  rightPanelPage: panelPages.TASK_HUB,
-  leftPanelPage: panelPages.PROJECTS
+  rightPanelPage: null,
+  leftPanelPage: null
 }
 
 export default function (state = initState, action) {

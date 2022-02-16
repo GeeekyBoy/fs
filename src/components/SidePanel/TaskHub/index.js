@@ -1,15 +1,13 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { connect } from "react-redux";
 import * as appActions from "../../../actions/app";
 import { AuthState } from "../../../constants";
-import styles from "./index.module.scss"
 import Comments from "./Comments";
-import { ReactComponent as BackArrowIcon } from "../../../assets/chevron-back-outline.svg";
 import { ReactComponent as ShareIcon } from "../../../assets/share-outline.svg"
-import PanelTabs from '../../PanelTabs';
+import PanelTabs from '../../UI/PanelTabs';
 import Details from './Details';
 
-const TaskHub = (props) => {
+const TaskHub = forwardRef((props, ref) => {
   const {
     user,
     app: {
@@ -41,46 +39,40 @@ const TaskHub = (props) => {
 		const linkToBeCopied = window.location.href
 		navigator.clipboard.writeText(linkToBeCopied)
 	}
-  return (
-    <>
-      <div className={styles.PanelPageToolbar}>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={closePanel}
-        >
-          <BackArrowIcon
-            width={24}
-            height={24}
+  useImperativeHandle(ref, () => ({
+    panelProps: {
+      title: "Task Hub",
+      actionIcon: ShareIcon,
+      header: (user.state === AuthState.SignedIn ||
+        (user.state !== AuthState.SignedIn &&
+          projects[selectedProject]?.isTemp)) && (
+        <center>
+          <PanelTabs
+            tabs={[
+              ["details", "Details"],
+              ["comments", "Comments"],
+            ]}
+            value={tab}
+            onChange={(newVal) => setTab(newVal)}
           />
-        </button>
-        <span className={styles.PanelPageTitle}>
-          Task Hub
-        </span>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={shareTask}
-        >
-          <ShareIcon
-            width={24}
-            height={24}
-          />
-        </button>
-      </div>
-      {(user.state === AuthState.SignedIn || (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)) && (
-        <PanelTabs
-          tabs={[
-            ["details", "Details"],
-            ["comments", "Comments"]
-          ]}
-          value={tab}
-          onChange={(newVal) => setTab(newVal)}
-        />
-      )}
-      {tab === "details" && <Details />}
-      {tab === "comments" && <Comments />}
-    </>
-  );
-};
+        </center>
+      ),
+      onClose: () => {
+        closePanel()
+      },
+      onAction: () => {
+        shareTask();
+      }
+    }
+  }));
+  return tab === "details" ? (
+    <Details />
+  ) : tab === "comments" ? (
+    <Comments />
+  ) : null;
+});
+
+TaskHub.displayName = "TaskHub";
 
 export default connect((state) => ({
   user: state.user,
@@ -89,4 +81,4 @@ export default connect((state) => ({
   comments: state.comments,
   projects: state.projects,
   users: state.users
-}))(TaskHub);
+}), null, null, { forwardRef: true })(TaskHub);

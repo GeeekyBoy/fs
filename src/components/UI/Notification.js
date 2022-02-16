@@ -14,7 +14,7 @@ const Notification = (props) => {
     onAnimationEnd,
     notificationData,
     senderData,
-    className,
+    class: className,
     style
   } = props
   const navigate = useContext(UNSAFE_NavigationContext) ? useNavigate() : null;

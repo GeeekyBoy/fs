@@ -43,77 +43,75 @@ const Details = (props) => {
     );
   };
   return selectedTask && (
-    <SimpleBar className={styles.DetailsForm}>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <input type="submit" name="submit" value="Submit"></input>
-        <AssigneeField
-          name="assignees"
-          label="Assigned To"
-          value={tasks[selectedTask].assignees}
+    <form onSubmit={(e) => e.preventDefault()} className={styles.DetailsForm}>
+      <input type="submit" name="submit" value="Submit"></input>
+      <AssigneeField
+        name="assignees"
+        label="Assigned To"
+        value={tasks[selectedTask].assignees}
+        readOnly={readOnly}
+      />
+      {(user.state === AuthState.SignedIn || (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)) && (
+        <WatcherField
+          name="watchers"
+          label="Watched By"
+          value={tasks[selectedTask].watchers}
           readOnly={readOnly}
         />
-        {(user.state === AuthState.SignedIn || (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)) && (
-          <WatcherField
-            name="watchers"
-            label="Watched By"
-            value={tasks[selectedTask].watchers}
-            readOnly={readOnly}
-          />
-        )}
-        <TextField
-          type="text"
-          name="task"
-          label="Task"
-          placeholder="task…"
-          onChange={handleChange}
-          value={tasks[selectedTask].task}
-          readOnly={readOnly}
-        />
-        <Textarea
-          name="description"
-          placeholder="description…"
-          label="Description"
-          onChange={handleChange}
-          value={tasks[selectedTask].description}
-          readOnly={readOnly}
-        />
-        <DateField
-          name="due"
-          label="Due"
-          onChange={handleChange}
-          placeholder="no date selected"
-          value={tasks[selectedTask].due}
-          readOnly={readOnly}
-          clearable
-        />
-        <TagField
-          name="tags"
-          label="Tags"
-          onChange={handleChange}
-          placeholder="tag…"
-          value={tasks[selectedTask].tags}
-          readOnly={readOnly}
-        />
-        <Select
-          name="status"
-          label="Status"
-          onChange={handleChange}
-          values={["todo", "pending", "done"]}
-          options={["Todo", "Pending", "Done"]}
-          value={tasks[selectedTask].status}
-          readOnly={readOnly}
-        />
-        <Select
-          name="priority"
-          label="Priority"
-          onChange={handleChange}
-          values={["low", "normal", "high"]}
-          options={["Low", "Normal", "High"]}
-          value={tasks[selectedTask].priority}
-          readOnly={readOnly}
-        />
-      </form>
-    </SimpleBar>
+      )}
+      <TextField
+        type="text"
+        name="task"
+        label="Task"
+        placeholder="task…"
+        onChange={handleChange}
+        value={tasks[selectedTask].task}
+        readOnly={readOnly}
+      />
+      <Textarea
+        name="description"
+        placeholder="description…"
+        label="Description"
+        onChange={handleChange}
+        value={tasks[selectedTask].description}
+        readOnly={readOnly}
+      />
+      <DateField
+        name="due"
+        label="Due"
+        onChange={handleChange}
+        placeholder="no date selected"
+        value={tasks[selectedTask].due}
+        readOnly={readOnly}
+        clearable
+      />
+      <TagField
+        name="tags"
+        label="Tags"
+        onChange={handleChange}
+        placeholder="tag…"
+        value={tasks[selectedTask].tags}
+        readOnly={readOnly}
+      />
+      <Select
+        name="status"
+        label="Status"
+        onChange={handleChange}
+        values={["todo", "pending", "done"]}
+        options={["Todo", "Pending", "Done"]}
+        value={tasks[selectedTask].status}
+        readOnly={readOnly}
+      />
+      <Select
+        name="priority"
+        label="Priority"
+        onChange={handleChange}
+        values={["low", "normal", "high"]}
+        options={["Low", "Normal", "High"]}
+        value={tasks[selectedTask].priority}
+        readOnly={readOnly}
+      />
+    </form>
   )
 }
 

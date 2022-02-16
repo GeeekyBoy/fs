@@ -1,28 +1,22 @@
 .AppSettingsForm {
-  overflow: auto;
-  flex: 1;
-  height: 0;
-  min-height: 0;
-  & :global(.simplebar-content) > form {
-    display: flex;
-    flex-direction: column;
-    & > h2 > span {
-      cursor: pointer;
-    }
-    & > input[type="submit"] {
-      display: none;
-    }
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    margin: 0 25px;
-    & > *:not(:last-child) {
-      margin-bottom: 5px;
-    }
-    & > *:last-child {
-      margin-bottom: 25px;
-    }
+  display: flex;
+  flex-direction: column;
+  & > h2 > span {
+    cursor: pointer;
+  }
+  & > input[type="submit"] {
+    display: none;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0 25px;
+  & > *:not(:last-child) {
+    margin-bottom: 5px;
+  }
+  & > *:last-child {
+    margin-bottom: 25px;
   }
 }
 
@@ -65,40 +59,5 @@
   }
   &::placeholder {
     color: #c0c0c0;
-  }
-}
-
-.PanelPageToolbar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 25px;
-  padding-top: 25px;
-}
-
-.PanelPageTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
-}
-
-.PanelPageToolbarAction {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 100%;
-  outline: none;
-  padding: 5px;
-  margin: 0;
-  background-color: transparent;
-  cursor: pointer;
-  transition: color 0.2s;
-  @include themify(color, "primary");
-  &:disabled {
-    cursor: not-allowed;
-    color: #CCCCCC!important;
   }
 }

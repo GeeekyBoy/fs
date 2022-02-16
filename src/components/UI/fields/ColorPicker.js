@@ -12,7 +12,7 @@ const ColorPicker = (props) => {
     name,
     readOnly,
     disabled,
-    className,
+    class: className,
     style
   } = props
 

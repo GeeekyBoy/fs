@@ -1,17 +1,17 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, forwardRef, useImperativeHandle } from 'react';
 import { connect } from "react-redux";
 import * as appActions from "../../actions/app";
 import styles from "./WatcherChooser.module.scss"
 import * as tasksActions from "../../actions/tasks"
 import * as usersActions from "../../actions/users"
 import { panelPages, AuthState } from "../../constants";
-import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
 import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
 import { ReactComponent as WatcherSearchIllustartion } from "../../assets/undraw_People_search_re_5rre.svg"
 import { ReactComponent as NoResultsIllustartion } from "../../assets/undraw_not_found_60pq.svg"
 import Avatar from '../UI/Avatar';
+import Illustration from '../UI/Illustration';
 
-const WatcherChooser = (props) => {
+const WatcherChooser = forwardRef((props, ref) => {
   const {
     app: {
       selectedTask
@@ -65,33 +65,20 @@ const WatcherChooser = (props) => {
       const linkToBeCopied = window.location.href
       navigator.clipboard.writeText(linkToBeCopied)
   }
+  useImperativeHandle(ref, () => ({
+    panelProps: {
+      title: "Add Watcher",
+      actionIcon: ShareIcon,
+      onClose: () => {
+        closeChooser()
+      },
+      onAction: () => {
+        shareTask();
+      }
+    }
+  }));
   return (
     <>
-      <div className={styles.PanelPageToolbar}>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={closeChooser}
-          disabled={isBusy}
-        >
-          <BackArrowIcon
-            width={24}
-            height={24}
-          />
-        </button>
-        <span className={styles.PanelPageTitle}>
-          Add Watcher
-        </span>
-        <button
-          className={styles.PanelPageToolbarAction}
-          onClick={shareTask}
-          disabled={isBusy}
-        >
-          <ShareIcon
-            width={24}
-            height={24}
-          />
-        </button>
-      </div>
       <input
         className={styles.KeywordField}
         type="text"
@@ -117,30 +104,30 @@ const WatcherChooser = (props) => {
           </button>
         ))}
         {!keyword && (
-          <div className={styles.WatcherChooserIllustartion}>
-            <WatcherSearchIllustartion />
-            <span>
-              Search For A Watcher
-            </span>
-          </div>
+          <Illustration
+          illustration={WatcherSearchIllustartion}
+          title="Search For A Watcher"
+          secondary={true}
+        />
         )}
         {keyword &&
         !filteredResults.length && (
-          <div className={styles.WatcherChooserIllustartion}>
-            <NoResultsIllustartion />
-            <span>
-              No Results Found
-            </span>
-          </div>
+          <Illustration
+            illustration={NoResultsIllustartion}
+            title="No Results Found"
+            secondary={true}
+          />
         )}
       </div>
     </>
   );
-};
+});
+
+WatcherChooser.displayName = "WatcherChooser";
 
 export default connect((state) => ({
   user: state.user,
   tasks: state.tasks,
   app: state.app,
   users: state.users
-}))(WatcherChooser);
+}), null, null, { forwardRef: true })(WatcherChooser);

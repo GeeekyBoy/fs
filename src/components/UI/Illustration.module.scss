@@ -1,4 +1,4 @@
-.ProjectNotSelectedContainer {
+.IllustrationContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -12,6 +12,9 @@
     transition: color 0.2s;
     @include themify(color, "primary");
   }
+	& > *:not(:last-child) {
+		margin-bottom: 10px;
+	}
   & > div {
     display: flex;
     align-items: center;
@@ -37,12 +40,20 @@
       @include themify(background-color, "primary");
     }
     & > *:not(:last-child) {
-      margin-bottom: 40px;
-    }
-    & > *:not(:last-child) {
       margin-bottom: 10px;
     }
   }
+	&.secondary {
+		& > svg {
+			width: 250px;
+			height: 163px;
+		}
+		& > div {
+			& > span {
+				font-size: 1.125rem;
+			}
+		}
+	}
   @media only screen and (max-width: 768px) {
     & > svg {
       width: 240px;

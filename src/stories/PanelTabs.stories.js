@@ -2,7 +2,7 @@ import React from "react";
 import { useArgs } from "@storybook/client-api";
 import { withPerformance } from "storybook-addon-performance";
 
-import PanelTabs from "../components/PanelTabs";
+import PanelTabs from "../components/UI/PanelTabs";
 
 export default {
   title: "ForwardSlash/Panel Tabs",

@@ -16,7 +16,7 @@ const TextField = (props) => {
     suffix,
     readOnly,
     disabled,
-    className,
+    class: className,
     style,
     inputRef
   } = props

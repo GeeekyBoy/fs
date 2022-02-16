@@ -12,7 +12,7 @@ const Textarea = (props) => {
     error,
     label,
     disabled,
-    className,
+    class: className,
     style
   } = props
   const [ id ] = useState("Textarea" + nanoid(11))

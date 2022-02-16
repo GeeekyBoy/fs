@@ -11,7 +11,7 @@ const TagField = (props) => {
     error,
     readOnly,
     disabled,
-    className,
+    class: className,
     style
   } = props
   const tagFieldRef = useRef(null)

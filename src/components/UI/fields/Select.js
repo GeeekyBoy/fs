@@ -12,7 +12,7 @@ const Select = (props) => {
     label,
     readOnly,
     disabled,
-    className,
+    class: className,
     style
 	} = props;
 

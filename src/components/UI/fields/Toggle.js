@@ -10,7 +10,7 @@ const Toggle = (props) => {
     name,
     readOnly,
     disabled,
-    className,
+    class: className,
     style
   } = props
 
