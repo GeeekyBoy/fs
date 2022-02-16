@@ -19,7 +19,7 @@ frontend:
     build:
       commands:
         - npm run build
-        - npx chromatic --project-token $CHROMATIC_TOKEN
+        - npx chromatic --project-token $CHROMATIC_TOKEN --exit-zero-on-changes
   artifacts:
     baseDirectory: build
     files:
