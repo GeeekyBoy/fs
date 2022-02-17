@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import loadable from '@loadable/component'
 import styles from "./index.module.scss";
 import { connect } from "react-redux";
 import parseLinkedList from "../../utils/parseLinkedList";
@@ -6,13 +7,13 @@ import ProjectNotSelected from "./ProjectNotSelected";
 import * as tasksActions from "../../actions/tasks";
 import { READY, LOADING, initTaskState, AuthState } from "../../constants";
 import sortedTasks from './sortedTasks';
-import ProjectToolbar from './ProjectToolbar';
-import TasksToolbar from './TasksToolbar';
-import NoTasks from './NoTasks';
-import TasksSearch from './TasksSearch';
-import ProjectHeader from './ProjectHeader';
-import SimpleBar from 'simplebar-react';
-import LoginBanner from './LoginBanner';
+const ProjectToolbar = loadable(() => import('./ProjectToolbar'));
+const TasksToolbar = loadable(() => import('./TasksToolbar'));
+const NoTasks = loadable(() => import('./NoTasks'));
+const TasksSearch = loadable(() => import('./TasksSearch'));
+const ProjectHeader = loadable(() => import('./ProjectHeader'));
+const SimpleBar = loadable(() => import('simplebar-react'));
+const LoginBanner = loadable(() => import('./LoginBanner'));
 
 const TasksPanel = (props) => {
   const {

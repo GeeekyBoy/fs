@@ -12,6 +12,7 @@
     "@dnd-kit/sortable": "6.0.0",
     "@dnd-kit/utilities": "3.1.0",
     "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
+    "@loadable/component": "^5.15.2",
     "@react-hook/media-query": "1.1.1",
     "@react-spring/web": "10.0.0-alpha.1",
     "@use-gesture/react": "10.2.5",

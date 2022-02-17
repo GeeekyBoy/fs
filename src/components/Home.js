@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import loadable from '@loadable/component'
 import { connect } from "react-redux";
 import { graphqlOperation } from "@aws-amplify/api";
 import { AuthState } from "../constants";
@@ -8,13 +9,13 @@ import * as appActions from "../actions/app";
 import * as queries from "../graphql/queries"
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styles from "./Home.module.scss"
-import TasksPanel from "./TasksPanel";
-import Loading from "./Loading";
-import Toolbar from "./Toolbar";
-import SidePanel from "./SidePanel";
-import Notifications from "./Notifications";
+const TasksPanel = loadable(() => import("./TasksPanel"));
+const Loading = loadable(() => import("./Loading"));
+const Toolbar = loadable(() => import("./Toolbar"));
+const SidePanel = loadable(() => import("./SidePanel"));
+const Notifications = loadable(() => import("./Notifications"));
+const SyncManager = loadable(() => import("./SyncManager"));
 import execGraphQL from "../utils/execGraphQL";
-import SyncManager from "./SyncManager";
 
 const Home = (props) => {
   const {

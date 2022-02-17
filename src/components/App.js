@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
+import loadable from '@loadable/component'
 import { connect } from "react-redux";
 import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
 import { useNavigate, useRoutes } from "react-router-dom";
-import AuthFlow from "./AuthFlow";
-import Home from "./Home";
 import store from "../store";
 import isOnline from "../utils/isOnline";
+const AuthFlow = loadable(() => import("./AuthFlow"));
+const Home = loadable(() => import("./Home"));
 
 const App = (props) => {
   const {

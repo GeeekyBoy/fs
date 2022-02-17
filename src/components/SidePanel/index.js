@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import loadable from '@loadable/component'
 import { connect } from "react-redux";
 import "draft-js/dist/Draft.css";
-import SidPanel from "../UI/SidePanel";
-import ASSIGNEE_CHOOSER from "./AssigneeChooser"
-import WATCHER_CHOOSER from "./WatcherChooser"
-import TASK_HUB from "./TaskHub"
-import PROJECTS from "./Projects"
-import ACCOUNT_SETTINGS from "./AccountSettings"
-import PROJECT_SETTINGS from "./ProjectSettings"
-import APP_SETTINGS from "./AppSettings"
-import NOTIFICATIONS from "./Notifications"
+const SidPanel = loadable(() => import("../UI/SidePanel"));
+const ASSIGNEE_CHOOSER = loadable(() => import("./AssigneeChooser"));
+const WATCHER_CHOOSER = loadable(() => import("./WatcherChooser"));
+const TASK_HUB = loadable(() => import("./TaskHub"));
+const PROJECTS = loadable(() => import("./Projects"));
+const ACCOUNT_SETTINGS = loadable(() => import("./AccountSettings"));
+const PROJECT_SETTINGS = loadable(() => import("./ProjectSettings"));
+const APP_SETTINGS = loadable(() => import("./AppSettings"));
+const NOTIFICATIONS = loadable(() => import("./Notifications"));
 
 const sidePanelPages = {
     ASSIGNEE_CHOOSER,
