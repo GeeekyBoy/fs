@@ -1,10 +1,13 @@
-html {
-  font-size: 16px;
-}
+@import "./scss/fonts.scss";
 
 * {
+  font-family: 'Rubik', sans-serif !important;
   -webkit-tap-highlight-color: transparent;
   outline: none;
+}
+
+html {
+  font-size: 16px;
 }
 
 .Calendar {

@@ -7,7 +7,10 @@ const Illustration = (props) => {
     title,
     actionLabel,
     onAction,
-    secondary
+    actionDisabled,
+    secondary,
+    class: className,
+    style
   } = props
   const handleAction = () => {
     if (onAction) {
@@ -18,15 +21,24 @@ const Illustration = (props) => {
     <div
       className={[
         styles.IllustrationContainer,
-        ...(secondary && [styles.secondary] || [])
+        ...(secondary && [styles.secondary] || []),
+        className || ""
       ].join(" ")}
+      style={style}
     >
       {React.createElement(illustration)}
       <div>
         <span>
           {title}
         </span>
-        {actionLabel && <button onClick={handleAction}>{actionLabel}</button>}
+        {actionLabel && (
+          <button
+            onClick={handleAction}
+            disabled={actionDisabled}
+          >
+            {actionLabel}
+          </button>
+        )}
       </div>
     </div>
   )

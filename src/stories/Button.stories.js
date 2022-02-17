@@ -16,3 +16,9 @@ Default.args = {
   label: "Button",
   disabled: false,
 };
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  ...Default.args,
+  disabled: true,
+};
