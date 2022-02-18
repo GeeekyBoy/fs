@@ -110,7 +110,11 @@ const Assign = (props) => {
 };
 
 export default connect((state) => ({
-	app: state.app,
-	user: state.user,
+	app: {
+    selectedTask: state.tasks.selectedTask
+  },
+	user: {
+    state: state.user.state,
+  },
 	users: state.users
 }))(Assign);

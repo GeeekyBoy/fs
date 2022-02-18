@@ -170,7 +170,13 @@ const ProjectToolbar = (props) => {
 }
 
 export default connect((state) => ({
-  app: state.app,
+  app: {
+    selectedProject: state.app.selectedProject,
+    isLeftPanelOpened: state.app.isLeftPanelOpened,
+    leftPanelPage: state.app.leftPanelPage
+  },
   tasks: state.tasks,
-  appSettings: state.appSettings
+  appSettings: {
+    tasksSortingCriteria: state.appSettings.tasksSortingCriteria
+  }
 }))(ProjectToolbar);

@@ -148,6 +148,18 @@ const AccountSettings = forwardRef((props, ref) => {
 AccountSettings.displayName = "AccountSettings";
 
 export default connect((state) => ({
-  user: state.user,
-  app: state.app
+  user: {
+    data: {
+      username: state.user.username,
+      firstName: state.user.firstName,
+      lastName: state.user.lastName,
+      email: state.user.email,
+      plan: state.user.plan,
+      avatar: state.user.avatar,
+      abbr: state.user.abbr,
+    }
+  },
+  app: {
+    isSynced: state.app.isSynced,
+  }
 }), null, null, { forwardRef: true })(AccountSettings);

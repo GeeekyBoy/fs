@@ -1,96 +1,80 @@
 @keyframes openingAnimLeft {
   from {
-    transform: translate3d(-366px, 0, 0);
-    margin: 0 -365px 0 0;
+    margin-left: -365px;
   }
 
   to {
-    transform: initial;
-    margin: 0;
+    margin-left: 0;
   }
 }
 
 @keyframes closingAnimLeft {
   from {
-    transform: initial;
-    margin: 0;
+    margin-left: 0;
   }
 
   to {
-    transform: translate3d(-366px, 0, 0);
-    margin: 0 -365px 0 0;
+    margin-left: -365px;
   }
 }
 
 @keyframes openingAnimRight {
   from {
-    transform: translate3d(366px, 0, 0);
-    margin: 0 0 0 -365px;
+    margin-right: -365px;
   }
 
   to {
-    transform: initial;
-    margin: 0;
+    margin-right: 0;
   }
 }
 
 @keyframes closingAnimRight {
   from {
-    transform: initial;
-    margin: 0;
+    margin-right: 0;
   }
 
   to {
-    transform: translate3d(366px, 0, 0);
-    margin: 0 0 0 -365px;
+    margin-right: -365px;
   }
 }
 
 @keyframes openingAnimLeftMobile {
   from {
     transform: translate3d(-100%, 0, 0);
-    margin: 0;
   }
 
   to {
     transform: initial;
-    margin: 0;
   }
 }
 
 @keyframes closingAnimLeftMobile {
   from {
     transform: initial;
-    margin: 0;
   }
 
   to {
     transform: translate3d(-100%, 0, 0);
-    margin: 0;
   }
 }
 
 @keyframes openingAnimRightMobile {
   from {
     transform: translate3d(100%, 0, 0);
-    margin: 0;
   }
 
   to {
     transform: initial;
-    margin: 0;
   }
 }
 
 @keyframes closingAnimRightMobile {
   from {
     transform: initial;
-    margin: 0;
   }
 
   to {
     transform: translate3d(100%, 0, 0);
-    margin: 0;
   }
 }
 
@@ -105,7 +89,6 @@
   width: 365px;
   max-width: 365px;
   min-width: 365px;
-  will-change: transform;
   overflow: hidden;
   animation: 0.2s ease-in-out forwards;
   animation-name: closingAnimLeft;
@@ -232,7 +215,8 @@
     position: absolute;
     width: 100%;
     & > * {
-      margin-bottom: 15px;
+      margin-bottom: 15px !important;
+      width: 100% !important;
     }
   }
 }

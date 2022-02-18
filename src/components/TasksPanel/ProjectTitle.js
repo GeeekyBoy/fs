@@ -88,6 +88,10 @@ const ProjectTitle = (props) => {
 
 export default connect((state) => ({
   tasks: state.tasks,
-  app: state.app,
+  app: {
+    isProjectTitleSelected: state.app.isProjectTitleSelected,
+    selectedProject: state.app.selectedProject,
+    taskAddingStatus: state.tasks.taskAddingStatus
+  },
   projects: state.projects,
 }))(ProjectTitle);

@@ -54,6 +54,7 @@ const SlashCommands = (props) => {
 }
 
 export default connect((state) => ({
-	app: state.app,
-	user: state.user
+	app: {
+    command: state.app.command,
+  }
 }))(SlashCommands);

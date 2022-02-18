@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import loadable from '@loadable/component'
+import React, { Suspense, useState, lazy } from 'react';
 import styles from "./index.module.scss";
 import { connect } from "react-redux";
 import parseLinkedList from "../../utils/parseLinkedList";
@@ -7,13 +6,13 @@ import ProjectNotSelected from "./ProjectNotSelected";
 import * as tasksActions from "../../actions/tasks";
 import { READY, LOADING, initTaskState, AuthState } from "../../constants";
 import sortedTasks from './sortedTasks';
-const ProjectToolbar = loadable(() => import('./ProjectToolbar'));
-const TasksToolbar = loadable(() => import('./TasksToolbar'));
-const NoTasks = loadable(() => import('./NoTasks'));
-const TasksSearch = loadable(() => import('./TasksSearch'));
-const ProjectHeader = loadable(() => import('./ProjectHeader'));
-const SimpleBar = loadable(() => import('simplebar-react'));
-const LoginBanner = loadable(() => import('./LoginBanner'));
+const ProjectToolbar = lazy(() => import('./ProjectToolbar'));
+const TasksToolbar = lazy(() => import('./TasksToolbar'));
+const NoTasks = lazy(() => import('./NoTasks'));
+const TasksSearch = lazy(() => import('./TasksSearch'));
+const ProjectHeader = lazy(() => import('./ProjectHeader'));
+const SimpleBar = lazy(() => import('simplebar-react'));
+const LoginBanner = lazy(() => import('./LoginBanner'));
 
 const TasksPanel = (props) => {
   const {
@@ -46,6 +45,7 @@ const TasksPanel = (props) => {
     )
   }
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div
       name="TasksPanelContainer"
       className={[
@@ -84,13 +84,23 @@ const TasksPanel = (props) => {
         </>
       ) : <ProjectNotSelected />}
     </div>
+    </Suspense>
   )
 }
 
 export default connect((state) => ({
   tasks: state.tasks,
-  app: state.app,
-  user: state.user,
-  status: state.status,
-  appSettings: state.appSettings
+  app: {
+    selectedProject: state.app.selectedProject,
+    isSynced: state.app.isSynced
+  },
+  user: {
+    state: state.user.state
+  },
+  status: {
+    tasks: state.status.tasks
+  },
+  appSettings: {
+    tasksSortingCriteria: state.appSettings.tasksSortingCriteria
+  }
 }))(TasksPanel);

@@ -15,9 +15,6 @@ const Notifications = forwardRef((props, ref) => {
   const {
     notifications,
     users,
-    app: {
-      isSynced
-    },
     dispatch
   } = props;
 
@@ -79,7 +76,6 @@ const Notifications = forwardRef((props, ref) => {
 Notifications.displayName = "Notifications";
 
 export default connect((state) => ({
-  app: state.app,
   notifications: state.notifications,
   users: state.users,
 }), null, null, { forwardRef: true })(Notifications);

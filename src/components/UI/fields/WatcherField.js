@@ -95,6 +95,8 @@ const WatcherField = (props) => {
 }
 
 export default connect((state) => ({
-    app: state.app,
-    users: state.users
-  }))(WatcherField);
+  app: {
+    selectedTask: state.tasks.selectedTask,
+  },
+  users: state.users
+}))(WatcherField);

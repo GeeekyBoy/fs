@@ -205,5 +205,7 @@ const ForgotPassword = (props) => {
   )
 }
 export default connect((state) => ({
-  app: state.app
+  app: {
+    isOffline: state.app.isOffline,
+  }
 }))(ForgotPassword);

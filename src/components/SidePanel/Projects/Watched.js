@@ -28,7 +28,5 @@ const Projects = (props) => {
 };
 
 export default connect((state) => ({
-  user: state.user,
-  app: state.app,
   projects: state.projects,
 }))(Projects);

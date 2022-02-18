@@ -62,7 +62,8 @@ const ProjectNotSelected = (props) => {
 };
 
 export default connect((state) => ({
-  user: state.user,
-  app: state.app,
+  app: {
+    projectAddingStatus: state.app.projectAddingStatus,
+  },
   projects: state.projects,
 }))(ProjectNotSelected);

@@ -90,6 +90,8 @@ const Due = (props) => {
 };
 
 export default connect((state) => ({
-	app: state.app,
+	app: {
+    selectedTask: state.app.selectedTask
+  },
 	tasks: state.tasks
 }))(Due);

@@ -110,6 +110,9 @@ const Toolbar = (props) => {
 };
 
 export default connect((state) => ({
-  app: state.app,
+  app: {
+    isLeftPanelOpened: state.app.isLeftPanelOpened,
+    leftPanelPage: state.app.leftPanelPage
+  },
   user: state.user
 }))(Toolbar);

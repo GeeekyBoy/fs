@@ -118,7 +118,11 @@ const SyncManager = (props) => {
 }
 
 export default connect((state) => ({
-  app: state.app,
+  app: {
+    isOffline: state.app.isOffline,
+    selectedProject: state.app.selectedProject,
+    selectedTask: state.app.selectedTask,
+  },
   mutations: state.mutations,
   user: state.user
 }))(SyncManager);

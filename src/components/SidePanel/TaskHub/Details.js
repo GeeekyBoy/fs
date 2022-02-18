@@ -5,7 +5,6 @@ import DateField from "../../UI/fields/DateField";
 import * as tasksActions from "../../../actions/tasks";
 import styles from "./Details.module.scss";
 import TagField from "../../UI/fields/TagField";
-import SimpleBar from 'simplebar-react';
 import AssigneeField from "../../UI/fields/AssigneeField";
 import Textarea from '../../UI/fields/Textarea';
 import WatcherField from '../../UI/fields/WatcherField';
@@ -116,10 +115,17 @@ const Details = (props) => {
 }
 
 export default connect((state) => ({
-  user: state.user,
+  user: {
+    state: state.user.state,
+    data: {
+      username: state.user.data.username,
+    }
+  },
   projects: state.projects,
   tasks: state.tasks,
-  app: state.app,
-  comments: state.comments,
-  users: state.users,
+  app: {
+    selectedProject: state.app.selectedProject,
+    selectedTask: state.app.selectedTask,
+    isSynced: state.app.isSynced
+  }
 }))(Details);

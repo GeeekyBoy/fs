@@ -114,6 +114,8 @@ const AssigneeField = (props) => {
 }
 
 export default connect((state) => ({
-    app: state.app,
-    users: state.users
-  }))(AssigneeField);
+  app: {
+    selectedTask: state.app.selectedTask
+  },
+  users: state.users
+}))(AssigneeField);

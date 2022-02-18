@@ -1,9 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
-import loadable from '@loadable/component'
+import React, { useRef, useState, useEffect, lazy } from 'react';
 import { connect } from "react-redux";
 import styles from "./Notifications.module.scss"
 import * as notificationsActions from "../actions/notifications"
-const Notification = loadable(() => import('./UI/Notification'));
+const Notification = lazy(() => import('./UI/Notification'));
 
 const Notifications = (props) => {
   const {

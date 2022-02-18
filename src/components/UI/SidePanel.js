@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import SimpleBar from 'simplebar-react';
 import styles from "./SidePanel.module.scss";
 import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
@@ -75,20 +75,22 @@ const SidePanel = (props) => {
           <div className={styles.SidePanelToolbarDumpAction} />
         )}
       </div>
-      {header}
-      <SimpleBar className={styles.SidePanelContent}>
-        {props.children}
-      </SimpleBar>
-      {footer}
-      {submitLabel && (
-        <Button
-          class={styles.SidePanelSubmit}
-          onClick={handleSubmit}
-          disabled={submitDisabled}
-        >
-          {submitLabel}
-        </Button>
-      )}
+      <Suspense fallback={<span>Loading</span>}>
+        {header}
+        <SimpleBar className={styles.SidePanelContent}>
+          {props.children}
+        </SimpleBar>
+        {footer}
+        {submitLabel && (
+          <Button
+            class={styles.SidePanelSubmit}
+            onClick={handleSubmit}
+            disabled={submitDisabled}
+          >
+            {submitLabel}
+          </Button>
+        )}
+      </Suspense>
     </div>
   );
 };

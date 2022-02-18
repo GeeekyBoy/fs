@@ -75,10 +75,12 @@ const TaskHub = forwardRef((props, ref) => {
 TaskHub.displayName = "TaskHub";
 
 export default connect((state) => ({
-  user: state.user,
-  tasks: state.tasks,
-  app: state.app,
-  comments: state.comments,
+  user: {
+    state: state.user.state,
+  },
+  app: {
+    lockedTaskField: state.app.lockedTaskField,
+    selectedProject: state.app.selectedProject,
+  },
   projects: state.projects,
-  users: state.users
 }), null, null, { forwardRef: true })(TaskHub);

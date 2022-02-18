@@ -54,9 +54,18 @@ const TaskPlaceholder = (props) => {
 
 export default connect((state) => ({
   tasks: state.tasks,
-  app: state.app,
-  user: state.user,
+  app: {
+    selectedProject: state.app.selectedProject,
+    isSynced: state.app.isSynced,
+  },
+  user: {
+    state: state.user.state,
+    data: {
+      username: state.user.data.username,
+    }
+  },
   projects: state.projects,
-  status: state.status,
-  appSettings: state.appSettings,
+  status: {
+    tasks: state.status.tasks,
+  }
 }))(TaskPlaceholder);

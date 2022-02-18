@@ -110,6 +110,7 @@ const Status = (props) => {
 };
 
 export default connect((state) => ({
-	app: state.app,
-	user: state.user
+	app: {
+    selectedTask: state.app.selectedTask
+  }
 }))(Status);

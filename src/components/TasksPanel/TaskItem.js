@@ -370,11 +370,34 @@ const TaskItem = (props) => {
 };
 
 export default connect((state) => ({
-  user: state.user,
+  user: {
+    state: state.user.state,
+    data: {
+      username: state.user.data.username,
+    }
+  },
   tasks: state.tasks,
-  app: state.app,
-  appSettings: state.appSettings,
+  app: {
+    selectedTask: state.app.selectedTask,
+    selectedProject: state.app.selectedProject,
+    taskAddingStatus: state.app.taskAddingStatus,
+    isRightPanelOpened: state.app.isRightPanelOpened,
+    isSynced: state.app.isSynced,
+    lockedTaskField: state.app.lockedTaskField,
+    command: state.app.command,
+  },
+  appSettings: {
+    tasksSortingCriteria: state.appSettings.tasksSortingCriteria,
+    showDueDate: state.appSettings.showDueDate,
+    showAssignees: state.appSettings.showAssignees,
+    showDoneIndicator: state.appSettings.showDoneIndicator,
+    showCopyButton: state.appSettings.showCopyButton,
+    showDuplicateButton: state.appSettings.showDuplicateButton,
+    showShareButton: state.appSettings.showShareButton,
+  },
   users: state.users,
   projects: state.projects,
-  collaboration: state.collaboration
+  collaboration: {
+    taskViewers: state.collaboration.taskViewers,
+  }
 }))(TaskItem);

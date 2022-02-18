@@ -149,6 +149,10 @@ const Commands = (props) => {
 };
 
 export default connect((state) => ({
-	app: state.app,
+	app: {
+    command: state.app.command,
+    selectedTask: state.app.selectedTask,
+    selectedProject: state.app.selectedProject
+  },
 	tasks: state.tasks
 }))(Commands);

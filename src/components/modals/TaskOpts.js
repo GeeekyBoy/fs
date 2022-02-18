@@ -158,8 +158,10 @@ const TaskOpts = (props) => {
 }
 
 export default connect((state) => ({
-  user: state.user,
   tasks: state.tasks,
-  app: state.app,
-  users: state.users
+  app: {
+    selectedTask: state.app.selectedTask,
+    selectedProject: state.app.selectedProject,
+    isRightPanelOpened: state.app.isRightPanelOpened
+  }
 }))(TaskOpts);

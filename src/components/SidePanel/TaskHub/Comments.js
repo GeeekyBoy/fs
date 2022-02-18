@@ -199,8 +199,17 @@ const Comments = (props) => {
 }
 
 export default connect((state) => ({
-  user: state.user,
-  app: state.app,
+  user: {
+    state: state.user.state,
+    data: {
+      username: state.user.username,
+    }
+  },
+  app: {
+    selectedProject: state.app.selectedProject,
+    selectedTask: state.app.selectedTask,
+    isSynced: state.app.isSynced
+  },
   comments: state.comments,
   projects: state.projects,
   users: state.users

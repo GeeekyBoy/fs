@@ -181,7 +181,15 @@ const ProjectSettings = forwardRef((props, ref) => {
 ProjectSettings.displayName = "ProjectSettings";
 
 export default connect((state) => ({
-  app: state.app,
+  app: {
+    selectedProject: state.app.selectedProject,
+    isSynced: state.app.isSynced
+  },
   projects: state.projects,
-  user: state.user
+  user: {
+    state: state.user.state,
+    data: {
+      username: state.user.data.username
+    }
+  }
 }), null, null, { forwardRef: true })(ProjectSettings);

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./index.module.scss"
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
-import { connect } from "react-redux"
 import { Auth } from "@aws-amplify/auth";
 import SimpleBar from 'simplebar-react';
 import Login from './Login';
@@ -10,8 +9,7 @@ import ForgotPassword from './ForgotPassword';
 import isLoggedIn from '../../utils/isLoggedIn';
 import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
 
-const AuthFlow = (props) => {
-  const { dispatch } = props
+const AuthFlow = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
   const [referrer, setReferrer] = useState(null)
   const [currPage, setCurrPage] = useState(Login)
@@ -66,4 +64,4 @@ const AuthFlow = (props) => {
   )
 }
 
-export default connect()(AuthFlow);
+export default AuthFlow;

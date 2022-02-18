@@ -126,8 +126,12 @@ const WatcherChooser = forwardRef((props, ref) => {
 WatcherChooser.displayName = "WatcherChooser";
 
 export default connect((state) => ({
-  user: state.user,
+  user: {
+    state: state.user.state,
+  },
   tasks: state.tasks,
-  app: state.app,
+  app: {
+    selectedTask: state.app.selectedTask
+  },
   users: state.users
 }), null, null, { forwardRef: true })(WatcherChooser);

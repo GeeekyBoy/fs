@@ -134,5 +134,7 @@ const ProjectItem = (props) => {
 };
 
 export default connect((state) => ({
-  app: state.app
+  app: {
+    selectedProject: state.app.selectedProject
+  }
 }))(ProjectItem);

@@ -181,7 +181,8 @@ const Owned = (props) => {
 }
 
 export default connect((state) => ({
-    user: state.user,
-    app: state.app,
-    projects: state.projects
+  app: {
+    isSynced: state.app.isSynced
+  },
+  projects: state.projects
 }))(Owned);

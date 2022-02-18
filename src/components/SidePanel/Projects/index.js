@@ -15,8 +15,7 @@ const Projects = forwardRef((props, ref) => {
   const {
     user,
     app: {
-      projectAddingStatus,
-      isSynced
+      projectAddingStatus
     },
     projects,
     dispatch
@@ -45,38 +44,45 @@ const Projects = forwardRef((props, ref) => {
     panelProps: {
       title: "Projects",
       actionIcon: AddIcon,
+      header: user.state === AuthState.SignedIn && (
+        <center>
+          <PanelTabs
+            tabs={[
+              ["owned", "Owned"],
+              ["assigned", "Assigned"],
+              ["watched", "Watched"],
+            ]}
+            value={scope}
+            onChange={(newVal) => setScope(newVal)}
+          />
+        </center>
+      ),
       onClose: () => {
-        closePanel()
+        closePanel();
       },
       onAction: () => {
         createNewProject();
-      }
-    }
+      },
+    },
   }));
-  return (
-    <>
-      {user.state === AuthState.SignedIn && (
-        <PanelTabs
-          tabs={[
-            ["owned", "Owned"],
-            ["assigned", "Assigned"],
-            ["watched", "Watched"]
-          ]}
-          value={scope}
-          onChange={(newVal) => setScope(newVal)}
-        />
-      )}
-      {scope === "assigned" && <Assigned />}
-      {scope === "watched" && <Watched />}
-      {scope === "owned" && <Owned />}
-    </>
-  );  
+  return scope === "assigned" ? (
+    <Assigned />
+  ) : scope === "watched" ? (
+    <Watched />
+  ) : scope === "owned" ? (
+    <Owned />
+  ) : null;
+    
 })
 
 Projects.displayName = "Projects"
 
 export default connect((state) => ({
-  user: state.user,
-  app: state.app,
+  user: {
+    state: state.user.state,
+  },
+  app: {
+    projectAddingStatus: state.app.projectAddingStatus,
+  },
   projects: state.projects
 }), null, null, { forwardRef: true })(Projects);

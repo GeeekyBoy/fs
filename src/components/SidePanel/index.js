@@ -1,16 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import loadable from '@loadable/component'
+import React, { useCallback, useEffect, useMemo, useState, lazy } from 'react';
 import { connect } from "react-redux";
 import "draft-js/dist/Draft.css";
-const SidPanel = loadable(() => import("../UI/SidePanel"));
-const ASSIGNEE_CHOOSER = loadable(() => import("./AssigneeChooser"));
-const WATCHER_CHOOSER = loadable(() => import("./WatcherChooser"));
-const TASK_HUB = loadable(() => import("./TaskHub"));
-const PROJECTS = loadable(() => import("./Projects"));
-const ACCOUNT_SETTINGS = loadable(() => import("./AccountSettings"));
-const PROJECT_SETTINGS = loadable(() => import("./ProjectSettings"));
-const APP_SETTINGS = loadable(() => import("./AppSettings"));
-const NOTIFICATIONS = loadable(() => import("./Notifications"));
+import SidPanel from "../UI/SidePanel";
+const ASSIGNEE_CHOOSER = lazy(() => import("./AssigneeChooser"));
+const WATCHER_CHOOSER = lazy(() => import("./WatcherChooser"));
+const TASK_HUB = lazy(() => import("./TaskHub"));
+const PROJECTS = lazy(() => import("./Projects"));
+const ACCOUNT_SETTINGS = lazy(() => import("./AccountSettings"));
+const PROJECT_SETTINGS = lazy(() => import("./ProjectSettings"));
+const APP_SETTINGS = lazy(() => import("./AppSettings"));
+const NOTIFICATIONS = lazy(() => import("./Notifications"));
 
 const sidePanelPages = {
     ASSIGNEE_CHOOSER,
@@ -75,5 +74,10 @@ const SidePanel = (props) => {
 };
 
 export default connect((state) => ({
-  app: state.app
+  app: {
+    isRightPanelOpened: state.app.isRightPanelOpened,
+    isLeftPanelOpened: state.app.isLeftPanelOpened,
+    rightPanelPage: state.app.rightPanelPage,
+    leftPanelPage: state.app.leftPanelPage
+  }
 }))(SidePanel);

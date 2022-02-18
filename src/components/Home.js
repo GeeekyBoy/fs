@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import loadable from '@loadable/component'
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { connect } from "react-redux";
 import { graphqlOperation } from "@aws-amplify/api";
 import { AuthState } from "../constants";
@@ -9,12 +8,12 @@ import * as appActions from "../actions/app";
 import * as queries from "../graphql/queries"
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import styles from "./Home.module.scss"
-const TasksPanel = loadable(() => import("./TasksPanel"));
-const Loading = loadable(() => import("./Loading"));
-const Toolbar = loadable(() => import("./Toolbar"));
-const SidePanel = loadable(() => import("./SidePanel"));
-const Notifications = loadable(() => import("./Notifications"));
-const SyncManager = loadable(() => import("./SyncManager"));
+const TasksPanel = lazy(() => import("./TasksPanel"));
+const Loading = lazy(() => import("./Loading"));
+const Toolbar = lazy(() => import("./Toolbar"));
+const SidePanel = lazy(() => import("./SidePanel"));
+const Notifications = lazy(() => import("./Notifications"));
+const SyncManager = lazy(() => import("./SyncManager"));
 import execGraphQL from "../utils/execGraphQL";
 
 const Home = (props) => {
@@ -91,7 +90,7 @@ const Home = (props) => {
     })()
   }, [routeLocation, app.isLoading, user]);
   return (
-    <div>
+    <div><Suspense fallback={<span>Loading</span>}>
       <Notifications />
       {isLoading ? (
         <Loading onFinish={() => setIsLoading(false)} />
@@ -106,13 +105,17 @@ const Home = (props) => {
 					</div>
 				</>
       )}
-    </div>
+    </Suspense></div>
   );
 };
 
 export default connect((state) => ({
-  app: state.app,
-  user: state.user,
-  tasks: state.tasks,
+  app: {
+    selectedProject: state.app.selectedProject,
+    isLoading: state.app.isLoading,
+  },
+  user: {
+    state: state.user.state,
+  },
   projects: state.projects
 }))(Home);

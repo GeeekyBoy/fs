@@ -76,7 +76,9 @@ const Export = (props) => {
 };
 
 export default connect((state) => ({
-  app: state.app,
+  app: {
+    selectedProject: state.app.selectedProject,
+  },
   projects: state.projects,
   tasks: state.tasks,
 }))(Export);

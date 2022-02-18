@@ -194,7 +194,13 @@ const ByDefault = (props) => {
 
 export default connect((state) => ({
   tasks: state.tasks,
-  app: state.app,
+  app: {
+    selectedProject: state.app.selectedProject,
+    isSynced: state.app.isSynced,
+  },
   projects: state.projects,
-  user: state.user
+  user: {
+    state: state.user.state,
+    data: state.user.data,
+  }
 }))(ByDefault);

@@ -31,8 +31,14 @@ const ProjectHeader = (props) => {
 }
 
 export default connect((state) => ({
-  user: state.user,
-  app: state.app,
+  user: {
+    state: state.user.state,
+  },
+  app: {
+    isSynced: state.app.isSynced,
+  },
   users: state.users,
-  collaboration: state.collaboration
+  collaboration: {
+    projectViewers: state.collaboration.projectViewers
+  }
 }))(ProjectHeader);

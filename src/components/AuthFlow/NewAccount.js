@@ -6,9 +6,7 @@ import { Auth } from "@aws-amplify/auth";
 import * as userActions from "../../actions/user"
 import * as cacheController from "../../controllers/cache"
 import { AuthState } from '../../constants';
-import DateField from '../UI/fields/DateField';
 import SubmitBtn from '../UI/fields/SubmitBtn';
-import Select from '../UI/fields/Select';
 import TextField from '../UI/fields/TextField';
 
 const NewAccount = (props) => {
@@ -304,5 +302,7 @@ const NewAccount = (props) => {
 }
 
 export default connect((state) => ({
-  app: state.app
+  app: {
+    isOffline: state.app.isOffline,
+  }
 }))(NewAccount);

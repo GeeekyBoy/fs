@@ -192,9 +192,4 @@ const Loading = (props) => {
   )
 }
 
-export default connect((state) => ({
-  user: state.user,
-  projects: state.projects,
-  tasks: state.tasks,
-  comments: state.comments
-}))(Loading);
+export default connect()(Loading);

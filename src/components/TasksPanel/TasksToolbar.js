@@ -42,7 +42,8 @@ const TasksToolbar = (props) => {
 }
 
 export default connect((state) => ({
-  app: state.app,
-  projects: state.projects,
-  appSettings: state.appSettings
+  app: {
+    selectedProject: state.app.selectedProject,
+  },
+  projects: state.projects
 }))(TasksToolbar);
