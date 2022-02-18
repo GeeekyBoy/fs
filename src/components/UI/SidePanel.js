@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { memo, Suspense } from 'react';
 import SimpleBar from 'simplebar-react';
 import styles from "./SidePanel.module.scss";
 import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
@@ -95,4 +95,4 @@ const SidePanel = (props) => {
   );
 };
 
-export default SidePanel;
+export default memo(SidePanel);

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import styles from "./ProgressBar.module.scss"
 
 const ProgressBar = (props) => {
@@ -15,4 +15,4 @@ const ProgressBar = (props) => {
   );
 }
 
-export default ProgressBar
+export default memo(ProgressBar)

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, memo } from "react"
 import styles from "./AvatarGroup.module.scss"
 
 const AvatarGroup = (props) => {
@@ -70,4 +70,4 @@ const AvatarGroup = (props) => {
 	)
 }
 
-export default AvatarGroup
+export default memo(AvatarGroup)

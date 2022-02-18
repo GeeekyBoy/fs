@@ -113,8 +113,6 @@ export default connect((state) => ({
 	app: {
     selectedTask: state.tasks.selectedTask
   },
-	user: {
-    state: state.user.state,
-  },
+	user: state.user,
 	users: state.users
 }))(Assign);

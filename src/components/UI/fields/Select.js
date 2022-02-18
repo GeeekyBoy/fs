@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from "./Select.module.scss";
 
 const Select = (props) => {
@@ -63,4 +63,4 @@ const Select = (props) => {
 	)
 }
 
-export default Select
+export default memo(Select)

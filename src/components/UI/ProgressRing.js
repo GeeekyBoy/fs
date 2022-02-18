@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { memo, useMemo } from "react"
 import styles from "./ProgressRing.module.scss"
 
 const ProgressRing = (props) => {
@@ -50,4 +50,4 @@ const ProgressRing = (props) => {
     );
 }
 
-export default ProgressRing
+export default memo(ProgressRing)

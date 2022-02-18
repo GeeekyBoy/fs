@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from "./Illustration.module.scss"
 
 const Illustration = (props) => {
@@ -44,4 +44,4 @@ const Illustration = (props) => {
   )
 }
 
-export default Illustration;
+export default memo(Illustration);

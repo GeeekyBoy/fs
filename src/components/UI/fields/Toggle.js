@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import styles from "./Toggle.module.scss"
 
 const Toggle = (props) => {
@@ -61,4 +61,4 @@ const Toggle = (props) => {
   )
 }
 
-export default Toggle
+export default memo(Toggle)

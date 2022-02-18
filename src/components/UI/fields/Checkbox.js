@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styles from "./Checkbox.module.scss";
 import { ReactComponent as CheckmarkIcon } from "../../../assets/checkmark-outline.svg";
 
@@ -53,4 +53,4 @@ const Checkbox = (props) => {
   );
 };
 
-export default Checkbox;
+export default memo(Checkbox);

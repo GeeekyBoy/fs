@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styles from "./PanelTabs.module.scss";
 
 const PanelTabs = (props) => {
@@ -47,4 +47,4 @@ const PanelTabs = (props) => {
   );
 };
 
-export default PanelTabs;
+export default memo(PanelTabs);

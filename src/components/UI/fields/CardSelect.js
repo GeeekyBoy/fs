@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from "./CardSelect.module.scss";
 
 const CardSelect = (props) => {
@@ -68,4 +68,4 @@ const CardSelect = (props) => {
 	)
 }
 
-export default CardSelect
+export default memo(CardSelect)

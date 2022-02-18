@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from "./Avatar.module.scss";
 
 const Avatar = (props) => {
@@ -39,4 +39,4 @@ const Avatar = (props) => {
   )
 }
 
-export default Avatar
+export default memo(Avatar)

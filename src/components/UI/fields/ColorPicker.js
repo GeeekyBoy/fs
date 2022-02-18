@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import styles from "./ColorPicker.module.scss"
 
 const ColorPicker = (props) => {
@@ -68,4 +68,4 @@ const ColorPicker = (props) => {
   )
 }
 
-export default ColorPicker
+export default memo(ColorPicker)
