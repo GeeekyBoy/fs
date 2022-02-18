@@ -17,7 +17,7 @@ const Notification = (props) => {
     class: className,
     style
   } = props
-  const navigate = useContext(UNSAFE_NavigationContext) ? useNavigate() : null;
+  const navigate = null;
   const openLink = (link) => {
     if (link) {
       if (onOpen) onOpen();

@@ -8,6 +8,44 @@ import isOnline from "../utils/isOnline";
 import AuthFlow from "./AuthFlow";
 import Home from "./Home";
 
+const routes = [
+  {
+    caseSensitive: true,
+    path: "/login",
+    element: <AuthFlow />,
+  },
+  {
+    caseSensitive: true,
+    path: "/signup",
+    element: <AuthFlow />,
+  },
+  {
+    caseSensitive: true,
+    path: "/forgot-password",
+    element: <AuthFlow />,
+  },
+  {
+    caseSensitive: true,
+    path: "/local/:projectPermalink",
+    element: <Home />,
+  },
+  {
+    caseSensitive: true,
+    path: "/:username/:projectPermalink/:taskPermalink",
+    element: <Home />,
+  },
+  {
+    caseSensitive: true,
+    path: "/:username/:projectPermalink",
+    element: <Home />,
+  },
+  {
+    caseSensitive: true,
+    path: "/",
+    element: <Home />,
+  },
+]
+
 const App = (props) => {
   const {
     appSettings,
@@ -67,43 +105,7 @@ const App = (props) => {
     document.documentElement.className = appSettings.theme + " " + (appSettings.isDarkMode ? "dark" : "light");
     document.querySelector('meta[name="theme-color"]').setAttribute('content', appSettings.isDarkMode ? "#272727" : availColors[appSettings.theme])
   }, [appSettings.theme, appSettings.isDarkMode]);
-  return useRoutes([
-    {
-      caseSensitive: true,
-      path: "/login",
-      element: <AuthFlow />,
-    },
-    {
-      caseSensitive: true,
-      path: "/signup",
-      element: <AuthFlow />,
-    },
-    {
-      caseSensitive: true,
-      path: "/forgot-password",
-      element: <AuthFlow />,
-    },
-    {
-      caseSensitive: true,
-      path: "/local/:projectPermalink",
-      element: <Home />,
-    },
-    {
-      caseSensitive: true,
-      path: "/:username/:projectPermalink/:taskPermalink",
-      element: <Home />,
-    },
-    {
-      caseSensitive: true,
-      path: "/:username/:projectPermalink",
-      element: <Home />,
-    },
-    {
-      caseSensitive: true,
-      path: "/",
-      element: <Home />,
-    },
-  ])
+  return useRoutes(routes)
 };
 
 export default connect((state) => ({
