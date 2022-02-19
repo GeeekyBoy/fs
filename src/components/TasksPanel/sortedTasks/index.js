@@ -1,9 +1,9 @@
 import { lazy } from "react";
-const BY_DEFAULT = lazy(() => import("./ByDefault"));
-const BY_DUE = lazy(() => import("./ByDue"));
-const BY_STATUS = lazy(() => import("./ByStatus"));
-const BY_PRIORITY = lazy(() => import("./ByPriority"));
-const BY_TAG = lazy(() => import("./ByTag"));
+import BY_DEFAULT from "./ByDefault";
+import BY_DUE from "./ByDue";
+import BY_STATUS from "./ByStatus";
+import BY_PRIORITY from "./ByPriority";
+import BY_TAG from "./ByTag";
 
 export default {
   BY_DEFAULT,

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import formatDate from '../../../utils/formatDate';
 import parseLinkedList from "../../../utils/parseLinkedList";
 import sortObj from '../../../utils/sortObj';
@@ -7,8 +7,8 @@ import Accordion from '../../UI/Accordion';
 import TaskItem from "../TaskItem";
 import TaskPlaceholder from '../TaskPlaceholder';
 
-const ByDue = (props) => {
-  const { tasks } = props;
+const ByDue = () => {
+  const tasks = useSelector(state => state.tasks);
   // const getSortedTasks = (tasks) => {
   //   return parseLinkedList(tasks, "prevTask", "nextTask").sort(
   //     (a, b) => (b.due || 0) - (a.due || 0)
@@ -73,6 +73,4 @@ const ByDue = (props) => {
   )
 }
 
-export default connect((state) => ({
-  tasks: state.tasks
-}))(ByDue);
+export default ByDue;

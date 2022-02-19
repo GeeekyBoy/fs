@@ -7,8 +7,8 @@ import parseLinkedList from "../../utils/parseLinkedList";
 import { ReactComponent as NotFoundIllustartion } from "../../assets/undraw_empty_xct9.svg";
 import { ReactComponent as TasksIllustartion } from "../../assets/undraw_teamwork_hpdk.svg";
 import filterObj from "../../utils/filterObj";
-import { useParams } from "react-router-dom";
 import Illustration from "../UI/Illustration";
+import { useParamsNoUpdates } from "../RouterUtils";
 
 const ProjectNotSelected = (props) => {
   const {
@@ -16,7 +16,7 @@ const ProjectNotSelected = (props) => {
     projects,
     dispatch,
   } = props;
-  const params = useParams();
+  const params = useParamsNoUpdates();
   const createNewProject = () => {
     projectAddingStatus === OK &&
       dispatch(

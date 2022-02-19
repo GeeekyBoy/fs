@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, useEffect } from "react"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./TaskItem.module.scss"
 import { useWindowSize } from "../../components/WindowSizeListener";
 import formatDate from "../../utils/formatDate"
@@ -15,7 +15,7 @@ import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
 import { ReactComponent as DetailsIcon } from "../../assets/information-circle-outline.svg";
 import SlashCommands from "../SlashCommands";
 import { useModal } from "../ModalManager";
-import { OK, initTaskState, AuthState } from "../../constants";
+import { OK, initTaskState, AuthState, panelPages } from "../../constants";
 import AvatarGroup from "../UI/AvatarGroup";
 import modals from '../modals';
 
@@ -23,41 +23,42 @@ const TaskItem = (props) => {
 
   const {
     item,
-    tasks,
-    users,
-    user,
-    projects,
-    collaboration,
-    app: {
-      selectedTask,
-      selectedProject,
-      taskAddingStatus,
-      isRightPanelOpened,
-      isSynced,
-      lockedTaskField,
-      command
-    },
-    appSettings: {
-      tasksSortingCriteria,
-      showDueDate,
-      showAssignees,
-      showDoneIndicator,
-      showCopyButton,
-      showDuplicateButton,
-      showShareButton
-    },
     nextTask,
     prevTask,
     listeners,
     isSorting,
-    isDragging,
-    dispatch
+    isDragging
   } = props;
 
   const { width } = useWindowSize();
   const { isModalOpened, showModal } = useModal();
 
   const inputRef = useRef(null)
+  const dispatch = useDispatch()
+  
+  const selectedTask = useSelector(state => state.app.selectedTask)
+  const selectedProject = useSelector(state => state.app.selectedProject)
+  const taskAddingStatus = useSelector(state => state.app.taskAddingStatus)
+  const rightPanelPage = useSelector(state => state.app.rightPanelPage)
+  const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
+  const isSynced = useSelector(state => state.app.isSynced)
+  const lockedTaskField = useSelector(state => state.app.lockedTaskField)
+  const command = useSelector(state => state.app.command)
+
+  const tasksSortingCriteria = useSelector(state => state.appSettings.tasksSortingCriteria)
+  const showDueDate = useSelector(state => state.appSettings.showDueDate)
+  const showAssignees = useSelector(state => state.appSettings.showAssignees)
+  const showDoneIndicator = useSelector(state => state.appSettings.showDoneIndicator)
+  const showCopyButton = useSelector(state => state.appSettings.showCopyButton)
+  const showDuplicateButton = useSelector(state => state.appSettings.showDuplicateButton)
+  const showShareButton = useSelector(state => state.appSettings.showShareButton)
+
+  const taskViewers = useSelector(state => state.collaboration.taskViewers)
+
+  const tasks = useSelector(state => state.tasks)
+  const users = useSelector(state => state.users)
+  const user = useSelector(state => state.user)
+  const projects = useSelector(state => state.projects)
 
   useEffect(() => {
     if (selectedTask === item.id) {
@@ -201,7 +202,10 @@ const TaskItem = (props) => {
       dispatch(appActions.handleSetTask(item.id))
     }
     if (!isRightPanelOpened) {
-      return dispatch(appActions.handleSetRightPanel(true))
+      if (rightPanelPage !== panelPages.TASK_HUB) {
+        dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
+      }
+      dispatch(appActions.handleSetRightPanel(true))
     }
   }
 
@@ -250,12 +254,12 @@ const TaskItem = (props) => {
           styles.TaskItemCore,
           ...(isSorting && [styles.sorting] || []),
           ...(isDragging && [styles.dragging] || []),
-          ...(collaboration.taskViewers[item.id] && [styles.collaborativeFocused] || []),
+          ...(taskViewers[item.id] && [styles.collaborativeFocused] || []),
           ...((tasksSortingCriteria !== "BY_DEFAULT" && tasksSortingCriteria !== "BY_DUE") && [styles.categorized] || []),
           ...((item.id === selectedTask) && [styles.focused] || [])
         ].join(" ")}
         style={{
-          borderColor: collaboration.taskViewers[item.id] && users[collaboration.taskViewers[item.id][0]].color,
+          borderColor: taskViewers[item.id] && users[taskViewers[item.id][0]].color,
         }}
       >
         <div className={styles.TaskItemLeftPart}>
@@ -369,35 +373,4 @@ const TaskItem = (props) => {
   );
 };
 
-export default connect((state) => ({
-  user: {
-    state: state.user.state,
-    data: {
-      username: state.user.data.username,
-    }
-  },
-  tasks: state.tasks,
-  app: {
-    selectedTask: state.app.selectedTask,
-    selectedProject: state.app.selectedProject,
-    taskAddingStatus: state.app.taskAddingStatus,
-    isRightPanelOpened: state.app.isRightPanelOpened,
-    isSynced: state.app.isSynced,
-    lockedTaskField: state.app.lockedTaskField,
-    command: state.app.command,
-  },
-  appSettings: {
-    tasksSortingCriteria: state.appSettings.tasksSortingCriteria,
-    showDueDate: state.appSettings.showDueDate,
-    showAssignees: state.appSettings.showAssignees,
-    showDoneIndicator: state.appSettings.showDoneIndicator,
-    showCopyButton: state.appSettings.showCopyButton,
-    showDuplicateButton: state.appSettings.showDuplicateButton,
-    showShareButton: state.appSettings.showShareButton,
-  },
-  users: state.users,
-  projects: state.projects,
-  collaboration: {
-    taskViewers: state.collaboration.taskViewers,
-  }
-}))(TaskItem);
+export default TaskItem;

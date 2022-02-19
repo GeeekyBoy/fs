@@ -1,22 +1,21 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthState } from "../constants";
 import * as projectsActions from "../actions/projects";
 import styles from "./Home.module.scss"
-const TasksPanel = lazy(() => import("./TasksPanel"));
-const Loading = lazy(() => import("./Loading"));
-const Toolbar = lazy(() => import("./Toolbar"));
-const SidePanel = lazy(() => import("./SidePanel"));
-const Notifications = lazy(() => import("./Notifications"));
-const SyncManager = lazy(() => import("./SyncManager"));
+import TasksPanel from "./TasksPanel";
+import Loading from "./Loading";
+import Toolbar from "./Toolbar";
+import SidePanel from "./SidePanel";
+import Notifications from "./Notifications";
+import SyncManager from "./SyncManager";
 import NavigationManager from "./NavigationManager";
 
-const Home = (props) => {
-  const {
-    user,
-    dispatch
-  } = props;
+const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  const user = useSelector(state => state.user);
 
   const fetchLocalProjects = () => {
     if (user.state !== AuthState.SignedIn) {
@@ -37,7 +36,7 @@ const Home = (props) => {
 
 
   return (
-    <div><Suspense fallback={<span>Loading</span>}>
+    <div>
       <Notifications />
       {isLoading ? (
         <Loading onFinish={() => setIsLoading(false)} />
@@ -53,17 +52,8 @@ const Home = (props) => {
 					</div>
 				</>
       )}
-    </Suspense></div>
+    </div>
   );
 };
 
-export default connect((state) => ({
-  app: {
-    selectedProject: state.app.selectedProject,
-    isLoading: state.app.isLoading,
-  },
-  user: {
-    state: state.user.state,
-  },
-  projects: state.projects
-}))(Home);
+export default Home;

@@ -10,7 +10,7 @@ module.exports = {
       options: {
         resources: "./src/scss/shared.scss",
       },
-    },
+    }
   ],
   webpack: {
     configure: {

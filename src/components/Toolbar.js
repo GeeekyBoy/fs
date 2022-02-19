@@ -1,35 +1,30 @@
-import React, { startTransition  } from 'react';
+import React from 'react';
 import styles from "./Toolbar.module.scss"
 import * as appActions from "../actions/app"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { panelPages, AuthState } from "../constants"
 import { ReactComponent as ProjectsIcon } from "../assets/albums-outline.svg"
 import { ReactComponent as NotificationIcon } from "../assets/notifications-outline.svg"
 import { ReactComponent as SettingsIcon } from "../assets/settings-outline.svg"
 import { ReactComponent as LoginIcon } from "../assets/person-circle-outline.svg"
 import Avatar from './UI/Avatar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigateNoUpdates } from './RouterUtils';
 
-const Toolbar = (props) => {
-  const {
-    app: {
-      isLeftPanelOpened,
-      leftPanelPage
-    },
-    user,
-    dispatch
-  } = props;
-  const navigate = useNavigate();
+const Toolbar = () => {
+  const navigate = useNavigateNoUpdates();
+  const dispatch = useDispatch();
+
+  const isLeftPanelOpened = useSelector(state => state.app.isLeftPanelOpened);
+  const leftPanelPage = useSelector(state => state.app.leftPanelPage);
+
+  const user = useSelector(state => state.user);
+
   const openLeftPanel = (page) => {
     if (!isLeftPanelOpened || (isLeftPanelOpened && leftPanelPage !== page)) {
       dispatch(appActions.setLeftPanelPage(page))
-      startTransition(() => {
-        dispatch(appActions.handleSetLeftPanel(true))
-      })
+      dispatch(appActions.handleSetLeftPanel(true))
     } else {
-      startTransition(() => {
-        dispatch(appActions.handleSetLeftPanel(false))
-      })
+      dispatch(appActions.handleSetLeftPanel(false))
     }
   }
   const goToLoginPage = () => {
@@ -109,10 +104,4 @@ const Toolbar = (props) => {
   );
 };
 
-export default connect((state) => ({
-  app: {
-    isLeftPanelOpened: state.app.isLeftPanelOpened,
-    leftPanelPage: state.app.leftPanelPage
-  },
-  user: state.user
-}))(Toolbar);
+export default Toolbar;

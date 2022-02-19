@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from "./ProjectToolbar.module.scss"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import * as tasksActions from "../../actions/tasks"
 import * as appActions from "../../actions/app"
 import * as appSettingsActions from "../../actions/appSettings"
@@ -19,20 +19,18 @@ import ShadowScroll from '../ShadowScroll';
 import { useModal } from '../ModalManager';
 import modals from '../modals';
 
-const ProjectToolbar = (props) => {
-  const {
-    app: {
-      selectedProject,
-      isLeftPanelOpened,
-      leftPanelPage
-    },
-    tasks,
-    appSettings: {
-      tasksSortingCriteria
-    },
-    dispatch,
-  } = props;
+const ProjectToolbar = () => {
   const { showModal } = useModal();
+  const dispatch = useDispatch();
+
+  const selectedProject = useSelector(state => state.app.selectedProject);
+  const isLeftPanelOpened = useSelector(state => state.app.isLeftPanelOpened);
+  const leftPanelPage = useSelector(state => state.app.leftPanelPage);
+
+  const tasks = useSelector(state => state.tasks);
+
+  const tasksSortingCriteria = useSelector(state => state.appSettings.tasksSortingCriteria);
+
   const openProjectSettings = () => {
     if (!isLeftPanelOpened || (isLeftPanelOpened && leftPanelPage !== panelPages.PROJECT_SETTINGS)) {
       dispatch(appActions.setLeftPanelPage(panelPages.PROJECT_SETTINGS))
@@ -169,14 +167,4 @@ const ProjectToolbar = (props) => {
   )
 }
 
-export default connect((state) => ({
-  app: {
-    selectedProject: state.app.selectedProject,
-    isLeftPanelOpened: state.app.isLeftPanelOpened,
-    leftPanelPage: state.app.leftPanelPage
-  },
-  tasks: state.tasks,
-  appSettings: {
-    tasksSortingCriteria: state.appSettings.tasksSortingCriteria
-  }
-}))(ProjectToolbar);
+export default ProjectToolbar;

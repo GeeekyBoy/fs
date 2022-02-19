@@ -5,9 +5,10 @@ import { connect } from "react-redux"
 import { Auth } from "@aws-amplify/auth";
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
+import { useNavigateNoUpdates } from '../RouterUtils';
 
 const ForgotPassword = (props) => {
-  const { app: { isOffline }, setShouldRedirect } = props
+  const { app: { isOffline } } = props
   const [username, setUsername] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [verificationCode, setVerificationCode] = useState("")
@@ -16,6 +17,7 @@ const ForgotPassword = (props) => {
   const [verificationCodeError, setVerificationCodeError] = useState(null)
   const [currStep, setCurrStep] = useState(0)
   const [isBusy, setIsBusy] = useState(false)
+  const navigate = useNavigateNoUpdates()
   const initiatePasswordRecovery = async (e) => {
     e.preventDefault()
     setUsernameError(null)
@@ -79,7 +81,7 @@ const ForgotPassword = (props) => {
     try {
       await Auth.forgotPasswordSubmit(username, verificationCode, newPassword)
       await Auth.signIn(username, newPassword)
-      setShouldRedirect(true)
+      navigate("/");
     } catch (error) {
       console.log('error signing in', error);
       switch (error.code) {

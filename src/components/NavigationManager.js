@@ -1,20 +1,30 @@
 import { useEffect } from "react"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { graphqlOperation } from "@aws-amplify/api";
 import * as appActions from "../actions/app"
 import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as queries from "../graphql/queries"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useLocation } from "wouter"
 import { AuthState } from '../constants';
 import execGraphQL from "../utils/execGraphQL";
+import { useParamsNoUpdates } from "./RouterUtils";
 
-const NavigationManager = (props) => {
-  const { app, projects, user, dispatch } = props
-  const navigate = useNavigate();
-  const routeParams = useParams();
-  const routeLocation = useLocation();
+const NavigationManager = () => {
+  const [routeLocation, navigate] = useLocation()
+  const routeParams = useParamsNoUpdates();
+  const dispatch = useDispatch()
+
+  const selectedProject = useSelector(state => state.app.selectedProject)
+
+  const projects = useSelector(state => state.projects)
+
+  const loadedTasks = useSelector(state => state.tasks)
+
+  const userState = useSelector(state => state.user.state)
+
   useEffect(() => {
+    console.log("Hello");
     (async () => {
     if (routeParams) {
       const {
@@ -36,11 +46,11 @@ const NavigationManager = (props) => {
           }
         }
         if (reqProject) {
-          const prevSelectedProject = app.selectedProject
+          const prevSelectedProject = selectedProject
           dispatch(appActions.handleSetProject(reqProject.id, false));
           if (taskPermalink) {
-            const tasks = prevSelectedProject === app.selectedProject ?
-              props.tasks : await dispatch(tasksActions.handleFetchTasks(reqProject.id, true))
+            const tasks = prevSelectedProject === selectedProject ?
+              loadedTasks : await dispatch(tasksActions.handleFetchTasks(reqProject.id, true))
             const reqTask = Object.values(tasks).filter(x => x.permalink === parseInt(taskPermalink, 10))[0]
             if (reqTask) {
               dispatch(appActions.handleSetTask(reqTask.id, false));
@@ -49,7 +59,7 @@ const NavigationManager = (props) => {
             navigate(`/${username}/${projectPermalink}`, { replace: true });
           }
         }
-      } else if (user.state !== AuthState.SignedIn && projectPermalink) {
+      } else if (userState !== AuthState.SignedIn && projectPermalink) {
         const reqProject = Object.values(projects).filter((x) => x.permalink === projectPermalink)[0];
         if (reqProject) {
           dispatch(appActions.handleSetProject(reqProject.id, false));
@@ -57,16 +67,8 @@ const NavigationManager = (props) => {
       }
     }
     })()
-  }, [routeLocation, user]);
+  }, [routeLocation, userState]);
   return null
 }
 
-export default connect((state) => ({
-  app: {
-    selectedProject: state.app.selectedProject,
-  },
-  user: {
-    state: state.user.state,
-  },
-  projects: state.projects
-}))(NavigationManager);
+export default NavigationManager;

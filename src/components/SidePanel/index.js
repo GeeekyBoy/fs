@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState, lazy } from 'react';
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import "draft-js/dist/Draft.css";
 import SidPanel from "../UI/SidePanel";
-const ASSIGNEE_CHOOSER = lazy(() => import("./AssigneeChooser"));
-const WATCHER_CHOOSER = lazy(() => import("./WatcherChooser"));
-const TASK_HUB = lazy(() => import("./TaskHub"));
-const PROJECTS = lazy(() => import("./Projects"));
-const ACCOUNT_SETTINGS = lazy(() => import("./AccountSettings"));
-const PROJECT_SETTINGS = lazy(() => import("./ProjectSettings"));
-const APP_SETTINGS = lazy(() => import("./AppSettings"));
-const NOTIFICATIONS = lazy(() => import("./Notifications"));
+import ASSIGNEE_CHOOSER from "./AssigneeChooser";
+import WATCHER_CHOOSER from "./WatcherChooser";
+import TASK_HUB from "./TaskHub";
+import PROJECTS from "./Projects";
+import ACCOUNT_SETTINGS from "./AccountSettings";
+import PROJECT_SETTINGS from "./ProjectSettings";
+import APP_SETTINGS from "./AppSettings";
+import NOTIFICATIONS from "./Notifications";
 
 const sidePanelPages = {
     ASSIGNEE_CHOOSER,
@@ -23,17 +23,15 @@ const sidePanelPages = {
 }
 
 const SidePanel = (props) => {
-  const {
-    app: {
-      isRightPanelOpened,
-      isLeftPanelOpened,
-      rightPanelPage,
-      leftPanelPage
-    },
-    right
-  } = props;
+  const { right } = props;
   const [panelProps, setPanelProps] = useState({})
   const [shouldRender, setShouldRender] = useState(false)
+
+  const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
+  const isLeftPanelOpened = useSelector(state => state.app.isLeftPanelOpened)
+  const rightPanelPage = useSelector(state => state.app.rightPanelPage)
+  const leftPanelPage = useSelector(state => state.app.leftPanelPage)
+
   const pageRef = useCallback(node => {
     if (node !== null) {
       setPanelProps(node.panelProps);
@@ -73,11 +71,4 @@ const SidePanel = (props) => {
   ) : null;
 };
 
-export default connect((state) => ({
-  app: {
-    isRightPanelOpened: state.app.isRightPanelOpened,
-    isLeftPanelOpened: state.app.isLeftPanelOpened,
-    rightPanelPage: state.app.rightPanelPage,
-    leftPanelPage: state.app.leftPanelPage
-  }
-}))(SidePanel);
+export default SidePanel;

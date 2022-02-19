@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "./ProjectTitle.module.scss"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app"
 import * as projectsActions from "../../actions/projects"
 import * as tasksActions from "../../actions/tasks"
@@ -10,16 +10,18 @@ import parseLinkedList from '../../utils/parseLinkedList';
 const ProjectTitle = (props) => {
 
   const {
-    app: {
-      isProjectTitleSelected,
-      selectedProject,
-      taskAddingStatus
-    },
-    projects,
-    tasks,
-    readOnly,
-    dispatch
+    readOnly
   } = props;
+
+  const dispatch = useDispatch();
+
+  const isProjectTitleSelected = useSelector(state => state.app.isProjectTitleSelected);
+  const selectedProject = useSelector(state => state.app.selectedProject);
+  const taskAddingStatus = useSelector(state => state.app.taskAddingStatus);
+
+  const projects = useSelector(state => state.projects);
+
+  const tasks = useSelector(state => state.tasks);
 
   const onChange = (e) => {
     dispatch(projectsActions.handleUpdateProject({
@@ -86,12 +88,4 @@ const ProjectTitle = (props) => {
   );
 };
 
-export default connect((state) => ({
-  tasks: state.tasks,
-  app: {
-    isProjectTitleSelected: state.app.isProjectTitleSelected,
-    selectedProject: state.app.selectedProject,
-    taskAddingStatus: state.tasks.taskAddingStatus
-  },
-  projects: state.projects,
-}))(ProjectTitle);
+export default ProjectTitle;

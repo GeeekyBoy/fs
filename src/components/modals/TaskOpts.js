@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { connect } from "react-redux";
+import React from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app"
 import * as tasksActions from "../../actions/tasks"
 import copyTaskCore from "../../utils/copyTask"
@@ -12,20 +12,19 @@ import { ReactComponent as CheckmarkIcon } from "../../assets/checkmark-circle-o
 import styles from "./TaskOpts.module.scss"
 import Modal from '../UI/Modal/';
 import { useModal } from '../ModalManager';
+import { panelPages } from '../../constants';
 
-const TaskOpts = (props) => {
-  
-  const {
-    app: {
-      selectedTask,
-      selectedProject,
-      isRightPanelOpened
-    },
-    tasks,
-    dispatch
-  } = props
+const TaskOpts = () => {
 
   const { modalRef, hideModal } = useModal();
+  const dispatch = useDispatch();
+
+  const selectedTask = useSelector(state => state.app.selectedTask)
+  const selectedProject = useSelector(state => state.app.selectedProject)
+  const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
+  const rightPanelPage = useSelector(state => state.app.rightPanelPage)
+
+  const tasks = useSelector(state => state.tasks)
 
   const copyTask = () => {
     hideModal()
@@ -79,7 +78,10 @@ const TaskOpts = (props) => {
   const openRightPanel = () => {
     hideModal()
     if (!isRightPanelOpened) {
-      return dispatch(appActions.handleSetRightPanel(true))
+      if (rightPanelPage !== panelPages.TASK_HUB) {
+        dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
+      }
+      dispatch(appActions.handleSetRightPanel(true))
     }
   }
 
@@ -157,11 +159,4 @@ const TaskOpts = (props) => {
   )
 }
 
-export default connect((state) => ({
-  tasks: state.tasks,
-  app: {
-    selectedTask: state.app.selectedTask,
-    selectedProject: state.app.selectedProject,
-    isRightPanelOpened: state.app.isRightPanelOpened
-  }
-}))(TaskOpts);
+export default TaskOpts;

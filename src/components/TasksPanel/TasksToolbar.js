@@ -1,20 +1,21 @@
 import React from 'react'
 import styles from "./TasksToolbar.module.scss"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import * as appActions from "../../actions/app"
 import { ReactComponent as SearchIcon } from "../../assets/search-outline.svg"
 import HeadingTextField from '../UI/fields/HeadingTextField';
 
 const TasksToolbar = (props) => {
   const {
-    app: {
-      selectedProject
-    },
-    projects,
     searchKeyword,
     setSearchKeyword,
-    dispatch,
   } = props;
+  const dispatch = useDispatch()
+
+  const selectedProject = useSelector(state => state.app.selectedProject)
+
+  const projects = useSelector(state => state.projects)
+
   return (
     <div className={styles.ToolbarContainer}>
       <HeadingTextField
@@ -41,9 +42,4 @@ const TasksToolbar = (props) => {
   )
 }
 
-export default connect((state) => ({
-  app: {
-    selectedProject: state.app.selectedProject,
-  },
-  projects: state.projects
-}))(TasksToolbar);
+export default TasksToolbar;

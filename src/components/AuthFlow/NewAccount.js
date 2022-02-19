@@ -8,9 +8,10 @@ import * as cacheController from "../../controllers/cache"
 import { AuthState } from '../../constants';
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
+import { useNavigateNoUpdates } from '../RouterUtils';
 
 const NewAccount = (props) => {
-  const { app: { isOffline }, setShouldRedirect, dispatch } = props
+  const { app: { isOffline }, dispatch } = props
   const [verificationCode, setVerificationCode] = useState("")
   const [currStep, setCurrStep] = useState(0)
   const [firstName, setFirstName] = useState("")
@@ -26,6 +27,7 @@ const NewAccount = (props) => {
   const [passwordError, setPasswordError] = useState(null)
   const [verificationCodeError, setVerificationCodeError] = useState(null)
   const [isBusy, setIsBusy] = useState(false)
+  const navigate = useNavigateNoUpdates();
   const validateFirstName = (value = firstName) => {
     setFirstNameError(null)
     if (!value.trim()) {
@@ -159,7 +161,7 @@ const NewAccount = (props) => {
       await Auth.confirmSignUp(username, verificationCode)
       await Auth.signIn(username, password);
       cacheController.resetCache(true)
-      setShouldRedirect(true)
+      navigate("/");
     } catch (error) {
       console.log('error signing in', error);
       switch (error.code) {

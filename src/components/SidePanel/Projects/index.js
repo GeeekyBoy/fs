@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as projectsActions from "../../../actions/projects"
 import * as appActions from "../../../actions/app"
 import { initProjectState, OK, PENDING, AuthState } from "../../../constants"
@@ -11,16 +11,16 @@ import Assigned from "./Assigned";
 import Watched from "./Watched";
 import Owned from "./Owned";
 
-const Projects = forwardRef((props, ref) => {
-  const {
-    user,
-    app: {
-      projectAddingStatus
-    },
-    projects,
-    dispatch
-  } = props
+const Projects = forwardRef((_, ref) => {
   const [scope, setScope] = useState("owned")
+  const dispatch = useDispatch();
+
+  const userState = useSelector(state => state.user.state);
+
+  const projectAddingStatus = useSelector(state => state.app.projectAddingStatus);
+
+  const projects = useSelector(state => state.projects);
+
   const createNewProject = () => {
     if (projectAddingStatus === OK) {
       dispatch(appActions.handleSetLeftPanel(false))
@@ -44,7 +44,7 @@ const Projects = forwardRef((props, ref) => {
     panelProps: {
       title: "Projects",
       actionIcon: AddIcon,
-      header: user.state === AuthState.SignedIn && (
+      header: userState === AuthState.SignedIn && (
         <center>
           <PanelTabs
             tabs={[
@@ -77,12 +77,4 @@ const Projects = forwardRef((props, ref) => {
 
 Projects.displayName = "Projects"
 
-export default connect((state) => ({
-  user: {
-    state: state.user.state,
-  },
-  app: {
-    projectAddingStatus: state.app.projectAddingStatus,
-  },
-  projects: state.projects
-}), null, null, { forwardRef: true })(Projects);
+export default Projects;

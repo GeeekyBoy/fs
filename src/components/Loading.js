@@ -1,6 +1,6 @@
 import React from "react"
 import { useEffect, useState } from "react"
-import { connect } from "react-redux"
+import { useDispatch } from "react-redux"
 import styles from "./Loading.module.scss"
 import { graphqlOperation } from "@aws-amplify/api";
 import * as appActions from "../actions/app"
@@ -12,22 +12,21 @@ import * as observersActions from "../actions/observers"
 import * as collaborationActions from "../actions/collaboration"
 import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
-import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom"
 import { panelPages, AuthState } from '../constants';
 import ProgressBar from "./UI/ProgressBar";
 import uploadLocal from "../utils/uploadLocal";
 import execGraphQL from "../utils/execGraphQL";
 import store from "../store";
+import { useNavigateNoUpdates, useParamsNoUpdates } from "./RouterUtils";
 
 const Loading = (props) => {
-  const { onFinish, dispatch } = props
-  const [shouldLogin, setShouldLogin] = useState(false)
+  const { onFinish } = props
   const [progressMax, setProgressMax] = useState(100)
   const [progressValue, setProgressValue] = useState(0)
   const [loadingMsg, setLoadingMsg] = useState("Please Wait A Moment")
-  const navigate = useNavigate()
-  const routeParams = useParams()
-  const routeLocation = useLocation()
+  const navigate = useNavigateNoUpdates()
+  const routeParams = useParamsNoUpdates()
+  const dispatch = useDispatch()
   useEffect(() => {
     (async () => {
     const currUser = await dispatch(userActions.handleFetchUser())
@@ -170,26 +169,15 @@ const Loading = (props) => {
     })()
   }, [])
   return (
-    <>
-      {shouldLogin ? (
-        <Navigate
-          to={{
-            pathname: "/login",
-            state: { referrer: routeLocation.pathname }
-          }}
-        />
-      ) : (
-        <div className={styles.LoadingContainer}>
-          <span>forwardslash</span>
-          <ProgressBar
-            max={progressMax}
-            value={progressValue}
-          />
-          <span>{loadingMsg}</span>
-        </div>
-      )}
-    </>
+    <div className={styles.LoadingContainer}>
+      <span>forwardslash</span>
+      <ProgressBar
+        max={progressMax}
+        value={progressValue}
+      />
+      <span>{loadingMsg}</span>
+    </div>
   )
 }
 
-export default connect()(Loading);
+export default Loading;

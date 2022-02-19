@@ -1,7 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { UNSAFE_NavigationContext } from 'react-router';
+import React, { useState } from 'react';
 import styles from "./Notification.module.scss"
-import { useNavigate } from 'react-router-dom';
 import { ReactComponent as CloseIcon } from "../../assets/close-outline.svg"
 import { ReactComponent as ChevronUpIcon } from "../../assets/chevron-up-outline.svg"
 import { ReactComponent as ChevronDownIcon } from "../../assets/chevron-down-outline.svg"
@@ -17,15 +15,9 @@ const Notification = (props) => {
     class: className,
     style
   } = props
-  const navigate = null;
   const openLink = (link) => {
-    if (link) {
-      if (onOpen) onOpen();
-      if (navigate) {
-        navigate("/" + link);
-      } else {
-        window.open("https://forwardslash.ch/" + link, "_blank").focus();
-      }
+    if (link && onOpen) {
+      onOpen("/" + onOpen);
     }
   }
   const [isExpanded, setIsExpanded] = useState(false);

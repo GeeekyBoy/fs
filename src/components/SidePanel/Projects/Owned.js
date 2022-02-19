@@ -19,7 +19,7 @@ import {
   restrictToFirstScrollableAncestor
 } from '@dnd-kit/modifiers';
 import {CSS} from '@dnd-kit/utilities';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as projectsActions from "../../../actions/projects"
 import ProjectItem from "./ProjectItem"
 import parseLinkedList from "../../../utils/parseLinkedList"
@@ -127,14 +127,13 @@ const SortableItem = (props) => {
   );
 }
 
-const Owned = (props) => {
-  const {
-    app: {
-      isSynced
-    },
-    projects,
-    dispatch
-  } = props
+const Owned = () => {
+  const dispatch = useDispatch();
+
+  const isSynced = useSelector(state => state.app.isSynced);
+
+  const projects = useSelector(state => state.projects);
+
   const onSortEnd = ({oldIndex, newIndex}) => {
     if (oldIndex > newIndex) {
         const sortedProjects = parseLinkedList(filterObj(projects, x => x.isOwned), "prevProject", "nextProject")
@@ -180,9 +179,4 @@ const Owned = (props) => {
   );  
 }
 
-export default connect((state) => ({
-  app: {
-    isSynced: state.app.isSynced
-  },
-  projects: state.projects
-}))(Owned);
+export default Owned;

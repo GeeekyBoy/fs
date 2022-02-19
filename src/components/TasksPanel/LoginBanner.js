@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from "./LoginBanner.module.scss"
-import { useNavigate } from 'react-router-dom';
+import { useNavigateNoUpdates } from '../RouterUtils';
 
 const LoginBanner = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigateNoUpdates();
   const handleClickBanner = () => {
     navigate("/login")
   }

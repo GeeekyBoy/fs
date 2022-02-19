@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { graphqlOperation } from "@aws-amplify/api";
 import * as appActions from "../actions/app"
 import * as projectsActions from "../actions/projects"
@@ -12,23 +12,32 @@ import * as collaborationActions from "../actions/collaboration"
 import * as queries from "../graphql/queries"
 import * as mutationsGraphQL from "../graphql/mutations"
 import * as cacheController from "../controllers/cache"
-import { useNavigate, useParams } from "react-router-dom"
 import { panelPages, AuthState } from '../constants';
 import execGraphQL from "../utils/execGraphQL";
 import store from "../store";
 import * as mutationID from "../utils/mutationID";
+import { useNavigateNoUpdates, useParamsNoUpdates } from "./RouterUtils";
 
 const SyncManager = (props) => {
-  const { app, mutations, user, dispatch } = props
   const [isInitial, setIsInitial] = useState(true)
   const ws = useRef(null)
-  const navigate = useNavigate()
-  const routeParams = useParams()
+  const navigate = useNavigateNoUpdates()
+  const routeParams = useParamsNoUpdates()
+  const dispatch = useDispatch()
+
+  const isOffline = useSelector(state => state.isOffline)
+  const selectedProject = useSelector(state => state.selectedProject)
+  const selectedTask = useSelector(state => state.selectedTask)
+
+  const mutations = useSelector(state => state.mutations)
+
+  const user = useSelector(state => state.user)
+
   useEffect(() => {
     if (user.state === AuthState.SignedIn) {
       if (isInitial) {
         setIsInitial(false)
-      } else if (app.isOffline) {
+      } else if (isOffline) {
         dispatch(appActions.setSynced(false))
         dispatch(usersActions.addCachedUsers(cacheController.getUsers()))
         dispatch(observersActions.handleClearNotificationsObservers())
@@ -62,10 +71,10 @@ const SyncManager = (props) => {
                   }
                 }
               }
-              if (!(app.selectedProject in projects) && reqProject) {
+              if (!(selectedProject in projects) && reqProject) {
                 dispatch(appActions.handleSetProject(reqProject.id, false))
                 const tasks = await dispatch(tasksActions.handleFetchTasks(reqProject.id, true))
-                if (!(app.selectedTask in tasks) && routeParams.taskPermalink) {
+                if (!(selectedTask in tasks) && routeParams.taskPermalink) {
                   const reqTask = Object.values(tasks).filter(x => x.permalink === parseInt(routeParams.taskPermalink, 10))[0]
                   if (reqTask) {
                     dispatch(appActions.handleSetTask(reqTask.id, false))
@@ -87,7 +96,7 @@ const SyncManager = (props) => {
               navigate(`/${firstProject.permalink}`, { replace: true })
             }
           }
-          if (store.getState().app.isOffline) {
+          if (store.getState().isOffline) {
             dispatch(appActions.setSynced(false))
             dispatch(usersActions.addCachedUsers(cacheController.getUsers()))
           } else {
@@ -96,7 +105,7 @@ const SyncManager = (props) => {
         })()
       }
     }
-  }, [app.isOffline])
+  }, [isOffline])
   useEffect(() => {
     if (mutations[0]) {
       const [mutationType, data, successCallback, errorCallback] = mutations[0];
@@ -117,12 +126,4 @@ const SyncManager = (props) => {
   return null
 }
 
-export default connect((state) => ({
-  app: {
-    isOffline: state.app.isOffline,
-    selectedProject: state.app.selectedProject,
-    selectedTask: state.app.selectedTask,
-  },
-  mutations: state.mutations,
-  user: state.user
-}))(SyncManager);
+export default SyncManager;

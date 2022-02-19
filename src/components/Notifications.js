@@ -1,17 +1,20 @@
 import React, { useRef, useState, useEffect, lazy } from 'react';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./Notifications.module.scss"
 import * as notificationsActions from "../actions/notifications"
+import { useNavigateNoUpdates } from './RouterUtils';
 const Notification = lazy(() => import('./UI/Notification'));
 
-const Notifications = (props) => {
-  const {
-    notifications,
-    users,
-    dispatch
-  } = props;
+const Notifications = () => {
   const dismissTimer = useRef(null)
   const [anim, setAnim] = useState(0)
+  const navigate = useNavigateNoUpdates();
+  const dispatch = useDispatch();
+
+  const notifications = useSelector(state => state.notifications);
+
+  const users = useSelector(state => state.users);
+
   const dismissNotification = (e) => {
     if (e) e.stopPropagation()
     clearTimeout(dismissTimer.current)
@@ -33,6 +36,7 @@ const Notifications = (props) => {
         <Notification
           key={notifications.pushed[0]}
           notificationData={notifications.pushed[0]}
+          onOpen={navigate}
           onDismiss={dismissNotification}
           onAnimationEnd={handleAnimationEnd}
           senderData={users[notifications.pushed[0].sender]}
@@ -47,7 +51,4 @@ const Notifications = (props) => {
   );
 };
 
-export default connect((state) => ({
-  notifications: state.notifications,
-  users: state.users,
-}))(Notifications);
+export default Notifications;

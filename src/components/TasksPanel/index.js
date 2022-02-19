@@ -1,39 +1,39 @@
 import React, { Suspense, useState, lazy } from 'react';
 import styles from "./index.module.scss";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import parseLinkedList from "../../utils/parseLinkedList";
 import ProjectNotSelected from "./ProjectNotSelected";
 import * as tasksActions from "../../actions/tasks";
 import { READY, LOADING, initTaskState, AuthState } from "../../constants";
 import sortedTasks from './sortedTasks';
-const ProjectToolbar = lazy(() => import('./ProjectToolbar'));
-const TasksToolbar = lazy(() => import('./TasksToolbar'));
-const NoTasks = lazy(() => import('./NoTasks'));
-const TasksSearch = lazy(() => import('./TasksSearch'));
-const ProjectHeader = lazy(() => import('./ProjectHeader'));
-const SimpleBar = lazy(() => import('simplebar-react'));
-const LoginBanner = lazy(() => import('./LoginBanner'));
+import ProjectToolbar from './ProjectToolbar';
+import TasksToolbar from './TasksToolbar';
+import NoTasks from './NoTasks';
+import TasksSearch from './TasksSearch';
+import ProjectHeader from './ProjectHeader';
+import SimpleBar from 'simplebar-react';
+import LoginBanner from './LoginBanner';
 
-const TasksPanel = (props) => {
-  const {
-    app: {
-      selectedProject,
-      isSynced
-    },
-    appSettings: {
-      tasksSortingCriteria
-    },
-    user,
-    status,
-    tasks,
-    dispatch,
-  } = props;
+const TasksPanel = () => {
   const [searchKeyword, setSearchKeyword] = useState("")
+  const dispatch = useDispatch();
+
+  const selectedProject = useSelector(state => state.app.selectedProject);
+  const isSynced = useSelector(state => state.app.isSynced);
+
+  const tasksSortingCriteria = useSelector(state => state.appSettings.tasksSortingCriteria);
+
+  const tasks = useSelector(state => state.tasks);
+
+  const tasksStatus = useSelector(state => state.status.tasks);
+
+  const user = useSelector(state => state.user);
+
   const addNewTask = (e) => {
     (e.target.getAttribute("name") === "TasksPanelContainer" ||
     (e.target.className === "simplebar-content-wrapper" && document.querySelector("[name='TasksView']")?.contains(e.target)) ||
     document.querySelector("[name='NoTasks']")?.contains(e.target) && !Object.keys(tasks).length) &&
-    status.tasks === READY &&
+    tasksStatus === READY &&
     isSynced &&
     dispatch(
       tasksActions.handleCreateTask(
@@ -45,13 +45,12 @@ const TasksPanel = (props) => {
     )
   }
   return (
-    <Suspense fallback={<div>Loading...</div>}>
     <div
       name="TasksPanelContainer"
       className={[
         styles.TasksPanelContainer,
-        ...((status.tasks === READY ||
-          status.tasks === LOADING) && [styles.ready] || [])
+        ...((tasksStatus === READY ||
+          tasksStatus === LOADING) && [styles.ready] || [])
       ].join(" ")}
       onClick={addNewTask}
     >
@@ -62,7 +61,7 @@ const TasksPanel = (props) => {
             searchKeyword={searchKeyword}
             setSearchKeyword={setSearchKeyword}
           />
-          {status.tasks === LOADING ? (
+          {tasksStatus === LOADING ? (
             <NoTasks msgID="LOADING" />
           ) : (
             <>
@@ -84,23 +83,7 @@ const TasksPanel = (props) => {
         </>
       ) : <ProjectNotSelected />}
     </div>
-    </Suspense>
   )
 }
 
-export default connect((state) => ({
-  tasks: state.tasks,
-  app: {
-    selectedProject: state.app.selectedProject,
-    isSynced: state.app.isSynced
-  },
-  user: {
-    state: state.user.state
-  },
-  status: {
-    tasks: state.status.tasks
-  },
-  appSettings: {
-    tasksSortingCriteria: state.appSettings.tasksSortingCriteria
-  }
-}))(TasksPanel);
+export default TasksPanel;

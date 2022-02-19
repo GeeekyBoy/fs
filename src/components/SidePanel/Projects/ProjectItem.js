@@ -1,17 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../../actions/app";
 import * as projectsActions from "../../../actions/projects";
 import ProjectCard from "../../UI/ProjectCard";
 
 const ProjectItem = (props) => {
   const {
-    app: { selectedProject },
     project,
     readOnly,
-    dispatch,
     listeners,
   } = props;
+  const dispatch = useDispatch();
+  const selectedProject = useSelector(state => state.app.selectedProject);
   const shareProject = (e) => {
     e.stopPropagation();
     const linkToBeCopied = window.location.href.replace(/\/\d+/, "");
@@ -49,8 +49,4 @@ const ProjectItem = (props) => {
   );
 };
 
-export default connect((state) => ({
-  app: {
-    selectedProject: state.app.selectedProject,
-  },
-}))(ProjectItem);
+export default ProjectItem;

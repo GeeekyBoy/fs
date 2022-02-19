@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import parseLinkedList from "../../../utils/parseLinkedList";
 import Accordion from '../../UI/Accordion';
 import TaskItem from "../TaskItem";
 import TaskPlaceholder from '../TaskPlaceholder';
 
-const ByPriority = (props) => {
-  const { tasks } = props;
+const ByPriority = () => {
+  const tasks = useSelector(state => state.tasks);
   const getSortedTasks = (tasks) => {
     const defaultSorting = parseLinkedList(tasks, "prevTask", "nextTask")
     return {
@@ -91,6 +91,4 @@ const ByPriority = (props) => {
   )
 }
 
-export default connect((state) => ({
-  tasks: state.tasks
-}))(ByPriority);
+export default ByPriority;

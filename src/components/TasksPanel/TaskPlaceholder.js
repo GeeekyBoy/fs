@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import * as tasksActions from "../../actions/tasks";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { AuthState, initTaskState, READY } from "../../constants";
 import styles from "./TaskPlaceholder.module.scss";
 import parseLinkedList from "../../utils/parseLinkedList";
@@ -9,13 +9,20 @@ const TaskPlaceholder = (props) => {
   const {
     preset = {},
     content = "Tap to create new task…",
-    app: { selectedProject, isSynced },
-    status,
-    projects,
-    tasks,
-    user,
-    dispatch,
   } = props;
+
+  const dispatch = useDispatch();
+
+  const selectedProject = useSelector(state => state.app.selectedProject);
+  const isSynced = useSelector(state => state.app.isSynced);
+
+  const tasks = useSelector(state => state.tasks);
+
+  const tasksStatus = useSelector(state => state.status.tasks);
+
+  const projects = useSelector(state => state.projects);
+
+  const user = useSelector(state => state.user);
 
   const getReadOnly = (user, projects, selectedProject, isSynced) => {
     return (user.state === AuthState.SignedIn &&
@@ -28,7 +35,7 @@ const TaskPlaceholder = (props) => {
 
   const addNewTask = () => {
       !readOnly &&
-      status.tasks === READY &&
+      tasksStatus === READY &&
       isSynced &&
       dispatch(
         tasksActions.handleCreateTask(
@@ -41,7 +48,7 @@ const TaskPlaceholder = (props) => {
         )
       );
   };
-  return !readOnly && status.tasks === READY && isSynced ? (
+  return !readOnly && tasksStatus === READY && isSynced ? (
     <span
       name="TaskPlaceholder"
       className={[styles.TaskPlaceholder, "noselect"].join(" ")}
@@ -52,20 +59,4 @@ const TaskPlaceholder = (props) => {
   ) : null;
 };
 
-export default connect((state) => ({
-  tasks: state.tasks,
-  app: {
-    selectedProject: state.app.selectedProject,
-    isSynced: state.app.isSynced,
-  },
-  user: {
-    state: state.user.state,
-    data: {
-      username: state.user.data.username,
-    }
-  },
-  projects: state.projects,
-  status: {
-    tasks: state.status.tasks,
-  }
-}))(TaskPlaceholder);
+export default TaskPlaceholder;

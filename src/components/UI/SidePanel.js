@@ -75,7 +75,6 @@ const SidePanel = (props) => {
           <div className={styles.SidePanelToolbarDumpAction} />
         )}
       </div>
-      <Suspense fallback={<span>Loading</span>}>
         {header}
         <SimpleBar className={styles.SidePanelContent}>
           {props.children}
@@ -90,7 +89,6 @@ const SidePanel = (props) => {
             {submitLabel}
           </Button>
         )}
-      </Suspense>
     </div>
   );
 };

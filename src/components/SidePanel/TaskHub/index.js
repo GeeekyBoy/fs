@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../../actions/app";
 import { AuthState } from "../../../constants";
 import Comments from "./Comments";
@@ -7,18 +7,17 @@ import { ReactComponent as ShareIcon } from "../../../assets/share-outline.svg"
 import PanelTabs from '../../UI/PanelTabs';
 import Details from './Details';
 
-const TaskHub = forwardRef((props, ref) => {
-  const {
-    user,
-    app: {
-      lockedTaskField,
-      selectedProject
-    },
-    projects,
-    dispatch
-  } = props;
+const TaskHub = forwardRef((_, ref) => {
   
   const idleTrigger = useRef(null)
+  const dispatch = useDispatch();
+
+  const userState = useSelector(state => state.user.state);
+
+  const lockedTaskField = useSelector(state => state.app.lockedTaskField);
+  const selectedProject = useSelector(state => state.app.selectedProject);
+
+  const projects = useSelector(state => state.projects);
 	
 	const forceIdle = () => {
 		if (["task", "description"].includes(lockedTaskField)) {
@@ -43,8 +42,8 @@ const TaskHub = forwardRef((props, ref) => {
     panelProps: {
       title: "Task Hub",
       actionIcon: ShareIcon,
-      header: (user.state === AuthState.SignedIn ||
-        (user.state !== AuthState.SignedIn &&
+      header: (userState === AuthState.SignedIn ||
+        (userState !== AuthState.SignedIn &&
           projects[selectedProject]?.isTemp)) && (
         <center>
           <PanelTabs
@@ -74,13 +73,4 @@ const TaskHub = forwardRef((props, ref) => {
 
 TaskHub.displayName = "TaskHub";
 
-export default connect((state) => ({
-  user: {
-    state: state.user.state,
-  },
-  app: {
-    lockedTaskField: state.app.lockedTaskField,
-    selectedProject: state.app.selectedProject,
-  },
-  projects: state.projects,
-}), null, null, { forwardRef: true })(TaskHub);
+export default TaskHub;

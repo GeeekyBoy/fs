@@ -5,7 +5,6 @@ import './utils/nanoidIE'
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from "react-redux"
-import { BrowserRouter } from "react-router-dom"
 import store from "./store"
 import './index.scss';
 import 'simplebar/dist/simplebar.min.css';
@@ -18,6 +17,7 @@ import { getAnalytics } from "firebase/analytics";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import ModalManager from "./components/ModalManager";
 import WindowSizeListener from "./components/WindowSizeListener";
+import RouterUtils from "./components/RouterUtils";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5qtc5aQFVBclDwYalib-qXn7DdK-tLEk",
@@ -35,16 +35,17 @@ const analytics = getAnalytics(app);
 API.configure(awsconfig);
 Auth.configure(awsconfig);
 const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
+const root = ReactDOM.createRoot(container)
 root.render(
+(
   <WindowSizeListener>
-    <Provider store={store}>
-      <BrowserRouter>
+    <RouterUtils>
+      <Provider store={store}>
         <ModalManager>
           <App />
         </ModalManager>
-      </BrowserRouter>
-    </Provider>
+      </Provider>
+    </RouterUtils>
   </WindowSizeListener>
-);
+), container);
 serviceWorkerRegistration.register();

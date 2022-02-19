@@ -5,12 +5,12 @@ import { connect } from "react-redux"
 import { Auth } from "@aws-amplify/auth";
 import * as userActions from "../../actions/user"
 import * as cacheController from "../../controllers/cache"
-import { useNavigate } from 'react-router-dom';
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
+import { useNavigateNoUpdates } from '../RouterUtils';
 
 const Login = (props) => {
-  const { app: { isOffline }, setShouldRedirect, dispatch } = props
+  const { app: { isOffline }, dispatch } = props
   const [verificationCode, setVerificationCode] = useState("")
   const [currStep, setCurrStep] = useState(0)
   const [username, setUsername] = useState("")
@@ -19,7 +19,7 @@ const Login = (props) => {
   const [passwordError, setPasswordError] = useState(null)
   const [verificationCodeError, setVerificationCodeError] = useState(null)
   const [isBusy, setIsBusy] = useState(false)
-  const navigate = useNavigate();
+  const navigate = useNavigateNoUpdates();
   const handleLogin = async (e) => {
     e.preventDefault()
     setIsBusy(true)
@@ -28,7 +28,7 @@ const Login = (props) => {
     try {
       await Auth.signIn(username, password);
       cacheController.resetCache(true)
-      setShouldRedirect(true)
+      navigate("/");
     } catch (error) {
       console.log('error signing in', error);
       switch(error.code) {
@@ -56,7 +56,7 @@ const Login = (props) => {
     try {
       await Auth.confirmSignUp(username, verificationCode)
       await Auth.signIn(username, password);
-      setShouldRedirect(true)
+      navigate("/");
     } catch (error) {
       console.log('error signing in', error);
       switch (error.code) {

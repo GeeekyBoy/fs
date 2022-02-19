@@ -1,57 +1,20 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
-import { useNavigate, useRoutes } from "react-router-dom";
 import store from "../store";
 import isOnline from "../utils/isOnline";
-import AuthFlow from "./AuthFlow";
+import { Route } from "wouter";
+import { useNavigateNoUpdates } from "./RouterUtils";
 import Home from "./Home";
+import AuthFlow from "./AuthFlow";
 
-const routes = [
-  {
-    caseSensitive: true,
-    path: "/login",
-    element: <AuthFlow />,
-  },
-  {
-    caseSensitive: true,
-    path: "/signup",
-    element: <AuthFlow />,
-  },
-  {
-    caseSensitive: true,
-    path: "/forgot-password",
-    element: <AuthFlow />,
-  },
-  {
-    caseSensitive: true,
-    path: "/local/:projectPermalink",
-    element: <Home />,
-  },
-  {
-    caseSensitive: true,
-    path: "/:username/:projectPermalink/:taskPermalink",
-    element: <Home />,
-  },
-  {
-    caseSensitive: true,
-    path: "/:username/:projectPermalink",
-    element: <Home />,
-  },
-  {
-    caseSensitive: true,
-    path: "/",
-    element: <Home />,
-  },
-]
+const homeInstance = <Home />
+const authFlowInstance = <AuthFlow />
 
-const App = (props) => {
-  const {
-    appSettings,
-    dispatch
-  } = props;
-  const navigate = useNavigate();
+const App = () => {
+  const navigate = useNavigateNoUpdates();
+  const dispatch = useDispatch()
 
   const fetchAppSettings = () => {
     const fetchedSettings = window.localStorage.getItem("appSettings")
@@ -89,28 +52,46 @@ const App = (props) => {
     }
   }, []);
 
-  useEffect(() => {
-    const availColors = {
-      "red": "#D20E1E",
-      "gold": "#E19D00",
-      "orange": "#E05307",
-      "green": "#0E6D0E",
-      "turquoise": "#009FAA",
-      "blue": "#0067C0",
-      "pink": "#CD007B",
-      "purple": "#4F4DCE",
-      "grey": "#586579",
-      "black": "#000000",
-    }
-    document.documentElement.className = appSettings.theme + " " + (appSettings.isDarkMode ? "dark" : "light");
-    document.querySelector('meta[name="theme-color"]').setAttribute('content', appSettings.isDarkMode ? "#272727" : availColors[appSettings.theme])
-  }, [appSettings.theme, appSettings.isDarkMode]);
-  return useRoutes(routes)
+
+  // useEffect(() => {
+  //   const availColors = {
+  //     "red": "#D20E1E",
+  //     "gold": "#E19D00",
+  //     "orange": "#E05307",
+  //     "green": "#0E6D0E",
+  //     "turquoise": "#009FAA",
+  //     "blue": "#0067C0",
+  //     "pink": "#CD007B",
+  //     "purple": "#4F4DCE",
+  //     "grey": "#586579",
+  //     "black": "#000000",
+  //   }
+  //   document.documentElement.className = appSettings.theme + " " + (appSettings.isDarkMode ? "dark" : "light");
+  //   document.querySelector('meta[name="theme-color"]').setAttribute('content', appSettings.isDarkMode ? "#272727" : availColors[appSettings.theme])
+  // }, [appSettings.theme, appSettings.isDarkMode]);
+  return <>
+    <Route path="/login">
+      {authFlowInstance}
+    </Route>
+    <Route path="/signup">
+      {authFlowInstance}
+    </Route>
+    <Route path="/forgot-password">
+      {authFlowInstance}
+    </Route>
+    <Route path="/local/:projectPermalink">
+      {homeInstance}
+    </Route>
+    <Route path="/:username/:projectPermalink/:taskPermalink">
+      {homeInstance}
+    </Route>
+    <Route path="/:username/:projectPermalink">
+      {homeInstance}
+    </Route>
+    <Route path="/">
+      {homeInstance}
+    </Route>
+  </>
 };
 
-export default connect((state) => ({
-  appSettings: {
-    theme: state.appSettings.theme,
-    isDarkMode: state.appSettings.isDarkMode,
-  }
-}))(App);
+export default App;
