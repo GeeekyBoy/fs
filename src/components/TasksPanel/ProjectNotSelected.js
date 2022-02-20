@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app";
 import * as projectsActions from "../../actions/projects";
 import { panelPages, initProjectState, OK } from "../../constants";
@@ -10,13 +10,14 @@ import filterObj from "../../utils/filterObj";
 import Illustration from "../UI/Illustration";
 import { useParamsNoUpdates } from "../RouterUtils";
 
-const ProjectNotSelected = (props) => {
-  const {
-    app: { projectAddingStatus },
-    projects,
-    dispatch,
-  } = props;
+const ProjectNotSelected = () => {
   const params = useParamsNoUpdates();
+  const dispatch = useDispatch();
+
+  const projectAddingStatus = useSelector(state => state.app.projectAddingStatus);
+
+  const projects = useSelector(state => state.projects);
+
   const createNewProject = () => {
     projectAddingStatus === OK &&
       dispatch(
@@ -61,9 +62,4 @@ const ProjectNotSelected = (props) => {
   );
 };
 
-export default connect((state) => ({
-  app: {
-    projectAddingStatus: state.app.projectAddingStatus,
-  },
-  projects: state.projects,
-}))(ProjectNotSelected);
+export default ProjectNotSelected;

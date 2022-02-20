@@ -18,7 +18,7 @@ import {
   restrictToFirstScrollableAncestor
 } from '@dnd-kit/modifiers';
 import { CSS } from '@dnd-kit/utilities';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import parseLinkedList from "../../../utils/parseLinkedList";
 import TaskItem from "../TaskItem";
 import * as tasksActions from "../../../actions/tasks";
@@ -129,17 +129,18 @@ const SortableItem = (props) => {
   );
 }
 
-const ByDefault = (props) => {
-  const {
-    app: {
-      selectedProject,
-      isSynced
-    },
-    tasks,
-    projects,
-    user,
-    dispatch,
-  } = props;
+const ByDefault = () => {
+  const dispatch = useDispatch();
+
+  const selectedProject = useSelector(state => state.app.selectedProject);
+  const isSynced = useSelector(state => state.app.isSynced);
+
+  const tasks = useSelector(state => state.tasks);
+
+  const projects = useSelector(state => state.projects);
+
+  const user = useSelector(state => state.user);
+
   const onSortEnd = (oldIndex, newIndex) => {
     if (oldIndex > newIndex) {
       const sortedTasks = parseLinkedList(tasks, "prevTask", "nextTask");
@@ -192,15 +193,4 @@ const ByDefault = (props) => {
   )
 }
 
-export default connect((state) => ({
-  tasks: state.tasks,
-  app: {
-    selectedProject: state.app.selectedProject,
-    isSynced: state.app.isSynced,
-  },
-  projects: state.projects,
-  user: {
-    state: state.user.state,
-    data: state.user.data,
-  }
-}))(ByDefault);
+export default ByDefault;

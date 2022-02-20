@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import * as tasksActions from "../../actions/tasks";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthState, initTaskState, READY } from "../../constants";
 import styles from "./TaskPlaceholder.module.scss";
 import parseLinkedList from "../../utils/parseLinkedList";

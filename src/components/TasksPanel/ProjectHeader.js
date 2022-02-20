@@ -1,28 +1,29 @@
 import React from "react"
 import { AuthState } from '../../constants';
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { useWindowSize } from "../../components/WindowSizeListener";
 import AvatarGroup from "../UI/AvatarGroup";
 import styles from "./ProjectHeader.module.scss"
 import ProjectTitle from "./ProjectTitle"
 
-const ProjectHeader = (props) => {
-  const {
-    app: {
-      isSynced
-    },
-    user,
-    users,
-    collaboration
-  } = props
+const ProjectHeader = () => {
   const { width } = useWindowSize();
+
+  const isSynced = useSelector(state => state.app.isSynced);
+
+  const userState = useSelector(state => state.user.state);
+
+  const users = useSelector(state => state.users);
+
+  const projectViewers = useSelector(state => state.collaboration.projectViewers);
+
   return (
     <div className={styles.ProjectHeader}>
       <ProjectTitle />
-      {(isSynced && user.state === AuthState.SignedIn) && (
+      {(isSynced && userState === AuthState.SignedIn) && (
         <AvatarGroup
           max={4}
-          users={collaboration.projectViewers.map(user => users[user])}
+          users={projectViewers.map(user => users[user])}
           size={ width > 768 ? 34 : 24 }
         />
       )}
@@ -30,15 +31,4 @@ const ProjectHeader = (props) => {
   )
 }
 
-export default connect((state) => ({
-  user: {
-    state: state.user.state,
-  },
-  app: {
-    isSynced: state.app.isSynced,
-  },
-  users: state.users,
-  collaboration: {
-    projectViewers: state.collaboration.projectViewers
-  }
-}))(ProjectHeader);
+export default ProjectHeader;
