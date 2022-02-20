@@ -20,20 +20,19 @@ const ByStatus = () => {
     <>
       <Accordion title="Todo">
         {sortedTasks.todo.map((value, index) => (
-          <div key={value.id}>
-            <TaskItem
-              item={value}
-              isSorting={false}
-              isDragging={false}
-              nextTask={
-                sortedTasks.todo[index + 1]?.id ||
-                sortedTasks.pending[0]?.id ||
-                sortedTasks.done[0]?.id ||
-                null
-              }
-              prevTask={sortedTasks.todo[index - 1]?.id || null}
-            />
-          </div>
+          <TaskItem
+            key={value.id}
+            item={value}
+            isSorting={false}
+            isDragging={false}
+            nextTask={
+              sortedTasks.todo[index + 1]?.id ||
+              sortedTasks.pending[0]?.id ||
+              sortedTasks.done[0]?.id ||
+              null
+            }
+            prevTask={sortedTasks.todo[index - 1]?.id || null}
+          />
         ))}
         <TaskPlaceholder
           content="Tap to create new todo task"
@@ -42,23 +41,22 @@ const ByStatus = () => {
       </Accordion>
       <Accordion title="Pending">
         {sortedTasks.pending.map((value, index) => (
-          <div key={value.id}>
-            <TaskItem
-              item={value}
-              isSorting={false}
-              isDragging={false}
-              nextTask={
-                sortedTasks.pending[index + 1]?.id ||
-                sortedTasks.done[0]?.id ||
-                null
-              }
-              prevTask={
-                sortedTasks.pending[index - 1]?.id ||
-                sortedTasks.todo[sortedTasks.todo.length - 1]?.id ||
-                null
-              }
-            />
-          </div>
+          <TaskItem
+            key={value.id}
+            item={value}
+            isSorting={false}
+            isDragging={false}
+            nextTask={
+              sortedTasks.pending[index + 1]?.id ||
+              sortedTasks.done[0]?.id ||
+              null
+            }
+            prevTask={
+              sortedTasks.pending[index - 1]?.id ||
+              sortedTasks.todo[sortedTasks.todo.length - 1]?.id ||
+              null
+            }
+          />
         ))}
         <TaskPlaceholder
           content="Tap to create new pending task"
@@ -67,20 +65,19 @@ const ByStatus = () => {
       </Accordion>
       <Accordion title="Finished">
         {sortedTasks.done.map((value, index) => (
-          <div key={value.id}>
-            <TaskItem
-              item={value}
-              isSorting={false}
-              isDragging={false}
-              nextTask={sortedTasks.done[index + 1]?.id || null}
-              prevTask={
-                sortedTasks.done[index - 1]?.id ||
-                sortedTasks.pending[sortedTasks.pending.length - 1]?.id ||
-                sortedTasks.todo[sortedTasks.todo.length - 1]?.id ||
-                null
-              }
-            />
-          </div>
+          <TaskItem
+            key={value.id}
+            item={value}
+            isSorting={false}
+            isDragging={false}
+            nextTask={sortedTasks.done[index + 1]?.id || null}
+            prevTask={
+              sortedTasks.done[index - 1]?.id ||
+              sortedTasks.pending[sortedTasks.pending.length - 1]?.id ||
+              sortedTasks.todo[sortedTasks.todo.length - 1]?.id ||
+              null
+            }
+          />
         ))}
         <TaskPlaceholder
           content="Tap to create new finsihed task"

@@ -1,32 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./Accordion.module.scss";
 import { ReactComponent as ChevronUpIcon } from "../../assets/chevron-up-outline.svg"
 import { ReactComponent as ChevronDownIcon } from "../../assets/chevron-down-outline.svg"
 
 const Accordion = (props) => {
-  const [height, setHeight] = useState(0);
+  const {
+    title,
+    children,
+    content,
+    contained
+  } = props
+
   const [isAccordionOpened, setIsAccordionOpened] = useState(true);
 
   const handleClick = () => {
     setIsAccordionOpened(!isAccordionOpened);
   };
 
-  useEffect(() => {
-    setHeight(props.height);
-  }, [props.height]);
-
   return (
     <div
       className={[
         styles.AccordionContainer,
-        ...[(props.contained && styles.contained) || []],
+        ...[(contained && styles.contained) || []],
       ].join(" ")}
     >
       <div
         className={[styles.AccordionHeader, "noselect"].join(" ")}
         onClick={handleClick}
       >
-        <span>{props.title}</span>
+        <span>{title}</span>
         {isAccordionOpened ? (
           <ChevronUpIcon
             width={24}
@@ -42,8 +44,8 @@ const Accordion = (props) => {
         )}
       </div>
       {isAccordionOpened && (
-        <div className={styles.AccordionContent} style={{ height }}>
-          {props.children || props.content}
+        <div className={styles.AccordionContent}>
+          {children || content}
         </div>
       )}
     </div>

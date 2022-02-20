@@ -38,23 +38,22 @@ const ByTag = () => {
       {sortedTasks.map((x, tagIndex) => (
         <Accordion title={x[0]} key={x[0]}>
           {x[1].map((value, taskIndex) => (
-            <div key={value.id}>
-              <TaskItem
-                item={value}
-                isSorting={false}
-                isDragging={false}
-                nextTask={
-                  (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
-                  (sortedTasks[tagIndex + 1]?.[1][0].id !== value.id && sortedTasks[tagIndex + 1]?.[1][0].id) ||
-                  null
-                }
-                prevTask={
-                  (x[1][taskIndex - 1]?.id !== value.id && x[1][taskIndex - 1]?.id) ||
-                  (sortedTasks[tagIndex - 1]?.[1][0].id !== value.id && sortedTasks[tagIndex - 1]?.[1][0].id) ||
-                  null
-                }
-              />
-            </div>
+            <TaskItem
+              key={value.id}
+              item={value}
+              isSorting={false}
+              isDragging={false}
+              nextTask={
+                (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
+                (sortedTasks[tagIndex + 1]?.[1][0].id !== value.id && sortedTasks[tagIndex + 1]?.[1][0].id) ||
+                null
+              }
+              prevTask={
+                (x[1][taskIndex - 1]?.id !== value.id && x[1][taskIndex - 1]?.id) ||
+                (sortedTasks[tagIndex - 1]?.[1][0].id !== value.id && sortedTasks[tagIndex - 1]?.[1][0].id) ||
+                null
+              }
+            />
           ))}
           <TaskPlaceholder
             content={

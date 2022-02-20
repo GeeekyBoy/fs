@@ -20,15 +20,14 @@ const TasksSearch = (props) => {
   return (
     <div>
       {searchResults.map((value, index) => (
-        <div key={value.id}>
-          <TaskItem
-            item={value}
-            isSorting={false}
-            isDragging={false}
-            nextTask={searchResults[index + 1]?.id || null}
-            prevTask={searchResults[index - 1]?.id || null}
-          />
-        </div>
+        <TaskItem
+          key={value.id}
+          item={value}
+          isSorting={false}
+          isDragging={false}
+          nextTask={searchResults[index + 1]?.id || null}
+          prevTask={searchResults[index - 1]?.id || null}
+        />
       ))}
     </div>
   )
