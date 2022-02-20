@@ -21,13 +21,14 @@ module.exports = {
         // new BundleAnalyzerPlugin()
       ],
       resolve: {
-        alias: {      // Must be below test-utils
-          "react/jsx-dev-runtime": "preact/jsx-runtime",     // Must be below test-utils
-          "react-dom/jsx-dev-runtime": "preact/jsx-runtime",
+        alias: {
+          "react/jsx-dev-runtime": "preact/jsx-runtime", 
+          "react-dom/jsx-dev-runtime": "preact/jsx-runtime", 
+          "react/jsx-runtime": "preact/jsx-runtime",
+          "react-dom/jsx-runtime": "preact/jsx-runtime",
           "react": "preact/compat",
           "react-dom/test-utils": "preact/test-utils",
-          "react-dom": "preact/compat",     // Must be below test-utils
-          "react/jsx-runtime": "preact/jsx-runtime"
+          "react-dom": "preact/compat"
         },
         fallback: {
           stream: require.resolve("stream-browserify"),
