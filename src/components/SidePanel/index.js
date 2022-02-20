@@ -48,7 +48,7 @@ const SidePanel = (props) => {
   }
   const handleAnimationEnd = () => {
     if ((right && !isRightPanelOpened) || (!right && !isLeftPanelOpened)) {
-      setShouldRender(false);
+      //setShouldRender(false);
     }
   }
   useEffect(() => {

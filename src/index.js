@@ -2,7 +2,7 @@ import "smap/smap-shim"
 import "core-js";
 import 'regenerator-runtime/runtime';
 import './utils/nanoidIE'
-import React from 'react';
+import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from "react-redux"
 import store from "./store"
@@ -38,14 +38,16 @@ const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container)
 root.render(
 (
-  <WindowSizeListener>
-    <RouterUtils>
-      <Provider store={store}>
-        <ModalManager>
-          <App />
-        </ModalManager>
-      </Provider>
-    </RouterUtils>
-  </WindowSizeListener>
+  <StrictMode>
+    <WindowSizeListener>
+      <RouterUtils>
+        <Provider store={store}>
+          <ModalManager>
+            <App />
+          </ModalManager>
+        </Provider>
+      </RouterUtils>
+    </WindowSizeListener>
+  </StrictMode>
 ), container);
 serviceWorkerRegistration.register();

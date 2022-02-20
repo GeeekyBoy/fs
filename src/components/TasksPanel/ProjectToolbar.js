@@ -24,18 +24,14 @@ const ProjectToolbar = () => {
   const dispatch = useDispatch();
 
   const selectedProject = useSelector(state => state.app.selectedProject);
-  const isLeftPanelOpened = useSelector(state => state.app.isLeftPanelOpened);
-  const leftPanelPage = useSelector(state => state.app.leftPanelPage);
 
   const tasks = useSelector(state => state.tasks);
 
   const tasksSortingCriteria = useSelector(state => state.appSettings.tasksSortingCriteria);
 
   const openProjectSettings = () => {
-    if (!isLeftPanelOpened || (isLeftPanelOpened && leftPanelPage !== panelPages.PROJECT_SETTINGS)) {
-      dispatch(appActions.setLeftPanelPage(panelPages.PROJECT_SETTINGS))
-      dispatch(appActions.handleSetLeftPanel(true))
-    }
+    dispatch(appActions.setLeftPanelPage(panelPages.PROJECT_SETTINGS))
+    dispatch(appActions.handleSetLeftPanel(true))
   }
   const openExportModal = () => {
     showModal(modals.EXPORT)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import styles from "./Notification.module.scss"
 import { ReactComponent as CloseIcon } from "../../assets/close-outline.svg"
 import { ReactComponent as ChevronUpIcon } from "../../assets/chevron-up-outline.svg"
@@ -110,4 +110,4 @@ const Notification = (props) => {
   )
 }
 
-export default Notification;
+export default memo(Notification);

@@ -36,10 +36,8 @@ const TaskItem = (props) => {
   const inputRef = useRef(null)
   const dispatch = useDispatch()
   
-  const selectedTask = useSelector(state => state.app.selectedTask)
   const selectedProject = useSelector(state => state.app.selectedProject)
   const taskAddingStatus = useSelector(state => state.app.taskAddingStatus)
-  const rightPanelPage = useSelector(state => state.app.rightPanelPage)
   const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
   const isSynced = useSelector(state => state.app.isSynced)
   const lockedTaskField = useSelector(state => state.app.lockedTaskField)
@@ -53,9 +51,9 @@ const TaskItem = (props) => {
   const showDuplicateButton = useSelector(state => state.appSettings.showDuplicateButton)
   const showShareButton = useSelector(state => state.appSettings.showShareButton)
 
+  const selectedTask = useSelector(state => state.app.selectedTask)
   const taskViewers = useSelector(state => state.collaboration.taskViewers)
 
-  const tasks = useSelector(state => state.tasks)
   const users = useSelector(state => state.users)
   const user = useSelector(state => state.user)
   const projects = useSelector(state => state.projects)
@@ -119,7 +117,7 @@ const TaskItem = (props) => {
     }
   }
 
-  const slashCommandsPos = useMemo(() => getSlashCommandsPos(inputRef), [tasks])
+  const slashCommandsPos = useMemo(() => getSlashCommandsPos(inputRef), [item])
 
   const onChange = (e) => {
     if (lockedTaskField !== "task") {
@@ -178,14 +176,6 @@ const TaskItem = (props) => {
     }
   }
 
-  const onChooseSuggestion = (suggestion) =>
-    dispatch(
-      tasksActions.handleUpdateTask({
-        id: selectedTask,
-        task: tasks[selectedTask] + suggestion,
-      })
-    );
-
   const openActionSheet = (item) => {
     dispatch(
       appActions.handleSetTask(item.id)
@@ -202,9 +192,7 @@ const TaskItem = (props) => {
       dispatch(appActions.handleSetTask(item.id))
     }
     if (!isRightPanelOpened) {
-      if (rightPanelPage !== panelPages.TASK_HUB) {
-        dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
-      }
+      dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
       dispatch(appActions.handleSetRightPanel(true))
     }
   }
@@ -288,7 +276,7 @@ const TaskItem = (props) => {
                   ref={inputRef}
                   className="task"
                   placeholder="Task…"
-                  value={(tasks[selectedTask].task || "") + (command || "")}
+                  value={(item.task || "") + (command || "")}
                   onKeyUp={handleKeyUp}
                   onKeyDown={handleKeyDown}
                   onChange={onChange}
@@ -364,13 +352,12 @@ const TaskItem = (props) => {
         )}
       </div>
       {(command && selectedTask === item.id) && (
-        <SlashCommands
-          onChooseSuggestion={onChooseSuggestion}
-          posInfo={slashCommandsPos}
-        />
+        <SlashCommands posInfo={slashCommandsPos} />
       )}
     </div>
   );
 };
+
+TaskItem.whyDidYouRender = true;
 
 export default TaskItem;

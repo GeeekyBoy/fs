@@ -19,19 +19,16 @@ const TaskOpts = () => {
   const { modalRef, hideModal } = useModal();
   const dispatch = useDispatch();
 
-  const selectedTask = useSelector(state => state.app.selectedTask)
-  const selectedProject = useSelector(state => state.app.selectedProject)
-  const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
-  const rightPanelPage = useSelector(state => state.app.rightPanelPage)
+  const selectedProjectID = useSelector(state => state.app.selectedProject)
 
-  const tasks = useSelector(state => state.tasks)
+  const selectedTask = useSelector(state => state.tasks[state.app.selectedTask])
 
   const copyTask = () => {
     hideModal()
     window.localStorage.setItem(
       "tasksClipboard",
       "COPIEDTASKSTART=>" +
-      JSON.stringify(tasks[selectedTask]) +
+      JSON.stringify(selectedTask) +
       "<=COPIEDTASKEND"
     );
   }
@@ -41,10 +38,10 @@ const TaskOpts = () => {
     dispatch(
       tasksActions.handleCreateTask(
         copyTaskCore(
-          tasks[selectedTask],
-          selectedProject,
           selectedTask,
-          tasks[selectedTask].nextTask
+          selectedProjectID,
+          selectedTask,
+          selectedTask.nextTask
         )
       )
     );
@@ -60,7 +57,7 @@ const TaskOpts = () => {
     hideModal()
     dispatch(
       tasksActions.handleRemoveTask(
-        tasks[selectedTask]
+        selectedTask
       )
     )
   }
@@ -69,7 +66,7 @@ const TaskOpts = () => {
     hideModal()
     dispatch(
       tasksActions.handleUpdateTask({
-        id: tasks[selectedTask].id,
+        id: selectedTask?.id,
         status: "done",
       })
     );
@@ -77,12 +74,8 @@ const TaskOpts = () => {
 
   const openRightPanel = () => {
     hideModal()
-    if (!isRightPanelOpened) {
-      if (rightPanelPage !== panelPages.TASK_HUB) {
-        dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
-      }
-      dispatch(appActions.handleSetRightPanel(true))
-    }
+    dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
+    dispatch(appActions.handleSetRightPanel(true))
   }
 
   return (
