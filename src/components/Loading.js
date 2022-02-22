@@ -2,7 +2,6 @@ import React from "react"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import styles from "./Loading.module.scss"
-import { graphqlOperation } from "@aws-amplify/api";
 import * as appActions from "../actions/app"
 import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
@@ -57,9 +56,9 @@ const Loading = (props) => {
       currUser.state === AuthState.SignedOut) {
       let reqProject = null;
       try {
-        reqProject = (await execGraphQL(graphqlOperation(queries.getProjectByPermalink, {
+        reqProject = (await execGraphQL(queries.getProjectByPermalink, {
           permalink: `${routeParams.username}/${routeParams.projectPermalink}`
-        }))).data.getProjectByPermalink
+        })).data.getProjectByPermalink
         dispatch(projectsActions.createProject(reqProject, "temp"))
       } catch {
         reqProject = null
@@ -100,9 +99,9 @@ const Loading = (props) => {
         let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
         if (!reqProject) {
           try {
-            reqProject = (await execGraphQL(graphqlOperation(queries.getProjectByPermalink, {
+            reqProject = (await execGraphQL(queries.getProjectByPermalink, {
               permalink: `${routeParams.username}/${routeParams.projectPermalink}`
-            }))).data.getProjectByPermalink
+            })).data.getProjectByPermalink
             dispatch(projectsActions.createProject(reqProject, "temp"))
           } catch {
             reqProject = null

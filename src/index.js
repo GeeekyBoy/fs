@@ -9,9 +9,6 @@ import store from "./store"
 import './index.scss';
 import 'simplebar/dist/simplebar.min.css';
 import App from './components/App';
-import { API } from "@aws-amplify/api";
-import { Auth } from "@aws-amplify/auth";
-import awsconfig from './aws-exports';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -32,8 +29,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-API.configure(awsconfig);
-Auth.configure(awsconfig);
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container)
 root.render(

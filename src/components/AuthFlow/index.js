@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./index.module.scss"
-import { Auth } from "@aws-amplify/auth";
 import SimpleBar from 'simplebar-react';
 import Login from './Login';
 import NewAccount from './NewAccount';
 import ForgotPassword from './ForgotPassword';
-import isLoggedIn from '../../utils/isLoggedIn';
+import AuthManager from "../../amplify/AuthManager"
 import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
 import { useLocationNoUpdates, useNavigateNoUpdates } from '../RouterUtils';
 
 const AuthFlow = () => {
-  const [currPage, setCurrPage] = useState(Login);
+  const [currPage, setCurrPage] = useState(<Login />);
   const routeLocation = useLocationNoUpdates();
   const navigate = useNavigateNoUpdates();
   const handleGoBack = () => navigate(-1);
   useEffect(() => {
-    isLoggedIn().then(res => res && (
-      Auth.currentAuthenticatedUser().then((authData) => {
-        if (authData) {
-          navigate("/");
-        }
-      })
-    ))
+    if (AuthManager.isLoggedIn()) {
+      navigate("/");
+    }
   }, [])
   useEffect(() => {
     switch (routeLocation) {
       case "/login":
-        setCurrPage(Login)
+        setCurrPage(<Login />)
         break
       case "/signup":
-        setCurrPage(NewAccount)
+        setCurrPage(<NewAccount />)
         break
       case "/forgot-password":
-        setCurrPage(ForgotPassword)
+        setCurrPage(<ForgotPassword />)
         break
       default:
         break
@@ -50,7 +45,7 @@ const AuthFlow = () => {
         />
         <span>Go back</span>
       </button>
-      {React.createElement(currPage, {setCurrPage})}
+      {currPage}
     </SimpleBar>
   )
 }

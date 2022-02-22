@@ -1,17 +1,16 @@
 import React, { useMemo } from 'react';
 import styles from "./NewAccount.module.scss"
 import { useState } from "react"
-import { connect } from "react-redux"
-import { Auth } from "@aws-amplify/auth";
+import { useDispatch, useSelector } from "react-redux"
 import * as userActions from "../../actions/user"
 import * as cacheController from "../../controllers/cache"
 import { AuthState } from '../../constants';
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import { useNavigateNoUpdates } from '../RouterUtils';
+import AuthManager from '../../amplify/AuthManager';
 
-const NewAccount = (props) => {
-  const { app: { isOffline }, dispatch } = props
+const NewAccount = () => {
   const [verificationCode, setVerificationCode] = useState("")
   const [currStep, setCurrStep] = useState(0)
   const [firstName, setFirstName] = useState("")
@@ -28,6 +27,8 @@ const NewAccount = (props) => {
   const [verificationCodeError, setVerificationCodeError] = useState(null)
   const [isBusy, setIsBusy] = useState(false)
   const navigate = useNavigateNoUpdates();
+  const dispatch = useDispatch()
+  const isOffline = useSelector(state => state.app.isOffline)
   const validateFirstName = (value = firstName) => {
     setFirstNameError(null)
     if (!value.trim()) {
@@ -126,16 +127,11 @@ const NewAccount = (props) => {
     e.preventDefault()
     setIsBusy(true)
     try {
-      await Auth.signUp({
-        username: username.trim(),
-        password: password,
-        attributes: {
-            given_name: firstName.trim(),
-            family_name: lastName.trim(),
-            email: email.trim(),
-            phone_number: phoneNumber,
-            
-        }
+      await AuthManager.signUp(username.trim(), password, {
+        given_name: firstName.trim(),
+        family_name: lastName.trim(),
+        email: email.trim(),
+        phone_number: phoneNumber,
       });
       setCurrStep(1)
       setIsBusy(false)
@@ -158,8 +154,8 @@ const NewAccount = (props) => {
     setVerificationCodeError(null)
     setIsBusy(true)
     try {
-      await Auth.confirmSignUp(username, verificationCode)
-      await Auth.signIn(username, password);
+      await AuthManager.confirmSignUp(username, verificationCode)
+      await AuthManager.signIn(username, password);
       cacheController.resetCache(true)
       navigate("/");
     } catch (error) {
@@ -303,8 +299,4 @@ const NewAccount = (props) => {
   )
 }
 
-export default connect((state) => ({
-  app: {
-    isOffline: state.app.isOffline,
-  }
-}))(NewAccount);
+export default NewAccount;

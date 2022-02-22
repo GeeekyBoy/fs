@@ -1,11 +1,10 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { graphqlOperation } from "@aws-amplify/api";
 import * as appActions from "../actions/app"
 import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as queries from "../graphql/queries"
-import { useLocation } from "wouter"
+import { useLocation } from "wouter-preact"
 import { AuthState } from '../constants';
 import execGraphQL from "../utils/execGraphQL";
 import { useParamsNoUpdates } from "./RouterUtils";
@@ -34,9 +33,9 @@ const NavigationManager = () => {
         let reqProject = Object.values(projects).filter(x => x.permalink === `${username}/${projectPermalink}`)[0]
         if (!reqProject) {
           try {
-            reqProject = (await execGraphQL(graphqlOperation(queries.getProjectByPermalink, {
+            reqProject = (await execGraphQL(queries.getProjectByPermalink, {
               permalink: `${username}/${projectPermalink}`
-            }))).data.getProjectByPermalink
+            })).data.getProjectByPermalink
             dispatch(projectsActions.createProject(reqProject, "temp"))
           } catch {
             reqProject = null

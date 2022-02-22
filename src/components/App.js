@@ -4,7 +4,7 @@ import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
 import store from "../store";
 import isOnline from "../utils/isOnline";
-import { Route } from "wouter";
+import { Route } from "wouter-preact";
 import { useNavigateNoUpdates } from "./RouterUtils";
 import Home from "./Home";
 import AuthFlow from "./AuthFlow";

@@ -15,8 +15,8 @@
     "@react-hook/media-query": "1.1.1",
     "@react-spring/web": "10.0.0-alpha.1",
     "@use-gesture/react": "10.2.6",
-    "aws-amplify": "^4.3.14",
     "aws-sdk": "^2.1076.0",
+    "blueimp-md5": "^2.19.0",
     "csv": "^6.0.5",
     "draft-js": "0.11.7",
     "draft-js-export-html": "1.4.1",
@@ -46,7 +46,7 @@
     "workbox-routing": "^6.4.2",
     "workbox-strategies": "^6.4.2",
     "workbox-streams": "^6.4.2",
-    "wouter": "^2.8.0-alpha.2"
+    "wouter-preact": "^2.8.0-alpha.2"
   },
   "scripts": {
     "start": "cross-env AUTOPREFIXER_GRID=autoplace craco start",
@@ -111,7 +111,7 @@
     "craco-workbox": "^0.2.0",
     "cross-env": "^7.0.3",
     "crypto-browserify": "3.12.0",
-    "eslint": "^8.5.0",
+    "eslint": "^8.9.0",
     "eslint-config-airbnb": "^19.0.4",
     "prettier": "^2.5.1",
     "sass": "^1.49.7",

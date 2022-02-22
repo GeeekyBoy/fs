@@ -1,18 +1,17 @@
-import { API } from "@aws-amplify/api";
-import { Auth } from "@aws-amplify/auth";
+import AuthManager from "../amplify/AuthManager";
 
 export default async (filter) => {
   const queryData = { 
     headers: { 
       'Content-Type': 'application/json',
-      Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
+      Authorization: await AuthManager.getIdToken(),
     },
     queryStringParameters: {
         filter: filter,
     },
   };
   try {
-    return await API.get("AdminQueries", "/searchForUser", queryData)
+    //return await API.get("AdminQueries", "/searchForUser", queryData)
   } catch(err) {
     console.error(err)
   }

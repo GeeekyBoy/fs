@@ -21,17 +21,17 @@ const Projects = forwardRef((_, ref) => {
 
   const projects = useSelector(state => state.projects);
 
-  const createNewProject = () => {
+  const createNewProject = async () => {
     if (projectAddingStatus === OK) {
       dispatch(appActions.handleSetLeftPanel(false))
       dispatch(
         projectsActions.handleCreateProject(
-          initProjectState(
+          (await initProjectState(
             parseLinkedList(
               filterObj(projects, x => x.isOwned),
               "prevProject",
               "nextProject"
-            ).reverse()[0]?.id
+            )).reverse()[0]?.id
           )
         )
       )

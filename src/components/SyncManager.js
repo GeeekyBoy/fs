@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { graphqlOperation } from "@aws-amplify/api";
 import * as appActions from "../actions/app"
 import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
@@ -60,9 +59,9 @@ const SyncManager = (props) => {
               let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
               if (!reqProject) {
                 try {
-                  reqProject = (await execGraphQL(graphqlOperation(queries.getProjectByPermalink, {
+                  reqProject = (await execGraphQL(queries.getProjectByPermalink, {
                     permalink: `${routeParams.username}/${routeParams.projectPermalink}`
-                  }))).data.getProjectByPermalink
+                  })).data.getProjectByPermalink
                   dispatch(projectsActions.createProject(reqProject, "temp"))
                 } catch {
                   reqProject = null
@@ -112,7 +111,7 @@ const SyncManager = (props) => {
       const generatedMutationID = mutationID.generate(user.data.username);
       const query = mutationsGraphQL[mutationType];
       const queryData = { input: { ...data, mutationID: generatedMutationID } };
-      execGraphQL(graphqlOperation(query, queryData))
+      execGraphQL(query, queryData)
         .then((res) => {
           dispatch(mutationsActions.nextMutation());
           if (successCallback) successCallback(res);

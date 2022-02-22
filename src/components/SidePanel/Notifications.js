@@ -1,6 +1,5 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { graphqlOperation } from "@aws-amplify/api";
 import * as mutations from "../../graphql/mutations"
 import * as appActions from "../../actions/app";
 import * as notificationsActions from "../../actions/notifications";
@@ -24,11 +23,8 @@ const Notifications = forwardRef((_, ref) => {
     dispatch(appActions.handleSetLeftPanel(false))
   }
   const dismissNotifications = () => {
-    execGraphQL(
-      graphqlOperation(
-        mutations.dismissNotifications
-      )
-    ).then(() => {
+    execGraphQL(mutations.dismissNotifications)
+    .then(() => {
       dispatch(notificationsActions.emptyNotifications())
     })
   }
@@ -50,16 +46,13 @@ const Notifications = forwardRef((_, ref) => {
   }));
   const dismissNotification = (e, id) => {
     e.stopPropagation()
-    execGraphQL(
-      graphqlOperation(
-        mutations.dismissNotification,
-        { notificationID: id }
-      )
-    ).then(() => {
-      console.log("Notification dismissed")
-    }).catch(err => {
-      console.log(err)
-    })
+    execGraphQL(mutations.dismissNotification, { notificationID: id })
+      .then(() => {
+        console.log("Notification dismissed");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   return notifications.stored.length ? notifications.stored.map(x => (
     <Notification

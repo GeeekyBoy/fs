@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { connect } from "react-redux";
-import { graphqlOperation } from "@aws-amplify/api";
 import * as mutations from "../../graphql/mutations"
 import * as appActions from "../../actions/app";
 import * as userActions from "../../actions/user";
@@ -66,13 +65,13 @@ const AccountSettings = forwardRef((props, ref) => {
 	}
   const saveChanges = () => {
     setIsBusy(true)
-    execGraphQL(graphqlOperation(mutations.updateUser, {
+    execGraphQL(mutations.updateUser, {
       input: {
         username,
         ...(newFirstName !== firstName && { firstName: newFirstName }),
         ...(newLastName !== lastName && { lastName: newLastName })
       }
-    })).then((res) => {
+    }).then((res) => {
       setIsBusy(false)
     }).catch(() => {
       setIsBusy(false)

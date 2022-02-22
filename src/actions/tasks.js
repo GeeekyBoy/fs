@@ -1,4 +1,3 @@
-import { graphqlOperation } from "@aws-amplify/api";
 import { AuthState } from '../constants';
 import { listTasksForProject } from "../graphql/queries"
 import * as appActions from "./app"
@@ -264,7 +263,7 @@ export const handleFetchTasks = (projectID, isInitial = false) => async (dispatc
   if (user.state === AuthState.SignedIn || projects[projectID].isTemp) {
     try {
       dispatch(statusActions.setTasksStatus(LOADING))
-      const res = await execGraphQL(graphqlOperation(listTasksForProject, { projectID }))
+      const res = await execGraphQL(listTasksForProject, { projectID })
       const items = res.data.listTasksForProject.items
       let usersToBeFetched = []
       for (const item of items) {

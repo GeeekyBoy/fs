@@ -1,4 +1,3 @@
-import { graphqlOperation } from "@aws-amplify/api";
 import { listUsersByUsernames } from "../graphql/queries"
 import execGraphQL from "../utils/execGraphQL";
 import generateRandomColor from "../utils/generateRandomColor";
@@ -20,7 +19,7 @@ export const addCachedUsers = (users) => ({
 export const handleAddUsers = (usernames) => async (dispatch, getState) => {
   const { users } = getState()
   usernames = usernames.filter(x => !users[x])
-  const res = await execGraphQL(graphqlOperation(listUsersByUsernames, { usernames }))
+  const res = await execGraphQL(listUsersByUsernames, { usernames })
   const items = res.data.listUsersByUsernames.items
   const itemsWithAbbr = items.map(x => {
     const abbr = x.firstName[0].toUpperCase() + x.lastName[0].toUpperCase()
@@ -72,7 +71,7 @@ export const handleSearchUsers = (keyword) => async (dispatch, getState) => {
     { email: { matchPhrasePrefix: keyword } }
   ]}
   try {
-    const usersData = (await execGraphQL(graphqlOperation(query, { filter }))).data.searchUsers.items || []
+    const usersData = (await execGraphQL(query, { filter })).data.searchUsers.items || []
     const newUsersData = usersData.filter(x => !users[x.username])
     const itemsWithAbbr = newUsersData.map(x => {
       const abbr = x.firstName[0].toUpperCase() + x.lastName[0].toUpperCase()

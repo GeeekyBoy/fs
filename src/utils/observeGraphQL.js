@@ -1,13 +1,7 @@
 import store from "../store";
-import { API } from "@aws-amplify/api";
 import { AuthState } from "../constants";
+import ApiManager from "../amplify/ApiManager";
 
-export default async (options, callback) => {
-  return await API.graphql({
-    authMode:
-      store.getState().user.state === AuthState.SignedIn ?
-      "AMAZON_COGNITO_USER_POOLS" :
-      "AWS_IAM",
-    ...options
-  }).subscribe(callback);
+export default async (query, variables = {}, callback) => {
+  return ApiManager.subscribe(query, variables, callback);
 };

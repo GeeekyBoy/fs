@@ -4,10 +4,8 @@ import * as observersActions from "./observers"
 import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
 import * as notificationsActions from "./notifications"
-import isLoggedIn from '../utils/isLoggedIn';
-import Auth from '@aws-amplify/auth';
 import execGraphQL from '../utils/execGraphQL';
-import { graphqlOperation } from '@aws-amplify/api-graphql';
+import AuthManager from '../amplify/AuthManager';
 
 export const SET_STATE = "SET_STATE";
 export const SET_DATA = "SET_DATA";
@@ -56,18 +54,14 @@ export const handleSetData = (userData) => (dispatch, getState) => {
 }
 
 export const handleFetchUser = () => async (dispatch, getState) => {
-  if (await isLoggedIn() || cacheController.getUser().state === AuthState.SignedIn) {
+  if (AuthManager.isLoggedIn() || cacheController.getUser().state === AuthState.SignedIn) {
     try {
-      const userData = (await execGraphQL({
-        ...graphqlOperation(
-          queries.getUserByUsername, {
-            username: (await Auth.currentAuthenticatedUser()).username
-          }
-        ),
-        authMode: "AMAZON_COGNITO_USER_POOLS"
-      })).data.getUserByUsername
-      const jwt = (await Auth.currentSession()).getAccessToken().getJwtToken();
-      userData.jwt = jwt
+      const userData = (
+        await execGraphQL(queries.getUserByUsername, {
+          username: AuthManager.getUser().username,
+        })
+      ).data.getUserByUsername;
+      userData.jwt = await AuthManager.getIdToken();
       dispatch(handleSetData(userData))
       dispatch(handleSetState(AuthState.SignedIn))
     } catch (err) {
@@ -85,7 +79,7 @@ export const handleFetchUser = () => async (dispatch, getState) => {
 
 export const handleSignOut = (shouldResetCache = false) => async (dispatch, getState) => {
   if (shouldResetCache) cacheController.resetCache();
-  await Auth.signOut()
+  await AuthManager.signOut()
   dispatch(handleSetState(AuthState.SignedOut))
   dispatch(handleSetData(null))
   if (shouldResetCache) window.location.reload();

@@ -68,11 +68,11 @@ export const panelPages = {
   APP_SETTINGS: "APP_SETTINGS"
 }
 
-export const initProjectState = (prevProject = null, nextProject = null) => {
+export const initProjectState = async (prevProject = null, nextProject = null) => {
   return {
     id: generateID(),
     title: null,
-    permalink: generateRandomWords().join("-"),
+    permalink: (await generateRandomWords()).join("-"),
     prevProject: prevProject,
     nextProject: nextProject,
     todoCount: 0,

@@ -1,4 +1,3 @@
-import { graphqlOperation } from "@aws-amplify/api";
 import { AuthState } from '../constants';
 import { listCommentsForTask } from "../graphql/queries"
 import * as usersActions from "./users"
@@ -112,7 +111,7 @@ export const handleFetchComments = (taskID) => async (dispatch, getState) => {
   const { user, app, projects } = getState()
   if (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp) {
     try {
-      const res = await execGraphQL(graphqlOperation(listCommentsForTask, { taskID }))
+      const res = await execGraphQL(listCommentsForTask, { taskID })
       const items = res.data.listCommentsForTask.items;
       let usersToBeFetched = []
       for (const item of items) {

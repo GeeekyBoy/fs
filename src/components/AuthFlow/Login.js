@@ -1,16 +1,15 @@
 import React from 'react';
 import styles from "./Login.module.scss"
 import { useState } from "react"
-import { connect } from "react-redux"
-import { Auth } from "@aws-amplify/auth";
+import { useDispatch, useSelector } from "react-redux"
 import * as userActions from "../../actions/user"
 import * as cacheController from "../../controllers/cache"
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import { useNavigateNoUpdates } from '../RouterUtils';
+import AuthManager from '../../amplify/AuthManager';
 
-const Login = (props) => {
-  const { app: { isOffline }, dispatch } = props
+const Login = () => {
   const [verificationCode, setVerificationCode] = useState("")
   const [currStep, setCurrStep] = useState(0)
   const [username, setUsername] = useState("")
@@ -20,13 +19,15 @@ const Login = (props) => {
   const [verificationCodeError, setVerificationCodeError] = useState(null)
   const [isBusy, setIsBusy] = useState(false)
   const navigate = useNavigateNoUpdates();
+  const dispatch = useDispatch()
+  const isOffline = useSelector(state => state.app.isOffline)
   const handleLogin = async (e) => {
     e.preventDefault()
     setIsBusy(true)
     setUsernameError(null)
     setPasswordError(null)
     try {
-      await Auth.signIn(username, password);
+      await AuthManager.signIn(username, password);
       cacheController.resetCache(true)
       navigate("/");
     } catch (error) {
@@ -54,8 +55,8 @@ const Login = (props) => {
     setVerificationCodeError(null)
     setIsBusy(true)
     try {
-      await Auth.confirmSignUp(username, verificationCode)
-      await Auth.signIn(username, password);
+      await AuthManager.confirmSignUp(username, verificationCode)
+      await AuthManager.signIn(username, password);
       navigate("/");
     } catch (error) {
       console.log('error signing in', error);
@@ -170,8 +171,4 @@ const Login = (props) => {
   )
 }
 
-export default connect((state) => ({
-  app: {
-    isOffline: state.app.isOffline
-  }
-}))(Login);
+export default Login;

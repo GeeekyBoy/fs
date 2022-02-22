@@ -1,14 +1,13 @@
 import React from 'react';
 import styles from "./ForgotPassword.module.scss"
 import { useState } from "react"
-import { connect } from "react-redux"
-import { Auth } from "@aws-amplify/auth";
+import { useSelector } from "react-redux"
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import { useNavigateNoUpdates } from '../RouterUtils';
+import AuthManager from '../../amplify/AuthManager';
 
-const ForgotPassword = (props) => {
-  const { app: { isOffline } } = props
+const ForgotPassword = () => {
   const [username, setUsername] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [verificationCode, setVerificationCode] = useState("")
@@ -18,12 +17,13 @@ const ForgotPassword = (props) => {
   const [currStep, setCurrStep] = useState(0)
   const [isBusy, setIsBusy] = useState(false)
   const navigate = useNavigateNoUpdates()
+  const isOffline = useSelector(state => state.app.isOffline)
   const initiatePasswordRecovery = async (e) => {
     e.preventDefault()
     setUsernameError(null)
     setIsBusy(true)
     try {
-      await Auth.forgotPassword(username)
+      await AuthManager.forgotPassword(username)
       setCurrStep(2)
       setIsBusy(false)
     } catch (error) {
@@ -46,8 +46,8 @@ const ForgotPassword = (props) => {
     setVerificationCodeError(null)
     setIsBusy(true)
     try {
-      await Auth.confirmSignUp(username, verificationCode)
-      await Auth.forgotPassword(username)
+      await AuthManager.confirmSignUp(username, verificationCode)
+      await AuthManager.forgotPassword(username)
       setVerificationCode("")
       setCurrStep(2)
       setIsBusy(false)
@@ -79,8 +79,8 @@ const ForgotPassword = (props) => {
     setVerificationCodeError(null)
     setIsBusy(true)
     try {
-      await Auth.forgotPasswordSubmit(username, verificationCode, newPassword)
-      await Auth.signIn(username, newPassword)
+      await AuthManager.forgotPasswordSubmit(username, verificationCode, newPassword)
+      await AuthManager.signIn(username, newPassword)
       navigate("/");
     } catch (error) {
       console.log('error signing in', error);
@@ -206,8 +206,4 @@ const ForgotPassword = (props) => {
     </div>
   )
 }
-export default connect((state) => ({
-  app: {
-    isOffline: state.app.isOffline,
-  }
-}))(ForgotPassword);
+export default ForgotPassword;

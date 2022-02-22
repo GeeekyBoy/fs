@@ -1,9 +1,9 @@
-import crypto from "crypto-browserify";
+import md5 from "blueimp-md5";
 
 export default async (email, size = 200) => {
   try {
     const normalizedEmail = email.toLowerCase().trim();
-    const hash = crypto.createHash("md5").update(normalizedEmail).digest("hex");
+    const hash = md5(normalizedEmail);
     const url = `https://www.gravatar.com/avatar/${hash}?s=${size}&d=404`;
     const response = await fetch(url);
     if (response.status !== 404) {

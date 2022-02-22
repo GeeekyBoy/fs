@@ -1,4 +1,3 @@
-import { graphqlOperation } from "@aws-amplify/api";
 import { AuthState } from '../constants';
 import * as usersActions from './users';
 import { listNotifications } from "../graphql/queries"
@@ -45,7 +44,7 @@ export const handleFetchNotifications = (taskID) => async (dispatch, getState) =
   const { user } = getState()
   if (user.state === AuthState.SignedIn) {
     try {
-      const res = await execGraphQL(graphqlOperation(listNotifications, { taskID }))
+      const res = await execGraphQL(listNotifications, { taskID })
       const items = res.data.listNotifications.items;
       let usersToBeFetched = []
       for (const item of items) {

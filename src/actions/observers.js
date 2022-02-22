@@ -1,4 +1,3 @@
-import { API, graphqlOperation } from "@aws-amplify/api";
 import * as projectsActions from "./projects"
 import * as tasksActions from "./tasks"
 import * as commentsActions from "./comments"
@@ -89,7 +88,7 @@ export const handleSetNotificationsObservers = () => async (dispatch, getState) 
     const data = {
       owner: user.data.username
     }
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onPushNotification, data), {
+    observers.push(await observeGraphQL(subscriptions.onPushNotification, data, {
       next: async e => {
         const { notifications } = getState()
         const incoming = e.value.data.onPushNotification
@@ -101,7 +100,7 @@ export const handleSetNotificationsObservers = () => async (dispatch, getState) 
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onDismissNotification, data), {
+    observers.push(await observeGraphQL(subscriptions.onDismissNotification, data, {
       next: e => {
         const { notifications } = getState()
         const incoming = e.value.data.onDismissNotification
@@ -133,7 +132,7 @@ export const handleSetUserObservers = () => async (dispatch, getState) => {
     const data = {
       username: user.data.username
     }
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onPushUserUpdate, data), {
+    observers.push(await observeGraphQL(subscriptions.onPushUserUpdate, data, {
       next: e => {
         const incoming = e.value.data.onPushUserUpdate
         dispatch(userActions.handleSetData(incoming))
@@ -163,7 +162,7 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
     const data = {
       owner: user.data.username
     }
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onCreateOwnedProject, data), {
+    observers.push(await observeGraphQL(subscriptions.onCreateOwnedProject, data, {
       next: e => {
         const { projects } = getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
@@ -176,7 +175,7 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onImportOwnedProjects, data), {
+    observers.push(await observeGraphQL(subscriptions.onImportOwnedProjects, data, {
       next: e => {
         const { projects } = getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
@@ -189,7 +188,7 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onUpdateOwnedProject, data), {
+    observers.push(await observeGraphQL(subscriptions.onUpdateOwnedProject, data, {
       next: e => {
         const { projects } = getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
@@ -209,7 +208,7 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onDeleteOwnedProject, data), {
+    observers.push(await observeGraphQL(subscriptions.onDeleteOwnedProject, data, {
       next: e => {
         const { app, projects } = getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
@@ -244,7 +243,7 @@ export const handleSetProjectObservers = (projectID) => async (dispatch, getStat
   if (!isOffline && !projects[projectID]?.isAssigned && !observers.projects.others[projectID]) {
     const observers = [];
     const data = { id: projectID }
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onUpdateProject, data), {
+    observers.push(await observeGraphQL(subscriptions.onUpdateProject, data, {
       next: e => {
         const { projects, app } = getState()
         const incoming = e.value.data.onUpdateProject
@@ -267,7 +266,7 @@ export const handleSetProjectObservers = (projectID) => async (dispatch, getStat
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onDeleteProject, data), {
+    observers.push(await observeGraphQL(subscriptions.onDeleteProject, data, {
       next: e => {
         const { app, projects } = getState()
         const incoming = e.value.data.onDeleteProject;
@@ -301,7 +300,7 @@ export const handleSetTasksObservers = (projectID) => async (dispatch, getState)
   const { app: { selectedProject, isOffline } } = getState()
   if (!isOffline && selectedProject === projectID) {
     const observers = [];
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onCreateTaskByProjectId, { projectID }), {
+    observers.push(await observeGraphQL(subscriptions.onCreateTaskByProjectId, { projectID }, {
       next: async (e) => {
         const { tasks } = getState()
         const incoming = e.value.data.onCreateTaskByProjectID
@@ -318,7 +317,7 @@ export const handleSetTasksObservers = (projectID) => async (dispatch, getState)
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onUpdateTaskByProjectId, { projectID }), {
+    observers.push(await observeGraphQL(subscriptions.onUpdateTaskByProjectId, { projectID }, {
       next: async (e) => {
         const { tasks } = getState()
         const incoming = e.value.data.onUpdateTaskByProjectID
@@ -342,7 +341,7 @@ export const handleSetTasksObservers = (projectID) => async (dispatch, getState)
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onDeleteTaskByProjectId, { projectID }), {
+    observers.push(await observeGraphQL(subscriptions.onDeleteTaskByProjectId, { projectID }, {
       next: e => {
         const { tasks, app } = getState()
         const incoming = e.value.data.onDeleteTaskByProjectID;
@@ -375,7 +374,7 @@ export const handleSetCommentsObservers = (taskID) => async (dispatch, getState)
   const { app: { selectedTask, isOffline } } = getState()
     if (!isOffline && selectedTask === taskID) {
     const observers = [];
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onCreateCommentByTaskId, { taskID }), {
+    observers.push(await observeGraphQL(subscriptions.onCreateCommentByTaskId, { taskID }, {
       next: async (e) => {
         const { comments } = getState()
         const incoming = e.value.data.onCreateCommentByTaskID
@@ -388,7 +387,7 @@ export const handleSetCommentsObservers = (taskID) => async (dispatch, getState)
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onUpdateCommentByTaskId, { taskID }), {
+    observers.push(await observeGraphQL(subscriptions.onUpdateCommentByTaskId, { taskID }, {
       next: e => {
         const { comments } = getState()
         const incoming = e.value.data.onUpdateCommentByTaskID
@@ -407,7 +406,7 @@ export const handleSetCommentsObservers = (taskID) => async (dispatch, getState)
       },
       error: error => console.warn(error)
     }))
-    observers.push(await observeGraphQL(graphqlOperation(subscriptions.onDeleteCommentByTaskId, { taskID }), {
+    observers.push(await observeGraphQL(subscriptions.onDeleteCommentByTaskId, { taskID }, {
       next: e => {
         const { comments } = getState()
         const incoming = e.value.data.onDeleteCommentByTaskID;

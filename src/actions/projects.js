@@ -1,4 +1,3 @@
-import { graphqlOperation } from "@aws-amplify/api";
 import { listOwnedProjects, listAssignedProjects, listWatchedProjects } from "../graphql/queries"
 import * as appActions from "./app"
 import * as mutationsActions from "./mutations"
@@ -138,7 +137,7 @@ export const handleFetchOwnedProjects = (isSync = false) => async (dispatch, get
   // if (!isSync) dispatch(appActions.handleSetProject(null))
   if (user.state === AuthState.SignedIn) {
     try {
-      const res = await execGraphQL(graphqlOperation(listOwnedProjects))
+      const res = await execGraphQL(listOwnedProjects)
       dispatch(fetchProjects(res.data.listOwnedProjects.items, OWNED))
     } catch (err) {
       if (err.errors[0].message === 'Network Error') {
@@ -156,7 +155,7 @@ export const handleFetchAssignedProjects = (isSync = false) => async (dispatch, 
   // if (!isSync) dispatch(appActions.handleSetProject(null))
   if (user.state === AuthState.SignedIn) {
     try {
-      const res = await execGraphQL(graphqlOperation(listAssignedProjects))
+      const res = await execGraphQL(listAssignedProjects)
       const fetchedAssignedProjects = res.data.listAssignedProjects.items
       dispatch(fetchProjects(fetchedAssignedProjects, ASSIGNED))
       for (const fetchedAssignedProject of fetchedAssignedProjects) {
@@ -178,7 +177,7 @@ export const handleFetchWatchedProjects = (isSync = false) => async (dispatch, g
   // if (!isSync) dispatch(appActions.handleSetProject(null))
   if (user.state === AuthState.SignedIn) {
     try {
-      const res = await execGraphQL(graphqlOperation(listWatchedProjects))
+      const res = await execGraphQL(listWatchedProjects)
       const fetchedWatchedProjects = res.data.listWatchedProjects.items
       dispatch(fetchProjects(fetchedWatchedProjects, WATCHED))
       for (const fetchedWatchedProject of fetchedWatchedProjects) {
