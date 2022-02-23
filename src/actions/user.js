@@ -5,7 +5,7 @@ import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
 import * as notificationsActions from "./notifications"
 import execGraphQL from '../utils/execGraphQL';
-import AuthManager from '../amplify/AuthManager';
+import Auth from '../amplify/Auth';
 
 export const SET_STATE = "SET_STATE";
 export const SET_DATA = "SET_DATA";
@@ -54,14 +54,14 @@ export const handleSetData = (userData) => (dispatch, getState) => {
 }
 
 export const handleFetchUser = () => async (dispatch, getState) => {
-  if (AuthManager.isLoggedIn() || cacheController.getUser().state === AuthState.SignedIn) {
+  if (await Auth.isLoggedIn()/* || cacheController.getUser().state === AuthState.SignedIn*/) {
     try {
       const userData = (
         await execGraphQL(queries.getUserByUsername, {
-          username: AuthManager.getUser().username,
+          username: Auth.getUser().username,
         })
       ).data.getUserByUsername;
-      userData.jwt = await AuthManager.getIdToken();
+      userData.jwt = await Auth.getIdToken();
       dispatch(handleSetData(userData))
       dispatch(handleSetState(AuthState.SignedIn))
     } catch (err) {
@@ -79,7 +79,7 @@ export const handleFetchUser = () => async (dispatch, getState) => {
 
 export const handleSignOut = (shouldResetCache = false) => async (dispatch, getState) => {
   if (shouldResetCache) cacheController.resetCache();
-  await AuthManager.signOut()
+  await Auth.signOut()
   dispatch(handleSetState(AuthState.SignedOut))
   dispatch(handleSetData(null))
   if (shouldResetCache) window.location.reload();

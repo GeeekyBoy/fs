@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import Login from './Login';
 import NewAccount from './NewAccount';
 import ForgotPassword from './ForgotPassword';
-import AuthManager from "../../amplify/AuthManager"
+import Auth from "../../amplify/Auth"
 import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
 import { useLocationNoUpdates, useNavigateNoUpdates } from '../RouterUtils';
 
@@ -14,7 +14,7 @@ const AuthFlow = () => {
   const navigate = useNavigateNoUpdates();
   const handleGoBack = () => navigate(-1);
   useEffect(() => {
-    if (AuthManager.isLoggedIn()) {
+    if (Auth.isLoggedIn()) {
       navigate("/");
     }
   }, [])

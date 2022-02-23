@@ -1,10 +1,10 @@
-import AuthManager from "../amplify/AuthManager";
+import Auth from "../amplify/Auth";
 
 export default async (filter) => {
   const queryData = { 
     headers: { 
       'Content-Type': 'application/json',
-      Authorization: await AuthManager.getIdToken(),
+      Authorization: await Auth.getIdToken(),
     },
     queryStringParameters: {
         filter: filter,

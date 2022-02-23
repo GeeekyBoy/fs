@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import { useNavigateNoUpdates } from '../RouterUtils';
-import AuthManager from '../../amplify/AuthManager';
+import Auth from '../../amplify/Auth';
 
 const ForgotPassword = () => {
   const [username, setUsername] = useState("")
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     setUsernameError(null)
     setIsBusy(true)
     try {
-      await AuthManager.forgotPassword(username)
+      await Auth.forgotPassword(username)
       setCurrStep(2)
       setIsBusy(false)
     } catch (error) {
@@ -46,8 +46,8 @@ const ForgotPassword = () => {
     setVerificationCodeError(null)
     setIsBusy(true)
     try {
-      await AuthManager.confirmSignUp(username, verificationCode)
-      await AuthManager.forgotPassword(username)
+      await Auth.confirmSignUp(username, verificationCode)
+      await Auth.forgotPassword(username)
       setVerificationCode("")
       setCurrStep(2)
       setIsBusy(false)
@@ -79,8 +79,8 @@ const ForgotPassword = () => {
     setVerificationCodeError(null)
     setIsBusy(true)
     try {
-      await AuthManager.forgotPasswordSubmit(username, verificationCode, newPassword)
-      await AuthManager.signIn(username, newPassword)
+      await Auth.forgotPasswordSubmit(username, verificationCode, newPassword)
+      await Auth.signIn(username, newPassword)
       navigate("/");
     } catch (error) {
       console.log('error signing in', error);

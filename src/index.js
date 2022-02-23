@@ -1,20 +1,31 @@
-import "smap/smap-shim"
+import "smap/smap-shim";
 import "core-js";
-import 'regenerator-runtime/runtime';
-import './utils/nanoidIE'
-import React, { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider } from "react-redux"
-import store from "./store"
-import './index.scss';
-import 'simplebar/dist/simplebar.min.css';
-import App from './components/App';
+import "regenerator-runtime/runtime";
+import "./utils/nanoidIE";
+import React, { StrictMode } from "react";
+import * as ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+import "./index.scss";
+import "simplebar/dist/simplebar.min.css";
+import App from "./components/App";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import makeMatcher from "wouter-preact/matcher";
 import ModalManager from "./components/ModalManager";
 import WindowSizeListener from "./components/WindowSizeListener";
 import RouterUtils from "./components/RouterUtils";
+import { Router } from "wouter-preact";
+
+const defaultMatcher = makeMatcher();
+const multipathMatcher = (patterns, path) => {
+  for (let pattern of [patterns].flat()) {
+    const [match, params] = defaultMatcher(pattern, path);
+    if (match) return [match, params];
+  }
+  return [false, null];
+};
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5qtc5aQFVBclDwYalib-qXn7DdK-tLEk",
@@ -23,26 +34,28 @@ const firebaseConfig = {
   storageBucket: "forwardslash.appspot.com",
   messagingSenderId: "637088123316",
   appId: "1:637088123316:web:60a68d05274be716828ae1",
-  measurementId: "G-XJM3GQR6VP"
+  measurementId: "G-XJM3GQR6VP",
 };
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container)
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
 root.render(
-(
   <StrictMode>
-    <WindowSizeListener>
+    <Router matcher={multipathMatcher}>
       <RouterUtils>
-        <Provider store={store}>
-          <ModalManager>
-            <App />
-          </ModalManager>
-        </Provider>
+        <WindowSizeListener>
+          <Provider store={store}>
+            <ModalManager>
+              <App />
+            </ModalManager>
+          </Provider>
+        </WindowSizeListener>
       </RouterUtils>
-    </WindowSizeListener>
-  </StrictMode>
-), container);
+    </Router>
+  </StrictMode>,
+  container
+);
 serviceWorkerRegistration.register();

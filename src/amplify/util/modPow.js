@@ -1,33 +1,35 @@
-const zero = BigInt(0);
-const one = BigInt(1);
-const two = BigInt(2);
+import BigInt from "big-integer";
+
+const zero = BigInt.zero;
+const one = BigInt.one;
+const two = BigInt[2];
 
 export default (a, e, m) => {
-  if (m === zero) {
-    throw new Error('bad modulus (0)');
+  if (m.equals(zero)) {
+    throw new Error("bad modulus (0)");
   }
 
-  if (e <= 0) {
-    throw new Error('negative exponents not implemented');
+  if (e.lesserOrEquals(0)) {
+    throw new Error("negative exponents not implemented");
   }
 
   let r = one;
-  let base = a % m;
+  let base = a.mod(m);
   let exp = e;
 
-  while (exp > zero) {
-    if (base === zero) {
+  while (exp.greater(zero)) {
+    if (base.equals(zero)) {
       r = zero;
       break;
     }
 
-    if (exp % two === one) {
-      r = (r * base) % m;
+    if (exp.mod(two).equals(one)) {
+      r = r.multiply(base).mod(m);
     }
 
-    base = (base * base) % m;
-    exp = exp / two;
+    base = base.multiply(base).mod(m);
+    exp = exp.divide(two);
   }
 
-  return r <= zero ? r + m : r;
+  return r.lesserOrEquals(zero) ? r.add(m).toJSNumber() : r.toJSNumber();
 };

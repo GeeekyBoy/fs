@@ -5,14 +5,18 @@ import { bigIntToHex } from "./util/converters";
 import * as cookies from "../controllers/cookies";
 import decodeJwt from "../utils/decodeJwt";
 
-class AuthManager {
+class Auth {
   constructor() {
     this.clientId = awsconfig.aws_user_pools_web_client_id;
+    this.identityPoolId = awsconfig.aws_cognito_identity_pool_id;
     this.groupId = awsconfig.aws_user_pools_id.split("_")[1];
     this.cognitoEndpoint = `https://cognito-idp.${awsconfig.aws_cognito_region}.amazonaws.com/`;
+    this.identityEndpoint = `https://cognito-identity.${awsconfig.aws_cognito_region}.amazonaws.com/`;
     this.accessToken = cookies.getCookie("accessToken");
     this.idToken = cookies.getCookie("idToken");
     this.refreshToken = cookies.getCookie("refreshToken");
+    this.secretKey = null;
+    this.sessionToken = null;
     if (this.idToken) {
       const decodedIdToken = decodeJwt(this.idToken);
       this.expiresAt = decodedIdToken.exp * 1000;
@@ -27,10 +31,12 @@ class AuthManager {
       this.user = null;
     }
   }
-  updateData(accessToken, idToken, refreshToken) {
+  updateData(accessToken, idToken, refreshToken, refreshed = false) {
     this.accessToken = accessToken;
     this.idToken = idToken;
     this.refreshToken = refreshToken;
+    this.secretKey = null;
+    this.sessionToken = null;
     const decodedIdToken = decodeJwt(this.idToken);
     this.expiresAt = decodedIdToken.exp * 1000;
     this.user = {
@@ -41,11 +47,13 @@ class AuthManager {
     };
     cookies.setCookie("accessToken", this.accessToken);
     cookies.setCookie("idToken", this.idToken, this.expiresAt);
-    cookies.setCookie(
-      "refreshToken",
-      this.refreshToken,
-      decodedIdToken.iat * 1000 + 3600 * 24 * 30
-    );
+    if (!refreshed) {
+      cookies.setCookie(
+        "refreshToken",
+        this.refreshToken,
+        decodedIdToken.iat * 1000 + 3600 * 24 * 30
+      );
+    }
   }
   resetData() {
     this.accessToken = null;
@@ -53,6 +61,8 @@ class AuthManager {
     this.refreshToken = null;
     this.expiresAt = null;
     this.user = null;
+    this.secretKey = null;
+    this.sessionToken = null;
     cookies.removeCookie("accessToken");
     cookies.removeCookie("idToken");
     cookies.removeCookie("refreshToken");
@@ -64,9 +74,6 @@ class AuthManager {
       throw new Error("User is not logged in");
     }
   }
-  isLoggedIn() {
-    return this.refreshToken !== null;
-  }
   async getIdToken() {
     if (this.refreshToken) {
       if (this.expiresAt <= Date.now()) {
@@ -75,6 +82,16 @@ class AuthManager {
       return this.idToken;
     } else {
       throw new Error("User is not logged in");
+    }
+  }
+  async isLoggedIn() {
+    if (this.refreshToken !== null) {
+      return true;
+    } else {
+      if (this.sessionToken === null) {
+        await this.anonymousSignIn();
+      }
+      return false;
     }
   }
   async signIn(username, password) {
@@ -136,7 +153,8 @@ class AuthManager {
     } else {
       const accessToken = passwordVerifierRes.AuthenticationResult.AccessToken;
       const idToken = passwordVerifierRes.AuthenticationResult.IdToken;
-      const refreshToken = passwordVerifierRes.AuthenticationResult.RefreshToken;
+      const refreshToken =
+        passwordVerifierRes.AuthenticationResult.RefreshToken;
       this.updateData(accessToken, idToken, refreshToken);
       console.log(passwordVerifierRes);
     }
@@ -294,10 +312,49 @@ class AuthManager {
     } else {
       const accessToken = refreshTokenRes.AuthenticationResult.AccessToken;
       const idToken = refreshTokenRes.AuthenticationResult.IdToken;
-      this.updateData(accessToken, idToken, this.refreshToken);
+      this.updateData(accessToken, idToken, this.refreshToken, true);
       return refreshTokenRes;
+    }
+  }
+  async anonymousSignIn() {
+    const rawIdentifyRes = await fetch(this.identityEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amz-Target": "AWSCognitoIdentityService.GetId",
+        "X-Amz-User-Agent": "amazon",
+      },
+      body: JSON.stringify({
+        IdentityPoolId: this.identityPoolId,
+      }),
+    });
+    const identifyRes = await rawIdentifyRes.json();
+    const identityId = identifyRes.IdentityId;
+    const rawAnonymousSignInRes = await fetch(this.identityEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-amz-json-1.1",
+        "X-Amz-Target": "AWSCognitoIdentityService.GetCredentialsForIdentity",
+        "X-Amz-User-Agent": "aws-amplify/4.3.13 js",
+      },
+      body: JSON.stringify({
+        IdentityId: identityId,
+      }),
+    });
+    const anonymousSignInRes = await rawAnonymousSignInRes.json();
+    console.log(anonymousSignInRes);
+    if (anonymousSignInRes.status === 400) {
+      throw {
+        code: anonymousSignInRes.__type,
+        message: anonymousSignInRes.message,
+      };
+    } else {
+      this.accessToken = anonymousSignInRes.Credentials.AccessKeyId;
+      this.secretKey = anonymousSignInRes.Credentials.SecretKey;
+      this.sessionToken = anonymousSignInRes.Credentials.SessionToken;
+      return anonymousSignInRes;
     }
   }
 }
 
-export default new AuthManager();
+export default new Auth();

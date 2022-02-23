@@ -1,3 +1,5 @@
+import BigInt from "big-integer";
+
 export const hexToUint8 = (hexString) =>
   new Uint8Array(
     (hexString.match(/.{1,2}/g) || []).map((byte) => parseInt(byte, 16))
@@ -28,4 +30,4 @@ export const b64ToUint8 = (b64) =>
 
 export const bigIntToHex = (v) => v.toString(16);
 
-export const hexToBigInt = (hex) => BigInt(`0x${hex}`);
+export const hexToBigInt = (hex) => BigInt(`${hex}`, 16);

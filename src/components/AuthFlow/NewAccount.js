@@ -8,7 +8,7 @@ import { AuthState } from '../../constants';
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import { useNavigateNoUpdates } from '../RouterUtils';
-import AuthManager from '../../amplify/AuthManager';
+import Auth from '../../amplify/Auth';
 
 const NewAccount = () => {
   const [verificationCode, setVerificationCode] = useState("")
@@ -127,7 +127,7 @@ const NewAccount = () => {
     e.preventDefault()
     setIsBusy(true)
     try {
-      await AuthManager.signUp(username.trim(), password, {
+      await Auth.signUp(username.trim(), password, {
         given_name: firstName.trim(),
         family_name: lastName.trim(),
         email: email.trim(),
@@ -154,8 +154,8 @@ const NewAccount = () => {
     setVerificationCodeError(null)
     setIsBusy(true)
     try {
-      await AuthManager.confirmSignUp(username, verificationCode)
-      await AuthManager.signIn(username, password);
+      await Auth.confirmSignUp(username, verificationCode)
+      await Auth.signIn(username, password);
       cacheController.resetCache(true)
       navigate("/");
     } catch (error) {

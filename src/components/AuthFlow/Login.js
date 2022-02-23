@@ -7,7 +7,7 @@ import * as cacheController from "../../controllers/cache"
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import { useNavigateNoUpdates } from '../RouterUtils';
-import AuthManager from '../../amplify/AuthManager';
+import Auth from '../../amplify/Auth';
 
 const Login = () => {
   const [verificationCode, setVerificationCode] = useState("")
@@ -27,7 +27,7 @@ const Login = () => {
     setUsernameError(null)
     setPasswordError(null)
     try {
-      await AuthManager.signIn(username, password);
+      await Auth.signIn(username, password);
       cacheController.resetCache(true)
       navigate("/");
     } catch (error) {
@@ -55,8 +55,8 @@ const Login = () => {
     setVerificationCodeError(null)
     setIsBusy(true)
     try {
-      await AuthManager.confirmSignUp(username, verificationCode)
-      await AuthManager.signIn(username, password);
+      await Auth.confirmSignUp(username, verificationCode)
+      await Auth.signIn(username, password);
       navigate("/");
     } catch (error) {
       console.log('error signing in', error);

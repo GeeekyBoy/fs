@@ -1,7 +1,6 @@
-import store from "../store";
 import { AuthState } from "../constants";
-import ApiManager from "../amplify/ApiManager";
+import PubSub from "../amplify/PubSub";
 
 export default async (query, variables = {}, callback) => {
-  return ApiManager.subscribe(query, variables, callback);
+  return PubSub.subscribe(query, variables, callback);
 };
