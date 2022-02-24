@@ -22,13 +22,15 @@ const ProjectNotSelected = () => {
     projectAddingStatus === OK &&
       dispatch(
         projectsActions.handleCreateProject(
-          (await initProjectState(
-            parseLinkedList(
-              filterObj(projects, (x) => x.isOwned),
-              "prevProject",
-              "nextProject"
-            )).reverse()[0]?.id
-          )
+          (
+            await initProjectState(
+              parseLinkedList(
+                filterObj(projects, (x) => x.isOwned),
+                "prevProject",
+                "nextProject"
+              )
+            )
+          ).reverse()[0]?.id
         )
       );
   };
