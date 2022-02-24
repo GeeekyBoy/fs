@@ -15,15 +15,19 @@ const ShadowScroll = (props) => {
     };
     onScroll();
     const node = ref.current;
-    const resizeObserver = new ResizeObserver(onScroll);
-    resizeObserver.observe(node);
+    const isResizeObserverSupported = "ResizeObserver" in window;
+    const observer = isResizeObserverSupported ? 
+      new ResizeObserver(onScroll) :
+      new MutationObserver(onScroll);
+    if (isResizeObserverSupported) observer.observe(node);
+    else observer.observe(node, { childList: true, subtree: true });
     node.addEventListener('scroll', onScroll);
     node.addEventListener("wheel", (e) => {
       e.preventDefault();
       node.scrollLeft += e.deltaY;
     });
     return () => {
-      resizeObserver.unobserve(node);
+      observer.disconnect();
       node.removeEventListener('scroll', onScroll);
       node.removeEventListener('wheel', onScroll);
     };
