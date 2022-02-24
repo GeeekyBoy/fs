@@ -26,15 +26,13 @@ const Projects = forwardRef((_, ref) => {
       dispatch(appActions.handleSetLeftPanel(false))
       dispatch(
         projectsActions.handleCreateProject(
-          (
-            await initProjectState(
-              parseLinkedList(
-                filterObj(projects, (x) => x.isOwned),
-                "prevProject",
-                "nextProject"
-              )
-            )
-          ).reverse()[0]?.id
+          await initProjectState(
+            parseLinkedList(
+              filterObj(projects, (x) => x.isOwned),
+              "prevProject",
+              "nextProject"
+            ).reverse()[0]?.id
+          )
         )
       );
     }
