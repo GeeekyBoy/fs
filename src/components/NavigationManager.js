@@ -4,7 +4,7 @@ import * as appActions from "../actions/app"
 import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as queries from "../graphql/queries"
-import { useLocation } from "wouter-preact"
+import { useLocation } from "wouter"
 import { AuthState } from '../constants';
 import execGraphQL from "../utils/execGraphQL";
 import { useParamsNoUpdates } from "./RouterUtils";

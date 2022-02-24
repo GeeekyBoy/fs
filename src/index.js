@@ -1,6 +1,3 @@
-import "smap/smap-shim";
-import "core-js";
-import "regenerator-runtime/runtime";
 import "./utils/nanoidIE";
 import React, { StrictMode } from "react";
 import * as ReactDOM from "react-dom";
@@ -12,11 +9,11 @@ import App from "./components/App";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import makeMatcher from "wouter-preact/matcher";
+import makeMatcher from "wouter/matcher";
 import ModalManager from "./components/ModalManager";
 import WindowSizeListener from "./components/WindowSizeListener";
 import RouterUtils from "./components/RouterUtils";
-import { Router } from "wouter-preact";
+import { Router } from "wouter";
 
 const defaultMatcher = makeMatcher();
 const multipathMatcher = (patterns, path) => {

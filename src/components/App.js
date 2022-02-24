@@ -4,9 +4,8 @@ import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
 import store from "../store";
 import isOnline from "../utils/isOnline";
-import { Route } from "wouter-preact";
+import { Route } from "wouter";
 import { useNavigateNoUpdates } from "./RouterUtils";
-import makeMatcher from "wouter-preact/matcher";
 import Home from "./Home";
 import AuthFlow from "./AuthFlow";
 

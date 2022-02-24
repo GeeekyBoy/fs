@@ -1,7 +1,7 @@
 // derived from https://github.com/flexdinesh answer
 
 import React from 'react';
-import {useLocation as useLocationOriginal, useRoute as useRouteOriginal} from 'wouter-preact';
+import {useLocation as useLocationOriginal, useRoute as useRouteOriginal} from 'wouter';
 
 const RouterUtilsContext = React.createContext({
   navigateRef: null,
