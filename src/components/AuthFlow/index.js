@@ -14,7 +14,7 @@ const AuthFlow = () => {
   const navigate = useNavigateNoUpdates();
   const handleGoBack = () => navigate(-1);
   useEffect(() => {
-    if (Auth.isLoggedIn()) {
+    if (await Auth.isLoggedIn()) {
       navigate("/");
     }
   }, [])
