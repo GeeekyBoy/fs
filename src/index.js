@@ -1,4 +1,4 @@
-import "./utils/nanoidIE";
+import 'react-app-polyfill/stable';
 import React, { StrictMode } from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
