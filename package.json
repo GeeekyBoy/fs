@@ -80,14 +80,14 @@
   "browserslist": {
     "production": [
       ">0.2%",
-      "not ie",
+      "not ie 11",
       "not dead",
       "not op_mini all"
     ],
     "development": [
       ">0.2%",
+      "not ie 11",
       "not dead",
-      "not ie",
       "not op_mini all"
     ]
   },
