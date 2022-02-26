@@ -3,6 +3,7 @@ import * as tasksActions from "./tasks"
 import * as observersActions from "./observers"
 import * as collaborationActions from "./collaboration"
 import * as commentsActions from "./comments"
+import { navigate } from "../components/Router"
 
 export const SET_PROJECT = "SET_PROJECT";
 export const SET_TASK = "SET_TASK";
@@ -100,9 +101,9 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
         dispatch(setProject(id))
         if (shouldChangeURL) {
           if (user.state === AuthState.SignedIn || projects[id].isTemp) {
-            app.navigate(`/${projects[id].permalink}`)
+            navigate(`/${projects[id].permalink}`)
           } else {
-            app.navigate(`/local/${projects[id].permalink}`)
+            navigate(`/local/${projects[id].permalink}`)
           }
         }
       }
@@ -117,7 +118,7 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
       }
     } else {
       if (shouldChangeURL) {
-        app.navigate("/")
+        navigate("/")
       }
       dispatch(setProject(null))
     }
@@ -142,7 +143,7 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
     }
     if (shouldChangeURL) {
       if (app.selectedProject && (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp)) {
-        app.navigate(`/${projects[app.selectedProject].permalink}`)
+        navigate(`/${projects[app.selectedProject].permalink}`)
       }
     }
     dispatch(setTask(null))
@@ -157,7 +158,7 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
     }
     if (shouldChangeURL) {
       if (app.selectedProject && (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp)) {
-        app.navigate(`/${projects[app.selectedProject].permalink}/${tasks[id].permalink}`)
+        navigate(`/${projects[app.selectedProject].permalink}/${tasks[id].permalink}`)
       }
     }
     dispatch(setTask(id))

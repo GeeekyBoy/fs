@@ -6,6 +6,7 @@ import * as cacheController from "../controllers/cache"
 import { AuthState } from "../constants";
 import prepareProjectToBeSent from "../utils/prepareProjectToBeSent";
 import execGraphQL from "../utils/execGraphQL";
+import { navigate } from "../components/Router"
 
 export const CREATE_PROJECT = "CREATE_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
@@ -95,7 +96,7 @@ export const handleUpdateProject = (update) => (dispatch, getState) => {
   const prevProjectState = {...projects[update.id]}
   dispatch(updateProject(update, OWNED))
   if (app.selectedProject === update.id && Object.prototype.hasOwnProperty.call(update, "permalink")) {
-    app?.navigate("/" + (user.state === AuthState.SignedIn ? user.data.username + "/" : "local/") + update.permalink, { replace: true })
+    navigate("/" + (user.state === AuthState.SignedIn ? user.data.username + "/" : "local/") + update.permalink, { replace: true })
   }
   if (user.state === AuthState.SignedIn) {
     return dispatch(mutationsActions.scheduleMutation(
@@ -106,7 +107,7 @@ export const handleUpdateProject = (update) => (dispatch, getState) => {
         if (getState().projects[update.id]) {
           dispatch(updateProject(prevProjectState))
           if (getState().app.selectedProject === update.id && Object.prototype.hasOwnProperty.call(update, "permalink")) {
-            app?.navigate("/" + prevProjectState.permalink, { replace: true })
+            navigate("/" + prevProjectState.permalink, { replace: true })
           }
         }
       }

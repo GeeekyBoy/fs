@@ -9,20 +9,8 @@ import App from "./components/App";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import makeMatcher from "wouter/matcher";
 import ModalManager from "./components/ModalManager";
 import WindowSizeListener from "./components/WindowSizeListener";
-import RouterUtils from "./components/RouterUtils";
-import { Router } from "wouter";
-
-const defaultMatcher = makeMatcher();
-const multipathMatcher = (patterns, path) => {
-  for (let pattern of [patterns].flat()) {
-    const [match, params] = defaultMatcher(pattern, path);
-    if (match) return [match, params];
-  }
-  return [false, null];
-};
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5qtc5aQFVBclDwYalib-qXn7DdK-tLEk",
@@ -41,17 +29,13 @@ const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 root.render(
   <StrictMode>
-    <Router matcher={multipathMatcher}>
-      <RouterUtils>
-        <WindowSizeListener>
-          <Provider store={store}>
-            <ModalManager>
-              <App />
-            </ModalManager>
-          </Provider>
-        </WindowSizeListener>
-      </RouterUtils>
-    </Router>
+    <WindowSizeListener>
+      <Provider store={store}>
+        <ModalManager>
+          <App />
+        </ModalManager>
+      </Provider>
+    </WindowSizeListener>
   </StrictMode>,
   container
 );

@@ -7,8 +7,8 @@ import * as cacheController from "../../controllers/cache"
 import { AuthState } from '../../constants';
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
-import { useNavigateNoUpdates } from '../RouterUtils';
 import Auth from '../../amplify/Auth';
+import { navigate } from '../Router';
 
 const NewAccount = () => {
   const [verificationCode, setVerificationCode] = useState("")
@@ -26,7 +26,6 @@ const NewAccount = () => {
   const [passwordError, setPasswordError] = useState(null)
   const [verificationCodeError, setVerificationCodeError] = useState(null)
   const [isBusy, setIsBusy] = useState(false)
-  const navigate = useNavigateNoUpdates();
   const dispatch = useDispatch()
   const isOffline = useSelector(state => state.app.isOffline)
   const validateFirstName = (value = firstName) => {

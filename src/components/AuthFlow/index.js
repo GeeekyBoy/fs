@@ -6,17 +6,19 @@ import NewAccount from './NewAccount';
 import ForgotPassword from './ForgotPassword';
 import Auth from "../../amplify/Auth"
 import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
-import { useLocationNoUpdates, useNavigateNoUpdates } from '../RouterUtils';
+import { navigate, useRouterNoUpdates } from '../Router';
 
 const AuthFlow = () => {
   const [currPage, setCurrPage] = useState(<Login />);
-  const routeLocation = useLocationNoUpdates();
-  const navigate = useNavigateNoUpdates();
+  const { routeLocation } = useRouterNoUpdates();
   const handleGoBack = () => navigate(-1);
   useEffect(() => {
-    if (await Auth.isLoggedIn()) {
-      navigate("/");
+    const checkAuth = async () => {
+      if (await Auth.isLoggedIn()) {
+        navigate("/");
+      }
     }
+    checkAuth();
   }, [])
   useEffect(() => {
     switch (routeLocation) {

@@ -15,16 +15,16 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
-  const user = useSelector(state => state.user);
+  const userState = useSelector(state => state.user.state);
 
   const fetchLocalProjects = () => {
-    if (user.state !== AuthState.SignedIn) {
+    if (userState !== AuthState.SignedIn) {
       dispatch(projectsActions.handleFetchOwnedProjects());
     }
   };
 
   useEffect(() => {
-    if (user.state === AuthState.SignedIn) {
+    if (userState === AuthState.SignedIn) {
       window.removeEventListener("storage", fetchLocalProjects)
     } else {
       window.addEventListener("storage", fetchLocalProjects);
@@ -32,7 +32,7 @@ const Home = () => {
     return () => {
       window.removeEventListener("storage", fetchLocalProjects)
     }
-  }, [user.state]);
+  }, [userState]);
 
 
   return (

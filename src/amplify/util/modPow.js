@@ -5,6 +5,9 @@ const one = BigInt.one;
 const two = BigInt[2];
 
 export default (a, e, m) => {
+  a = BigInt(a);
+  e = BigInt(e);
+  m = BigInt(m);
   if (m.equals(zero)) {
     throw new Error("bad modulus (0)");
   }
@@ -31,5 +34,5 @@ export default (a, e, m) => {
     exp = exp.divide(two);
   }
 
-  return r.lesserOrEquals(zero) ? r.add(m).toJSNumber() : r.toJSNumber();
+  return r.lesserOrEquals(zero) ? r.add(m) : r;
 };

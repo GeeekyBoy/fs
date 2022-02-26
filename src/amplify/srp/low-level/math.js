@@ -1,3 +1,4 @@
+import BigInt from "big-integer";
 import { getRandomValues } from "../../util/crypto.js";
 import padHex from "../../util/padHex.js";
 import modPow from "../../util/modPow.js";
@@ -17,7 +18,7 @@ export const u = async ({ A, B }) =>
   hexToBigInt(await hashHex(padHex(A) + padHex(B)));
 
 export const S = async ({ u, a, x, B, k }) =>
-  modPow(B - k * modPow(g, x, N), a + u * x, N);
+  modPow(B.subtract(modPow(g, x, N).multiply(k)), a + u * x, N);
 
 export const x = async (salt, groupId, userIdForSrp, password) =>
   hexToBigInt(

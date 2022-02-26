@@ -15,13 +15,12 @@ import { panelPages, AuthState } from '../constants';
 import execGraphQL from "../utils/execGraphQL";
 import store from "../store";
 import * as mutationID from "../utils/mutationID";
-import { useNavigateNoUpdates, useParamsNoUpdates } from "./RouterUtils";
+import { navigate, useRouterNoUpdates } from "./Router"
 
 const SyncManager = (props) => {
   const [isInitial, setIsInitial] = useState(true)
   const ws = useRef(null)
-  const navigate = useNavigateNoUpdates()
-  const routeParams = useParamsNoUpdates()
+  const { routeParams } = useRouterNoUpdates();
   const dispatch = useDispatch()
 
   const isOffline = useSelector(state => state.isOffline)

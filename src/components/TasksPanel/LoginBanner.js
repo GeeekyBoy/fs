@@ -1,9 +1,8 @@
 import React from 'react';
+import { navigate } from '../Router';
 import styles from "./LoginBanner.module.scss"
-import { useNavigateNoUpdates } from '../RouterUtils';
 
 const LoginBanner = () => {
-  const navigate = useNavigateNoUpdates();
   const handleClickBanner = () => {
     navigate("/login")
   }

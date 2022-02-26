@@ -4,14 +4,12 @@ import * as appActions from "../actions/app"
 import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as queries from "../graphql/queries"
-import { useLocation } from "wouter"
 import { AuthState } from '../constants';
 import execGraphQL from "../utils/execGraphQL";
-import { useParamsNoUpdates } from "./RouterUtils";
+import { navigate, useRouter } from "./Router"
 
 const NavigationManager = () => {
-  const [routeLocation, navigate] = useLocation()
-  const routeParams = useParamsNoUpdates();
+  const { routeLocation, routeParams } = useRouter();
   const dispatch = useDispatch()
 
   const selectedProject = useSelector(state => state.app.selectedProject)
@@ -23,7 +21,7 @@ const NavigationManager = () => {
   const userState = useSelector(state => state.user.state)
 
   useEffect(() => {
-    console.log("Hello");
+    console.log(routeParams);
     (async () => {
     if (routeParams) {
       const {

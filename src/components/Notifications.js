@@ -2,13 +2,12 @@ import React, { useRef, useState, useEffect, lazy } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Notifications.module.scss"
 import * as notificationsActions from "../actions/notifications"
-import { useNavigateNoUpdates } from './RouterUtils';
+import { navigate } from './Router';
 const Notification = lazy(() => import('./UI/Notification'));
 
 const Notifications = () => {
   const dismissTimer = useRef(null)
   const [anim, setAnim] = useState(0)
-  const navigate = useNavigateNoUpdates();
   const dispatch = useDispatch();
 
   const notifications = useSelector(state => state.notifications);

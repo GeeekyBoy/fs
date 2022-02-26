@@ -4,13 +4,21 @@ import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
 import store from "../store";
 import isOnline from "../utils/isOnline";
-import { Route } from "wouter";
-import { useNavigateNoUpdates } from "./RouterUtils";
 import Home from "./Home";
 import AuthFlow from "./AuthFlow";
+import Router from "./Router";
+
+const routes = {
+  "/login": AuthFlow,
+  "/signup": AuthFlow,
+  "/forgot-password": AuthFlow,
+  "/local/:projectPermalink": Home,
+  "/:username/:projectPermalink/:taskPermalink": Home,
+  "/:username/:projectPermalink": Home,
+  "/": Home,
+}
 
 const App = () => {
-  const navigate = useNavigateNoUpdates();
   const dispatch = useDispatch();
 
   const fetchAppSettings = () => {
@@ -33,7 +41,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    dispatch(appActions.setNavigate(navigate));
     window.addEventListener("storage", fetchAppSettings);
     window.addEventListener("beforeunload", checkReloadAbility);
     const checkConnectionInterval = setInterval(async () => {
@@ -70,23 +77,7 @@ const App = () => {
   //   document.documentElement.className = appSettings.theme + " " + (appSettings.isDarkMode ? "dark" : "light");
   //   document.querySelector('meta[name="theme-color"]').setAttribute('content', appSettings.isDarkMode ? "#272727" : availColors[appSettings.theme])
   // }, [appSettings.theme, appSettings.isDarkMode]);
-  return (
-    <>
-      <Route path={["/login", "/signup", "/forgot-password"]}>
-        <AuthFlow />
-      </Route>
-      <Route
-        path={[
-          "/local/:projectPermalink",
-          "/:username/:projectPermalink/:taskPermalink",
-          "/:username/:projectPermalink",
-          "/",
-        ]}
-      >
-        <Home />
-      </Route>
-    </>
-  );
+  return <Router routes={routes} />;
 };
 
 export default App;

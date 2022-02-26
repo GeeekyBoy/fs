@@ -1,5 +1,5 @@
 import React from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app";
 import * as projectsActions from "../../actions/projects";
 import { panelPages, initProjectState, OK } from "../../constants";
@@ -8,10 +8,10 @@ import { ReactComponent as NotFoundIllustartion } from "../../assets/undraw_empt
 import { ReactComponent as TasksIllustartion } from "../../assets/undraw_teamwork_hpdk.svg";
 import filterObj from "../../utils/filterObj";
 import Illustration from "../UI/Illustration";
-import { useParamsNoUpdates } from "../RouterUtils";
+import { useRouterNoUpdates } from "../Router";
 
 const ProjectNotSelected = () => {
-  const params = useParamsNoUpdates();
+  const { routeParams } = useRouterNoUpdates();
   const dispatch = useDispatch();
 
   const projectAddingStatus = useSelector(state => state.app.projectAddingStatus);
@@ -39,22 +39,22 @@ const ProjectNotSelected = () => {
   return (
     <Illustration
       illustration={
-        params.projectPermalink
+        routeParams.projectPermalink
           ? NotFoundIllustartion
           : TasksIllustartion
       }
       title={
-        params.projectPermalink
+        routeParams.projectPermalink
           ? "Requested Project Not Found"
           : "Create A Project To Get Started"
       }
       actionLabel={
-        params.projectPermalink
+        routeParams.projectPermalink
         ? "My Projects"
         : "+ Create New"
       }
       onAction={
-        params.projectPermalink
+        routeParams.projectPermalink
         ? openProjectsPanel
         : createNewProject
       }

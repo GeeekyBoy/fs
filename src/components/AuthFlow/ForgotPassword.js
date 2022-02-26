@@ -4,8 +4,8 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
-import { useNavigateNoUpdates } from '../RouterUtils';
 import Auth from '../../amplify/Auth';
+import { navigate } from '../Router';
 
 const ForgotPassword = () => {
   const [username, setUsername] = useState("")
@@ -16,7 +16,6 @@ const ForgotPassword = () => {
   const [verificationCodeError, setVerificationCodeError] = useState(null)
   const [currStep, setCurrStep] = useState(0)
   const [isBusy, setIsBusy] = useState(false)
-  const navigate = useNavigateNoUpdates()
   const isOffline = useSelector(state => state.app.isOffline)
   const initiatePasswordRecovery = async (e) => {
     e.preventDefault()

@@ -11,6 +11,7 @@ import filterObj from "../utils/filterObj";
 import updateAssignedTasks from "../pushedUpdates/updateAssignedTasks";
 import updateWatchedTasks from "../pushedUpdates/updateWatchedTasks";
 import observeGraphQL from "../utils/observeGraphQL";
+import { navigate } from "../components/Router"
 
 export const SET_USER_OBSERVERS = "SET_USER_OBSERVERS";
 export const CLEAR_USER_OBSERVERS = "CLEAR_USER_OBSERVERS";
@@ -258,7 +259,7 @@ export const handleSetProjectObservers = (projectID) => async (dispatch, getStat
                 mutatedAt: mutationDate
               }))
               if (app.selectedProject === incoming.id && incoming.permalink !== prevPermalink) {
-                app?.navigate("/" + incoming.permalink, { replace: true })
+                navigate("/" + incoming.permalink, { replace: true })
               }
             }
           }

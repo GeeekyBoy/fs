@@ -8,10 +8,9 @@ import { ReactComponent as NotificationIcon } from "../assets/notifications-outl
 import { ReactComponent as SettingsIcon } from "../assets/settings-outline.svg"
 import { ReactComponent as LoginIcon } from "../assets/person-circle-outline.svg"
 import Avatar from './UI/Avatar';
-import { useNavigateNoUpdates } from './RouterUtils';
+import { navigate } from './Router';
 
 const Toolbar = () => {
-  const navigate = useNavigateNoUpdates();
   const dispatch = useDispatch();
 
   const isLeftPanelOpened = useSelector(state => state.app.isLeftPanelOpened);

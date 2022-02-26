@@ -16,15 +16,14 @@ import ProgressBar from "./UI/ProgressBar";
 import uploadLocal from "../utils/uploadLocal";
 import execGraphQL from "../utils/execGraphQL";
 import store from "../store";
-import { useNavigateNoUpdates, useParamsNoUpdates } from "./RouterUtils";
+import { navigate, useRouterNoUpdates } from "./Router"
 
 const Loading = (props) => {
   const { onFinish } = props
   const [progressMax, setProgressMax] = useState(100)
   const [progressValue, setProgressValue] = useState(0)
   const [loadingMsg, setLoadingMsg] = useState("Please Wait A Moment")
-  const navigate = useNavigateNoUpdates()
-  const routeParams = useParamsNoUpdates()
+  const { routeParams } = useRouterNoUpdates()
   const dispatch = useDispatch()
   useEffect(() => {
     (async () => {

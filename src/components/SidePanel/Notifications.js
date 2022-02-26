@@ -8,11 +8,10 @@ import { ReactComponent as NoNotificationsIllustration } from "../../assets/undr
 import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
 import Notification from '../UI/Notification';
 import execGraphQL from '../../utils/execGraphQL';
-import { useNavigateNoUpdates } from '../RouterUtils';
+import { navigate } from '../Router';
 
 const Notifications = forwardRef((_, ref) => {
-
-  const navigate = useNavigateNoUpdates();
+  
   const dispatch = useDispatch();
 
   const users = useSelector(state => state.users);

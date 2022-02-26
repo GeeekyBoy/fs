@@ -25,33 +25,33 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <script type="text/javascript">
-    //remap console to some other output
-    var console = (function (oldCons) {
-      return {
-        log: function (text) {
-          oldCons.log(text);
-          //custom code here to be using the 'text' variable
-          //for example: var content = text;
-          //document.getElementById(id).innerHTML = content
-        },
-        info: function (text) {
-          oldCons.info(text);
-          //custom code here to be using the 'text' variable
-        },
-        warn: function (text) {
-          oldCons.warn(text);
-          //custom code here to be using the 'text' variable
-        },
-        error: function (text) {
-          oldCons.error(text);
-          alert(text);
-          //custom code here to be using the 'text' variable
-        }
-      };
-    }(window.console));
+    // //remap console to some other output
+    // var console = (function (oldCons) {
+    //   return {
+    //     log: function (text) {
+    //       oldCons.log(text);
+    //       //custom code here to be using the 'text' variable
+    //       //for example: var content = text;
+    //       //document.getElementById(id).innerHTML = content
+    //     },
+    //     info: function (text) {
+    //       oldCons.info(text);
+    //       //custom code here to be using the 'text' variable
+    //     },
+    //     warn: function (text) {
+    //       oldCons.warn(text);
+    //       //custom code here to be using the 'text' variable
+    //     },
+    //     error: function (text) {
+    //       oldCons.error(text);
+    //       alert(text);
+    //       //custom code here to be using the 'text' variable
+    //     }
+    //   };
+    // }(window.console));
 
-    //Then redefine the old console
-    window.console = console;
+    // //Then redefine the old console
+    // window.console = console;
       var appSettings = window.localStorage.getItem("appSettings")
       appSettings = appSettings ? JSON.parse(appSettings) : {
         theme: "blue",
