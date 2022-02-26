@@ -116,7 +116,6 @@ class Auth {
       }),
     });
     const srpAuthRes = await rawSrpAuthRes.json();
-    console.log(srpAuthRes);
     const { claimSig, timestamp } = await calculateClaimSig(
       a,
       this.groupId,
@@ -156,7 +155,6 @@ class Auth {
       const refreshToken =
         passwordVerifierRes.AuthenticationResult.RefreshToken;
       this.updateData(accessToken, idToken, refreshToken);
-      console.log(passwordVerifierRes);
     }
   }
   async forgotPassword(username) {
@@ -173,7 +171,6 @@ class Auth {
       }),
     });
     const forgotPasswordRes = await rawForgotPasswordRes.json();
-    console.log(forgotPasswordRes);
     if (forgotPasswordRes.status === 400) {
       throw {
         code: forgotPasswordRes.__type,
@@ -200,7 +197,6 @@ class Auth {
       }),
     });
     const forgotPasswordSubmitRes = await rawForgotPasswordSubmitRes.json();
-    console.log(forgotPasswordSubmitRes);
     if (forgotPasswordSubmitRes.status === 400) {
       throw {
         code: forgotPasswordSubmitRes.__type,
@@ -233,7 +229,6 @@ class Auth {
       }),
     });
     const signUpRes = await rawSignUpRes.json();
-    console.log(signUpRes);
     if (signUpRes.status === 400) {
       throw {
         code: signUpRes.__type,
@@ -258,7 +253,6 @@ class Auth {
       }),
     });
     const confirmSignUpRes = await rawConfirmSignUpRes.json();
-    console.log(confirmSignUpRes);
     if (confirmSignUpRes.status === 400) {
       throw {
         code: confirmSignUpRes.__type,
@@ -282,7 +276,6 @@ class Auth {
       }),
     });
     const signOutRes = await rawSignOutRes.json();
-    console.log(signOutRes);
     this.resetData();
     return signOutRes;
   }
@@ -303,7 +296,6 @@ class Auth {
       }),
     });
     const refreshTokenRes = await rawRefreshTokenRes.json();
-    console.log(refreshTokenRes);
     if (refreshTokenRes.status === 400) {
       throw {
         code: refreshTokenRes.__type,
@@ -342,7 +334,6 @@ class Auth {
       }),
     });
     const anonymousSignInRes = await rawAnonymousSignInRes.json();
-    console.log(anonymousSignInRes);
     if (anonymousSignInRes.status === 400) {
       throw {
         code: anonymousSignInRes.__type,

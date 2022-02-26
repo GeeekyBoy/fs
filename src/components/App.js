@@ -9,12 +9,12 @@ import AuthFlow from "./AuthFlow";
 import Router from "./Router";
 
 const routes = {
-  "/login": AuthFlow,
-  "/signup": AuthFlow,
-  "/forgot-password": AuthFlow,
-  "/local/:projectPermalink": Home,
-  "/:username/:projectPermalink/:taskPermalink": Home,
-  "/:username/:projectPermalink": Home,
+  "/login/*": AuthFlow,
+  "/signup/*": AuthFlow,
+  "/forgot-password/*": AuthFlow,
+  "/local/:projectPermalink/*": Home,
+  "/:username/:projectPermalink/:taskPermalink/*": Home,
+  "/:username/:projectPermalink/*": Home,
   "/": Home,
 }
 

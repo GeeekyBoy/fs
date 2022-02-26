@@ -49,7 +49,6 @@ class PubSub {
         );
         this.ws.onopen = () => resolve();
         this.ws.onmessage = (event) => {
-          console.log("WebSocket message", event.data);
           const data = JSON.parse(event.data);
           if (data.id) {
             const { id, type } = data;
@@ -70,7 +69,7 @@ class PubSub {
         };
         this.ws.onclose = () => (this.ws = null);
         this.ws.onerror = (event) => {
-          console.log("WebSocket error", event);
+          console.error("WebSocket error", event);
           reject(event);
         };
       })();
@@ -91,7 +90,6 @@ class PubSub {
       type: "start",
     };
     this.ws.send(JSON.stringify(dataToSend));
-    console.log("hello");
     this.subscriptions[subscriptionId] = callback;
     return {
       id: subscriptionId,

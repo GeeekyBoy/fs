@@ -135,7 +135,7 @@ const NewAccount = () => {
       setCurrStep(1)
       setIsBusy(false)
     } catch (error) {
-      console.log('error signing in', error);
+      console.error('error signing in', error);
       switch(error.code) {
         case "UsernameExistsException":
           setUsernameError("This username is taken!")
@@ -158,7 +158,7 @@ const NewAccount = () => {
       cacheController.resetCache(true)
       navigate("/");
     } catch (error) {
-      console.log('error signing in', error);
+      console.error('error signing in', error);
       switch (error.code) {
         case "CodeMismatchException":
           setVerificationCodeError("Code is incorrect. Please check the code sent to your email and try again.")

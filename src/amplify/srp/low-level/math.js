@@ -18,7 +18,7 @@ export const u = async ({ A, B }) =>
   hexToBigInt(await hashHex(padHex(A) + padHex(B)));
 
 export const S = async ({ u, a, x, B, k }) =>
-  modPow(B.subtract(modPow(g, x, N).multiply(k)), a + u * x, N);
+  modPow(B.subtract(modPow(g, x, N).multiply(k)), BigInt(u).multiply(x).add(a), N);
 
 export const x = async (salt, groupId, userIdForSrp, password) =>
   hexToBigInt(

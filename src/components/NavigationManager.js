@@ -21,7 +21,6 @@ const NavigationManager = () => {
   const userState = useSelector(state => state.user.state)
 
   useEffect(() => {
-    console.log(routeParams);
     (async () => {
     if (routeParams) {
       const {

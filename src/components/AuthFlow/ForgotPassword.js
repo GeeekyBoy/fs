@@ -26,7 +26,7 @@ const ForgotPassword = () => {
       setCurrStep(2)
       setIsBusy(false)
     } catch (error) {
-      console.log('error signing in', error);
+      console.error('error signing in', error);
       switch (error.code) {
         case "InvalidParameterException":
           setCurrStep(1)
@@ -51,7 +51,7 @@ const ForgotPassword = () => {
       setCurrStep(2)
       setIsBusy(false)
     } catch (error) {
-      console.log('error signing in', error);
+      console.error('error signing in', error);
       switch (error.code) {
         case "CodeMismatchException":
           setVerificationCodeError("Code is incorrect. Please check the code sent to your email and try again.")
@@ -82,7 +82,7 @@ const ForgotPassword = () => {
       await Auth.signIn(username, newPassword)
       navigate("/");
     } catch (error) {
-      console.log('error signing in', error);
+      console.error('error signing in', error);
       switch (error.code) {
         case "CodeMismatchException":
           setVerificationCodeError("Code is incorrect. Please check the code sent to your email and try again.")
