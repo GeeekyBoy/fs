@@ -20,8 +20,10 @@ const Notifications = () => {
     setAnim(1)
   }
   const handleAnimationEnd = () => {
-    dispatch(notificationsActions.dismiss(notifications.pushed[0]?.id))
-    setAnim(0)
+    if (anim === 1) {
+      dispatch(notificationsActions.dismiss(notifications.pushed[0]?.id))
+      setAnim(0)
+    }
   }
   useEffect(() => {
     clearTimeout(dismissTimer.current)
@@ -33,7 +35,7 @@ const Notifications = () => {
     <div className={styles.NotificationsContainer}>
       {notifications.pushed[0] && (
         <Notification
-          key={notifications.pushed[0]}
+          key={notifications.pushed[0].id}
           notificationData={notifications.pushed[0]}
           onOpen={navigate}
           onDismiss={dismissNotification}

@@ -12,7 +12,7 @@ const Notification = (props) => {
     onAnimationEnd,
     notificationData,
     senderData,
-    class: className,
+    className,
     style
   } = props
   const openLink = (link) => {
