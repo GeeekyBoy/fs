@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from "react"
-import styles from "./Owned.module.scss";
 import {
   closestCenter,
   DndContext,
@@ -25,6 +24,7 @@ import ProjectItem from "./ProjectItem"
 import parseLinkedList from "../../../utils/parseLinkedList"
 import filterObj from "../../../utils/filterObj";
 import { ReactComponent as NoOwnedIllustartion } from "../../../assets/undraw_businessman_re_mlee.svg"
+import Illustration from "../../UI/Illustration";
 
 const Sortable = (props) => {
 
@@ -77,13 +77,9 @@ const Sortable = (props) => {
       }}
       modifiers={[restrictToVerticalAxis, restrictToFirstScrollableAncestor]}
     >
-      <div>
-        <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          <div>
-            {children}
-          </div>
-        </SortableContext>
-      </div>
+      <SortableContext items={items} strategy={verticalListSortingStrategy}>
+        {children}
+      </SortableContext>
     </DndContext>
   );
 }
@@ -170,12 +166,11 @@ const Owned = () => {
       ))}
     </Sortable>
   ) : (
-    <div className={styles.NoOwnedProjects}>
-      <NoOwnedIllustartion />
-      <span>
-        No Projects Owned By You
-      </span>
-    </div>
+    <Illustration
+      illustration={NoOwnedIllustartion}
+      title="No Projects Owned By You"
+      secondary={true}
+    />
   );  
 }
 

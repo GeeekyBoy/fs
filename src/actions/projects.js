@@ -1,11 +1,11 @@
 import { listOwnedProjects, listAssignedProjects, listWatchedProjects } from "../graphql/queries"
 import * as appActions from "./app"
-import * as observersActions from "./observers"
 import * as cacheController from "../controllers/cache"
 import { AuthState } from "../constants";
 import prepareProjectToBeSent from "../utils/prepareProjectToBeSent";
 import { navigate } from "../components/Router"
 import API from "../amplify/API"
+import PubSub from "../amplify/PubSub";
 
 export const CREATE_PROJECT = "CREATE_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
@@ -73,7 +73,7 @@ export const handleCreateProject = (projectState) => (dispatch, getState) => {
           isVirtual: false
         }))
         if (getState().app.selectedProject === projectState.id) {
-          dispatch(observersActions.handleSetTasksObservers(projectState.id))
+          PubSub.subscribeTopic("tasks", incoming.data.createProject.id)
         }
       },
       error: () => {
@@ -159,7 +159,7 @@ export const handleFetchAssignedProjects = (isSync = false) => async (dispatch, 
       const fetchedAssignedProjects = res.data.listAssignedProjects.items
       dispatch(fetchProjects(fetchedAssignedProjects, ASSIGNED))
       for (const fetchedAssignedProject of fetchedAssignedProjects) {
-        await dispatch(observersActions.handleSetProjectObservers(fetchedAssignedProject.id))
+        PubSub.subscribeTopic("project", fetchedAssignedProject.id)
       }
     } catch(err) {
       if (err.errors.message === 'Network Error') {
@@ -181,7 +181,7 @@ export const handleFetchWatchedProjects = (isSync = false) => async (dispatch, g
       const fetchedWatchedProjects = res.data.listWatchedProjects.items
       dispatch(fetchProjects(fetchedWatchedProjects, WATCHED))
       for (const fetchedWatchedProject of fetchedWatchedProjects) {
-        await dispatch(observersActions.handleSetProjectObservers(fetchedWatchedProject.id))
+        PubSub.subscribeTopic("project", fetchedWatchedProject.id)
       }
     } catch(err) {
       if (err.errors.message === 'Network Error') {

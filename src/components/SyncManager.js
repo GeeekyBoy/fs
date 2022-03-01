@@ -5,7 +5,6 @@ import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as userActions from "../actions/user"
 import * as usersActions from "../actions/users"
-import * as observersActions from "../actions/observers"
 import * as collaborationActions from "../actions/collaboration"
 import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
@@ -13,8 +12,9 @@ import { panelPages, AuthState } from '../constants';
 import store from "../store";
 import { navigate, useRouterNoUpdates } from "./Router"
 import API from "../amplify/API"
+import PubSub from "../amplify/PubSub"
 
-const SyncManager = (props) => {
+const SyncManager = () => {
   const [isInitial, setIsInitial] = useState(true)
   const ws = useRef(null)
   const { routeParams } = useRouterNoUpdates();
@@ -33,12 +33,7 @@ const SyncManager = (props) => {
       } else if (isOffline) {
         dispatch(appActions.setSynced(false))
         dispatch(usersActions.addCachedUsers(cacheController.getUsers()))
-        dispatch(observersActions.handleClearNotificationsObservers())
-        dispatch(observersActions.handleClearUserObservers())
-        dispatch(observersActions.handleClearOwnedProjectsObservers())
-        dispatch(observersActions.handleClearProjectObservers())
-        dispatch(observersActions.handleClearTasksObservers())
-        dispatch(observersActions.handleClearCommentsObservers())
+        PubSub.unsubscribeAll()
       } else {
         (async () => {
           const currUser = await dispatch(userActions.handleFetchUser())
@@ -49,7 +44,7 @@ const SyncManager = (props) => {
               await dispatch(projectsActions.handleFetchOwnedProjects(true))
               await dispatch(projectsActions.handleFetchAssignedProjects(true))
               const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))
-              await dispatch(observersActions.handleSetOwnedProjectsObservers())
+              PubSub.subscribe("ownedProjects")
               let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
               if (!reqProject) {
                 try {
@@ -82,7 +77,7 @@ const SyncManager = (props) => {
             await dispatch(projectsActions.handleFetchOwnedProjects(true))
             await dispatch(projectsActions.handleFetchAssignedProjects(true))
             const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))
-            await dispatch(observersActions.handleSetOwnedProjectsObservers())
+            PubSub.subscribe("ownedProjects")
             const firstProject = Object.values(projects).filter(x => !x.prevProject && x.isOwned)?.[0]
             if (firstProject) {
               dispatch(appActions.handleSetProject(firstProject.id, false))

@@ -1,9 +1,9 @@
 import { panelPages, AuthState } from "../constants"
 import * as tasksActions from "./tasks"
-import * as observersActions from "./observers"
 import * as collaborationActions from "./collaboration"
 import * as commentsActions from "./comments"
 import { navigate } from "../components/Router"
+import PubSub from "../amplify/PubSub"
 
 export const SET_PROJECT = "SET_PROJECT";
 export const SET_TASK = "SET_TASK";
@@ -93,7 +93,7 @@ export const setNavigate = (navigate) => ({
 export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getState) => {
   const { user, app, projects } = getState()
   if (app.selectedProject !== id) {
-    dispatch(observersActions.handleClearTasksObservers())
+    PubSub.unsubscribeTopic("tasks")
     dispatch(handleSetTask(null, shouldChangeURL));
     dispatch(tasksActions.emptyTasks());
     if (id) {
@@ -113,7 +113,7 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
           if (user.state === AuthState.SignedIn) {
             dispatch(collaborationActions.handleJoinProject(id))
           }
-          dispatch(observersActions.handleSetTasksObservers(id))
+          PubSub.subscribeTopic("tasks", id)
         }
       }
     } else {
@@ -127,7 +127,7 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
 
 export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState) => {
   const { user, projects, tasks, app } = getState()
-  dispatch(observersActions.handleClearCommentsObservers())
+  PubSub.unsubscribeTopic("comments")
   dispatch(commentsActions.emptyComments())
   dispatch(setProjectTitle(false))
   if (id !== app.selectedTask) dispatch(setCommand(""))
@@ -170,7 +170,7 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
           action: "FOCUS_TASK",
           taskID: id
         }))
-        dispatch(observersActions.handleSetCommentsObservers(id))
+        PubSub.subscribeTopic("comments", id)
       }
     }
   }

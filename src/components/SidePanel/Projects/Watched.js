@@ -1,11 +1,11 @@
 import React, { Fragment, useMemo } from "react";
-import { connect } from "react-redux";
-import styles from "./Watched.module.scss";
+import { useSelector } from "react-redux";
 import ProjectItem from "./ProjectItem";
 import { ReactComponent as NoWatchedIllustartion } from "../../../assets/undraw_Surveillance_re_8tkl.svg";
+import Illustration from "../../UI/Illustration";
 
 const Projects = (props) => {
-  const { projects } = props;
+  const projects = useSelector(state => state.projects);
   const getWatchedProjects = (projects) => {
     return Object.values(projects).filter((x) => x.isWatched);
   };
@@ -20,13 +20,12 @@ const Projects = (props) => {
       </Fragment>
     ))
   ) : (
-    <div className={styles.NoWatchedProjects}>
-      <NoWatchedIllustartion />
-      <span>No Projects Watched By You</span>
-    </div>
+    <Illustration
+      illustration={NoWatchedIllustartion}
+      title="No Projects Watched By You"
+      secondary={true}
+    />
   );
 };
 
-export default connect((state) => ({
-  projects: state.projects,
-}))(Projects);
+export default Projects;

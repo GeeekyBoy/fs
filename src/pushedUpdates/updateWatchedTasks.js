@@ -1,7 +1,7 @@
-import * as observersActions from "../actions/observers";
 import * as projectsActions from "../actions/projects"
 import API from "../amplify/API";
 import * as queries from "../graphql/queries"
+import PubSub from "../amplify/PubSub";
 
 const updateWatchedTasks = async (dispatch, getState, pushedUpdate) => {
   const { watchedTasks } = pushedUpdate
@@ -12,7 +12,7 @@ const updateWatchedTasks = async (dispatch, getState, pushedUpdate) => {
   const unwatchedProjects = currWatchedProjects.filter(x => !watchedProjects.includes(x));
   for (const unwatchedProject of unwatchedProjects) {
     if (!(projects[unwatchedProject].isAssigned || projects[unwatchedProject].isTemp)) {
-      dispatch(observersActions.handleClearProjectObservers(unwatchedProject))
+      PubSub.unsubscribeTopic("project", unwatchedProject)
     }
     dispatch(projectsActions.removeProject(unwatchedProject, "watched"))
   }
@@ -27,7 +27,7 @@ const updateWatchedTasks = async (dispatch, getState, pushedUpdate) => {
         })).data.getProjectByID
         if (newWatchedProjectData) {
           dispatch(projectsActions.createProject(newWatchedProjectData, "watched"))
-          await dispatch(observersActions.handleSetProjectObservers(newWatchedProject))
+          PubSub.subscribeTopic("project", newWatchedProject)
         }
       } catch (err) {
         console.error(err)

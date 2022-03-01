@@ -1,6 +1,6 @@
 import padHex from "../../util/padHex.js";
 import { hexToUint8, hexToBigInt } from "../../util/converters.js";
-import * as SRP from "../low-level/index.js";
+import * as SRP from "../index.js";
 import getTimestamp from "../../util/getTimestamp.js";
 import computeKey from "./computeKey.js";
 import getSecret from "./getSecret.js";

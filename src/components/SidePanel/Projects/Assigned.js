@@ -1,11 +1,11 @@
 import React, { Fragment, useMemo } from "react";
-import { connect } from "react-redux";
-import styles from "./Assigned.module.scss";
+import { useSelector } from "react-redux";
 import ProjectItem from "./ProjectItem";
 import { ReactComponent as NoAssignedIllustartion } from "../../../assets/undraw_Surveillance_re_8tkl.svg";
+import Illustration from "../../UI/Illustration";
 
-const Projects = (props) => {
-  const { projects } = props;
+const Projects = () => {
+  const projects = useSelector(state => state.projects);
   const getAssignedProjects = (projects) => {
     return Object.values(projects).filter((x) => x.isAssigned);
   };
@@ -20,13 +20,12 @@ const Projects = (props) => {
       </Fragment>
     ))
   ) : (
-    <div className={styles.NoAssignedProjects}>
-      <NoAssignedIllustartion />
-      <span>No Projects Assigned To You</span>
-    </div>
+    <Illustration
+      illustration={NoAssignedIllustartion}
+      title="No Projects Assigned To You"
+      secondary={true}
+    />
   );
 };
 
-export default connect((state) => ({
-  projects: state.projects,
-}))(Projects);
+export default Projects;

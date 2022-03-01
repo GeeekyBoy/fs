@@ -7,7 +7,6 @@ import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as userActions from "../actions/user"
 import * as usersActions from "../actions/users"
-import * as observersActions from "../actions/observers"
 import * as collaborationActions from "../actions/collaboration"
 import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
@@ -17,6 +16,7 @@ import uploadLocal from "../utils/uploadLocal";
 import store from "../store";
 import { navigate, useRouterNoUpdates } from "./Router"
 import API from "../amplify/API"
+import PubSub from "../amplify/PubSub"
 
 const Loading = (props) => {
   const { onFinish } = props
@@ -93,7 +93,7 @@ const Loading = (props) => {
         setLoadingMsg("We Are Fetching Projects Watched By You")
         const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
         setProgressValue(progressValue + 4)
-        await dispatch(observersActions.handleSetOwnedProjectsObservers())
+        PubSub.subscribe("ownedProjects")
         let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
         if (!reqProject) {
           try {
@@ -136,7 +136,7 @@ const Loading = (props) => {
           setLoadingMsg("We Are Fetching Projects Watched By You")
           const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
           setProgressValue(progressValue + 3)
-          await dispatch(observersActions.handleSetOwnedProjectsObservers())
+          PubSub.subscribe("ownedProjects")
           const firstProject = Object.values(projects).filter(x => !x.prevProject && x.isOwned)?.[0]
           if (firstProject) {
             dispatch(appActions.handleSetProject(firstProject.id, false))

@@ -5,11 +5,11 @@ import * as statusActions from "./status"
 import * as projectsActions from "./projects"
 import * as usersActions from "./users"
 import * as commentsActions from "./comments"
-import * as observersActions from "./observers"
 import * as cacheController from "../controllers/cache"
 import { READY, LOADING } from "../constants";
 import prepareTaskToBeSent from "../utils/prepareTaskToBeSent";
 import API from '../amplify/API';
+import PubSub from '../amplify/PubSub';
 
 export const CREATE_TASK = "CREATE_TASK";
 export const UPDATE_TASK = "UPDATE_TASK";
@@ -73,7 +73,7 @@ export const handleCreateTask = (taskState) => (dispatch, getState) => {
         }))
         if (getState().app.selectedTask === taskState.id) {
           dispatch(commentsActions.handleFetchComments(taskState.id))
-          dispatch(observersActions.handleSetCommentsObservers(taskState.id))
+          PubSub.subscribeTopic("comments", taskState.id)
         }
       },
       error: () => {

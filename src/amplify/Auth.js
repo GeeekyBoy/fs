@@ -1,6 +1,6 @@
 import awsconfig from "../aws-exports";
-import * as SRP from "./srp/low-level/index";
-import calculateClaimSig from "./srp/franken-srp/calculateClaimSig";
+import * as SRP from "./srp/index.js";
+import calculateClaimSig from "./srp/signing/calculateClaimSig";
 import { bigIntToHex } from "./util/converters";
 import * as cookies from "../controllers/cookies";
 import decodeJwt from "../utils/decodeJwt";
@@ -45,13 +45,13 @@ class Auth {
       family_name: decodedIdToken.family_name,
       email: decodedIdToken.email,
     };
-    cookies.setCookie("accessToken", this.accessToken);
+    cookies.setCookie("accessToken", this.accessToken, this.expiresAt);
     cookies.setCookie("idToken", this.idToken, this.expiresAt);
     if (!refreshed) {
       cookies.setCookie(
         "refreshToken",
         this.refreshToken,
-        decodedIdToken.iat * 1000 + 3600 * 24 * 30
+        decodedIdToken.iat * 1000 + 3600 * 24 * 30 * 1000
       );
     }
   }

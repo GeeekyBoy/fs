@@ -1,11 +1,11 @@
 import { AuthState } from '../constants';
 import getGravatar from '../utils/getGravatar';
-import * as observersActions from "./observers"
 import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
 import * as notificationsActions from "./notifications"
 import Auth from '../amplify/Auth';
 import API from '../amplify/API';
+import PubSub from '../amplify/PubSub';
 
 export const SET_STATE = "SET_STATE";
 export const SET_DATA = "SET_DATA";
@@ -28,13 +28,13 @@ const fetchCachedUser = (user) => ({
 
 export const handleSetState = (userState) => (dispatch) => {
   if (userState !== AuthState.SignedIn) {
-    dispatch(observersActions.handleClearUserObservers())
+    PubSub.unsubscribeTopic("user")
   }
   dispatch(setState(userState))
   if (userState === AuthState.SignedIn) {
-    dispatch(observersActions.handleSetUserObservers())
+    PubSub.subscribeTopic("user")
     dispatch(notificationsActions.handleFetchNotifications())
-    dispatch(observersActions.handleSetNotificationsObservers())
+    PubSub.subscribeTopic("notifications")
   }
 }
 

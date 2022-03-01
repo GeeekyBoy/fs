@@ -39,12 +39,12 @@ const ProjectItem = (props) => {
       pendingCount={project.pendingCount}
       doneCount={project.doneCount}
       createdAt={project.createdAt}
-      readOnly={true}
+      readOnly={readOnly}
       onShare={shareProject}
       onRemove={removeProject}
       onSelect={selectProject}
       selected={selectedProject === project.id}
-      {...listeners}
+      listeners={listeners}
     />
   );
 };

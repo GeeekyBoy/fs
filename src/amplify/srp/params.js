@@ -1,4 +1,4 @@
-import { hexToBigInt } from "../../util/converters.js";
+import { hexToBigInt } from "../util/converters.js";
 
 export const N = hexToBigInt(
   `

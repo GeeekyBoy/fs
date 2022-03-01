@@ -1,6 +1,8 @@
 import awsconfig from "../aws-exports";
 import Auth from "./Auth";
 import signAwsReq from "./signAwsReq";
+import { getTopic } from "./topicFactory"
+import * as subscriptionsGraphQL from "../graphql/subscriptions";
 
 class PubSub {
   constructor() {
@@ -46,7 +48,7 @@ class PubSub {
       if (this.reqQueue[0][1] === 1) {
         const subscription = this.subscriptions[subscriptionId];
         const body = JSON.stringify({
-          query: subscription.query,
+          query: subscriptionsGraphQL[subscription.type],
           variables: subscription.variables,
         });
         const dataToSend = {
@@ -123,9 +125,10 @@ class PubSub {
   }
   async subscribe(template) {
     this.subscriptions[template.id] = {
-      query: template.query,
+      type: template.type,
       variables: template.variables,
       topic: template.topic,
+      variant: template.variant,
       next: template.next,
       error: template.error,
       startAck: false,
@@ -135,15 +138,31 @@ class PubSub {
       this.sendNextReq();
     }
   }
-  unsubscribe(topic) {
+  async subscribeTopic(topic, variant = null) {
+    const topicSubscriptions = getTopic(topic, variant)
+    for (const subscription of topicSubscriptions) {
+      this.subscribe(subscription);
+    }
+  }
+  unsubscribe(subscriptionId) {
+    this.subscriptions[subscriptionId].startAck = false;
+    this.reqQueue.push([subscriptionId, 0]);
+    if (this.reqQueue.length === 1) {
+      this.sendNextReq();
+    }
+  }
+  unsubscribeTopic(topic, variant = null) {
     for (const subscriptionId in this.subscriptions) {
       if (this.subscriptions[subscriptionId].topic === topic) {
-        this.subscriptions[subscriptionId].startAck = false;
-        this.reqQueue.push([subscriptionId, 0]);
-        if (this.reqQueue.length === 1) {
-          this.sendNextReq();
+        if (this.subscriptions[subscriptionId].variant === variant) {
+          this.unsubscribe(subscriptionId);
         }
       }
+    }
+  }
+  unsubscribeAll() {
+    for (const subscriptionId in this.subscriptions) {
+      this.unsubscribe(subscriptionId);
     }
   }
 }

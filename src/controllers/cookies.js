@@ -11,7 +11,7 @@ export const getCookie = (key) => {
   return null;
 };
 
-export const setCookie = (key, value, expires) => { 
+export const setCookie = (key, value, expires) => {
   document.cookie = `${key}=${value}; path=/; expires=${new Date(expires).toUTCString()}`
 }
 

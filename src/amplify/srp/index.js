@@ -1,11 +1,11 @@
 import BigInt from "big-integer";
-import { getRandomValues } from "../../util/crypto.js";
-import padHex from "../../util/padHex.js";
-import modPow from "../../util/modPow.js";
-import { hexToBigInt, uint8ToHex, bigIntToHex } from "../../util/converters.js";
+import { getRandomValues } from "../util/crypto.js";
+import padHex from "../util/padHex.js";
+import modPow from "../util/modPow.js";
+import { hexToBigInt, uint8ToHex, bigIntToHex } from "../util/converters.js";
 
 import { N, g } from "./params.js";
-import { hashHex, hashUtf8 } from "./_helpers.js";
+import { hashHex, hashUtf8 } from "../util/hashing.js";
 
 export const aCreate = async () => hexToBigInt(uint8ToHex(getRandomValues(32)));
 
