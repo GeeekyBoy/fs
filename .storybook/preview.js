@@ -1,4 +1,4 @@
-import "../src/index.scss";
+import "../src/scss/index.scss";
 import "simplebar/dist/simplebar.min.css";
 
 export const parameters = {
