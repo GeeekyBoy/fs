@@ -93,7 +93,7 @@ const Loading = (props) => {
         setLoadingMsg("We Are Fetching Projects Watched By You")
         const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
         setProgressValue(progressValue + 4)
-        PubSub.subscribe("ownedProjects")
+        PubSub.subscribeTopic("ownedProjects")
         let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
         if (!reqProject) {
           try {
@@ -136,7 +136,7 @@ const Loading = (props) => {
           setLoadingMsg("We Are Fetching Projects Watched By You")
           const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
           setProgressValue(progressValue + 3)
-          PubSub.subscribe("ownedProjects")
+          PubSub.subscribeTopic("ownedProjects")
           const firstProject = Object.values(projects).filter(x => !x.prevProject && x.isOwned)?.[0]
           if (firstProject) {
             dispatch(appActions.handleSetProject(firstProject.id, false))

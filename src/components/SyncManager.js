@@ -44,7 +44,7 @@ const SyncManager = () => {
               await dispatch(projectsActions.handleFetchOwnedProjects(true))
               await dispatch(projectsActions.handleFetchAssignedProjects(true))
               const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))
-              PubSub.subscribe("ownedProjects")
+              PubSub.subscribeTopic("ownedProjects")
               let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
               if (!reqProject) {
                 try {
@@ -77,7 +77,7 @@ const SyncManager = () => {
             await dispatch(projectsActions.handleFetchOwnedProjects(true))
             await dispatch(projectsActions.handleFetchAssignedProjects(true))
             const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))
-            PubSub.subscribe("ownedProjects")
+            PubSub.subscribeTopic("ownedProjects")
             const firstProject = Object.values(projects).filter(x => !x.prevProject && x.isOwned)?.[0]
             if (firstProject) {
               dispatch(appActions.handleSetProject(firstProject.id, false))
