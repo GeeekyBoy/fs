@@ -4,10 +4,10 @@ import * as queries from "../graphql/queries"
 import PubSub from "../amplify/PubSub";
 
 const updateAssignedTasks = async (dispatch, getState, pushedUpdate) => {
-  const { watchedTasks } = pushedUpdate
+  const { assignedTasks } = pushedUpdate
   const { projects } = getState()
   const currAssignedProjects = Object.values(projects).filter(x => x.isAssigned).map(x => x.id)
-  const assignedProjects = [...new Set(watchedTasks.map(taskPath => taskPath.match(/(.*)\/.*/)[1]))]
+  const assignedProjects = [...new Set(assignedTasks.map(taskPath => taskPath.match(/(.*)\/.*/)[1]))]
   const newAssignedProjects = assignedProjects.filter(x => !currAssignedProjects.includes(x))
   const unassignedProjects = currAssignedProjects.filter(x => !assignedProjects.includes(x));
   for (const unassignedProject of unassignedProjects) {

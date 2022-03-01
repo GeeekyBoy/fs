@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect, lazy } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Notifications.module.scss"
 import * as notificationsActions from "../actions/notifications"
 import { navigate } from './Router';
-const Notification = lazy(() => import('./UI/Notification'));
+import Notification from './UI/Notification';
 
 const Notifications = () => {
   const dismissTimer = useRef(null)

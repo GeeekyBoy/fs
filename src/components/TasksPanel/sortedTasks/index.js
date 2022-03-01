@@ -1,4 +1,3 @@
-import { lazy } from "react";
 import BY_DEFAULT from "./ByDefault";
 import BY_DUE from "./ByDue";
 import BY_STATUS from "./ByStatus";

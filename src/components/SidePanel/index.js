@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState, lazy } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from "react-redux";
 import "draft-js/dist/Draft.css";
 import SidPanel from "../UI/SidePanel";

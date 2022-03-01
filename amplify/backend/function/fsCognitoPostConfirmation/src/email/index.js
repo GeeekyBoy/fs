@@ -14,7 +14,7 @@ const templates = {
 }
 
 const getContent = (templateID, entities) => {
-    const result = templates[templateID]
+    const result = {...templates[templateID]}
     const entitiesKeyValuePairs = Object.entries(entities)
     for (const entitiesKeyValuePair of entitiesKeyValuePairs) {
         const replacementRegex = new RegExp(`\\[${entitiesKeyValuePair[0]}\\]`, "g")

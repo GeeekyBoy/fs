@@ -1,4 +1,4 @@
-import React, { Suspense, useState, lazy } from 'react';
+import React, { useState } from 'react';
 import styles from "./index.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import parseLinkedList from "../../utils/parseLinkedList";
