@@ -19,5 +19,5 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   margin: 0 30px;
-  @include themify(background-color, "color-background-fill-color-solid-background-base");
+  background-color: var(--color-background-fill-color-solid-background-base);
 }

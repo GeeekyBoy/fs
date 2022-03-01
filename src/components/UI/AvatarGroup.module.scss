@@ -8,7 +8,7 @@
   border-radius: 100%;
   border: 2.5px solid;
   transition: border-color 0.2s;
-  @include themify(border-color, "primary");
+  border-color: var(--primary);
 }
 
 .LetterAvatar {
@@ -19,7 +19,7 @@
   line-height: 0;
   border: 2.5px solid;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-  @include themify(color, "primary");
-  @include themify(background-color, "auxiliarySurface");
-  @include themify(border-color, "primary");
+  color: var(--primary);
+  background-color: var(--auxiliarySurface);
+  border-color: var(--primary);
 }

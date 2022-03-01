@@ -10,8 +10,8 @@
     border: 1px solid;
     border-radius: 15px;
     transition: background-color 0.2s, border-color 0.2s;
-    @include themify(border-color, "color-stroke-color-card-stroke-default");
-    @include themify(background-color, "color-background-fill-color-card-background-default");
+    border-color: var(--color-stroke-color-card-stroke-default);
+    background-color: var(--color-background-fill-color-card-background-default);
     @media only screen and (max-width: 768px) {
       padding: 5px;
       border-radius: 0;
@@ -35,7 +35,7 @@
   font-weight: 500;
   font-size: 1.3rem;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
   & > svg {
     cursor: pointer;
   }

@@ -14,7 +14,7 @@
     opacity: 1;
   }
   transition: background-color 0.2s, opacity 0.3s;
-  @include themify(background-color, "color-background-fill-color-layer-default");
+  background-color: var(--color-background-fill-color-layer-default);
   @media only screen and (max-width: 768px) {
     padding: 0px;
     width: 100%;

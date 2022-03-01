@@ -1,7 +1,7 @@
 
 .ModalHeaderBody {
   padding: 20px;
-  @include themify(background-color, "color-background-fill-color-layer-alt");
+  background-color: var(--color-background-fill-color-layer-alt);
 }
 
 .ModalHeader {
@@ -10,7 +10,7 @@
   align-items: center;
   margin-bottom: 15px;
   font-weight: 600;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
 }
 
 .ModalFooter {
@@ -36,13 +36,13 @@
   border-radius: 8px;
   transition: background-color 0.2s, color 0.2s;
   &.primary {
-    @include themify(color, "color-fill-color-text-on-accent-primary");
-    @include themify(background-color, "primary");
+    color: var(--color-fill-color-text-on-accent-primary);
+    background-color: var(--primary);
   }
   &.secondary {
     border: 1px solid;
-    @include themify(border-color, "color-stroke-color-card-stroke-default");
-    @include themify(color, "color-fill-color-text-primary");
-    @include themify(background-color, "color-fill-color-control-default");
+    border-color: var(--color-stroke-color-card-stroke-default);
+    color: var(--color-fill-color-text-primary);
+    background-color: var(--color-fill-color-control-default);
   }
 }

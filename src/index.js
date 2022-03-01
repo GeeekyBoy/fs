@@ -3,7 +3,7 @@ import React, { StrictMode } from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import "./index.scss";
+import "./scss/index.scss";
 import "simplebar/dist/simplebar.min.css";
 import App from "./components/App";
 import { initializeApp } from "firebase/app";

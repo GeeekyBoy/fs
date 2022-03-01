@@ -16,9 +16,9 @@
   overflow: hidden;
   cursor: text;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
   &.placeholder {
-    @include themify(color, "color-fill-color-text-secondary", true);
+    color: var(--color-fill-color-text-secondary) !important;
   }
   @media only screen and (max-width: 768px) {
     padding: 0;
@@ -40,7 +40,7 @@
     border: none;
     outline: none;
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
     &::placeholder {
       color: #c0c0c0;
     }

@@ -1,7 +1,7 @@
 .FileFieldContainer {
   border: 2px dashed;
   padding: 70px 0;
-  @include themify(border-color, "color-fill-color-text-tertiary");
+  border-color: var(--color-fill-color-text-tertiary);
   & > input {
     display: none;
   }
@@ -18,6 +18,6 @@
   }
   & > span:nth-child(2) {
     font-weight: 600;
-    @include themify(color, "color-fill-color-text-secondary");
+    color: var(--color-fill-color-text-secondary);
   }
 }

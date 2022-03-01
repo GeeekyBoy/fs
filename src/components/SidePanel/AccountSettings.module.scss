@@ -23,13 +23,13 @@
     font-size: 1.625rem;
     line-height: 0;
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > span:nth-child(3) {
     font-size: 0.875rem;
     line-height: 0;
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > *:not(:last-child) {
     margin-bottom: 25px;

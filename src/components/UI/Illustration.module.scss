@@ -10,7 +10,7 @@
     width: 360px;
     height: 250px;
     transition: color 0.2s;
-    @include themify(color, "primary");
+    color: var(--primary);
   }
 	& > *:not(:last-child) {
 		margin-bottom: 10px;
@@ -24,7 +24,7 @@
       font-weight: bold;
       font-size: 1.75rem;
       transition: color 0.2s;
-      @include themify(color, "color-fill-color-text-primary");
+      color: var(--color-fill-color-text-primary);
     }
     & > button {
       border-radius: 100000000000000px;
@@ -36,8 +36,8 @@
       font-weight: 600;
       font-size: 1.125rem;
       transition: background-color 0.2s, color 0.2s;
-      @include themify(color, "color-fill-color-text-on-accent-primary");
-      @include themify(background-color, "primary");
+      color: var(--color-fill-color-text-on-accent-primary);
+      background-color: var(--primary);
     }
     & > *:not(:last-child) {
       margin-bottom: 10px;

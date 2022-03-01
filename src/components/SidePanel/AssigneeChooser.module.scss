@@ -8,9 +8,9 @@
   font-size: 0.875rem;
   font-weight: 400;
   transition: opacity 0.3s, background-color 0.2s, color 0.2s;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(color, "color-fill-color-text-primary");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  color: var(--color-fill-color-text-primary);
+  background-color: var(--color-background-fill-color-card-background-default);
   &::placeholder {
     color: #c0c0c0;
   }
@@ -44,16 +44,16 @@
     & > span:nth-child(1) {
       font-weight: bold;
       transition: color 0.2s;
-      @include themify(color, "color-fill-color-text-primary");
+      color: var(--color-fill-color-text-primary);
     }
     & > span:nth-child(2) {
       font-style: italic;
       transition: color 0.2s;
-      @include themify(color, "color-fill-color-text-primary");
+      color: var(--color-fill-color-text-primary);
     }
   }
   &:not(:disabled):hover {
-    @include themify(background-color, "color-fill-color-subtle-secondary");
+    background-color: var(--color-fill-color-subtle-secondary);
   }
   &:disabled {
     cursor: default;

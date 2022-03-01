@@ -27,7 +27,7 @@
   border-radius: 8px;
   border: 2px solid transparent;
   background-color: transparent;
-  @include themify(border-color, "outline");
+  border-color: var(--outline);
   & > label {
     position: absolute;
     top: 8.8px;
@@ -40,11 +40,11 @@
     margin: 2.5px 0 2.5px -3px;
     transform-origin: bottom left;
     transition: transform 150ms cubic-bezier(0.4,0,0.2,1), background-color 0.2s;
-    @include themify(color, "outline");
-    @include themify(background-color, "auxiliarySurface");
+    color: var(--outline);
+    background-color: var(--auxiliarySurface);
   }
   & > span {
-    @include themify(color, "color-fill-color-text-secondary");
+    color: var(--color-fill-color-text-secondary);
   }
   &.focused, &.filled {
     & > label {
@@ -52,9 +52,9 @@
     }
   }
   &.focused {
-    @include themify(border-color, "primary");
+    border-color: var(--primary);
     & > label {
-      @include themify(color, "primary");
+      color: var(--primary);
     }
   }
   &.error {
@@ -90,9 +90,9 @@
   border-radius: 100000000000000px;
   flex-direction: row;
   align-items: center;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(color, "color-fill-color-text-secondary");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  color: var(--color-fill-color-text-secondary);
+  background-color: var(--color-background-fill-color-card-background-default);
   & > span {
     cursor: pointer;
     &:nth-child(1) {
@@ -109,8 +109,8 @@
       align-items: center;
       justify-content: center;
       &:hover {
-        @include themify(background-color, "color-fill-color-text-secondary");
-        @include themify(color, "color-fill-color-text-on-accent-primary");
+        background-color: var(--color-fill-color-text-secondary);
+        color: var(--color-fill-color-text-on-accent-primary);
       }
     }
   }
@@ -136,5 +136,5 @@
   flex: 1;
   z-index: 1;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
 }

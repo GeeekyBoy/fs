@@ -8,7 +8,7 @@
   background-color: transparent;
   transition: background-color 0.2s;
   &.active {
-    @include themify(background-color, "color-fill-color-subtle-secondary");
+    background-color: var(--color-fill-color-subtle-secondary);
   }
   padding: 10px 20px;
   cursor: pointer;
@@ -28,8 +28,8 @@
   flex-direction: row;
   align-items: center;
   transition: background-color 0.2s, color 0.2s;
-  @include themify(color, "primary");
-  @include themify(background-color, "color-fill-color-subtle-secondary");
+  color: var(--primary);
+  background-color: var(--color-fill-color-subtle-secondary);
 }
 
 .NoTags {
@@ -39,5 +39,5 @@
   align-items: center;
   justify-content: center;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
 }

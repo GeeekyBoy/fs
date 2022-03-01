@@ -1,5 +1,3 @@
-@import "./scss/fonts.scss";
-
 * {
   font-family: 'Rubik', sans-serif !important;
   -webkit-tap-highlight-color: transparent;
@@ -11,15 +9,15 @@ html {
 }
 
 .Calendar {
-  @include themify-global(--cl-color-primary, "primary", true);
-  @include themify-global(--cl-color-primary-light, "color-fill-color-subtle-secondary", true);
+  --cl-color-primary: var(--primary) !important;
+  --cl-color-primary-light: var(--color-fill-color-subtle-secondary) !important;
 }
 
 body {
   width: 100vw;
   height: 100%;
   margin: 0;
-  @include themify-global(background-color, "auxiliarySurface", true);
+  background-color: var(--auxiliarySurface);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -34,8 +32,6 @@ label,
   -ms-user-select: none !important;
   user-select: none !important;
 }
-
-
 
 input::selection.noselect {
   color:transparent;

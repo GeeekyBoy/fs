@@ -17,14 +17,14 @@
   position: relative;
   border: 4px solid transparent;
   transition: background-color 0.2s, border-color 0.2s;
-  @include themify(background-color, "primary");
+  background-color: var(--primary);
   transition: background-color 0.3s;
   & * {
     z-index: 2;
   }
   &.selected {
     border: 4px solid;
-    @include themify(border-color, "color-fill-color-text-primary");
+    border-color: var(--color-fill-color-text-primary);
   }
 }
 
@@ -60,7 +60,7 @@
   white-space: nowrap;
   overflow: hidden;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-on-accent-primary");
+  color: var(--color-fill-color-text-on-accent-primary);
 }
 
 .ProjectCardPermalink {
@@ -71,7 +71,7 @@
   white-space: nowrap;
   overflow: hidden;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-on-accent-primary");
+  color: var(--color-fill-color-text-on-accent-primary);
 }
 
 .TasksCount {
@@ -129,7 +129,7 @@
   cursor: pointer;
   padding: 1px 6px;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-on-accent-primary");
+  color: var(--color-fill-color-text-on-accent-primary);
 }
 
 .ProjectCardPermission {
@@ -142,8 +142,8 @@
   z-index: 1;
   & > svg {
     transition: color 0.2s, fill 0.2s;
-    @include themify(color, "color-fill-color-text-on-accent-primary");
-    @include themify(fill, "color-fill-color-text-on-accent-primary");
+    color: var(--color-fill-color-text-on-accent-primary);
+    fill: var(--color-fill-color-text-on-accent-primary);
   }
 }
 
@@ -155,5 +155,5 @@
   white-space: nowrap;
   overflow: hidden;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-on-accent-primary");
+  color: var(--color-fill-color-text-on-accent-primary);
 }

@@ -15,8 +15,8 @@
   width: calc(100% - 12px);
   border-radius: 24px;
   position: relative;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
   & > *:not(:last-child) {
     margin-right: 5px;
   }
@@ -38,11 +38,11 @@
   background-color: transparent;
   cursor: pointer;
   transition: color 0.2s;
-  @include themify(color, "primary");
+  color: var(--primary);
   &.selected {
     cursor: default;
     transition: background-color 0.2s, color 0.2s;
-    @include themify(background-color, "primary");
-    @include themify(color, "color-fill-color-text-on-accent-primary");
+    background-color: var(--primary);
+    color: var(--color-fill-color-text-on-accent-primary);
   }
 }

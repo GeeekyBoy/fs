@@ -7,19 +7,19 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
-  @include themify(background-color, "color-background-fill-color-layer-default");
+  background-color: var(--color-background-fill-color-layer-default);
   & > span:nth-child(1) {
     font-weight: bold;
     font-size: 2.625rem;
     transition: color 0.2s;
-    @include themify(color, "primary");
+    color: var(--primary);
   }
   & > span:nth-child(3) {
     font-weight: bold;
     font-size: 1.125rem;
     text-align: center;
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > div {
     width: 250px;

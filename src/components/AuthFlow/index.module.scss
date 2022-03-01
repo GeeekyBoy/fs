@@ -31,5 +31,5 @@
   padding: 5px;
   z-index: 1;
   cursor: pointer;
-  @include themify(color, "primary");
+  color: var(--primary);
 }

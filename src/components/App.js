@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
 import store from "../store";
@@ -20,6 +20,8 @@ const routes = {
 
 const App = () => {
   const dispatch = useDispatch();
+  const theme = useSelector(state => state.appSettings.theme);
+  const isDarkMode = useSelector(state => state.appSettings.isDarkMode);
 
   const fetchAppSettings = () => {
     const fetchedSettings = window.localStorage.getItem("appSettings");
@@ -61,22 +63,23 @@ const App = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const availColors = {
-  //     "red": "#D20E1E",
-  //     "gold": "#E19D00",
-  //     "orange": "#E05307",
-  //     "green": "#0E6D0E",
-  //     "turquoise": "#009FAA",
-  //     "blue": "#0067C0",
-  //     "pink": "#CD007B",
-  //     "purple": "#4F4DCE",
-  //     "grey": "#586579",
-  //     "black": "#000000",
-  //   }
-  //   document.documentElement.className = appSettings.theme + " " + (appSettings.isDarkMode ? "dark" : "light");
-  //   document.querySelector('meta[name="theme-color"]').setAttribute('content', appSettings.isDarkMode ? "#272727" : availColors[appSettings.theme])
-  // }, [appSettings.theme, appSettings.isDarkMode]);
+  useEffect(() => {
+    const availColors = {
+      "red": "#D20E1E",
+      "gold": "#E19D00",
+      "orange": "#E05307",
+      "green": "#0E6D0E",
+      "turquoise": "#009FAA",
+      "blue": "#0067C0",
+      "pink": "#CD007B",
+      "purple": "#4F4DCE",
+      "grey": "#586579",
+      "black": "#000000",
+    }
+    document.documentElement.className = theme + " " + (isDarkMode ? "dark" : "light");
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', isDarkMode ? "#272727" : availColors[theme])
+  }, [theme, isDarkMode]);
+
   return <Router routes={routes} />;
 };
 

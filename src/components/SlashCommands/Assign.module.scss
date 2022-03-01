@@ -7,7 +7,7 @@
   transition: background-color 0.2s;
   cursor: pointer;
   &.selected {
-    @include themify(background-color, "color-fill-color-subtle-secondary");
+    background-color: var(--color-fill-color-subtle-secondary);
   }
   & > div {
     display: flex;
@@ -16,13 +16,13 @@
       font-weight: 600;
       font-size: 0.875rem;
       transition: color 0.2s;
-      @include themify(color, "color-fill-color-text-primary");
+      color: var(--color-fill-color-text-primary);
     }
     & > span:nth-child(2) {
       font-weight: 400;
       font-size: 0.75rem;
       transition: color 0.2s;
-      @include themify(color, "color-fill-color-text-primary");
+      color: var(--color-fill-color-text-primary);
     }
   }
   & > *:not(:last-child) {
@@ -37,5 +37,5 @@
   align-items: center;
   justify-content: center;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
 }

@@ -8,7 +8,7 @@
     width: max-content;
     font-size: 0.875rem;
     font-weight: 600;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -31,8 +31,8 @@
   cursor: pointer;
   margin-left: 5px;
   border-radius: 8px;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
   & > div {
     display: flex;
     align-items: center;
@@ -43,13 +43,13 @@
     min-height: 32px;
     width: 32px;
     height: 32px;
-    @include themify(color, "color-fill-color-text-on-accent-primary");
-    @include themify(background-color, "primary");
+    color: var(--color-fill-color-text-on-accent-primary);
+    background-color: var(--primary);
   }
   & > span {
     font-weight: 600;
     font-size: 0.875rem;
-    @include themify(color, "primary");
+    color: var(--primary);
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -68,12 +68,12 @@
   border-radius: 8px;
   outline: none;
   height: fit-content;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
   & > span {
     font-weight: 600;
     font-size: 0.875rem;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > button {
     position: relative;
@@ -84,8 +84,8 @@
     font-weight: 600;
     font-size: 0.75rem;
     cursor: pointer;
-    @include themify(color, "color-fill-color-text-on-accent-primary");
-    @include themify(background-color, "primary");
+    color: var(--color-fill-color-text-on-accent-primary);
+    background-color: var(--primary);
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -102,9 +102,9 @@
   border-radius: 8px;
   flex-direction: column;
   align-items: center;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
-  @include themify(color, "color-fill-color-text-primary");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
+  color: var(--color-fill-color-text-primary);
   &:last-child {
     margin-right: 5px;
   }
@@ -145,6 +145,6 @@
   padding: 0;
   border-radius: 100%;
   cursor: pointer;
-  @include themify(color, "color-fill-color-text-on-accent-primary");
-  @include themify(background-color, "primary");
+  color: var(--color-fill-color-text-on-accent-primary);
+  background-color: var(--primary);
 }

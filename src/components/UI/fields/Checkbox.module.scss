@@ -8,7 +8,7 @@
   border: none;
   background-color: transparent;
   width: fit-content;
-  @include themify(border-color, "outline");
+  border-color: var(--outline);
   & > *:not(:last-child) {
     margin-right: 10px;
   }
@@ -18,7 +18,7 @@
     font-size: 0.875rem;
     font-weight: 400;
     cursor: pointer;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   &.disabled {
     opacity: 0.6;
@@ -46,12 +46,12 @@
   padding: 0;
   cursor: pointer;
   transition: border-color 0.2s;
-  @include themify(border-color, "color-stroke-color-control-strong-stroke-default");
-  @include themify(background-color, "color-fill-color-control-alt-secondary");
+  border-color: var(--color-stroke-color-control-strong-stroke-default);
+  background-color: var(--color-fill-color-control-alt-secondary);
   &.checked {
-  @include themify(color, "color-fill-color-text-on-accent-primary");
-    @include themify(border-color, "primary");
-    @include themify(background-color, "primary");
+  color: var(--color-fill-color-text-on-accent-primary);
+    border-color: var(--primary);
+    background-color: var(--primary);
     & > svg * {
       stroke-width: 64px;
     }

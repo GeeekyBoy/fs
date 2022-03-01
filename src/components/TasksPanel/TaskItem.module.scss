@@ -28,12 +28,12 @@
   height: 28px;
   border-radius: 6px;
   & > svg {
-    @include themify(color, "primary");
+    color: var(--primary);
   }
   &:hover {
-    @include themify(background-color, "primary");
+    background-color: var(--primary);
     & > svg {
-      @include themify(color, "color-fill-color-text-on-accent-primary", true);
+      color: var(--color-fill-color-text-on-accent-primary) !important;
     }
   }
 }
@@ -70,7 +70,7 @@
     margin-right: 10px;
   }
   &.focused {
-    @include themify(border-color, "primary", true);
+    border-color: var(--primary) !important;
     & .TaskItemActions {
       opacity: 1;
       width: auto;
@@ -84,8 +84,8 @@
     opacity: 0.5;
   }
   &:not(.focused):not(.dragging):not(.sorting):hover {
-    @include themify(border-color, "color-stroke-color-card-stroke-default");
-    @include themify(background-color, "color-background-fill-color-card-background-secondary");
+    border-color: var(--color-stroke-color-card-stroke-default);
+    background-color: var(--color-background-fill-color-card-background-secondary);
     & .TaskItemActions {
       opacity: 1;
       width: auto;
@@ -149,12 +149,12 @@
   flex: 1;
   text-decoration: none;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
   &.done {
     text-decoration: line-through;
   }
   &.placeholder {
-    @include themify(color, "color-fill-color-text-secondary", true);
+    color: var(--color-fill-color-text-secondary) !important;
   }
 }
 
@@ -169,9 +169,9 @@
     margin: 0;
     font-weight: 400;
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
     &::placeholder {
-      @include themify(color, "color-fill-color-text-secondary", true);
+      color: var(--color-fill-color-text-secondary) !important;
     }
   }
 }
@@ -187,8 +187,8 @@
   border-radius: 10px;
   padding: 3px 10px;
   transition: background-color 0.2s, color 0.2s;
-  @include themify(color, "color-fill-color-text-on-accent-primary");
-  @include themify(background-color, "primary");
+  color: var(--color-fill-color-text-on-accent-primary);
+  background-color: var(--primary);
   @media only screen and (max-width: 768px) {
     width: 48px;
     font-size: 0.5rem;
@@ -209,7 +209,7 @@
   height: 30px;
   & > svg {
     transition: fill 0.2s;
-    @include themify(fill, "color-fill-color-text-primary");
+    fill: var(--color-fill-color-text-primary);
   }
 }
 
@@ -253,12 +253,12 @@
   padding: 2.5px;
   cursor: pointer;
   transition: border-color 0.2s;
-  @include themify(border-color, "color-stroke-color-control-strong-stroke-default");
-  @include themify(background-color, "color-fill-color-control-alt-secondary");
+  border-color: var(--color-stroke-color-control-strong-stroke-default);
+  background-color: var(--color-fill-color-control-alt-secondary);
   &.done {
-    @include themify(color, "color-fill-color-text-on-accent-primary");
-    @include themify(border-color, "primary");
-    @include themify(background-color, "primary");
+    color: var(--color-fill-color-text-on-accent-primary);
+    border-color: var(--primary);
+    background-color: var(--primary);
     & > svg * {
       stroke-width: 64px;
     }

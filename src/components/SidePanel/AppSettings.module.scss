@@ -39,10 +39,10 @@
     font-size: 0.875rem;
     font-weight: 600;
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
     &.AppSettingSectionHeader {
       margin-top: 5px;
-      @include themify(color, "color-fill-color-text-secondary");
+      color: var(--color-fill-color-text-secondary);
     }
   }
 }

@@ -25,10 +25,10 @@
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 400;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
   & > label {
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
     margin-bottom: 0;
     width: max-content;
     font-size: 0.875rem;
@@ -53,14 +53,14 @@
   border: 1px solid transparent;
   transition: background-color 0.2s ease-in-out;
   cursor: pointer;
-  @include themify(background-color, "color-fill-color-control-alt-secondary");
-  @include themify(border-color, "color-stroke-color-control-strong-stroke-default");
+  background-color: var(--color-fill-color-control-alt-secondary);
+  border-color: var(--color-stroke-color-control-strong-stroke-default);
   &.selected {
-    @include themify(border-color, "primary");
-    @include themify(background-color, "primary");
+    border-color: var(--primary);
+    background-color: var(--primary);
     & > div {
       transform: translateX(calc(100% + 7.5px));
-      @include themify(background-color, "color-fill-color-text-on-accent-primary");
+      background-color: var(--color-fill-color-text-on-accent-primary);
     }
   }
   & > div {
@@ -69,6 +69,6 @@
     border-radius: 100%;
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
-    @include themify(background-color, "color-fill-color-text-secondary");
+    background-color: var(--color-fill-color-text-secondary);
   }
 }

@@ -6,8 +6,8 @@
   margin-top: -20px;
   margin-left: -40px;
   cursor: pointer;
-  @include themify(color, "color-fill-color-text-on-accent-primary");
-  @include themify(background-color, "primary");
+  color: var(--color-fill-color-text-on-accent-primary);
+  background-color: var(--primary);
   @media only screen and (max-width: 768px) {
     margin: 0;
     width: calc(100% - 40px);

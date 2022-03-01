@@ -10,7 +10,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -33,14 +33,14 @@
   border-radius: 8px;
   text-align: inherit;
   transition: color 0.2s, border-color 0.2s, opacity 0.3s;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
   & > span:nth-child(1) {
     width: inherit;
     font-size: 1.5rem;
     font-weight: 600;
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-secondary");
+    color: var(--color-fill-color-text-secondary);
   }
   & > span:nth-child(2) {
     width: inherit;
@@ -50,12 +50,12 @@
   }
   &.selected {
     cursor: default;
-    @include themify(border-color, "primary", true);
+    border-color: var(--primary) !important;
     & > span:nth-child(1) {
-      @include themify(color, "primary");
+      color: var(--primary);
     }
     & > span:nth-child(2) {
-      @include themify(color, "color-fill-color-text-primary");
+      color: var(--color-fill-color-text-primary);
     }
   }
   &.readOnly {

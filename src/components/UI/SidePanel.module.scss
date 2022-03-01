@@ -92,7 +92,7 @@
   overflow: hidden;
   animation: 0.2s ease-in-out forwards;
   animation-name: closingAnimLeft;
-  @include themify(background-color, "auxiliarySurface");
+  background-color: var(--auxiliarySurface);
   &.opened {
     overflow: auto;
     animation-name: openingAnimLeft;
@@ -100,7 +100,7 @@
   &.right {
     border-left: 1px solid;
     animation-name: closingAnimRight;
-    @include themify(border-color, "color-stroke-color-card-stroke-default");
+    border-color: var(--color-stroke-color-card-stroke-default);
     &.opened {
       animation-name: openingAnimRight;
     }
@@ -108,7 +108,7 @@
 
   &:not(.right) {
     border-right: 1px solid;
-    @include themify(border-color, "color-stroke-color-card-stroke-default");
+    border-color: var(--color-stroke-color-card-stroke-default);
   }
   & > *:not(:last-child) {
     margin-bottom: 25px;
@@ -157,7 +157,7 @@
   font-size: 1.125rem;
   font-weight: 600;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
 }
 
 .SidePanelToolbarAction {
@@ -174,7 +174,7 @@
   height: 34px;
   cursor: pointer;
   transition: color 0.2s;
-  @include themify(color, "primary");
+  color: var(--primary);
   &:disabled {
     cursor: not-allowed;
     color: #cccccc !important;

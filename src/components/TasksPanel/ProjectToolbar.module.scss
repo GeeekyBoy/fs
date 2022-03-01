@@ -32,7 +32,7 @@
   font-size: 0.875rem;
   & > span {
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > div {
     width: 105px;
@@ -55,8 +55,8 @@
   cursor: pointer;
   border-radius: 50px;
   transition: background-color 0.2s, color 0.2s;
-  @include themify(color, "color-fill-color-text-on-accent-primary");
-  @include themify(background-color, "primary");
+  color: var(--color-fill-color-text-on-accent-primary);
+  background-color: var(--primary);
   & > *:not(:last-child) {
     margin-right: 3px;
   }

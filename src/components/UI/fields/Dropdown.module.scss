@@ -13,10 +13,10 @@
   border-radius: 50px;
   padding: 5px 10px;
   cursor: pointer;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
   &.opened {
-    @include themify(border-color, "primary", true);
+    border-color: var(--primary) !important;
   }
   & > input {
     pointer-events: none;
@@ -25,7 +25,7 @@
     font-size: 0.75rem;
     background-color: transparent;
     cursor: pointer;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
 }
 
@@ -39,12 +39,12 @@
   border-radius: 8px;
   z-index: 10;
   box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "auxiliarySurface");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--auxiliarySurface);
   & > span {
     padding: 8px;
     cursor: pointer;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > span:first-child {
     border-radius: 8px 8px 0 0;
@@ -53,10 +53,10 @@
     border-radius: 0 0 8px 8px;
   }
   & > span:hover {
-    @include themify(background-color, "color-fill-color-subtle-secondary");
+    background-color: var(--color-fill-color-subtle-secondary);
   }
   & > span.selected {
-    @include themify(color, "primary");
-    @include themify(background-color, "color-fill-color-subtle-secondary");
+    color: var(--primary);
+    background-color: var(--color-fill-color-subtle-secondary);
   }
 }

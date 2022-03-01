@@ -10,7 +10,7 @@
   width: 40px;
   height: calc(100vh - 60px);
   transition: background-color 0.2s;
-  @include themify(background-color, "auxiliarySurface");
+  background-color: var(--auxiliarySurface);
   @media only screen and (max-width: 768px) {
     padding: 4px 0;
     flex-direction: row;
@@ -21,7 +21,7 @@
     height: 60px;
     border-radius: 0;
     border-top: 1px solid;
-    @include themify(border-top-color, "color-stroke-color-card-stroke-default");
+    border-top-color: var(--color-stroke-color-card-stroke-default);
   }
 }
 
@@ -81,33 +81,33 @@
   font-weight: 400;
   background-color: transparent;
   cursor: pointer;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
   & > svg {
     padding: 2px 0;
     width: 52px;
     border-radius: 50px;
   }
   &:not(.selected):hover {
-    @include themify(background-color, "color-fill-color-subtle-secondary");
+    background-color: var(--color-fill-color-subtle-secondary);
   }
   &.selected:hover {
-    @include themify(background-color, "color-fill-color-subtle-tertiary");
+    background-color: var(--color-fill-color-subtle-tertiary);
   }
   &.selected {
-    @include themify(background-color, "color-fill-color-subtle-secondary");
+    background-color: var(--color-fill-color-subtle-secondary);
   }
   &.LoginBtn {
     width: 46px;
     height: 46px;
     padding: 8px;
     transition: background-color 0.2s;
-    @include themify(background-color, "primary");
-    @include themify(color, "color-fill-color-text-on-accent-primary");
+    background-color: var(--primary);
+    color: var(--color-fill-color-text-on-accent-primary);
     & > svg {
-      @include themify(fill, "color-fill-color-text-on-accent-primary");
+      fill: var(--color-fill-color-text-on-accent-primary);
     }
     &:hover {
-      @include themify(background-color, "primaryHover");
+      background-color: var(--primaryHover);
     }
   }
 }
@@ -124,7 +124,7 @@
   font-weight: 900;
   font-size: 1.375rem;
   transition: color 0.2s;
-  @include themify(color, "primary");
+  color: var(--primary);
   @media only screen and (max-width: 350px) {
     display: none;
   }

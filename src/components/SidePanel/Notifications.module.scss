@@ -13,7 +13,7 @@
     height: 163px;
     margin-top: 25px;
     transition: color 0.2s;
-    @include themify(color, "primary");
+    color: var(--primary);
   }
   & > span {
     font-weight: bold;
@@ -21,7 +21,7 @@
     transition: color 0.2s;
     margin-top: 25px;
     width: max-content;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > *:not(:last-child) {
     margin-bottom: 10px;

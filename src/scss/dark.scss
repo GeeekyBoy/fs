@@ -1,0 +1,141 @@
+
+
+html.dark {
+  --color-fill-color-text-primary: rgba(255,255,255,1);
+  --color-fill-color-text-secondary: rgba(255,255,255,0.786);
+  --color-fill-color-text-tertiary: rgba(255,255,255,0.544);
+  --color-fill-color-text-disabled: rgba(255,255,255,0.363);
+  --color-fill-color-accent-text-disabled: rgba(255,255,255,0.363);
+  --color-fill-color-text-on-accent-primary: rgba(0,0,0,1);
+  --color-fill-color-text-on-accent-secondary: rgba(0,0,0,0.500);
+  --color-fill-color-text-on-accent-disabled: rgba(255,255,255,0.530);
+  --color-fill-color-text-on-accent-selected-text: rgba(255,255,255,1);
+  --color-fill-color-control-transparent: rgba(255,255,255,0.000);
+  --color-fill-color-control-default: rgba(255,255,255,0.060);
+  --color-fill-color-control-secondary: rgba(255,255,255,0.084);
+  --color-fill-color-control-tertiary: rgba(255,255,255,0.033);
+  --color-fill-color-control-input-active: rgba(30,30,30,0.700);
+  --color-fill-color-control-disabled: rgba(255,255,255,0.042);
+  --color-fill-color-control-strong-default: rgba(255,255,255,0.544);
+  --color-fill-color-control-strong-disabled: rgba(255,255,255,0.247);
+  --color-fill-color-subtle-transparent: rgba(255,255,255,0.000);
+  --color-fill-color-subtle-secondary: rgba(255,255,255,0.060);
+  --color-fill-color-subtle-tertiary: rgba(255,255,255,0.042);
+  --color-fill-color-subtle-disabled: rgba(255,255,255,0.000);
+  --color-fill-color-control-solid-default: rgba(69,69,69,1);
+  --color-fill-color-control-alt-transparent: rgba(255,255,255,0.000);
+  --color-fill-color-control-alt-secondary: rgba(0,0,0,0.100);
+  --color-fill-color-control-alt-tertiary: rgba(255,255,255,0.042);
+  --color-fill-color-control-alt-quarternary: rgba(255,255,255,0.070);
+  --color-fill-color-control-alt-disabled: rgba(255,255,255,0.000);
+  --color-fill-color-accent-disabled: rgba(255,255,255,0.158);
+  --color-fill-color-system-critical: rgba(255,153,164,1);
+  --color-fill-color-system-success: rgba(108,203,95,1);
+  --color-fill-color-system-attention: rgba(96,205,255,1);
+  --color-fill-color-system-caution: rgba(252,225,0,1);
+  --color-fill-color-system-attention-background: rgba(255,255,255,0.033);
+  --color-fill-color-system-success-background: rgba(57,61,27,1);
+  --color-fill-color-system-caution-background: rgba(67,53,25,1);
+  --color-fill-color-system-critical-background: rgba(68,39,38,1);
+  --color-fill-color-system-neutral: rgba(255,255,255,0.544);
+  --color-fill-color-system-neutral-background: rgba(255,255,255,0.033);
+  --color-fill-color-system-solid-neutral: rgba(157,157,157,1);
+  --color-fill-color-system-solid-attention-background: rgba(46,46,46,1);
+  --color-fill-color-system-solid-neutral-background: rgba(46,46,46,1);
+  --color-fill-color-control-on-image-default: rgba(28,28,28,0.700);
+  --color-fill-color-control-on-image-secondary: rgba(26,26,26,1);
+  --color-fill-color-control-on-image-tertiary: rgba(19,19,19,1);
+  --color-fill-color-control-on-image-disabled: rgba(30,30,30,0.000);
+  --color-stroke-color-control-stroke-default: rgba(255,255,255,0.070);
+  --color-stroke-color-control-stroke-secondary: rgba(255,255,255,0.093);
+  --color-stroke-color-control-stroke-on-accent-default: rgba(255,255,255,0.080);
+  --color-stroke-color-control-stroke-on-accent-secondary: rgba(0,0,0,0.140);
+  --color-stroke-color-control-stroke-on-accent-tertiary: rgba(0,0,0,0.217);
+  --color-stroke-color-control-stroke-on-accent-disabled: rgba(0,0,0,0.200);
+  --color-stroke-color-control-stroke-for-strong-fill-when-on-image: rgba(0,0,0,0.420);
+  --color-stroke-color-control-strong-stroke-default: rgba(255,255,255,0.544);
+  --color-stroke-color-control-strong-stroke-disabled: rgba(255,255,255,0.158);
+  --color-stroke-color-card-stroke-default: rgba(0,0,0,0.100);
+  --color-stroke-color-card-stroke-default-solid: rgba(28,28,28,1);
+  --color-stroke-color-divider-stroke-default: rgba(255,255,255,0.084);
+  --color-stroke-color-surface-stroke-default: rgba(117,117,117,0.400);
+  --color-stroke-color-surface-stroke-flyout: rgba(0,0,0,0.200);
+  --color-stroke-color-focus-stroke-outer: rgba(255,255,255,1);
+  --color-stroke-color-focus-stroke-inner: rgba(0,0,0,0.700);
+  --color-background-fill-color-card-background-default: rgba(255,255,255,0.051);
+  --color-background-fill-color-card-background-secondary: rgba(255,255,255,0.033);
+  --color-background-fill-color-smoke-default: rgba(0,0,0,0.300);
+  --color-background-fill-color-layer-default: rgba(58,58,58,0.300);
+  --color-background-fill-color-layer-alt: rgba(255,255,255,0.054);
+  --color-background-fill-color-solid-background-base: rgba(32,32,32,1);
+  --color-background-fill-color-solid-background-secondary: rgba(28,28,28,1);
+  --color-background-fill-color-solid-background-tertiary: rgba(40,40,40,1);
+  --color-background-fill-color-solid-background-quarternary: rgba(44,44,44,1);
+  --effect-style-shadow-card-rest: 0.00px 2.00px 4.00px rgba(0,0,0,0.130);
+  --effect-style-shadow-card-hover: 0.00px 2.00px 4.00px rgba(0,0,0,0.260);
+  --effect-style-shadow-tooltip: 0.00px 4.00px 8.00px rgba(0,0,0,0.260);
+  --effect-style-shadow-flyout: 0.00px 8.00px 16.00px rgba(0,0,0,0.260);
+  --effect-style-shadow-dialog: 0.00px 2.00px 21.00px rgba(0,0,0,0.370);
+  --effect-style-shell-shadows-inactive-window: 0.00px 2.00px 10.67px rgba(0,0,0,0.370);
+  --effect-style-shell-shadows-active-window: 0.00px 2.00px 21.00px rgba(0,0,0,0.550);
+  &.red {
+    --primary: #f46762;
+    --primaryHover: #e1615d;
+    --auxiliarySurface: #2e1a1b;
+    --outline: #938f99;
+  }
+  &.gold {
+    --primary: #ffd52a;
+    --primaryHover: #eac42a;
+    --auxiliarySurface: #22201a;
+    --outline: #938f99;
+  }
+  &.orange {
+    --primary: #fb9a44;
+    --primaryHover: #e78f42;
+    --auxiliarySurface: #261e1a;
+    --outline: #938f99;
+  }
+  &.green {
+    --primary: #45e532;
+    --primaryHover: #43d332;
+    --auxiliarySurface: #1a241a;
+    --outline: #938f99;
+  }
+  &.turquoise {
+    --primary: #29f7ff;
+    --primaryHover: #29e3ea;
+    --auxiliarySurface: #1a2323;
+    --outline: #938f99;
+  }
+  &.blue {
+    --primary: #4cc2ff;
+    --primaryHover: #49b3eb;
+    --auxiliarySurface: #1a2229;
+    --outline: #938f99;
+  }
+  &.pink {
+    --primary: #ff4fcb;
+    --primaryHover: #eb4cbb;
+    --auxiliarySurface: #2b1a24;
+    --outline: #938f99;
+  }
+  &.purple {
+    --primary: #b5adeb;
+    --primaryHover: #a7a0d9;
+    --auxiliarySurface: #1e1d33;
+    --outline: #938f99;
+  }
+  &.grey {
+    --primary: #adbbc5;
+    --primaryHover: #a0adb6;
+    --auxiliarySurface: #1e2024;
+    --outline: #938f99;
+  }
+  &.black {
+    --primary: #ffffff;
+    --primaryHover: #ffffff;
+    --auxiliarySurface: #202020;
+    --outline: #938f99;
+  }
+}

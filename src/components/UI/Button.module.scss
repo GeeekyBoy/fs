@@ -6,10 +6,10 @@
   cursor: pointer;
   width: 100px;
   transition: background-color 0.3s, color 0.2s;
-  @include themify(background-color, "primary");
-  @include themify(color, "color-fill-color-text-on-accent-primary");
+  background-color: var(--primary);
+  color: var(--color-fill-color-text-on-accent-primary);
   &:hover {
-    @include themify(background-color, "primaryHover");
+    background-color: var(--primaryHover);
   }
   &:disabled {
     background-color: #CCCCCC!important;

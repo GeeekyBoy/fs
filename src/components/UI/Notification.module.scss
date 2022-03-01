@@ -11,9 +11,9 @@
   border: 1px solid;
   border-radius: 8px;
   transition: background-color 0.2s, color 0.2s;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
-  @include themify(color, "color-fill-color-text-primary");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
+  color: var(--color-fill-color-text-primary);
   &.clickable {
     cursor: pointer;
     &:hover {
@@ -57,7 +57,7 @@
   border: none;
   background-color: transparent;
   transition: color 0.2s;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
 }
 
 .NotificationContent {

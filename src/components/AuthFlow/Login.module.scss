@@ -9,8 +9,8 @@
   width: 350px;
   padding: 35px;
   transition: background-color 0.2s, border-color 0.2s;
-  @include themify(border-color, "color-stroke-color-card-stroke-default");
-  @include themify(background-color, "color-background-fill-color-card-background-default");
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
   & > *:not(:last-child) {
     margin-bottom: 15px;
   }
@@ -27,12 +27,12 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  @include themify(color, "color-fill-color-text-primary");
+  color: var(--color-fill-color-text-primary);
   & > span:nth-child(1) {
     font-weight: bold;
     font-size: 1.5rem;
     transition: color 0.2s;
-    @include themify(color, "primary");
+    color: var(--primary);
   }
   & > span:nth-child(2) {
     font-weight: 600;
@@ -70,7 +70,7 @@
   }
   & > *:nth-child(3) > span:first-child {
     transition: color 0.2s;
-    @include themify(color, "color-fill-color-text-primary");
+    color: var(--color-fill-color-text-primary);
   }
   & > h2 > span {
     cursor: pointer;
@@ -101,7 +101,7 @@
   cursor: pointer;
   & > span:nth-child(2) {
     transition: color 0.2s;
-    @include themify(color, "primary");
+    color: var(--primary);
   }
 }
 
@@ -111,5 +111,5 @@
   justify-self: flex-end;
   cursor: pointer;
   transition: color 0.2s;
-  @include themify(color, "primary");
+  color: var(--primary);
 }
