@@ -1,5 +1,5 @@
+import API from "../amplify/API";
 import { listUsersByUsernames } from "../graphql/queries"
-import execGraphQL from "../utils/execGraphQL";
 import generateRandomColor from "../utils/generateRandomColor";
 import getGravatar from '../utils/getGravatar';
 
@@ -19,7 +19,7 @@ export const addCachedUsers = (users) => ({
 export const handleAddUsers = (usernames) => async (dispatch, getState) => {
   const { users } = getState()
   usernames = usernames.filter(x => !users[x])
-  const res = await execGraphQL(listUsersByUsernames, { usernames })
+  const res = await API.execute(listUsersByUsernames, { usernames })
   const items = res.data.listUsersByUsernames.items
   const itemsWithAbbr = items.map(x => {
     const abbr = x.firstName[0].toUpperCase() + x.lastName[0].toUpperCase()
@@ -71,7 +71,7 @@ export const handleSearchUsers = (keyword) => async (dispatch, getState) => {
     { email: { matchPhrasePrefix: keyword } }
   ]}
   try {
-    const usersData = (await execGraphQL(query, { filter })).data.searchUsers.items || []
+    const usersData = (await API.execute(query, { filter })).data.searchUsers.items || []
     const newUsersData = usersData.filter(x => !users[x.username])
     const itemsWithAbbr = newUsersData.map(x => {
       const abbr = x.firstName[0].toUpperCase() + x.lastName[0].toUpperCase()

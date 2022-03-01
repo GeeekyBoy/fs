@@ -7,8 +7,8 @@ import styles from "./Notifications.module.scss"
 import { ReactComponent as NoNotificationsIllustration } from "../../assets/undraw_notify_re_65on.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
 import Notification from '../UI/Notification';
-import execGraphQL from '../../utils/execGraphQL';
 import { navigate } from '../Router';
+import API from '../../amplify/API';
 
 const Notifications = forwardRef((_, ref) => {
   
@@ -22,7 +22,7 @@ const Notifications = forwardRef((_, ref) => {
     dispatch(appActions.handleSetLeftPanel(false))
   }
   const dismissNotifications = () => {
-    execGraphQL(mutations.dismissNotifications)
+    API.execute(mutations.dismissNotifications)
     .then(() => {
       dispatch(notificationsActions.emptyNotifications())
     })
@@ -45,7 +45,7 @@ const Notifications = forwardRef((_, ref) => {
   }));
   const dismissNotification = (e, id) => {
     e.stopPropagation()
-    execGraphQL(mutations.dismissNotification, { notificationID: id })
+    API.execute(mutations.dismissNotification, { notificationID: id })
       .then(() => {
         console.log("Notification dismissed");
       })

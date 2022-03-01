@@ -8,7 +8,7 @@ import { ReactComponent as LogOutIcon } from "../../assets/log-out-outline.svg"
 import Button from '../UI/Button';
 import TextField from '../UI/fields/TextField';
 import Avatar from '../UI/Avatar';
-import execGraphQL from '../../utils/execGraphQL';
+import API from '../../amplify/API';
 
 const AccountSettings = forwardRef((props, ref) => {
   const {
@@ -65,7 +65,7 @@ const AccountSettings = forwardRef((props, ref) => {
 	}
   const saveChanges = () => {
     setIsBusy(true)
-    execGraphQL(mutations.updateUser, {
+    API.execute(mutations.updateUser, {
       input: {
         username,
         ...(newFirstName !== firstName && { firstName: newFirstName }),

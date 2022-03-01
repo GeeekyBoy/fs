@@ -1,7 +1,7 @@
 import { AuthState } from '../constants';
 import * as usersActions from './users';
 import { listNotifications } from "../graphql/queries"
-import execGraphQL from "../utils/execGraphQL";
+import API from '../amplify/API';
 
 export const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 export const PUSH_NOTIFICATION = "PUSH_NOTIFICATION";
@@ -44,7 +44,7 @@ export const handleFetchNotifications = (taskID) => async (dispatch, getState) =
   const { user } = getState()
   if (user.state === AuthState.SignedIn) {
     try {
-      const res = await execGraphQL(listNotifications, { taskID })
+      const res = await API.execute(listNotifications, { taskID })
       const items = res.data.listNotifications.items;
       let usersToBeFetched = []
       for (const item of items) {

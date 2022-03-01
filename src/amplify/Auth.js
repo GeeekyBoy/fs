@@ -84,6 +84,16 @@ class Auth {
       throw new Error("User is not logged in");
     }
   }
+  async getAccessToken() {
+    if (this.refreshToken) {
+      if (this.expiresAt <= Date.now()) {
+        await this.refresh();
+      }
+      return this.accessToken;
+    } else {
+      throw new Error("User is not logged in");
+    }
+  }
   async isLoggedIn() {
     if (this.refreshToken !== null) {
       return true;
@@ -144,7 +154,7 @@ class Auth {
       }),
     });
     const passwordVerifierRes = await rawPasswordVerifierRes.json();
-    if (passwordVerifierRes.status === 400) {
+    if (rawPasswordVerifierRes.status === 400) {
       throw {
         code: passwordVerifierRes.__type,
         message: passwordVerifierRes.message,
@@ -171,7 +181,7 @@ class Auth {
       }),
     });
     const forgotPasswordRes = await rawForgotPasswordRes.json();
-    if (forgotPasswordRes.status === 400) {
+    if (rawForgotPasswordRes.status === 400) {
       throw {
         code: forgotPasswordRes.__type,
         message: forgotPasswordRes.message,
@@ -197,7 +207,7 @@ class Auth {
       }),
     });
     const forgotPasswordSubmitRes = await rawForgotPasswordSubmitRes.json();
-    if (forgotPasswordSubmitRes.status === 400) {
+    if (rawForgotPasswordSubmitRes.status === 400) {
       throw {
         code: forgotPasswordSubmitRes.__type,
         message: forgotPasswordSubmitRes.message,
@@ -229,7 +239,7 @@ class Auth {
       }),
     });
     const signUpRes = await rawSignUpRes.json();
-    if (signUpRes.status === 400) {
+    if (rawSignUpRes.status === 400) {
       throw {
         code: signUpRes.__type,
         message: signUpRes.message,
@@ -253,7 +263,7 @@ class Auth {
       }),
     });
     const confirmSignUpRes = await rawConfirmSignUpRes.json();
-    if (confirmSignUpRes.status === 400) {
+    if (rawConfirmSignUpRes.status === 400) {
       throw {
         code: confirmSignUpRes.__type,
         message: confirmSignUpRes.message,
@@ -296,7 +306,7 @@ class Auth {
       }),
     });
     const refreshTokenRes = await rawRefreshTokenRes.json();
-    if (refreshTokenRes.status === 400) {
+    if (rawRefreshTokenRes.status === 400) {
       throw {
         code: refreshTokenRes.__type,
         message: refreshTokenRes.message,
@@ -334,7 +344,7 @@ class Auth {
       }),
     });
     const anonymousSignInRes = await rawAnonymousSignInRes.json();
-    if (anonymousSignInRes.status === 400) {
+    if (rawAnonymousSignInRes.status === 400) {
       throw {
         code: anonymousSignInRes.__type,
         message: anonymousSignInRes.message,

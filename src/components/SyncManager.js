@@ -6,16 +6,13 @@ import * as tasksActions from "../actions/tasks"
 import * as userActions from "../actions/user"
 import * as usersActions from "../actions/users"
 import * as observersActions from "../actions/observers"
-import * as mutationsActions from "../actions/mutations"
 import * as collaborationActions from "../actions/collaboration"
 import * as queries from "../graphql/queries"
-import * as mutationsGraphQL from "../graphql/mutations"
 import * as cacheController from "../controllers/cache"
 import { panelPages, AuthState } from '../constants';
-import execGraphQL from "../utils/execGraphQL";
 import store from "../store";
-import * as mutationID from "../utils/mutationID";
 import { navigate, useRouterNoUpdates } from "./Router"
+import API from "../amplify/API"
 
 const SyncManager = (props) => {
   const [isInitial, setIsInitial] = useState(true)
@@ -26,8 +23,6 @@ const SyncManager = (props) => {
   const isOffline = useSelector(state => state.isOffline)
   const selectedProject = useSelector(state => state.selectedProject)
   const selectedTask = useSelector(state => state.selectedTask)
-
-  const mutations = useSelector(state => state.mutations)
 
   const user = useSelector(state => state.user)
 
@@ -58,7 +53,7 @@ const SyncManager = (props) => {
               let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
               if (!reqProject) {
                 try {
-                  reqProject = (await execGraphQL(queries.getProjectByPermalink, {
+                  reqProject = (await API.execute(queries.getProjectByPermalink, {
                     permalink: `${routeParams.username}/${routeParams.projectPermalink}`
                   })).data.getProjectByPermalink
                   dispatch(projectsActions.createProject(reqProject, "temp"))
@@ -104,23 +99,6 @@ const SyncManager = (props) => {
       }
     }
   }, [isOffline])
-  useEffect(() => {
-    if (mutations[0]) {
-      const [mutationType, data, successCallback, errorCallback] = mutations[0];
-      const generatedMutationID = mutationID.generate(user.data.username);
-      const query = mutationsGraphQL[mutationType];
-      const queryData = { input: { ...data, mutationID: generatedMutationID } };
-      execGraphQL(query, queryData)
-        .then((res) => {
-          dispatch(mutationsActions.nextMutation());
-          if (successCallback) successCallback(res);
-        })
-        .catch((err) => {
-          console.error(err);
-          if (errorCallback) errorCallback(err);
-        });
-    }
-  }, [mutations[0]])
   return null
 }
 

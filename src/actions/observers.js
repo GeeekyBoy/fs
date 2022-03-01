@@ -10,8 +10,9 @@ import * as mutationID from "../utils/mutationID"
 import filterObj from "../utils/filterObj";
 import updateAssignedTasks from "../pushedUpdates/updateAssignedTasks";
 import updateWatchedTasks from "../pushedUpdates/updateWatchedTasks";
-import observeGraphQL from "../utils/observeGraphQL";
+import generateID from "../utils/generateID";
 import { navigate } from "../components/Router"
+import PubSub from "../amplify/PubSub"
 
 export const SET_USER_OBSERVERS = "SET_USER_OBSERVERS";
 export const CLEAR_USER_OBSERVERS = "CLEAR_USER_OBSERVERS";
@@ -26,70 +27,17 @@ export const CLEAR_COMMENTS_OBSERVERS = "CLEAR_COMMENTS_OBSERVERS";
 export const SET_NOTIFICATIONS_OBSERVERS = "SET_NOTIFICATIONS_OBSERVERS";
 export const CLEAR_NOTIFICATIONS_OBSERVERS = "CLEAR_NOTIFICATIONS_OBSERVERS";
 
-const setUserObservers = (observers) => ({
-  type: SET_USER_OBSERVERS,
-  observers
-});
-
-const clearUserObservers = () => ({
-  type: CLEAR_USER_OBSERVERS
-});
-
-const setOwnedProjectsObservers = (observers) => ({
-  type: SET_OWNED_PROJECTS_OBSERVERS,
-  observers
-});
-
-const clearOwnedProjectsObservers = () => ({
-  type: CLEAR_OWNED_PROJECTS_OBSERVERS
-});
-
-const setProjectObservers = (id, observers) => ({
-  type: SET_OWNED_PROJECTS_OBSERVERS,
-  observers,
-  id
-});
-
-const clearProjectObservers = (id) => ({
-  type: CLEAR_OWNED_PROJECTS_OBSERVERS,
-  id
-});
-
-const setTasksObservers = (observers) => ({
-  type: SET_TASKS_OBSERVERS,
-  observers
-});
-
-const clearTasksObservers = () => ({
-  type: CLEAR_TASKS_OBSERVERS
-});
-
-const setCommentsObservers = (observers) => ({
-  type: SET_COMMENTS_OBSERVERS,
-  observers
-});
-
-const clearCommentsObservers = () => ({
-  type: CLEAR_COMMENTS_OBSERVERS
-});
-
-const setNotificationsObservers = (observers) => ({
-  type: SET_NOTIFICATIONS_OBSERVERS,
-  observers
-});
-
-const clearNotificationsObservers = () => ({
-  type: CLEAR_NOTIFICATIONS_OBSERVERS
-});
-
 export const handleSetNotificationsObservers = () => async (dispatch, getState) => {
   const { user, app: { isOffline } } = getState()
   if (!isOffline) {
-    const observers = [];
     const data = {
       owner: user.data.username
     }
-    observers.push(await observeGraphQL(subscriptions.onPushNotification, data, {
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onPushNotification,
+      variables: data,
+      topic: "notifications",
       next: async e => {
         const { notifications } = getState()
         const incoming = e.value.data.onPushNotification
@@ -100,8 +48,12 @@ export const handleSetNotificationsObservers = () => async (dispatch, getState) 
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onDismissNotification, data, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onDismissNotification,
+      variables: data,
+      topic: "notifications",
       next: e => {
         const { notifications } = getState()
         const incoming = e.value.data.onDismissNotification
@@ -111,29 +63,25 @@ export const handleSetNotificationsObservers = () => async (dispatch, getState) 
         }
       },
       error: error => console.warn(error)
-    }))
-    return dispatch(setNotificationsObservers(observers))
+    })
   }
 }
 
-export const handleClearNotificationsObservers = () => (dispatch, getState) => {
-  const { observers } = getState()
-  if (observers.notifications) {
-    for (const observer of observers.notifications) {
-      observer.unsubscribe()
-    }
-  }
-  return dispatch(clearNotificationsObservers())
+export const handleClearNotificationsObservers = () => () => {
+  PubSub.unsubscribe("notifications")
 }
 
 export const handleSetUserObservers = () => async (dispatch, getState) => {
   const { user, app: { isOffline } } = getState()
   if (!isOffline) {
-    const observers = [];
     const data = {
       username: user.data.username
     }
-    observers.push(await observeGraphQL(subscriptions.onPushUserUpdate, data, {
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onPushUserUpdate,
+      variables: data,
+      topic: "user",
       next: e => {
         const incoming = e.value.data.onPushUserUpdate
         dispatch(userActions.handleSetData(incoming))
@@ -141,29 +89,25 @@ export const handleSetUserObservers = () => async (dispatch, getState) => {
         updateWatchedTasks(dispatch, getState, incoming)
       },
       error: error => console.warn(error)
-    }))
-    return dispatch(setUserObservers(observers))
+    })
   }
 }
 
 export const handleClearUserObservers = () => (dispatch, getState) => {
-  const { observers } = getState()
-  if (observers.user) {
-    for (const observer of observers.user) {
-      observer.unsubscribe()
-    }
-  }
-  return dispatch(clearUserObservers())
+  PubSub.unsubscribe("user")
 }
 
 export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) => {
   const { user, app: { isOffline } } = getState()
   if (!isOffline) {
-    const observers = [];
     const data = {
       owner: user.data.username
     }
-    observers.push(await observeGraphQL(subscriptions.onCreateOwnedProject, data, {
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onCreateOwnedProject,
+      variables: data,
+      topic: "ownedProjects",
       next: e => {
         const { projects } = getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
@@ -175,8 +119,12 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onImportOwnedProjects, data, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onImportOwnedProjects,
+      variables: data,
+      topic: "ownedProjects",
       next: e => {
         const { projects } = getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
@@ -188,8 +136,12 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onUpdateOwnedProject, data, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onUpdateOwnedProject,
+      variables: data,
+      topic: "ownedProjects",
       next: e => {
         const { projects } = getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
@@ -208,8 +160,12 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onDeleteOwnedProject, data, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onDeleteOwnedProject,
+      variables: data,
+      topic: "ownedProjects",
       next: e => {
         const { app, projects } = getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
@@ -224,27 +180,23 @@ export const handleSetOwnedProjectsObservers = () => async (dispatch, getState) 
         }
       },
       error: error => console.warn(error)
-    }))
-    return dispatch(setOwnedProjectsObservers(observers))
+    })
   }
 }
 
 export const handleClearOwnedProjectsObservers = () => (dispatch, getState) => {
-  const { observers } = getState()
-  if (observers.projects.owned) {
-    for (const observer of observers.projects.owned) {
-      observer.unsubscribe()
-    }
-  }
-  return dispatch(clearOwnedProjectsObservers())
+  PubSub.unsubscribe("ownedProjects")
 }
 
 export const handleSetProjectObservers = (projectID) => async (dispatch, getState) => {
   const { projects, observers, app: { isOffline } } = getState()
   if (!isOffline && !projects[projectID]?.isAssigned && !observers.projects.others[projectID]) {
-    const observers = [];
     const data = { id: projectID }
-    observers.push(await observeGraphQL(subscriptions.onUpdateProject, data, {
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onPushUserUpdate,
+      variables: data,
+      topic: "proejct",
       next: e => {
         const { projects, app } = getState()
         const incoming = e.value.data.onUpdateProject
@@ -266,8 +218,12 @@ export const handleSetProjectObservers = (projectID) => async (dispatch, getStat
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onDeleteProject, data, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onDeleteProject,
+      variables: data,
+      topic: "project",
       next: e => {
         const { app, projects } = getState()
         const incoming = e.value.data.onDeleteProject;
@@ -282,26 +238,22 @@ export const handleSetProjectObservers = (projectID) => async (dispatch, getStat
         }
       },
       error: error => console.warn(error)
-    }))
-    return dispatch(setProjectObservers(projectID, observers))
+    })
   }
 }
 
-export const handleClearProjectObservers = (projectID) => (dispatch, getState) => {
-  const { observers } = getState()
-  if (observers.projects.others[projectID]) {
-    for (const observer of observers.projects.others[projectID]) {
-      observer.unsubscribe()
-    }
-  }
-  return dispatch(clearProjectObservers(projectID))
+export const handleClearProjectObservers = (projectID) => () => {
+  PubSub.unsubscribeAll("project")
 }
 
 export const handleSetTasksObservers = (projectID) => async (dispatch, getState) => {
   const { app: { selectedProject, isOffline } } = getState()
   if (!isOffline && selectedProject === projectID) {
-    const observers = [];
-    observers.push(await observeGraphQL(subscriptions.onCreateTaskByProjectId, { projectID }, {
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onCreateTaskByProjectId,
+      variables: { projectID },
+      topic: "tasks",
       next: async (e) => {
         const { tasks } = getState()
         const incoming = e.value.data.onCreateTaskByProjectID
@@ -317,8 +269,12 @@ export const handleSetTasksObservers = (projectID) => async (dispatch, getState)
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onUpdateTaskByProjectId, { projectID }, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onUpdateTaskByProjectId,
+      variables: { projectID },
+      topic: "tasks",
       next: async (e) => {
         const { tasks } = getState()
         const incoming = e.value.data.onUpdateTaskByProjectID
@@ -341,8 +297,12 @@ export const handleSetTasksObservers = (projectID) => async (dispatch, getState)
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onDeleteTaskByProjectId, { projectID }, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onDeleteTaskByProjectId,
+      variables: { projectID },
+      topic: "tasks",
       next: e => {
         const { tasks, app } = getState()
         const incoming = e.value.data.onDeleteTaskByProjectID;
@@ -356,26 +316,22 @@ export const handleSetTasksObservers = (projectID) => async (dispatch, getState)
         }
       },
       error: error => console.warn(error)
-    }))
-    return dispatch(setTasksObservers(observers))
+    })
   }
 }
 
 export const handleClearTasksObservers = () => (dispatch, getState) => {
-  const { observers } = getState()
-  if (observers.tasks) {
-    for (const observer of observers.tasks) {
-      observer.unsubscribe()
-    }
-  }
-  return dispatch(clearTasksObservers())
+  PubSub.unsubscribe("tasks")
 }
 
 export const handleSetCommentsObservers = (taskID) => async (dispatch, getState) => {
   const { app: { selectedTask, isOffline } } = getState()
     if (!isOffline && selectedTask === taskID) {
-    const observers = [];
-    observers.push(await observeGraphQL(subscriptions.onCreateCommentByTaskId, { taskID }, {
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onCreateCommentByTaskId,
+      variables: { taskID },
+      topic: "comments",
       next: async (e) => {
         const { comments } = getState()
         const incoming = e.value.data.onCreateCommentByTaskID
@@ -387,8 +343,12 @@ export const handleSetCommentsObservers = (taskID) => async (dispatch, getState)
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onUpdateCommentByTaskId, { taskID }, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onUpdateCommentByTaskId,
+      variables: { taskID },
+      topic: "comments",
       next: e => {
         const { comments } = getState()
         const incoming = e.value.data.onUpdateCommentByTaskID
@@ -406,8 +366,12 @@ export const handleSetCommentsObservers = (taskID) => async (dispatch, getState)
         }
       },
       error: error => console.warn(error)
-    }))
-    observers.push(await observeGraphQL(subscriptions.onDeleteCommentByTaskId, { taskID }, {
+    })
+    await PubSub.subscribe({
+      id: generateID(),
+      query: subscriptions.onDeleteCommentByTaskId,
+      variables: { taskID },
+      topic: "comments",
       next: e => {
         const { comments } = getState()
         const incoming = e.value.data.onDeleteCommentByTaskID;
@@ -418,17 +382,10 @@ export const handleSetCommentsObservers = (taskID) => async (dispatch, getState)
         }
       },
       error: error => console.warn(error)
-    }))
-    return dispatch(setCommentsObservers(observers))
+    })
   }
 }
 
-export const handleClearCommentsObservers = () => (dispatch, getState) => {
-  const { observers } = getState()
-  if (observers.comments) {
-    for (const observer of observers.comments) {
-      observer.unsubscribe()
-    }
-  }
-  return dispatch(clearCommentsObservers())
+export const handleClearCommentsObservers = () => () => {
+  PubSub.unsubscribe("comments")
 }

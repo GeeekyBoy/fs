@@ -4,8 +4,8 @@ import * as observersActions from "./observers"
 import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
 import * as notificationsActions from "./notifications"
-import execGraphQL from '../utils/execGraphQL';
 import Auth from '../amplify/Auth';
+import API from '../amplify/API';
 
 export const SET_STATE = "SET_STATE";
 export const SET_DATA = "SET_DATA";
@@ -57,11 +57,11 @@ export const handleFetchUser = () => async (dispatch, getState) => {
   if (await Auth.isLoggedIn()/* || cacheController.getUser().state === AuthState.SignedIn*/) {
     try {
       const userData = (
-        await execGraphQL(queries.getUserByUsername, {
+        await API.execute(queries.getUserByUsername, {
           username: Auth.getUser().username,
         })
       ).data.getUserByUsername;
-      userData.jwt = await Auth.getIdToken();
+      userData.jwt = await Auth.getAccessToken();
       dispatch(handleSetData(userData))
       dispatch(handleSetState(AuthState.SignedIn))
     } catch (err) {

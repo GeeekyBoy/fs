@@ -1,6 +1,6 @@
+import API from "../amplify/API";
 import * as cacheController from "../controllers/cache"
 import * as mutations from "../graphql/mutations"
-import execGraphQL from "./execGraphQL";
 
 export default async () => {
   const { localCache } = cacheController.getCache()
@@ -11,7 +11,7 @@ export default async () => {
         dataToBeSent[index].tasks = Object.values(localCache.tasks[project.id] || {});
       }
       try {
-        await execGraphQL(mutations.importData, {
+        await API.execute(mutations.importData, {
           data: JSON.stringify(dataToBeSent)
         })
         cacheController.deleteLocalCache()

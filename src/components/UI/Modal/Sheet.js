@@ -59,7 +59,6 @@ const Sheet = forwardRef(({ content }, ref) => {
     )
   
     const overlayBG = y.to((py) => `rgba(0, 0, 0, ${((312 - py) / 312) * 0.5})`)
-    const display = y.to((py) => (py < 312 ? null : "none"))
   
     useEffect(() => {
         openSheet({ canceled: null })
@@ -67,11 +66,11 @@ const Sheet = forwardRef(({ content }, ref) => {
     return (
         <animated.div
             className={styles.SheetShell}
-            style={{ display, backgroundColor: overlayBG }}
+            style={{ backgroundColor: overlayBG }}
         >
             <animated.div
                 className={styles.SheetContainer}
-                style={{ display, y }}
+                style={{ y }}
                 ref={containerRef}
                 {...bind()}
             >

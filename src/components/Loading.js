@@ -14,9 +14,9 @@ import * as cacheController from "../controllers/cache"
 import { panelPages, AuthState } from '../constants';
 import ProgressBar from "./UI/ProgressBar";
 import uploadLocal from "../utils/uploadLocal";
-import execGraphQL from "../utils/execGraphQL";
 import store from "../store";
 import { navigate, useRouterNoUpdates } from "./Router"
+import API from "../amplify/API"
 
 const Loading = (props) => {
   const { onFinish } = props
@@ -54,7 +54,7 @@ const Loading = (props) => {
       currUser.state === AuthState.SignedOut) {
       let reqProject = null;
       try {
-        reqProject = (await execGraphQL(queries.getProjectByPermalink, {
+        reqProject = (await API.execute(queries.getProjectByPermalink, {
           permalink: `${routeParams.username}/${routeParams.projectPermalink}`
         })).data.getProjectByPermalink
         dispatch(projectsActions.createProject(reqProject, "temp"))
@@ -97,7 +97,7 @@ const Loading = (props) => {
         let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
         if (!reqProject) {
           try {
-            reqProject = (await execGraphQL(queries.getProjectByPermalink, {
+            reqProject = (await API.execute(queries.getProjectByPermalink, {
               permalink: `${routeParams.username}/${routeParams.projectPermalink}`
             })).data.getProjectByPermalink
             dispatch(projectsActions.createProject(reqProject, "temp"))

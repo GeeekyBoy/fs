@@ -5,8 +5,8 @@ import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as queries from "../graphql/queries"
 import { AuthState } from '../constants';
-import execGraphQL from "../utils/execGraphQL";
 import { navigate, useRouter } from "./Router"
+import API from "../amplify/API"
 
 const NavigationManager = () => {
   const { routeLocation, routeParams } = useRouter();
@@ -30,7 +30,7 @@ const NavigationManager = () => {
         let reqProject = Object.values(projects).filter(x => x.permalink === `${username}/${projectPermalink}`)[0]
         if (!reqProject) {
           try {
-            reqProject = (await execGraphQL(queries.getProjectByPermalink, {
+            reqProject = (await API.execute(queries.getProjectByPermalink, {
               permalink: `${username}/${projectPermalink}`
             })).data.getProjectByPermalink
             dispatch(projectsActions.createProject(reqProject, "temp"))
