@@ -6,7 +6,7 @@ export const parameters = {
   controls: {
     matchers: {
       color: /(background|color)$/i,
-      date: /(Date|createdAt)$/i,
+      date: /(Date|createdAt|due)$/i,
     },
   },
   layout: "fullscreen",

@@ -64,7 +64,7 @@ class API {
       }
       const mutation = this.mutationQueue[0];
       try {
-        const generatedMutationID = mutationID.generate(Auth.getUser().username);
+        const generatedMutationID = mutationID.generate((await Auth.getUser()).username);
         const result = await this.execute(mutationsGraphQL[mutation.type], {
           input: {
             ...mutation.variables,

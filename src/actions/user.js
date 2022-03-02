@@ -58,7 +58,7 @@ export const handleFetchUser = () => async (dispatch, getState) => {
     try {
       const userData = (
         await API.execute(queries.getUserByUsername, {
-          username: Auth.getUser().username,
+          username: (await Auth.getUser()).username,
         })
       ).data.getUserByUsername;
       userData.jwt = await Auth.getAccessToken();

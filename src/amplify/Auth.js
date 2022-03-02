@@ -67,8 +67,11 @@ class Auth {
     cookies.removeCookie("idToken");
     cookies.removeCookie("refreshToken");
   }
-  getUser() {
-    if (this.idToken) {
+  async getUser() {
+    if (this.refreshToken) {
+      if (this.expiresAt <= Date.now()) {
+        await this.refresh();
+      }
       return this.user;
     } else {
       throw new Error("User is not logged in");

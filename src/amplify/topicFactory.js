@@ -122,7 +122,7 @@ const subscriptionsTemplates = {
   ],
   project: [
     {
-      type: "onPushUserUpdate",
+      type: "onUpdateProject",
       next: e => {
         const { projects, app } = store.getState()
         const incoming = e.value.data.onUpdateProject
