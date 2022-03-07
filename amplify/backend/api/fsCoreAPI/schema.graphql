@@ -53,6 +53,7 @@ type Project
   @key(name: "byOwner", fields: ["owner"])
   @key(name: "byPermalink", fields: ["permalink"]) {
   id: ID!
+  rank: String!
   permalink: String!
   title: String
   tasksCount: Int!
@@ -81,6 +82,7 @@ type Task
   @key(name: "byProject", fields: ["projectID"])
   @key(name: "byDue", fields: ["due"]) {
   id: ID!
+  rank: String!
   projectID: ID!
   permalink: Int!
   task: String
