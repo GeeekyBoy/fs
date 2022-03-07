@@ -139,27 +139,6 @@ type Notification
   sender: String!
 }
 
-type History
-  @model(queries: null, mutations: null, subscriptions: null)
-  @auth(
-    rules: [
-      { allow: public, provider: iam }
-      { allow: private, provider: userPools }
-    ]
-  )
-  @aws_iam
-  @aws_cognito_user_pools
-  @key(name: "byOwner", fields: ["owner"])
-  @key(name: "bySender", fields: ["sender"]) {
-  id: ID!
-  type: NotificationType!
-  payload: AWSJSON!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-  owner: String!
-  sender: String!
-}
-
 type Mutation {
   pushUserUpdate(input: PushUserUpdateInput!): UserUpdate
     @function(name: "fsCoreApiResolver-${env}")
