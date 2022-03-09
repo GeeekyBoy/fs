@@ -22,8 +22,7 @@ export const pushProjectUpdate = /* GraphQL */ `
   mutation PushProjectUpdate($input: PushProjectUpdateInput!) {
     pushProjectUpdate(input: $input) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -55,8 +54,7 @@ export const createProject = /* GraphQL */ `
   mutation CreateProject($input: CreateProjectInput!) {
     createProject(input: $input) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -78,8 +76,7 @@ export const createTask = /* GraphQL */ `
     createTask(input: $input) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
@@ -113,8 +110,7 @@ export const updateProject = /* GraphQL */ `
   mutation UpdateProject($input: UpdateProjectInput!) {
     updateProject(input: $input) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -134,8 +130,7 @@ export const updateTask = /* GraphQL */ `
     updateTask(input: $input) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
@@ -182,8 +177,7 @@ export const deleteProjectAndTasks = /* GraphQL */ `
   mutation DeleteProjectAndTasks($input: DeleteProjectInput!) {
     deleteProjectAndTasks(input: $input) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -205,8 +199,7 @@ export const deleteTaskAndComments = /* GraphQL */ `
     deleteTaskAndComments(input: $input) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
@@ -269,8 +262,7 @@ export const assignTask = /* GraphQL */ `
     assignTask(input: $input) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
@@ -290,8 +282,7 @@ export const unassignTask = /* GraphQL */ `
     unassignTask(input: $input) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
@@ -311,8 +302,7 @@ export const addWatcher = /* GraphQL */ `
     addWatcher(input: $input) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
@@ -332,8 +322,7 @@ export const removeWatcher = /* GraphQL */ `
     removeWatcher(input: $input) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description

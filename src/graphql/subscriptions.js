@@ -48,8 +48,7 @@ export const onCreateOwnedProject = /* GraphQL */ `
   subscription OnCreateOwnedProject($owner: String!) {
     onCreateOwnedProject(owner: $owner) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -93,8 +92,7 @@ export const onUpdateOwnedProject = /* GraphQL */ `
   subscription OnUpdateOwnedProject($owner: String!) {
     onUpdateOwnedProject(owner: $owner) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -113,8 +111,7 @@ export const onDeleteOwnedProject = /* GraphQL */ `
   subscription OnDeleteOwnedProject($owner: String!) {
     onDeleteOwnedProject(owner: $owner) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -135,8 +132,7 @@ export const onUpdateProject = /* GraphQL */ `
   subscription OnUpdateProject($id: String!) {
     onUpdateProject(id: $id) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -155,8 +151,7 @@ export const onDeleteProject = /* GraphQL */ `
   subscription OnDeleteProject($id: String!) {
     onDeleteProject(id: $id) {
       id
-      prevProject
-      nextProject
+      rank
       permalink
       title
       tasksCount
@@ -178,8 +173,7 @@ export const onCreateTaskByProjectId = /* GraphQL */ `
     onCreateTaskByProjectID(projectID: $projectID) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
@@ -201,8 +195,7 @@ export const onUpdateTaskByProjectId = /* GraphQL */ `
     onUpdateTaskByProjectID(projectID: $projectID) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
@@ -222,8 +215,7 @@ export const onDeleteTaskByProjectId = /* GraphQL */ `
     onDeleteTaskByProjectID(projectID: $projectID) {
       id
       projectID
-      prevTask
-      nextTask
+      rank
       permalink
       task
       description
