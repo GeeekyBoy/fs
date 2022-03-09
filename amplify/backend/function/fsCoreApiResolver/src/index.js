@@ -629,7 +629,7 @@ exports.handler = async function (ctx) {
             throw new Error(PERMALINK_USED)
           }
         } else {
-          if (item === "permissions") {
+          if (item === "permissions" || item === "rank") {
             if (updateData[item]) {
               expAttrVal[`:${item}`] = updateData[item]
               updateExp.push(`#${item}=:${item}`)
@@ -695,7 +695,7 @@ exports.handler = async function (ctx) {
       const nullAttrs = []
       let updateExp = []
       for (const item in updateData) {
-        if (item === "status") {
+        if (item === "status" || item === "rank") {
           if (updateData[item]) {
             expAttrVal[`:${item}`] = updateData[item]
             updateExp.push(`#${item}=:${item}`)
