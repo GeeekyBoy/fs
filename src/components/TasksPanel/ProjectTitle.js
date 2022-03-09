@@ -5,7 +5,8 @@ import * as appActions from "../../actions/app"
 import * as projectsActions from "../../actions/projects"
 import * as tasksActions from "../../actions/tasks"
 import { initTaskState, OK } from '../../constants';
-import parseLinkedList from '../../utils/parseLinkedList';
+import sortByRank from '../../utils/sortByRank';
+import generateRank from '../../utils/generateRank';
 
 const ProjectTitle = (props) => {
 
@@ -31,7 +32,7 @@ const ProjectTitle = (props) => {
   };
 
   const onKeyUp = (e) => {
-    const firstTask = parseLinkedList(tasks, "prevTask", "nextTask")[0]?.id
+    const firstTask = sortByRank(tasks)[0];
     if (e.key === "Enter") {
       if (taskAddingStatus === OK) {
         appActions.handleSetProjectTitle(false)
@@ -39,8 +40,7 @@ const ProjectTitle = (props) => {
           tasksActions.handleCreateTask(
             initTaskState(
               selectedProject,
-              null,
-              firstTask
+              generateRank(undefined, firstTask?.rank),
             )
           )
         )
@@ -48,7 +48,7 @@ const ProjectTitle = (props) => {
     } else if (e.key === "ArrowDown") {
       dispatch(appActions.handleSetProjectTitle(false))
       if (firstTask) {
-        return dispatch(appActions.handleSetTask(firstTask))
+        return dispatch(appActions.handleSetTask(firstTask.id))
       }
     } else if (e.key === "Escape") {
       return dispatch(appActions.handleSetProjectTitle(false))

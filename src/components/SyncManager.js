@@ -11,6 +11,7 @@ import * as cacheController from "../controllers/cache"
 import { panelPages, AuthState } from '../constants';
 import store from "../store";
 import { navigate, useRouterNoUpdates } from "./Router"
+import sortByRank from "../utils/sortByRank"
 import API from "../amplify/API"
 import PubSub from "../amplify/PubSub"
 
@@ -78,7 +79,7 @@ const SyncManager = () => {
             await dispatch(projectsActions.handleFetchAssignedProjects(true))
             const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))
             PubSub.subscribeTopic("ownedProjects")
-            const firstProject = Object.values(projects).filter(x => !x.prevProject && x.isOwned)?.[0]
+            const firstProject = sortByRank(Object.values(projects).filter(x => x.isOwned))?.[0]
             if (firstProject) {
               dispatch(appActions.handleSetProject(firstProject.id, false))
               navigate(`/${firstProject.permalink}`, { replace: true })

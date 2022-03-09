@@ -3,7 +3,8 @@ import styles from "./Commands.module.scss"
 import * as tasksActions from "../../actions/tasks"
 import * as appActions from "../../actions/app"
 import copyTask from "../../utils/copyTask"
-import parseLinkedList from "../../utils/parseLinkedList"
+import sortByRank from "../../utils/sortByRank"
+import generateRank from "../../utils/generateRank"
 import { connect } from "react-redux"
 import { supportedCommands } from "../../constants"
 import { ReactComponent as AssignIcon } from "../../assets/person-add-outline.svg"
@@ -62,11 +63,7 @@ const Commands = (props) => {
           copyTask(
             tasks[selectedTask],
             selectedProject,
-            parseLinkedList(
-              tasks,
-              "prevTask",
-              "nextTask"
-            ).reverse()[0]?.id
+            generateRank(sortByRank(tasks, true)[0]?.rank)
           )
         ))
         return dispatch(appActions.handleSetTask(null))

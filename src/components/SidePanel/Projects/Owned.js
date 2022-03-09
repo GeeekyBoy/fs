@@ -21,7 +21,8 @@ import {CSS} from '@dnd-kit/utilities';
 import { useDispatch, useSelector } from "react-redux";
 import * as projectsActions from "../../../actions/projects"
 import ProjectItem from "./ProjectItem"
-import parseLinkedList from "../../../utils/parseLinkedList"
+import sortByRank from "../../../utils/sortByRank"
+import generateRank from "../../../utils/generateRank"
 import filterObj from "../../../utils/filterObj";
 import { ReactComponent as NoOwnedIllustartion } from "../../../assets/undraw_businessman_re_mlee.svg"
 import Illustration from "../../UI/Illustration";
@@ -132,23 +133,21 @@ const Owned = () => {
 
   const onSortEnd = ({oldIndex, newIndex}) => {
     if (oldIndex > newIndex) {
-        const sortedProjects = parseLinkedList(filterObj(projects, x => x.isOwned), "prevProject", "nextProject")
+        const sortedProjects = sortByRank(filterObj(projects, x => x.isOwned))
         dispatch(projectsActions.handleUpdateProject({
           id: sortedProjects[oldIndex].id,
-          prevProject: sortedProjects[newIndex - 1]?.id || null,
-          nextProject:  sortedProjects[newIndex]?.id || null,
+          rank: generateRank(sortedProjects[newIndex - 1]?.rank, sortedProjects[newIndex]?.rank),
         }))
       } else if (oldIndex < newIndex) {
-        const sortedProjects = parseLinkedList(filterObj(projects, x => x.isOwned), "prevProject", "nextProject")
+        const sortedProjects = sortByRank(filterObj(projects, x => x.isOwned))
         dispatch(projectsActions.handleUpdateProject({
           id: sortedProjects[oldIndex].id,
-          prevProject: sortedProjects[newIndex]?.id || null,
-          nextProject:  sortedProjects[newIndex + 1]?.id || null,
+          rank: generateRank(sortedProjects[newIndex]?.rank, sortedProjects[newIndex + 1]?.rank),
         }))
     }
   };
   const getOwnedProjects = (projects) => {
-    return parseLinkedList(filterObj(projects, x => x.isOwned), "prevProject", "nextProject")
+    return sortByRank(filterObj(projects, x => x.isOwned))
   }
   const ownedProjects = useMemo(() => getOwnedProjects(projects), [projects])
   return ownedProjects.length ? (

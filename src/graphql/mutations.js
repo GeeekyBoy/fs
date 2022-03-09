@@ -354,8 +354,7 @@ export const importData = /* GraphQL */ `
       owner
       items {
         id
-        prevProject
-        nextProject
+        rank
         permalink
         title
         tasksCount

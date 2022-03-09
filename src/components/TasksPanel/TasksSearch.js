@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from "react-redux";
 import Fuse from "fuse.js"
-import parseLinkedList from "../../utils/parseLinkedList";
+import sortByRank from "../../utils/sortByRank";
 import TaskItem from "./TaskItem";
 
 const TasksSearch = (props) => {
@@ -10,7 +10,7 @@ const TasksSearch = (props) => {
   const tasks = useSelector(state => state.tasks);
 
   const getSearchResults = (tasks, searchKeyword) => {
-    const tasksArr = parseLinkedList(tasks, "prevTask", "nextTask")
+    const tasksArr = sortByRank(tasks)
     const fuse = new Fuse(tasksArr, {
         keys: ['task', 'description']
     })

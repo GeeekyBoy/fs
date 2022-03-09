@@ -19,11 +19,12 @@ import {
 } from '@dnd-kit/modifiers';
 import { CSS } from '@dnd-kit/utilities';
 import { useDispatch, useSelector } from "react-redux";
-import parseLinkedList from "../../../utils/parseLinkedList";
+import sortByRank from "../../../utils/sortByRank";
 import TaskItem from "../TaskItem";
 import * as tasksActions from "../../../actions/tasks";
 import { AuthState } from "../../../constants";
 import TaskPlaceholder from '../TaskPlaceholder';
+import generateRank from '../../../utils/generateRank';
 
 const Sortable = (props) => {
 
@@ -143,21 +144,19 @@ const ByDefault = () => {
 
   const onSortEnd = (oldIndex, newIndex) => {
     if (oldIndex > newIndex) {
-      const sortedTasks = parseLinkedList(tasks, "prevTask", "nextTask");
+      const sortedTasks = sortByRank(tasks);
       dispatch(
         tasksActions.handleUpdateTask({
           id: sortedTasks[oldIndex].id,
-          prevTask: sortedTasks[newIndex - 1]?.id || null,
-          nextTask: sortedTasks[newIndex]?.id || null,
+          rank: generateRank(sortedTasks[newIndex - 1]?.rank, sortedTasks[newIndex]?.rank),
         })
       );
     } else if (oldIndex < newIndex) {
-      const sortedTasks = parseLinkedList(tasks, "prevTask", "nextTask");
+      const sortedTasks = sortByRank(tasks);
       dispatch(
         tasksActions.handleUpdateTask({
           id: sortedTasks[oldIndex].id,
-          prevTask: sortedTasks[newIndex]?.id || null,
-          nextTask: sortedTasks[newIndex + 1]?.id || null,
+          rank: generateRank(sortedTasks[newIndex]?.rank, sortedTasks[newIndex + 1]?.rank),
         })
       );
     }
@@ -169,12 +168,12 @@ const ByDefault = () => {
     (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
   }
   const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
-  const getSortedTasks = (tasks) => parseLinkedList(tasks, "prevTask", "nextTask")
+  const getSortedTasks = (tasks) => sortByRank(tasks)
   const sortedTasks = useMemo(() => getSortedTasks(tasks), [tasks])
   return (
     <>
       <Sortable
-        items={parseLinkedList(tasks, "prevTask", "nextTask").map(({ id }) => id)}
+        items={sortByRank(tasks).map(({ id }) => id)}
         onDragEnd={onSortEnd}
       >
         {sortedTasks.map((value, index) => (
@@ -182,8 +181,8 @@ const ByDefault = () => {
             key={value.id}
             index={index}
             value={value}
-            nextTask={value.nextTask}
-            prevTask={value.prevTask}
+            nextTask={sortedTasks[index + 1]?.id || null}
+            prevTask={sortedTasks[index - 1]?.id || null}
             sortable={!readOnly}
           />
         ))}

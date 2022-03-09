@@ -68,13 +68,12 @@ export const panelPages = {
   APP_SETTINGS: "APP_SETTINGS"
 }
 
-export const initProjectState = async (prevProject = null, nextProject = null) => {
+export const initProjectState = async (rank) => {
   return {
     id: generateID(),
     title: null,
     permalink: (await generateRandomWords()).join("-"),
-    prevProject: prevProject,
-    nextProject: nextProject,
+    rank: rank,
     todoCount: 0,
     pendingCount: 0,
     doneCount: 0,
@@ -85,12 +84,11 @@ export const initProjectState = async (prevProject = null, nextProject = null) =
   }
 }
 
-export const initTaskState = (projectID, prevTask = null, nextTask = null, preset = {}) => ({
+export const initTaskState = (projectID, rank = "", preset = {}) => ({
   id: generateID(),
   projectID: projectID,
   task: preset.task || "",
-  prevTask: prevTask,
-  nextTask: nextTask,
+  rank: rank,
   description: preset.description || null,
   due: preset.due || null,
   tags: preset.tags || [],

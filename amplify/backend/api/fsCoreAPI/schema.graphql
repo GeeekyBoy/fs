@@ -53,7 +53,7 @@ type Project
   @key(name: "byOwner", fields: ["owner"])
   @key(name: "byPermalink", fields: ["permalink"]) {
   id: ID!
-  rank: String!
+  rank: Float!
   permalink: String!
   title: String
   tasksCount: Int!
@@ -82,7 +82,7 @@ type Task
   @key(name: "byProject", fields: ["projectID"])
   @key(name: "byDue", fields: ["due"]) {
   id: ID!
-  rank: String!
+  rank: Float!
   projectID: ID!
   permalink: Int!
   task: String
@@ -138,6 +138,29 @@ type Notification
   owner: String!
   sender: String!
 }
+
+# type History
+#   @model(queries: null, mutations: null, subscriptions: null)
+#   @auth(
+#     rules: [
+#       { allow: public, provider: iam }
+#       { allow: private, provider: userPools }
+#     ]
+#   )
+#   @aws_iam
+#   @aws_cognito_user_pools
+#   @key(name: "byOwner", fields: ["owner"])
+#   @key(name: "bySender", fields: ["sender"]) {
+#   id: ID!
+#   entityID: ID!
+#   type: HistoryType!
+#   prev: String!
+#   next: String!
+#   createdAt: AWSDateTime!
+#   updatedAt: AWSDateTime!
+#   owner: String!
+#   sender: String!
+# }
 
 type Mutation {
   pushUserUpdate(input: PushUserUpdateInput!): UserUpdate
@@ -426,8 +449,7 @@ input PushUserUpdateInput {
 
 input PushProjectUpdateInput {
   id: ID!
-  prevProject: ID
-  nextProject: ID
+  rank: Float!
   permalink: String
   title: String
   tasksCount: Int
@@ -454,8 +476,7 @@ input PushNotificationInput {
 
 input CreateProjectInput {
   id: ID!
-  prevProject: ID
-  nextProject: ID
+  rank: Float!
   permalink: String!
   privacy: ProjectPrivacy!
   permissions: Permissions!
@@ -467,8 +488,7 @@ input CreateProjectInput {
 input CreateTaskInput {
   id: ID!
   projectID: ID!
-  prevTask: ID
-  nextTask: ID
+  rank: Float!
   task: String
   description: String
   due: AWSTimestamp
@@ -487,8 +507,7 @@ input CreateCommentInput {
 
 input UpdateProjectInput {
   id: ID!
-  prevProject: ID
-  nextProject: ID
+  rank: Float!
   permalink: String
   privacy: ProjectPrivacy
   permissions: Permissions
@@ -498,8 +517,7 @@ input UpdateProjectInput {
 
 input UpdateTaskInput {
   id: ID!
-  prevTask: ID
-  nextTask: ID
+  rank: Float!
   task: String
   description: String
   due: AWSTimestamp
@@ -576,8 +594,7 @@ type UserUpdate @aws_iam @aws_cognito_user_pools {
 
 type CreatedProject @aws_iam @aws_cognito_user_pools {
   id: ID!
-  prevProject: ID
-  nextProject: ID
+  rank: Float!
   permalink: String!
   title: String
   tasksCount: Int!
@@ -596,8 +613,7 @@ type CreatedProject @aws_iam @aws_cognito_user_pools {
 type CreatedTask @aws_iam @aws_cognito_user_pools {
   id: ID!
   projectID: ID!
-  prevTask: ID
-  nextTask: ID
+  rank: Float!
   permalink: Int!
   task: String
   description: String
@@ -625,8 +641,7 @@ type CreatedComment @aws_iam @aws_cognito_user_pools {
 
 type ProjectUpdate @aws_iam @aws_cognito_user_pools {
   id: ID!
-  prevProject: ID
-  nextProject: ID
+  rank: Float!
   permalink: String
   title: String
   tasksCount: Int
@@ -643,8 +658,7 @@ type ProjectUpdate @aws_iam @aws_cognito_user_pools {
 type TaskUpdate @aws_iam @aws_cognito_user_pools {
   id: ID!
   projectID: ID!
-  prevTask: ID
-  nextTask: ID
+  rank: Float!
   permalink: Int
   task: String
   description: String
@@ -668,8 +682,7 @@ type CommentUpdate @aws_iam @aws_cognito_user_pools {
 
 type DeletedProject @aws_iam @aws_cognito_user_pools {
   id: ID!
-  prevProject: ID
-  nextProject: ID
+  rank: Float!
   permalink: String!
   title: String
   tasksCount: Int!
@@ -688,8 +701,7 @@ type DeletedProject @aws_iam @aws_cognito_user_pools {
 type DeletedTask @aws_iam @aws_cognito_user_pools {
   id: ID!
   projectID: ID!
-  prevTask: ID
-  nextTask: ID
+  rank: Float!
   permalink: Int!
   task: String
   description: String

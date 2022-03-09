@@ -13,6 +13,8 @@ import styles from "./TaskOpts.module.scss"
 import Modal from '../UI/Modal/';
 import { useModal } from '../ModalManager';
 import { panelPages } from '../../constants';
+import getNextItem from '../../utils/getNextItem';
+import generateRank from '../../utils/generateRank';
 
 const TaskOpts = () => {
 
@@ -21,6 +23,7 @@ const TaskOpts = () => {
 
   const selectedProjectID = useSelector(state => state.app.selectedProject)
 
+  const tasks = useSelector(state => state.tasks)
   const selectedTask = useSelector(state => state.tasks[state.app.selectedTask])
 
   const copyTask = () => {
@@ -40,8 +43,10 @@ const TaskOpts = () => {
         copyTaskCore(
           selectedTask,
           selectedProjectID,
-          selectedTask,
-          selectedTask.nextTask
+          generateRank(
+            selectedTask.rank,
+            getNextItem(selectedTask.rank, tasks)?.rank
+          )
         )
       )
     );

@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import * as projectsActions from "../../../actions/projects"
 import * as appActions from "../../../actions/app"
 import { initProjectState, OK, PENDING, AuthState } from "../../../constants"
-import parseLinkedList from "../../../utils/parseLinkedList"
+import sortByRank from "../../../utils/sortByRank"
 import { ReactComponent as AddIcon } from "../../../assets/add-outline.svg";
 import filterObj from "../../../utils/filterObj";
 import PanelTabs from "../../UI/PanelTabs";
 import Assigned from "./Assigned";
 import Watched from "./Watched";
 import Owned from "./Owned";
+import generateRank from "../../../utils/generateRank";
 
 const Projects = forwardRef((_, ref) => {
   const [scope, setScope] = useState("owned")
@@ -27,11 +28,12 @@ const Projects = forwardRef((_, ref) => {
       dispatch(
         projectsActions.handleCreateProject(
           await initProjectState(
-            parseLinkedList(
-              filterObj(projects, (x) => x.isOwned),
-              "prevProject",
-              "nextProject"
-            ).reverse()[0]?.id
+            generateRank(
+              sortByRank(
+                filterObj(projects, (x) => x.isOwned),
+                true
+              )[0]?.rank
+            )
           )
         )
       );

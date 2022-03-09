@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./index.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import parseLinkedList from "../../utils/parseLinkedList";
+import sortByRank from "../../utils/sortByRank";
 import ProjectNotSelected from "./ProjectNotSelected";
 import * as tasksActions from "../../actions/tasks";
 import { READY, LOADING, initTaskState, AuthState } from "../../constants";
@@ -13,6 +13,7 @@ import TasksSearch from './TasksSearch';
 import ProjectHeader from './ProjectHeader';
 import SimpleBar from 'simplebar-react';
 import LoginBanner from './LoginBanner';
+import generateRank from '../../utils/generateRank';
 
 const TasksPanel = () => {
   const [searchKeyword, setSearchKeyword] = useState("")
@@ -39,7 +40,7 @@ const TasksPanel = () => {
       tasksActions.handleCreateTask(
         initTaskState(
           selectedProject,
-          parseLinkedList(tasks, "prevTask", "nextTask").reverse()[0]?.id
+          generateRank(sortByRank(tasks, true)[0]?.rank)
         )
       )
     )
@@ -75,7 +76,7 @@ const TasksPanel = () => {
               ) : isSynced ? (
                 <NoTasks msgID="EMPTY" />
               ) : (
-                  <NoTasks msgID="OFFLINE" />
+                <NoTasks msgID="OFFLINE" />
               )}
             </>
           )}

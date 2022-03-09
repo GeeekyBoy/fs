@@ -3,7 +3,8 @@ import * as tasksActions from "../../actions/tasks";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthState, initTaskState, READY } from "../../constants";
 import styles from "./TaskPlaceholder.module.scss";
-import parseLinkedList from "../../utils/parseLinkedList";
+import sortByRank from "../../utils/sortByRank";
+import generateRank from "../../utils/generateRank";
 
 const TaskPlaceholder = (props) => {
   const {
@@ -41,8 +42,7 @@ const TaskPlaceholder = (props) => {
         tasksActions.handleCreateTask(
           initTaskState(
             selectedProject,
-            parseLinkedList(tasks, "prevTask", "nextTask").reverse()[0]?.id,
-            null,
+            generateRank(sortByRank(tasks, true)[0]?.rank),
             preset
           )
         )

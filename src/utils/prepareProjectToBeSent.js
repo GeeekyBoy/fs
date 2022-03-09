@@ -1,8 +1,7 @@
 export default (projectState) => {
   return {
     id: projectState.id,
-    prevProject: projectState.prevProject,
-    nextProject: projectState.nextProject,
+    rank: projectState.rank,
     permalink: projectState.permalink,
     privacy: projectState.privacy,
     permissions: projectState.permissions,

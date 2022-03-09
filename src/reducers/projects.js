@@ -1,5 +1,3 @@
-import injectItemOrder from "../utils/injectItemOrder"
-import removeItemOrder from "../utils/removeItemOrder"
 import { CREATE_PROJECT, UPDATE_PROJECT, REMOVE_PROJECT, EMPTY_PROJECTS, FETCH_PROJECTS, FETCH_CACHED_PROJECTS } from "../actions/projects"
 import filterObj from "../utils/filterObj"
 
@@ -7,16 +5,6 @@ export default function (state = {}, action) {
   let stateClone = {...state}
   switch(action.type) {
     case CREATE_PROJECT:
-      if (action.scope === "owned") {
-        stateClone = injectItemOrder(
-          stateClone,
-          action.projectState,
-          action.projectState.prevProject,
-          action.projectState.nextProject,
-          "prevProject",
-          "nextProject"
-        )
-      }
       return {
         ...stateClone,
         [action.projectState.id]: {
@@ -29,22 +17,6 @@ export default function (state = {}, action) {
       }
     case UPDATE_PROJECT:
       const update = Object.fromEntries(Object.entries(action.update).filter(item => item[1] != null))
-      if (update.prevProject && update.nextProject) {
-        stateClone = removeItemOrder(
-          stateClone,
-          stateClone[update.id],
-          "prevProject",
-          "nextProject"
-        )
-        stateClone = injectItemOrder(
-          stateClone,
-          stateClone[update.id],
-          update.prevProject,
-          update.nextProject,
-          "prevProject",
-          "nextProject"
-        )
-      }
       return {
         ...stateClone,
         [update.id]: {
@@ -53,14 +25,6 @@ export default function (state = {}, action) {
         }
       }
     case REMOVE_PROJECT:
-      if (action.scope === "owned") {
-        stateClone = removeItemOrder(
-          stateClone,
-          stateClone[action.id],
-          "prevProject",
-          "nextProject"
-        )
-      }
       if ((action.scope === "owned" && !stateClone[action.id].isAssigned && !stateClone[action.id].isWatched && !stateClone[action.id].isTemp) ||
           (action.scope === "assigned" && !stateClone[action.id].isOwned && !stateClone[action.id].isWatched && !stateClone[action.id].isTemp) ||
           (action.scope === "watched" && !stateClone[action.id].isOwned && !stateClone[action.id].isAssigned && !stateClone[action.id].isTemp) ||

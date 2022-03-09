@@ -416,105 +416,6 @@ exports.handler = async function (ctx) {
     }
   }
 
-  async function removeProjectOrder(projectID) {
-    const { prevProject, nextProject } = await getProject(projectID)
-    const prevProjectUpdateParams = {
-      TableName: PROJECTTABLE,
-      Key: {
-        "id": prevProject
-      },
-      UpdateExpression: "SET nextProject = :nextProject, updatedAt = :updatedAt",
-      ReturnValues: "ALL_NEW",
-      ExpressionAttributeValues: {
-        ":nextProject": nextProject,
-        ":updatedAt": new Date().toISOString()
-      }
-    };
-    const nextProjectUpdateParams = {
-      TableName: PROJECTTABLE,
-      Key: {
-        "id": nextProject
-      },
-      UpdateExpression: "SET prevProject = :prevProject, updatedAt = :updatedAt",
-      ReturnValues: "ALL_NEW",
-      ExpressionAttributeValues: {
-        ":prevProject": prevProject,
-        ":updatedAt": new Date().toISOString()
-      }
-    };
-    try {
-      if (prevProject) {
-        const updatedPrevProject = await docClient.update(prevProjectUpdateParams).promise()
-        cachedProjects[prevProject] = {...updatedPrevProject.Attributes}
-      }
-      if (nextProject) {
-        const updatedNextProject = await docClient.update(nextProjectUpdateParams).promise()
-        cachedProjects[nextProject] = {...updatedNextProject.Attributes}
-      }
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-
-  function parseLinkedList (arr, prevKey, nextKey) {
-    const list = {}
-    for (const arrItem of arr) {
-      list[arrItem.id] = arrItem
-    }
-    const sortedArray = []
-    const firstItemArr = arr.filter(x => !x[prevKey])
-    if (firstItemArr.length === 1) {
-      sortedArray.push(firstItemArr[0])
-      let nextItem = firstItemArr[0][nextKey]
-      while (nextItem) {
-        sortedArray.push(list[nextItem])
-        nextItem = list[nextItem][nextKey]
-      }
-      return sortedArray
-    } else {
-      return []
-    }
-  }
-
-  async function injectProjectOrder(projectID, prevProject, nextProject) {
-    const prevProjectUpdateParams = {
-      TableName: PROJECTTABLE,
-      Key: {
-        "id": prevProject
-      },
-      UpdateExpression: "SET nextProject = :nextProject, updatedAt = :updatedAt",
-      ReturnValues: "ALL_NEW",
-      ExpressionAttributeValues: {
-        ":nextProject": projectID,
-        ":updatedAt": new Date().toISOString()
-      }
-    };
-    const nextProjectUpdateParams = {
-      TableName: PROJECTTABLE,
-      Key: {
-        "id": nextProject
-      },
-      UpdateExpression: "SET prevProject = :prevProject, updatedAt = :updatedAt",
-      ReturnValues: "ALL_NEW",
-      ExpressionAttributeValues: {
-        ":prevProject": projectID,
-        ":updatedAt": new Date().toISOString()
-      }
-    };
-    try {
-      if (prevProject) {
-        const updatedPrevProject = await docClient.update(prevProjectUpdateParams).promise()
-        cachedProjects[prevProject] = {...updatedPrevProject.Attributes}
-      }
-      if (nextProject) {
-        const updatedNextProject = await docClient.update(nextProjectUpdateParams).promise()
-        cachedProjects[nextProject] = {...updatedNextProject.Attributes}
-      }
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-
   async function createProject(ctx) {
     const client = ctx.identity.username
     const mutationID = ctx.arguments.input.mutationID || null
@@ -539,12 +440,6 @@ exports.handler = async function (ctx) {
         updatedAt: new Date().toISOString(),
         owner: client
       }
-      let isCont = false
-      if (!projectData.prevProject) {
-        projectData.prevProject = await getLastProject(client)
-        isCont = true
-      }
-      projectData.nextProject = projectData.nextProject || null
       const params = {
         TableName: PROJECTTABLE,
         Item: projectData
@@ -552,96 +447,12 @@ exports.handler = async function (ctx) {
       try {
         await docClient.put(params).promise();
         cachedProjects[projectData.id] = {...projectData}
-        if (isCont) {
-          await injectProjectOrder(projectData.id, projectData.prevProject, null)
-        } else {
-          await injectProjectOrder(projectData.id, projectData.prevProject, projectData.nextProject)
-        }
         return { ...projectData, mutationID };
       } catch (err) {
         throw new Error(err);
       }
     } else {
       throw new Error(UNAUTHORIZED)
-    }
-  }
-
-  async function removeTaskOrder(taskID) {
-    const { prevTask, nextTask } = await getTask(taskID)
-    const prevTaskUpdateParams = {
-      TableName: TASKTABLE,
-      Key: {
-        "id": prevTask
-      },
-      UpdateExpression: "SET nextTask = :nextTask, updatedAt = :updatedAt",
-      ReturnValues: "ALL_NEW",
-      ExpressionAttributeValues: {
-        ":nextTask": nextTask,
-        ":updatedAt": new Date().toISOString()
-      }
-    };
-    const nextTaskUpdateParams = {
-      TableName: TASKTABLE,
-      Key: {
-        "id": nextTask
-      },
-      UpdateExpression: "SET prevTask = :prevTask, updatedAt = :updatedAt",
-      ReturnValues: "ALL_NEW",
-      ExpressionAttributeValues: {
-        ":prevTask": prevTask,
-        ":updatedAt": new Date().toISOString()
-      }
-    };
-    try {
-      if (prevTask) {
-        const updatedPrevTask = await docClient.update(prevTaskUpdateParams).promise()
-        cachedTasks[prevTask] = {...updatedPrevTask.Attributes}
-      }
-      if (nextTask) {
-        const updatedNextTask = await docClient.update(nextTaskUpdateParams).promise()
-        cachedTasks[nextTask] = {...updatedNextTask.Attributes}
-      }
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-
-  async function injectTaskOrder(taskID, prevTask, nextTask) {
-    const prevTaskUpdateParams = {
-      TableName: TASKTABLE,
-      Key: {
-        "id": prevTask
-      },
-      UpdateExpression: "SET nextTask = :nextTask, updatedAt = :updatedAt",
-      ReturnValues: "ALL_NEW",
-      ExpressionAttributeValues: {
-        ":nextTask": taskID,
-        ":updatedAt": new Date().toISOString()
-      }
-    };
-    const nextTaskUpdateParams = {
-      TableName: TASKTABLE,
-      Key: {
-        "id": nextTask
-      },
-      UpdateExpression: "SET prevTask = :prevTask, updatedAt = :updatedAt",
-      ReturnValues: "ALL_NEW",
-      ExpressionAttributeValues: {
-        ":prevTask": taskID,
-        ":updatedAt": new Date().toISOString()
-      }
-    };
-    try {
-      if (prevTask) {
-        const updatedPrevTask = await docClient.update(prevTaskUpdateParams).promise()
-        cachedTasks[prevTask] = {...updatedPrevTask.Attributes}
-      }
-      if (nextTask) {
-        const updatedNextTask = await docClient.update(nextTaskUpdateParams).promise()
-        cachedTasks[nextTask] = {...updatedNextTask.Attributes}
-      }
-    } catch (err) {
-      throw new Error(err);
     }
   }
 
@@ -697,12 +508,6 @@ exports.handler = async function (ctx) {
         updatedAt: new Date().toISOString(),
         owner: client
       }
-      let isCont = false
-      if (!taskData.prevTask) {
-        taskData.prevTask = await getLastTask(projectID)
-        isCont = true
-      }
-      taskData.nextTask = taskData.nextTask || null
       const projectUpdateParams = {
         TableName: PROJECTTABLE,
         Key: {
@@ -725,11 +530,6 @@ exports.handler = async function (ctx) {
       try {
         await docClient.put(taskParams).promise();
         cachedTasks[taskData.id] = {...taskData}
-        if (isCont) {
-          await injectTaskOrder(taskData.id, taskData.prevTask, null)
-        } else {
-          await injectTaskOrder(taskData.id, taskData.prevTask, taskData.nextTask)
-        }
         const updatedProject = await docClient.update(projectUpdateParams).promise()
         await _pushProjectUpdate(updatedProject.Attributes)
         cachedProjects[projectID] = {...updatedProject.Attributes}
@@ -866,10 +666,6 @@ exports.handler = async function (ctx) {
         params.ExpressionAttributeNames = expAttrNames
       }
       try {
-        if (updateData.prevProject !== undefined && updateData.nextProject !== undefined) {
-          await removeProjectOrder(projectID)
-          await injectProjectOrder(projectID, updateData.prevProject, updateData.nextProject)
-        }
         const data = await docClient.update(params).promise();
         return {
           id: projectID,
@@ -935,10 +731,6 @@ exports.handler = async function (ctx) {
         taskUpdateParams.ExpressionAttributeNames = expAttrNames
       }
       try {
-        if (updateData.prevTask !== undefined && updateData.nextTask !== undefined) {
-          await removeTaskOrder(taskID)
-          await injectTaskOrder(taskID, updateData.prevTask, updateData.nextTask)
-        }
         if (updateData.status) {
           await updateTaskCount(taskID, updateData.status)
         }
@@ -968,7 +760,7 @@ exports.handler = async function (ctx) {
             owners: [...effectiveWatchers]
           })
         }
-        if (updateData.status) {
+        if (updateData.priority) {
           await _pushNotification({
             type: "PRIORITY_CHANGE",
             payload: `{
@@ -1379,77 +1171,18 @@ exports.handler = async function (ctx) {
     }
   }
 
-  async function getLastProject (client) {
-    const params = {
-      TableName: PROJECTTABLE,
-      IndexName: "byOwner",
-      ProjectionExpression: "#id, nextProject",
-      KeyConditionExpression: "#owner = :owner",
-      ExpressionAttributeNames: { "#id": "id", "#owner": "owner" },
-      ExpressionAttributeValues: {
-        ":owner": client
-      },
-    };
-    try {
-      let items = []
-      let lastData = null
-      while (!lastData || lastData.LastEvaluatedKey) {
-        lastData = await docClient.query(params).promise();
-        items = [...items, ...(lastData.Items || [])]
-        params.ExclusiveStartKey = lastData.LastEvaluatedKey
-      }
-      if (items.length) {
-        return items.filter(x => !x.nextProject)[0].id
-      } else {
-        return null
-      }
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-
-  async function getLastTask (projectID) {
-    const params = {
-      TableName: TASKTABLE,
-      IndexName: "byProject",
-      ProjectionExpression: "#id, nextTask",
-      KeyConditionExpression: "projectID = :projectID",
-      ExpressionAttributeNames: { "#id": "id" },
-      ExpressionAttributeValues: {
-        ":projectID": projectID
-      },
-    };
-    try {
-      let items = []
-      let lastData = null
-      while (!lastData || lastData.LastEvaluatedKey) {
-        lastData = await docClient.query(params).promise();
-        items = [...items, ...(lastData.Items || [])]
-        params.ExclusiveStartKey = lastData.LastEvaluatedKey
-      }
-      if (items.length) {
-        return items.filter(x => !x.nextTask)[0].id
-      } else {
-        return null
-      }
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-
   async function importData(ctx) {
-    const data = JSON.parse(ctx.arguments.data)
+    const data = Object.values(JSON.parse(ctx.arguments.data))
     const client = ctx.identity.username
     const importedProjects = {
       owner: client,
       items: []
     }
     try {
-      let sortedProjects = parseLinkedList(data, "prevProject", "nextProject")
-      const projectsCount = sortedProjects.length
+      const projectsCount = data.length
       for (let i = 0; i < projectsCount; i++) {
-        const project = sortedProjects[i]
-        const tasks = project.tasks
+        const project = data[i]
+        const tasks = Object.values(project.tasks)
         const projectData = await createProject({
           identity: {
             username: client
@@ -1457,20 +1190,18 @@ exports.handler = async function (ctx) {
           arguments: {
             input: {
               id: client + "-" + project.id,
+              rank: project.rank,
               permalink: project.permalink,
               title: project.title,
-              prevProject: project.prevProject ? client + "-" + project.prevProject : null,
-              nextProject: project.nextProject ? client + "-" + project.nextProject : null,
               privacy: project.privacy,
               permissions: project.permissions,
               members: project.members
             }
           }
         })
-        let sortedTasks = parseLinkedList(tasks, "prevTask", "nextTask")
-        const sortedTasksCount = sortedTasks.length
+        const sortedTasksCount = tasks.length
         for (let k = 0; k < sortedTasksCount; k++) {
-          const task = sortedTasks[k]
+          const task = tasks[k]
           await createTask({
             identity: {
               username: client
@@ -1478,10 +1209,9 @@ exports.handler = async function (ctx) {
             arguments: {
               input: {
                 id: client + "-" + task.id,
+                rank: task.rank,
                 projectID: projectData.id,
                 task: task.task,
-                prevTask: task.prevTask ? client + "-" + task.prevTask : null,
-                nextTask: task.nextTask ? client + "-" + task.nextTask : null,
                 description: task.description,
                 due: task.due,
                 tags: task.tags,
@@ -1786,7 +1516,6 @@ exports.handler = async function (ctx) {
         removeTasksProm,
         removeProjectProm,
       ]);
-      await removeProjectOrder(projectID)
       return { ...deletedProject, mutationID }
     } else {
       throw new Error(UNAUTHORIZED)
@@ -1799,7 +1528,6 @@ exports.handler = async function (ctx) {
     const client = ctx.identity.username
     if (await isTaskEditableByClient(taskID, client)) {
       const removeCommentsProm = removeCommentsOfTask(taskID);
-      await removeTaskOrder(taskID)
       await updateTaskCount(taskID)
       const taskAssignees = cachedTasks[taskID].assignees
       const taskWatchers = cachedTasks[taskID].watchers
@@ -2374,8 +2102,7 @@ exports.handler = async function (ctx) {
       mutation pushProjectUpdate($input: PushProjectUpdateInput!) {
         pushProjectUpdate(input: $input) {
           id
-          prevProject
-          nextProject
+          rank
           permalink
           title
           tasksCount

@@ -123,10 +123,10 @@ export const handleUpdateTask = (update) => (dispatch, getState) => {
   }
 }
 
-export const handleRemoveTask = (taskState) => (dispatch, getState) => {
+export const handleRemoveTask = (taskState, prevTask = null) => (dispatch, getState) => {
   const { user, tasks, app } = getState()
   if (app.selectedTask === taskState.id) {
-    dispatch(appActions.handleSetTask(taskState.prevTask))
+    dispatch(appActions.handleSetTask(prevTask))
   }
   if (tasks[taskState.id]) {
     dispatch(removeTask(taskState.id))

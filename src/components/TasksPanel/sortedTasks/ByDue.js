@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from "react-redux";
 import formatDate from '../../../utils/formatDate';
-import parseLinkedList from "../../../utils/parseLinkedList";
+import sortByRank from "../../../utils/sortByRank";
 import sortObj from '../../../utils/sortObj';
 import Accordion from '../../UI/Accordion';
 import TaskItem from "../TaskItem";
@@ -10,14 +10,14 @@ import TaskPlaceholder from '../TaskPlaceholder';
 const ByDue = () => {
   const tasks = useSelector(state => state.tasks);
   // const getSortedTasks = (tasks) => {
-  //   return parseLinkedList(tasks, "prevTask", "nextTask").sort(
+  //   return sortByRank(tasks).sort(
   //     (a, b) => (b.due || 0) - (a.due || 0)
   //   )
   // }
   const getSortedTasks = (tasks) => {
     let result = {}
     const noDue = [];
-    const defaultSorting = parseLinkedList(tasks, "prevTask", "nextTask")
+    const defaultSorting = sortByRank(tasks)
     for (const task of defaultSorting) {
       if (task.due) {
         if (!result[task.due]) {

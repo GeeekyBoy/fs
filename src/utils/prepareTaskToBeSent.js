@@ -2,8 +2,7 @@ export default (taskState) => {
   return {
     id: taskState.id,
     projectID: taskState.projectID,
-    prevTask: taskState.prevTask,
-    nextTask: taskState.nextTask,
+    rank: taskState.rank,
     task: taskState.task,
     description: taskState.description,
     due: taskState.due,

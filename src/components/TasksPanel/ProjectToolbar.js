@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import * as tasksActions from "../../actions/tasks"
 import * as appActions from "../../actions/app"
 import * as appSettingsActions from "../../actions/appSettings"
-import parseLinkedList from "../../utils/parseLinkedList"
+import sortByRank from "../../utils/sortByRank"
 import copyTask from "../../utils/copyTask"
 import { panelPages } from "../../constants";
 import { ReactComponent as ClipboardIcon } from "../../assets/clipboard-outline.svg"
@@ -18,6 +18,7 @@ import Dropdown from '../UI/fields/Dropdown';
 import ShadowScroll from '../ShadowScroll';
 import { useModal } from '../ModalManager';
 import modals from '../modals';
+import generateRank from '../../utils/generateRank'
 
 const ProjectToolbar = () => {
   const { showModal } = useModal();
@@ -50,11 +51,7 @@ const ProjectToolbar = () => {
               copyTask(
                 taskState,
                 selectedProject,
-                parseLinkedList(
-                  tasks,
-                  "prevTask",
-                  "nextTask"
-                ).reverse()[0]?.id
+                generateRank(sortByRank(tasks, true)[0]?.rank)
               )
             )
           )

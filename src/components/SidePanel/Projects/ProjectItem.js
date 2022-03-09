@@ -12,13 +12,11 @@ const ProjectItem = (props) => {
   } = props;
   const dispatch = useDispatch();
   const selectedProject = useSelector(state => state.app.selectedProject);
-  const shareProject = (e) => {
-    e.stopPropagation();
+  const shareProject = () => {
     const linkToBeCopied = window.location.href.replace(/\/\d+/, "");
     navigator.clipboard.writeText(linkToBeCopied);
   };
-  const removeProject = (e) => {
-    e.stopPropagation();
+  const removeProject = () => {
     if (!readOnly) {
       dispatch(projectsActions.handleRemoveProject(project));
     }

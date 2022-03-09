@@ -28,7 +28,7 @@ init_env () {
         tmp=$(mktemp)
         jq --arg env "${ENV}" --arg appId "${AWS_APP_ID}" '.[$env].categories.hosting.amplifyhosting.appId = $appId' ./amplify/team-provider-info.json > "$tmp" && mv "$tmp" ./amplify/team-provider-info.json
         echo "# Pushing changes to the cloud"
-        amplify push --yes
+        amplify push --yes --allow-destructive-graphql-schema-updates
     else
         echo "STACKINFO="${STACKINFO}
         echo "# Importing Amplify environment: ${ENV} (amplify env import)"
@@ -41,7 +41,7 @@ init_env () {
         tmp=$(mktemp)
         jq --arg env "${ENV}" --arg appId "${AWS_APP_ID}" '.[$env].categories.hosting.amplifyhosting.appId = $appId' ./amplify/team-provider-info.json > "$tmp" && mv "$tmp" ./amplify/team-provider-info.json
         echo "# Pushing changes to the cloud"
-        amplify push --yes
+        amplify push --yes --allow-destructive-graphql-schema-updates
     fi
     echo "# Done initializing Amplify environment: ${ENV}"
 }

@@ -17,6 +17,7 @@ import store from "../store";
 import { navigate, useRouterNoUpdates } from "./Router"
 import API from "../amplify/API"
 import PubSub from "../amplify/PubSub"
+import sortByRank from "../utils/sortByRank"
 
 const Loading = (props) => {
   const { onFinish } = props
@@ -137,7 +138,7 @@ const Loading = (props) => {
           const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
           setProgressValue(progressValue + 3)
           PubSub.subscribeTopic("ownedProjects")
-          const firstProject = Object.values(projects).filter(x => !x.prevProject && x.isOwned)?.[0]
+          const firstProject = sortByRank(Object.values(projects).filter(x => x.isOwned))?.[0]
           if (firstProject) {
             dispatch(appActions.handleSetProject(firstProject.id, false))
             navigate(`/${firstProject.permalink}`, { replace: true })
@@ -147,7 +148,7 @@ const Loading = (props) => {
           setLoadingMsg("We Are Fetching Your Own Projects")
           const projects = await dispatch(projectsActions.handleFetchOwnedProjects())
           setProgressValue(progressValue + 1)
-          const firstProject = Object.values(projects).filter(x => !x.prevProject && x.isOwned)?.[0]
+          const firstProject = sortByRank(Object.values(projects).filter(x => x.isOwned))?.[0]
           if (firstProject) {
             dispatch(appActions.handleSetProject(firstProject.id, false))
             navigate(`/local/${firstProject.permalink}`, { replace: true })

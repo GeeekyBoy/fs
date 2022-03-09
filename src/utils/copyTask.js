@@ -1,11 +1,10 @@
 import generateID from "./generateID";
 
-export default (taskState, projectID, prevTask = null, nextTask = null) => {
+export default (taskState, projectID, rank) => {
   return {
     id: generateID(),
     projectID: projectID,
-    prevTask: prevTask,
-    nextTask: nextTask,
+    rank: rank,
     task: taskState.task,
     description: taskState.description,
     due: taskState.due,

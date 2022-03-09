@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from "react-redux";
-import parseLinkedList from "../../../utils/parseLinkedList";
+import sortByRank from "../../../utils/sortByRank";
 import Accordion from '../../UI/Accordion';
 import TaskItem from "../TaskItem";
 import TaskPlaceholder from '../TaskPlaceholder';
@@ -8,7 +8,7 @@ import TaskPlaceholder from '../TaskPlaceholder';
 const ByStatus = () => {
   const tasks = useSelector(state => state.tasks);
   const getSortedTasks = (tasks) => {
-    const defaultSorting = parseLinkedList(tasks, "prevTask", "nextTask")
+    const defaultSorting = sortByRank(tasks)
     return {
       todo: [...defaultSorting].filter(x => x.status === "todo"),
       pending: [...defaultSorting].filter(x => x.status === "pending"),

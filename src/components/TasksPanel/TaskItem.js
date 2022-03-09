@@ -1,23 +1,15 @@
 import React, { useRef, useMemo, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./TaskItem.module.scss"
 import { useWindowSize } from "../../components/WindowSizeListener";
-import formatDate from "../../utils/formatDate"
 import copyTaskCore from "../../utils/copyTask"
+import generateRank from "../../utils/generateRank";
 import * as appActions from "../../actions/app";
 import * as tasksActions from "../../actions/tasks";
-import { ReactComponent as CheckmarkIcon } from "../../assets/checkmark-outline.svg";
-import { ReactComponent as OptionsIcon } from "../../assets/ellipsis-vertical.svg";
-import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
-import { ReactComponent as CopyIcon } from "../../assets/copy-outline.svg"
-import { ReactComponent as DuplicateIcon } from "../../assets/duplicate-outline.svg"
-import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
-import { ReactComponent as DetailsIcon } from "../../assets/information-circle-outline.svg";
 import SlashCommands from "../SlashCommands";
 import { useModal } from "../ModalManager";
 import { OK, initTaskState, AuthState, panelPages } from "../../constants";
-import AvatarGroup from "../UI/AvatarGroup";
 import modals from '../modals';
+import Task from "../UI/Task";
 
 const TaskItem = (props) => {
 
@@ -37,13 +29,13 @@ const TaskItem = (props) => {
   const dispatch = useDispatch()
   
   const selectedProject = useSelector(state => state.app.selectedProject)
+  const nextTaskRank = useSelector(state => state.tasks[nextTask]?.rank)
   const taskAddingStatus = useSelector(state => state.app.taskAddingStatus)
   const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
   const isSynced = useSelector(state => state.app.isSynced)
   const lockedTaskField = useSelector(state => state.app.lockedTaskField)
   const command = useSelector(state => state.app.command)
 
-  const tasksSortingCriteria = useSelector(state => state.appSettings.tasksSortingCriteria)
   const showDueDate = useSelector(state => state.appSettings.showDueDate)
   const showAssignees = useSelector(state => state.appSettings.showAssignees)
   const showDoneIndicator = useSelector(state => state.appSettings.showDoneIndicator)
@@ -119,7 +111,7 @@ const TaskItem = (props) => {
 
   const slashCommandsPos = useMemo(() => getSlashCommandsPos(inputRef), [item])
 
-  const onChange = (e) => {
+  const handleChange = (e) => {
     if (lockedTaskField !== "task") {
       dispatch(appActions.setLockedTaskField("task"))
     }
@@ -131,73 +123,68 @@ const TaskItem = (props) => {
     );
   };
 
-  const toggleStatus = (item) => {
+  const handleToggleStatus = (nextStatus) => {
     dispatch(
       tasksActions.handleUpdateTask({
         id: item.id,
-        status: item.status === "done" ? "todo" : "done",
+        status: nextStatus,
       })
     );
   };
 
-  const handleKeyUp = (e) => {
-    if (!command) {
-      if (e.key === "Enter") {
-        if (taskAddingStatus === OK && !readOnly) {
-          dispatch(
-            tasksActions.handleCreateTask(
-              initTaskState(
-                selectedProject,
-                selectedTask,
-                nextTask
-              )
-            )
-          );
-        }
-      } else if (e.key === "ArrowUp") {
-        if (!prevTask) {
-          dispatch(appActions.handleSetProjectTitle(true))
-        } else {
-          dispatch(appActions.handleSetTask(prevTask))
-        }
-      } else if (e.key === "ArrowDown") {
-        if (nextTask) {
-          dispatch(appActions.handleSetTask(nextTask))
-        }
-      } else if (e.key === "Escape") {
-        dispatch(appActions.handleSetTask(null))
-      }
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "ArrowUp" || e.key === "ArrowDown" || e.key === "Enter") {
-      e.preventDefault()
+  const handleArrowUp = () => {
+    if (!prevTask) {
+      dispatch(appActions.handleSetProjectTitle(true))
+    } else {
+      dispatch(appActions.handleSetTask(prevTask))
     }
   }
 
-  const openActionSheet = (item) => {
-    dispatch(
-      appActions.handleSetTask(item.id)
-    )
-    showModal(modals.TASK_OPTS)
+  const handleArrowDown = () => {
+    if (nextTask) {
+      dispatch(appActions.handleSetTask(nextTask))
+    }
   }
 
-  const selectItem = (item) => {
+  const handleEnter = () => {
+    if (taskAddingStatus === OK && !readOnly) {
+      dispatch(
+        tasksActions.handleCreateTask(
+          initTaskState(
+            selectedProject,
+            generateRank(item.rank, nextTaskRank),
+          )
+        )
+      );
+    }
+  }
+
+  const handleEscape = () => {
+    dispatch(appActions.handleSetTask(null))
+  }
+
+  const handleSelect = () => {
     dispatch(appActions.handleSetTask(item.id))
   }
 
-  const openRightPanel = (item) => {
-    if (item.id !== selectedTask) {
-      dispatch(appActions.handleSetTask(item.id))
-    }
-    if (!isRightPanelOpened) {
-      dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
-      dispatch(appActions.handleSetRightPanel(true))
+  const handleDetails = () => {
+    if (width < 768) {
+      dispatch(
+        appActions.handleSetTask(item.id)
+      )
+      showModal(modals.TASK_OPTS)
+    } else {
+      if (item.id !== selectedTask) {
+        dispatch(appActions.handleSetTask(item.id))
+      }
+      if (!isRightPanelOpened) {
+        dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
+        dispatch(appActions.handleSetRightPanel(true))
+      }
     }
   }
 
-  const copyTask = (item) => {
+  const handleCopy = () => {
     window.localStorage.setItem(
       "tasksClipboard",
       "COPIEDTASKSTART=>" +
@@ -206,158 +193,62 @@ const TaskItem = (props) => {
     );
   }
 
-  const duplicateTask = (item) => {
+  const handleDuplicate = () => {
     dispatch(
       tasksActions.handleCreateTask(
         copyTaskCore(
           item,
           selectedProject,
-          item.id,
-          item.nextTask
+          generateRank(item.rank, nextTaskRank),
         )
       )
     );
   }
 
-  const shareTask = () => {
+  const handleShare = () => {
     const linkToBeCopied = window.location.href
     navigator.clipboard.writeText(linkToBeCopied)
   }
 
-  const removeTask = (item) => {
-    dispatch(tasksActions.handleRemoveTask(item))
+  const handleRemove = () => {
+    dispatch(tasksActions.handleRemoveTask(item, prevTask))
   }
 
   return (
-    <div
-      {...listeners}
-      className={[
-        styles.TaskItemShell,
-        ...(isSorting && [styles.sorting] || []),
-        ...(isDragging && [styles.dragging] || [])
-      ].join(" ")}
-    >
-      <div
-        className={[
-          styles.TaskItemCore,
-          ...(isSorting && [styles.sorting] || []),
-          ...(isDragging && [styles.dragging] || []),
-          ...(taskViewers[item.id] && [styles.collaborativeFocused] || []),
-          ...((tasksSortingCriteria !== "BY_DEFAULT" && tasksSortingCriteria !== "BY_DUE") && [styles.categorized] || []),
-          ...((item.id === selectedTask) && [styles.focused] || [])
-        ].join(" ")}
-        style={{
-          borderColor: taskViewers[item.id] && users[taskViewers[item.id][0]].color,
-        }}
-      >
-        <div className={styles.TaskItemLeftPart}>
-          <div className={styles.TaskItemLeftLeftPart}>
-            {showDoneIndicator && (
-              <button
-                className={[
-                  styles.TaskItemStatusToggle,
-                  ...(item.status === "done" && [styles.done] || [])
-                ].join(" ")}
-                onClick={() => toggleStatus(item)}
-                disabled={readOnly}
-              >
-                {item.status === "done" && (
-                  <CheckmarkIcon
-                    width={24}
-                    height={24}
-                  />
-                )}
-              </button>
-            )}
-            {(selectedTask === item.id) ? (
-              <div className={styles.TaskItemInput}>
-                <input
-                  type="text"
-                  ref={inputRef}
-                  className="task"
-                  placeholder="Task…"
-                  value={(item.task || "") + (command || "")}
-                  onKeyUp={handleKeyUp}
-                  onKeyDown={handleKeyDown}
-                  onChange={onChange}
-                  contentEditable={false}
-                  readOnly={readOnly}
-                />
-              </div>
-            ) : (
-              <span
-                onClick={() => selectItem(item)}
-                className={[
-                  styles.TaskItemHeader,
-                  ...(!item.task && [styles.placeholder] || []),
-                  ...(item.status === "done" && [styles.done] || [])
-                ].join(" ")}
-              >
-                {item.task || "Untitled Task"}
-              </span>
-            )}
-          </div>
-          <div className={styles.TaskItemLeftRightPart}>
-            {width > 768 &&
-            <div className={styles.TaskItemActions}>
-              {((item.id === selectedTask && showCopyButton) || item.id !== selectedTask) && (
-                <button className={styles.TaskItemAction} onClick={() => copyTask(item)}>
-                  <CopyIcon height={18} />
-                </button>
-              )}
-              {!readOnly && ((item.id === selectedTask && showDuplicateButton) || item.id !== selectedTask) && (
-                <button className={styles.TaskItemAction} onClick={() => duplicateTask(item)}>
-                  <DuplicateIcon height={18} />
-                </button>
-              )}
-              {((item.id === selectedTask && showShareButton) || item.id !== selectedTask) && (
-                <button className={styles.TaskItemAction} onClick={() => shareTask(item)}>
-                  <ShareIcon height={18} />
-                </button>
-              )}
-              {!readOnly && (
-                <button className={styles.TaskItemAction} onClick={() => removeTask(item)}>
-                  <RemoveIcon height={18} />
-                </button>
-              )}
-              <button className={styles.TaskItemAction} onClick={() => openRightPanel(item)}>
-                <DetailsIcon height={18} />
-              </button>
-            </div>}
-          </div>
-        </div>
-        <div
-          className={[
-            styles.TaskItemRightPart,
-            ...((item.id === selectedTask) && [styles.focused] || []),
-          ].join(" ")}
-        >
-          {showAssignees && (
-            <AvatarGroup
-              max={width > 768 ? 4 : 3}
-              users={processedAssingees}
-              size={ width > 768 ? 24 : 18 }
-            />
-          )}
-          {showDueDate && (
-            <span className={styles.TaskItemDueDate}>
-              {item.due ? formatDate(item.due) : "No Due"}
-            </span>
-          )}
-        </div>
-        {width <= 768 && (
-          <button className={styles.TaskItemOptsBtn} onClick={() => openActionSheet(item)}>
-            <OptionsIcon width={18} />
-          </button>
-        )}
-      </div>
-      {(command && selectedTask === item.id) && (
-        <SlashCommands posInfo={slashCommandsPos} />
-      )}
-    </div>
+    <Task
+      id={item.id}
+      task={item.task}
+      status={item.status}
+      due={item.due}
+      onChange={handleChange}
+      onSelect={handleSelect}
+      onToggleStatus={handleToggleStatus}
+      onCopy={handleCopy}
+      onRemove={handleRemove}
+      onDuplicate={handleDuplicate}
+      onShare={handleShare}
+      onDetails={handleDetails}
+      onArrowUp={handleArrowUp}
+      onArrowDown={handleArrowDown}
+      onEnter={handleEnter}
+      onEscape={handleEscape}
+      mobile={width < 768}
+      taskViewers={taskViewers}
+      showDueDate={showDueDate}
+      showAssignees={showAssignees}
+      showDoneIndicator={showDoneIndicator}
+      showCopyButton={showCopyButton}
+      showDuplicateButton={showDuplicateButton}
+      showShareButton={showShareButton}
+      assignees={processedAssingees}
+      selected={item.id === selectedTask}
+      command={command}
+      readOnly={readOnly}
+      listeners={listeners}
+      isSorting={isSorting}
+      isDragging={isDragging}
+    />
   );
 };
-
-TaskItem.whyDidYouRender = true;
 
 export default TaskItem;

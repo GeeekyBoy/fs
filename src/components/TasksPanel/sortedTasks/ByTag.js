@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from "react-redux";
 import getTitleCase from '../../../utils/getTitleCase';
-import parseLinkedList from "../../../utils/parseLinkedList";
+import sortByRank from "../../../utils/sortByRank";
 import sortObj from '../../../utils/sortObj';
 import Accordion from '../../UI/Accordion';
 import TaskItem from "../TaskItem";
@@ -12,7 +12,7 @@ const ByTag = () => {
   const getSortedTasks = (tasks) => {
     let result = {}
     const untagged = []
-    const defaultSorting = parseLinkedList(tasks, "prevTask", "nextTask")
+    const defaultSorting = sortByRank(tasks)
     for (const task of defaultSorting) {
       if (task.tags?.length) {
         for (const tag of task.tags) {

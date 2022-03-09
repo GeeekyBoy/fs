@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useWindowSize } from "../../components/WindowSizeListener";
-import parseLinkedList from "../../utils/parseLinkedList";
+import sortByRank from "../../utils/sortByRank";
 import { useModal } from "../ModalManager";
 import { stringify } from 'csv-stringify/browser/esm';
 import CardSelect from "../UI/fields/CardSelect";
@@ -20,7 +20,7 @@ const Export = (props) => {
   const { width } = useWindowSize();
 
   const handleExport = () => {
-    const orderedTasks = parseLinkedList(tasks, "prevTask", "nextTask");
+    const orderedTasks = sortByRank(tasks);
     const preparedTasks = orderedTasks.map(task => ({
         task: task.task,
         description: task.description,
