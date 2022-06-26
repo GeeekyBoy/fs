@@ -43,7 +43,6 @@ const TaskItem = (props) => {
   const isLocked = useSelector(state => state.app.lockedTaskField && isSelected)
   const batchSelected = useSelector(state => state.app.selectedTasks?.includes(item.id))
   const isBatchSelecting = useSelector(state => state.app.selectedTasks != null)
-  const taskViewers = useSelector(state => state.collaboration.taskViewers)
 
   const users = useSelector(state => state.users)
   const user = useSelector(state => state.user)
@@ -227,7 +226,6 @@ const TaskItem = (props) => {
       onEnter={handleEnter}
       onEscape={handleEscape}
       mobile={width < 768}
-      taskViewers={taskViewers}
       showDueDate={showDueDate}
       showAssignees={showAssignees}
       showDoneIndicator={showDoneIndicator}

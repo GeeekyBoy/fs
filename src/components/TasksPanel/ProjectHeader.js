@@ -15,18 +15,9 @@ const ProjectHeader = () => {
 
   const users = useSelector(state => state.users);
 
-  const projectViewers = useSelector(state => state.collaboration.projectViewers);
-
   return (
     <div className={styles.ProjectHeader}>
       <ProjectTitle />
-      {(isSynced && userState === AuthState.SignedIn) && (
-        <AvatarGroup
-          max={4}
-          users={projectViewers.map(user => users[user])}
-          size={ width > 768 ? 34 : 24 }
-        />
-      )}
     </div>
   )
 }

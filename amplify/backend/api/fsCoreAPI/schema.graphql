@@ -1,20 +1,3 @@
-type Connection
-  @model(queries: null, mutations: null, subscriptions: null)
-  @auth(
-    rules: [
-      { allow: public, provider: iam }
-      { allow: private, provider: userPools }
-    ]
-  )
-  @aws_iam
-  @aws_cognito_user_pools
-  @key(name: "byOwner", fields: ["owner"])
-  @key(name: "byProject", fields: ["projectId"]) {
-  id: ID!
-  projectId: ID!
-  owner: String!
-}
-
 type User
   @aws_iam
   @aws_cognito_user_pools {

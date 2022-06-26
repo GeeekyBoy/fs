@@ -9,7 +9,6 @@ import users from "./users";
 import appSettings from "./appSettings";
 import notifications from "./notifications";
 import status from "./status";
-import collaboration from "./collaboration";
 
 export default {
   user,
@@ -23,5 +22,4 @@ export default {
   status,
   appSettings,
   notifications,
-  collaboration,
 };

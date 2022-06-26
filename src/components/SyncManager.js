@@ -5,7 +5,6 @@ import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as userActions from "../actions/user"
 import * as usersActions from "../actions/users"
-import * as collaborationActions from "../actions/collaboration"
 import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
 import { panelPages, AuthState } from '../constants';
@@ -37,7 +36,6 @@ const SyncManager = () => {
       } else {
         (async () => {
           const currUser = await dispatch(userActions.handleFetchUser())
-          await dispatch(collaborationActions.handleInitSession());
           if (routeParams.projectPermalink &&
             routeParams.username &&
             currUser.state === AuthState.SignedIn) {

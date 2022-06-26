@@ -38,7 +38,6 @@ Default.args = {
   status: "todo",
   due: null,
   mobile: false,
-  taskViewers: [],
   showDueDate: true,
   showAssignees: true,
   showDoneIndicator: true,

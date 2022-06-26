@@ -37,7 +37,6 @@ const TaskItem = (props) => {
     onBatchSelect,
     onBatchDeselect,
     mobile,
-    taskViewers,
     showDueDate,
     showAssignees,
     showDoneIndicator,
@@ -289,14 +288,10 @@ const TaskItem = (props) => {
           styles.TaskItemCore,
           ...(isSorting && [styles.sorting] || []),
           ...(isDragging && [styles.dragging] || []),
-          ...(taskViewers[id] && [styles.collaborativeFocused] || []),
           ...(selected && [styles.focused] || []),
           ...(batchSelected && [styles.batchSelected] || []),
           ...(isBatchSelecting && [styles.isBatchSelecting] || [])
         ].join(" ")}
-        // style={{
-        //   borderColor: taskViewers[id] && users[taskViewers[id][0]].color,
-        // }}
       >
         <div className={styles.TaskItemExtras}>
           {!isBatchSelecting && (
