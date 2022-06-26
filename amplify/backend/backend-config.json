@@ -55,26 +55,16 @@
     }
   },
   "function": {
-    "fsCognitoPostConfirmation": {
+    "fsCognitoPostConfirmationInvoker": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "fsDailyReport": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "fsCognito",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "api",
-          "resourceName": "fsCoreAPI",
-          "attributes": [
-            "GraphQLAPIIdOutput"
-          ]
-        }
-      ]
+      "dependsOn": []
     },
     "fsCoreApiResolver": {
       "build": true,
@@ -98,21 +88,16 @@
         }
       ]
     },
-    "fsCognitoPostConfirmationInvoker": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "fsDailyReport": {
+    "fsCognitoPostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [
         {
-          "category": "api",
-          "resourceName": "fsCoreAPI",
+          "category": "auth",
+          "resourceName": "fsCognito",
           "attributes": [
-            "GraphQLAPIIdOutput"
+            "UserPoolId"
           ]
         }
       ]

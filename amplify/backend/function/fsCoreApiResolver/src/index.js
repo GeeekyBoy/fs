@@ -1,3 +1,11 @@
+/* Amplify Params - DO NOT EDIT
+  API_FSCOREAPI_GRAPHQLAPIENDPOINTOUTPUT
+  API_FSCOREAPI_GRAPHQLAPIIDOUTPUT
+  AUTH_FSCOGNITO_USERPOOLID
+  ENV
+  REGION
+Amplify Params - DO NOT EDIT */
+
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/no-unresolved */

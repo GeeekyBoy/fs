@@ -13,21 +13,9 @@
     },
     "categories": {
       "function": {
-        "fsCognitoPostConfirmation": {
-          "deploymentBucketName": "amplify-fs-experiment-115527-deployment",
-          "s3Key": "amplify-builds/fsCognitoPostConfirmation-6376317353596a6c7777-build.zip"
-        },
-        "fsCoreApiResolver": {
-          "deploymentBucketName": "amplify-fs-experiment-115527-deployment",
-          "s3Key": "amplify-builds/fsCoreApiResolver-7831486d74364646376d-build.zip"
-        },
         "fsCognitoPostConfirmationInvoker": {
           "deploymentBucketName": "amplify-fs-experiment-115527-deployment",
           "s3Key": "amplify-builds/fsCognitoPostConfirmationInvoker-2b6e7742464651426843-build.zip"
-        },
-        "fsDailyReport": {
-          "deploymentBucketName": "amplify-fs-experiment-115527-deployment",
-          "s3Key": "amplify-builds/fsDailyReport-45476977466f41396b59-build.zip"
         }
       },
       "hosting": {
