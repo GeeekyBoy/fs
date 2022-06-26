@@ -200,12 +200,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "fstesttttLambdaRolec9319ea3",
+            "fsLambdaRolec9319ea3",
             {
               "Fn::Join": [
                 "",
                 [
-                  "fstesttttLambdaRolec9319ea3",
+                  "fsLambdaRolec9319ea3",
                   "-",
                   {
                     "Ref": "env"
