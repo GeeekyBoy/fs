@@ -1,0 +1,61 @@
+.ComboBoxShell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  & > label {
+    width: max-content;
+    margin-bottom: 0;
+    color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+  & > *:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}
+
+.ComboBoxContainer {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 22px);
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  border-color: var(--color-stroke-color-card-stroke-default);
+  border-bottom-color: var(--color-stroke-color-control-strong-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
+  cursor: pointer;
+  & > input {
+    width: 100%;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    pointer-events: none;
+  }
+}
+
+.Options {
+  display: flex;
+  z-index: 10;
+  position: fixed;
+  left: 0;
+  flex-direction: column;
+  min-width: max-content;
+  padding: 4px;
+  border: 1px solid;
+  border-radius: 4px;
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-image: var(--color-background-fill-color-acrylic-background);
+  box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
+  font-size: 0.875rem;
+  & > *:not(:last-child) {
+    margin-bottom: 4px;
+  }
+}

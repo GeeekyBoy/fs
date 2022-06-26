@@ -1,18 +1,19 @@
 import React, { useEffect, useMemo } from 'react';
 import styles from "./Description.module.scss"
 import * as tasksActions from "../../actions/tasks"
-import * as appActions from "../../actions/app"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Description = (props) => {
   const {
     commandParam,
-    app: {
-      selectedTask
-    },
-    tasks,
-    dispatch
+    onCommandChange,
   } = props
+
+  const dispatch = useDispatch()
+
+  const selectedTask = useSelector(state => state.app.selectedTask);
+
+  const tasks = useSelector(state => state.tasks);
 
   const getSuggestedDescription = (commandParam) => {
     return commandParam
@@ -22,10 +23,12 @@ const Description = (props) => {
 
   const chooseDescription = () => {
     if (suggestedDescription){
-      dispatch(appActions.setCommand(""))
+      onCommandChange(null)
       dispatch(tasksActions.handleUpdateTask({
           id: selectedTask,
-          description: suggestedDescription
+          action: "update",
+          field: "description",
+          value: suggestedDescription
       }))
     }
   }
@@ -60,9 +63,4 @@ const Description = (props) => {
   );
 };
 
-export default connect((state) => ({
-	app: {
-    selectedTask: state.app.selectedTask
-  },
-	tasks: state.tasks
-}))(Description);
+export default Description;

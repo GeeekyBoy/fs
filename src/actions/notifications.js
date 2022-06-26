@@ -40,17 +40,17 @@ const fetchNotifications = (notifications) => ({
   notifications
 });
 
-export const handleFetchNotifications = (taskID) => async (dispatch, getState) => {
+export const handleFetchNotifications = (taskId) => async (dispatch, getState) => {
   const { user } = getState()
   if (user.state === AuthState.SignedIn) {
     try {
-      const res = await API.execute(listNotifications, { taskID })
+      const res = await API.execute(listNotifications, { taskId })
       const items = res.data.listNotifications.items;
       let usersToBeFetched = []
       for (const item of items) {
         usersToBeFetched = [...new Set([
           ...usersToBeFetched,
-          item.sender
+          item.mutator,
         ])]
       }
       await dispatch(usersActions.handleAddUsers(usersToBeFetched))

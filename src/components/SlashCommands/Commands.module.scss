@@ -2,17 +2,19 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 8px 8px 8px 12px;
+  border-radius: 6px;
   background-color: transparent;
-  padding: 8px 20px;
-  transition: background-color 0.2s;
+  color: var(--color-fill-color-text-primary);
   cursor: pointer;
+  transition: background-color 0.2s;
   &.selected {
     background-color: var(--color-fill-color-subtle-secondary);
   }
   & > svg {
-    transition: background-color 0.2s, fill 0.2s;
-    color: var(--primary);
     fill: var(--primary);
+    color: var(--primary);
+    transition: background-color 0.2s, fill 0.2s;
   }
   & > div {
     display: flex;
@@ -23,32 +25,30 @@
       align-items: center;
       justify-content: flex-start;
       & > span:nth-child(1) {
-        transition: color 0.2s;
-        font-weight: 600;
+        color: var(--color-fill-color-text-primary);
         font-size: 0.875rem;
         text-transform: lowercase;
-        color: var(--color-fill-color-text-primary);
+        transition: color 0.2s;
         &::first-letter {
           text-transform: capitalize;
         }
       }
       & > span:nth-child(2) {
-        line-height: 0;
-        height: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 14px;
-        font-weight: 600;
+        height: 14px;
         padding: 2px;
         border: 1px solid;
         border-radius: 4px;
-        font-size: 0.75rem;
-        text-transform: lowercase;
-        transition: background-color 0.2s, color 0.2s;
-        color: var(--primary);
         border-color: var(--color-stroke-color-card-stroke-default);
         background-color: var(--color-background-fill-color-card-background-default);
+        color: var(--primary);
+        font-size: 0.75rem;
+        line-height: 0;
+        text-transform: lowercase;
+        transition: background-color 0.2s, color 0.2s;
       }
       & > *:not(:last-child) {
         margin-right: 5px;
@@ -62,12 +62,12 @@
 
 .NoIntent {
   display: flex;
-  width: 100%;
-  font-size: 0.875rem;
+  align-items: center;
   align-items: center;
   justify-content: center;
-  align-items: center;
+  width: 100%;
   padding: 10px 0;
-  transition: color 0.2s;
   color: var(--color-fill-color-text-primary);
+  font-size: 0.875rem;
+  transition: color 0.2s;
 }

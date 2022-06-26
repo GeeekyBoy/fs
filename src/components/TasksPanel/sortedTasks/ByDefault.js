@@ -37,17 +37,9 @@ const Sortable = (props) => {
   const [activeId, setActiveId] = useState(null);
   const getIndex = items.indexOf.bind(items);
   const activeIndex = activeId ? getIndex(activeId) : -1;
-  const activationConstraint = {
-    delay: 250,
-    tolerance: 5,
-  }
   const sensors = useSensors(
-    useSensor(MouseSensor, {
-      activationConstraint,
-    }),
-    useSensor(TouchSensor, {
-      activationConstraint,
-    })
+    useSensor(MouseSensor),
+    useSensor(TouchSensor)
   );
 
   return (
@@ -148,7 +140,9 @@ const ByDefault = () => {
       dispatch(
         tasksActions.handleUpdateTask({
           id: sortedTasks[oldIndex].id,
-          rank: generateRank(sortedTasks[newIndex - 1]?.rank, sortedTasks[newIndex]?.rank),
+          action: 'update',
+          field: 'rank',
+          value: generateRank(sortedTasks[newIndex - 1]?.rank, sortedTasks[newIndex]?.rank),
         })
       );
     } else if (oldIndex < newIndex) {
@@ -156,7 +150,9 @@ const ByDefault = () => {
       dispatch(
         tasksActions.handleUpdateTask({
           id: sortedTasks[oldIndex].id,
-          rank: generateRank(sortedTasks[newIndex]?.rank, sortedTasks[newIndex + 1]?.rank),
+          action: 'update',
+          field: 'rank',
+          value: generateRank(sortedTasks[newIndex]?.rank, sortedTasks[newIndex + 1]?.rank),
         })
       );
     }

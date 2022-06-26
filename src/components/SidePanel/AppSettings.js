@@ -1,16 +1,16 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app";
 import * as appSettingsActions from "../../actions/appSettings";
 import styles from "./AppSettings.module.scss"
 import ColorPicker from '../UI/fields/ColorPicker';
 import Toggle from '../UI/fields/Toggle';
 
-const AppSettings = forwardRef((props, ref) => {
-  const {
-    appSettings,
-    dispatch
-  } = props;
+const AppSettings = forwardRef((_, ref) => {
+
+  const dispatch = useDispatch();
+
+  const appSettings = useSelector(state => state.appSettings);
 
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -154,6 +154,4 @@ const AppSettings = forwardRef((props, ref) => {
 
 AppSettings.displayName = "AppSettings";
 
-export default connect((state) => ({
-  appSettings: state.appSettings
-}), null, null, { forwardRef: true })(AppSettings);
+export default AppSettings;

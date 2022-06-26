@@ -1,23 +1,29 @@
-.DropdownContainer {
-  position: fixed!important;
+.ComboBoxContainer {
   display: flex;
+  z-index: 999;
+  position: fixed!important;
   flex-direction: column;
   justify-content: flex-start;
-  z-index: 999;
-  border-radius: 10px;
-  border: 1px solid;
-  padding: 5px 0;
   width: 320px;
   max-height: 300px;
-  transition: background-color 0.2s;
-  box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
+  padding: 4px;
+  border: 1px solid;
+  border-radius: 8px;
   border-color: var(--color-stroke-color-card-stroke-default);
-  background-color: var(--auxiliarySurface);
+  background-image: var(--color-background-fill-color-acrylic-background);
+  box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
+  transition: background-color 0.2s;
   @media only screen and (max-width: 768px) {
     left: 0!important;
+    width: calc(100vw - 8px);
     max-height: 200px;
-    width: 100vw;
-    border-radius: 0px;
     border: none;
+    border-radius: 0px;
   }
+}
+
+.DemoMsg {
+  padding: 5px;
+  color: var(--color-fill-color-text-primary);
+  text-align: center;
 }

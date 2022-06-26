@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthState } from "../../../constants";
 import DateField from "../../UI/fields/DateField";
 import * as tasksActions from "../../../actions/tasks";
@@ -9,35 +9,53 @@ import AssigneeField from "../../UI/fields/AssigneeField";
 import Textarea from '../../UI/fields/Textarea';
 import WatcherField from '../../UI/fields/WatcherField';
 import TextField from '../../UI/fields/TextField';
-import Select from '../../UI/fields/Select';
+import AttachmentField from '../../UI/fields/AttachmentField';
+import ComboBox from '../../UI/fields/ComboBox';
 
-const Details = (props) => {
-  const {
-    tasks,
-    projects,
-    user,
-    app: {
-      selectedProject,
-      selectedTask,
-      isSynced
-    },
-    dispatch
-  } = props;
+const Details = () => {
+  const dispatch = useDispatch();
 
-  const getReadOnly = (user, projects, selectedProject, isSynced) => {
-    return (user.state === AuthState.SignedIn &&
-    ((projects[selectedProject]?.owner !== user.data.username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
-    (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
+  const userState = useSelector(state => state.user.state);
+  const username = useSelector(state => state.user.data?.username);
+
+  const selectedProject = useSelector(state => state.projects[state.app.selectedProject]);
+
+  const tasks = useSelector(state => state.tasks);
+
+  const attachments = useSelector(state => state.attachments);
+
+  const selectedTask = useSelector(state => state.app.selectedTask);
+  const isSynced = useSelector(state => state.app.isSynced);
+
+  const getReadOnly = (userState, username, selectedProject, isSynced) => {
+    return (userState === AuthState.SignedIn &&
+    ((selectedProject?.owner !== username &&
+    selectedProject?.permissions === "r") || !isSynced)) ||
+    (userState !== AuthState.SignedIn && selectedProject?.isTemp)
   }
 
-  const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
+  const readOnly = useMemo(
+    () => getReadOnly(userState, username, selectedProject, isSynced),
+    [userState, username, selectedProject, isSynced]
+  );
+
+  const getStatusSet = (selectedProject) => {
+    const result = {}
+    for (const { id, title } of selectedProject.statusSet) {
+      result[id] = title
+    }
+    return result
+  }
+
+  const statusSet = useMemo(() => getStatusSet(selectedProject), [selectedProject])
   
   const handleChange = (e) => {
     dispatch(
       tasksActions.handleUpdateTask({
         id: selectedTask,
-        [e.target.name]: e.target.value,
+        action: "update",
+        field: e.target.name,
+        value: e.target.value
       })
     );
   };
@@ -47,16 +65,28 @@ const Details = (props) => {
       <AssigneeField
         name="assignees"
         label="Assigned To"
-        value={tasks[selectedTask].assignees}
+        value={{
+          assignees: tasks[selectedTask].assignees,
+          anonymousAssignees: tasks[selectedTask].anonymousAssignees,
+          invitedAssignees: tasks[selectedTask].invitedAssignees
+        }}
         readOnly={readOnly}
       />
-      {(user.state === AuthState.SignedIn || (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)) && (
-        <WatcherField
-          name="watchers"
-          label="Watched By"
-          value={tasks[selectedTask].watchers}
-          readOnly={readOnly}
-        />
+      {(userState === AuthState.SignedIn || (userState !== AuthState.SignedIn && selectedProject?.isTemp)) && (
+        <>
+          <WatcherField
+            name="watchers"
+            label="Watched By"
+            value={tasks[selectedTask].watchers}
+            readOnly={readOnly}
+          />
+          <AttachmentField
+            name="attachments"
+            label="Attachments"
+            value={attachments}
+            readOnly={readOnly}
+          />
+        </>
       )}
       <TextField
         type="text"
@@ -92,40 +122,28 @@ const Details = (props) => {
         value={tasks[selectedTask].tags}
         readOnly={readOnly}
       />
-      <Select
+      <ComboBox
         name="status"
         label="Status"
         onChange={handleChange}
-        values={["todo", "pending", "done"]}
-        options={["Todo", "Pending", "Done"]}
         value={tasks[selectedTask].status}
+        options={statusSet}
         readOnly={readOnly}
       />
-      <Select
+      <ComboBox
         name="priority"
         label="Priority"
         onChange={handleChange}
-        values={["low", "normal", "high"]}
-        options={["Low", "Normal", "High"]}
         value={tasks[selectedTask].priority}
+        options={{
+          low: "Low",
+          normal: "Normal",
+          high: "High",
+        }}
         readOnly={readOnly}
       />
     </form>
   )
 }
 
-export default connect((state) => ({
-  user: {
-    state: state.user.state,
-    data: {
-      username: state.user.data.username,
-    }
-  },
-  projects: state.projects,
-  tasks: state.tasks,
-  app: {
-    selectedProject: state.app.selectedProject,
-    selectedTask: state.app.selectedTask,
-    isSynced: state.app.isSynced
-  }
-}))(Details);
+export default Details;

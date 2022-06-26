@@ -5,12 +5,11 @@
   justify-content: center;
   width: 100%;
   & > label {
-    margin-bottom: 0;
     width: max-content;
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: color 0.2s;
+    margin-bottom: 0;
     color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
+    transition: color 0.2s;
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -18,39 +17,37 @@
 }
 
 .Selection {
-  position: relative;
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  text-align: left;
-  opacity: 1;
   padding: 12px;
   border: 1px solid;
-  outline: none;
-  cursor: pointer;
   border-radius: 8px;
-  text-align: inherit;
-  transition: color 0.2s, border-color 0.2s, opacity 0.3s;
   border-color: var(--color-stroke-color-card-stroke-default);
+  outline: none;
   background-color: var(--color-background-fill-color-card-background-default);
+  text-align: left;
+  text-align: inherit;
+  cursor: pointer;
+  opacity: 1;
+  transition: color 0.2s, border-color 0.2s, opacity 0.3s;
   & > span:nth-child(1) {
     width: inherit;
-    font-size: 1.5rem;
-    font-weight: 600;
-    transition: color 0.2s;
     color: var(--color-fill-color-text-secondary);
+    font-size: 1.5rem;
+    transition: color 0.2s;
   }
   & > span:nth-child(2) {
     width: inherit;
-    font-size: 0.875rem;
-    font-weight: 400;
     color: #aaa8ac;
+    font-size: 0.875rem;
   }
   &.selected {
-    cursor: default;
     border-color: var(--primary) !important;
+    cursor: default;
     & > span:nth-child(1) {
       color: var(--primary);
     }
@@ -62,8 +59,8 @@
     cursor: default;
   }
   &.disabled {
-    opacity: 0.6;
     cursor: not-allowed;
+    opacity: 0.6;
   }
 }
 
@@ -77,8 +74,8 @@
   &.row {
     flex-direction: row;
     & > *:not(:last-child) {
-      margin-bottom: 0;
       margin-right: 5px;
+      margin-bottom: 0;
     }
   }
   &.centeredText {

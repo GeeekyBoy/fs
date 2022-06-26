@@ -7,16 +7,16 @@
 }
 
 .ProjectTitleHeader {
-  font-weight: 600;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  color: var(--color-fill-color-text-primary);
+  font-weight: 600;
   font-size: 2rem;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
   cursor: text;
   transition: color 0.2s;
-  color: var(--color-fill-color-text-primary);
   &.placeholder {
     color: var(--color-fill-color-text-secondary) !important;
   }
@@ -31,23 +31,23 @@
   margin: 0;
   padding: 0;
   & > input {
-    background-color: transparent;
-    font-size: 2rem;
     width: 100%;
-    font-weight: 600;
-    padding: 0;
     margin: 0;
+    padding: 0;
     border: none;
     outline: none;
-    transition: color 0.2s;
+    background-color: transparent;
     color: var(--color-fill-color-text-primary);
+    font-weight: 600;
+    font-size: 2rem;
+    transition: color 0.2s;
     &::placeholder {
       color: #c0c0c0;
     }
   }
   @media only screen and (max-width: 768px) {
-    padding: 0;
     width: calc(100% - 40px);
+    padding: 0;
     & > input {
       font-size: 1.375rem;
     }

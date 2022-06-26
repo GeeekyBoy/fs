@@ -1,31 +1,34 @@
 import React, { useMemo } from 'react';
 import { useOuterClick } from 'react-outer-click';
 import { useState, useRef } from "react"
-import { connect } from "react-redux";
 import { AuthState } from "../../../constants";
 import styles from "./Comments.module.scss"
+import { useDispatch, useSelector } from "react-redux"
 import { stateToHTML } from 'draft-js-export-html';
 import { Editor, EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 import { ReactComponent as CommentsIllustartion } from "../../../assets/undraw_Public_discussion_re_w9up.svg"
 import { ReactComponent as RemoveIcon } from "../../../assets/trash-outline.svg"
 import * as commentsActions from "../../../actions/comments";
 import Avatar from '../../UI/Avatar';
-import generateID from '../../../utils/generateID';
+import generateId from '../../../utils/generateId';
 import Illustration from '../../UI/Illustration';
 
-const Comments = (props) => {
-  const {
-    user,
-    users,
-    comments,
-    app: {
-      selectedProject,
-      selectedTask,
-      isSynced
-    },
-    projects,
-    dispatch
-  } = props
+const Comments = () => {
+
+  const dispatch = useDispatch()
+
+  const selectedProject = useSelector(state => state.app.selectedProject)
+  const selectedTask = useSelector(state => state.app.selectedTask)
+  const isSynced = useSelector(state => state.app.isSynced)
+
+  const projects = useSelector(state => state.projects)
+
+  const comments = useSelector(state => state.comments)
+
+  const user = useSelector(state => state.user)
+
+  const users = useSelector(state => state.users)
+
   const newCommentRef = useRef(null)
   const [isNewCommentOpened, setIsNewCommentOpened] = useState(false)
   const [editorState, setEditorState] = useState(
@@ -77,8 +80,8 @@ const Comments = (props) => {
     e.stopPropagation()
     const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
     dispatch(commentsActions.handleCreateComment({
-      id: generateID(),
-      taskID: selectedTask,
+      id: generateId(),
+      taskId: selectedTask,
       content: content
     }))
     setEditorState(EditorState.push(editorState, ContentState.createFromText('')))
@@ -97,19 +100,19 @@ const Comments = (props) => {
             <div
               className={[
                 styles.CommentUnit,
-                ...(x.owner === user.data.username && [styles.self] || [])
+                ...(x.owner === user.data?.username && [styles.self] || [])
               ].join(" ")}
               key={x.id}
             >
-              {x.owner !== user.data.username && (
+              {x.owner !== user.data?.username && (
                 <Avatar user={users[x.owner]} size={32} circular />
               )}
               <div className={styles.CommentContent}>
                 <div className={styles.CommentBox}>
                   <div className={styles.CommentHeader}>
                     <span className={styles.CommenterName}>
-                      {x.owner === user.data.username && "You"}
-                      {x.owner !== user.data.username && (
+                      {x.owner === user.data?.username && "You"}
+                      {x.owner !== user.data?.username && (
                         `${users[x.owner].firstName} ${users[x.owner].lastName}`
                       )}
                     </span>
@@ -144,16 +147,10 @@ const Comments = (props) => {
           )
         ))}
         {!processedComments && (
-          // <div className={styles.NoComments}>
-          //   <CommentsIllustartion />
-          //   <span>
-          //     No Comments On This Task
-          //   </span>
-          // </div>
           <Illustration
             illustration={CommentsIllustartion}
             title="No Comments On This Task"
-            secondary={true}
+            secondary
           />
         )}
       </div>
@@ -198,14 +195,4 @@ const Comments = (props) => {
   )
 }
 
-export default connect((state) => ({
-  user: state.user,
-  app: {
-    selectedProject: state.app.selectedProject,
-    selectedTask: state.app.selectedTask,
-    isSynced: state.app.isSynced
-  },
-  comments: state.comments,
-  projects: state.projects,
-  users: state.users
-}))(Comments);
+export default Comments;

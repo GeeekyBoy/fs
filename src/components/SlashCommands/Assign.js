@@ -1,34 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./Assign.module.scss"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as usersActions from "../../actions/users";
-import * as appActions from "../../actions/app"
 import * as tasksActions from "../../actions/tasks"
 import { AuthState } from "../../constants";
 import Avatar from '../UI/Avatar';
 
 const Assign = (props) => {
   const {
-    app: {
-      selectedTask
-    },
+    onCommandChange,
     commandParam,
-    user,
-    users,
-    dispatch
   } = props
+
+  const dispatch = useDispatch();
+
+  const selectedTask = useSelector(state => state.app.selectedTask);
+
+  const user = useSelector(state => state.user);
+
+  const users = useSelector(state => state.users);
 
   const [results, setResults] = useState([])
   const [selection, setSelection] = useState(0)
 
-  const handleAssignTask = async (username) => {
-    dispatch(tasksActions.handleAssignTask(selectedTask, username))
-    dispatch(appActions.setCommand(""))
+  const handleAddAssignee = async (username) => {
+    dispatch(tasksActions.handleAddAssignee(selectedTask, username))
+    onCommandChange(null)
+  }
+  const handleAddAnonymousAssignee = async (username) => {
+    dispatch(tasksActions.handleAddAnonymousAssignee(selectedTask, username))
+    onCommandChange(null)
   }
   useEffect(() => {
     const nextKeyword = commandParam?.trim()
     if (user.state === AuthState.SignedIn && nextKeyword) {
-      dispatch(usersActions.handleSearchUsers(nextKeyword)).then(res => setResults(res))
+      dispatch(usersActions.handleSearchUsers(nextKeyword, selectedTask, "toAssign")).then(res => setResults(res))
     } else {
       setResults([])
     }
@@ -40,9 +46,9 @@ const Assign = (props) => {
         e.preventDefault()
         e.stopPropagation()
         if (selection === 0) {
-          handleAssignTask(`anonymous:${commandParam}`) 
+          handleAddAnonymousAssignee(commandParam.trim())
         } else {
-          handleAssignTask(`user:${results[selection - 1]}`) 
+          handleAddAssignee(results[selection - 1]) 
         }
       } else if (e.key === "ArrowUp") {
         e.preventDefault()
@@ -80,7 +86,7 @@ const Assign = (props) => {
         ].join(" ")}
         key="::anonymous::"
         onMouseEnter={() => setSelection(0)}
-        onClick={() => handleAssignTask(`anonymous:${commandParam}`)}
+        onClick={() => handleAddAnonymousAssignee(commandParam.trim())}
       >
         <Avatar user={{name: commandParam[0]}} size={32} circular />
         <div>
@@ -96,7 +102,7 @@ const Assign = (props) => {
           ].join(" ")}
           key={x}
           onMouseEnter={() => setSelection(i + 1)}
-          onClick={() => handleAssignTask(`user:${x}`)}
+          onClick={() => handleAddAssignee(x)}
         >
           <Avatar user={users[x]} size={32} circular />
           <div>
@@ -109,10 +115,4 @@ const Assign = (props) => {
   );
 };
 
-export default connect((state) => ({
-	app: {
-    selectedTask: state.tasks.selectedTask
-  },
-	user: state.user,
-	users: state.users
-}))(Assign);
+export default Assign;

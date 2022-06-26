@@ -40,7 +40,7 @@ const Notifications = () => {
           onOpen={navigate}
           onDismiss={dismissNotification}
           onAnimationEnd={handleAnimationEnd}
-          senderData={users[notifications.pushed[0].sender]}
+          senderData={users[notifications.pushed[0].mutator]}
           className={[
             styles.NotificationOverride,
             ...(anim === 0 && [styles.entering] || []),

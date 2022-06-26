@@ -54,7 +54,8 @@ export const handleSetData = (userData) => (dispatch, getState) => {
 }
 
 export const handleFetchUser = () => async (dispatch, getState) => {
-  if (await Auth.isLoggedIn()/* || cacheController.getUser().state === AuthState.SignedIn*/) {
+  const { app } = getState();
+  if (!app.isOffline && await Auth.isLoggedIn()) {
     try {
       const userData = (
         await API.execute(queries.getUserByUsername, {
@@ -65,11 +66,12 @@ export const handleFetchUser = () => async (dispatch, getState) => {
       dispatch(handleSetData(userData))
       dispatch(handleSetState(AuthState.SignedIn))
     } catch (err) {
-      console.error(err)
-      if (err.errors?.[0]?.message === 'Network Error') {
+      if (err.message === 'Failed to fetch') {
         dispatch(fetchCachedUser(cacheController.getUser()))
       }
     }
+  } else if (cacheController.getUser().state === AuthState.SignedIn) {
+    dispatch(fetchCachedUser(cacheController.getUser()))
   } else {
     dispatch(handleSetState(AuthState.SignedOut))
     dispatch(handleSetData(null))

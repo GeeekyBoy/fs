@@ -1,11 +1,10 @@
-import React, { useRef, useMemo, useEffect } from "react"
+import React, { useRef, useMemo, useEffect, useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useWindowSize } from "../../components/WindowSizeListener";
 import copyTaskCore from "../../utils/copyTask"
 import generateRank from "../../utils/generateRank";
 import * as appActions from "../../actions/app";
 import * as tasksActions from "../../actions/tasks";
-import SlashCommands from "../SlashCommands";
 import { useModal } from "../ModalManager";
 import { OK, initTaskState, AuthState, panelPages } from "../../constants";
 import modals from '../modals';
@@ -28,13 +27,10 @@ const TaskItem = (props) => {
   const inputRef = useRef(null)
   const dispatch = useDispatch()
   
-  const selectedProject = useSelector(state => state.app.selectedProject)
   const nextTaskRank = useSelector(state => state.tasks[nextTask]?.rank)
   const taskAddingStatus = useSelector(state => state.app.taskAddingStatus)
   const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
   const isSynced = useSelector(state => state.app.isSynced)
-  const lockedTaskField = useSelector(state => state.app.lockedTaskField)
-  const command = useSelector(state => state.app.command)
 
   const showDueDate = useSelector(state => state.appSettings.showDueDate)
   const showAssignees = useSelector(state => state.appSettings.showAssignees)
@@ -43,7 +39,10 @@ const TaskItem = (props) => {
   const showDuplicateButton = useSelector(state => state.appSettings.showDuplicateButton)
   const showShareButton = useSelector(state => state.appSettings.showShareButton)
 
-  const selectedTask = useSelector(state => state.app.selectedTask)
+  const isSelected = useSelector(state => state.app.selectedTask === item.id)
+  const isLocked = useSelector(state => state.app.lockedTaskField && isSelected)
+  const batchSelected = useSelector(state => state.app.selectedTasks?.includes(item.id))
+  const isBatchSelecting = useSelector(state => state.app.selectedTasks != null)
   const taskViewers = useSelector(state => state.collaboration.taskViewers)
 
   const users = useSelector(state => state.users)
@@ -51,7 +50,7 @@ const TaskItem = (props) => {
   const projects = useSelector(state => state.projects)
 
   useEffect(() => {
-    if (selectedTask === item.id) {
+    if (isSelected) {
       setTimeout(() => {
         if (!(isRightPanelOpened || isModalOpened)) {
           inputRef.current?.focus()
@@ -60,21 +59,15 @@ const TaskItem = (props) => {
         }
       }, 0)
     }
-  }, [isRightPanelOpened, isModalOpened, selectedTask])
+  }, [isRightPanelOpened, isModalOpened, isSelected])
 
   const processAssingees = (value, users) => {
     const result = []
-    for (const assignee of value) {
-      const isValidAssignee = /^(user|anonymous):(.*)$/.test(assignee)
-      if (isValidAssignee) {
-        const [, assigneeType, assigneeID] = assignee.match(/(user|anonymous):(.*)/)
-        const isUser = assigneeType === "user"
-        if (isUser) {
-          result.push({...users[assigneeID], isUser})
-        } else {
-          result.push({ name: assigneeID, isUser })
-        }
-      }
+    for (const assigneeId of value.assignees) {
+      result.push({...users[assigneeId], username: assigneeId, isUser: true})
+    }
+    for (const assigneeId of value.anonymousAssignees) {
+      result.push({ name: assigneeId, isUser: false })
     }
     return result
   }
@@ -86,95 +79,94 @@ const TaskItem = (props) => {
     (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
   }
 
-  const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
+  const readOnly = useMemo(() => getReadOnly(user, projects, item.projectId, isSynced), [user, projects, item.projectId, isSynced])
   
-  const processedAssingees = useMemo(() => processAssingees(item.assignees, users), [item.assignees, users]);
-
-  const getSlashCommandsPos = (inputRef) => {
-    if (inputRef.current) {
-      const inputPos = inputRef.current.getBoundingClientRect()
-      const cursorPos = 
-        inputRef.current.selectionStart * 9.6 < inputPos.left - 40 ?
-        inputPos.left - 40 :
-        inputRef.current.selectionStart * 9.6
-      return {
-        top: inputPos.top + 40,
-        left: inputPos.left - 160 + cursorPos
-      }
-    } else {
-      return {
-        top: 0,
-        left: 0
-      }
+  const processedAssingees = useMemo(() => {
+    const allAssignees = {
+      assignees: item.assignees,
+      anonymousAssignees: item.anonymousAssignees,
+      invitedAssignees: item.invitedAssignees
     }
-  }
+    return processAssingees(allAssignees, users)
+  }, [item.assignees, item.anonymousAssignees, item.invitedAssignees, users]);
 
-  const slashCommandsPos = useMemo(() => getSlashCommandsPos(inputRef), [item])
-
-  const handleChange = (e) => {
-    if (lockedTaskField !== "task") {
+  const handleChange = useCallback((e) => {
+    if (isLocked) {
       dispatch(appActions.setLockedTaskField("task"))
     }
     dispatch(
       tasksActions.handleUpdateTask({
-        id: selectedTask,
-        task: e.target.value,
+        id: item.id,
+        action: "update",
+        field: "task",
+        value: e.target.value,
       })
     );
-  };
+  }, [item.id, isLocked]);
 
-  const handleToggleStatus = (nextStatus) => {
+  const handleToggleStatus = useCallback((nextStatus) => {
     dispatch(
       tasksActions.handleUpdateTask({
         id: item.id,
-        status: nextStatus,
+        action: "update",
+        field: "status",
+        value: nextStatus,
       })
     );
-  };
+  }, [item.id]);
 
-  const handleArrowUp = () => {
+  const handleArrowUp = useCallback(() => {
     if (!prevTask) {
       dispatch(appActions.handleSetProjectTitle(true))
     } else {
       dispatch(appActions.handleSetTask(prevTask))
     }
-  }
+  }, [prevTask]);
 
-  const handleArrowDown = () => {
+  const handleArrowDown = useCallback(() => {
     if (nextTask) {
       dispatch(appActions.handleSetTask(nextTask))
     }
-  }
+  }, [nextTask]);
 
-  const handleEnter = () => {
+  const handleEnter = useCallback(() => {
     if (taskAddingStatus === OK && !readOnly) {
       dispatch(
         tasksActions.handleCreateTask(
           initTaskState(
-            selectedProject,
+            item.projectId,
             generateRank(item.rank, nextTaskRank),
+            projects[item.projectId].defaultStatus,
           )
         )
       );
     }
-  }
+  }, [taskAddingStatus, readOnly, item.rank, nextTaskRank]);
 
-  const handleEscape = () => {
+  const handleEscape = useCallback(() => {
     dispatch(appActions.handleSetTask(null))
-  }
+  }, []);
 
-  const handleSelect = () => {
+  const handleSelect = useCallback(() => {
     dispatch(appActions.handleSetTask(item.id))
-  }
+  }, [item.id]);
 
-  const handleDetails = () => {
+  const handleBatchSelect = useCallback(() => {
+    dispatch(appActions.handleBatchSelectTask(item.id))
+  }, [item.id]);
+
+  const handleBatchDeselect = useCallback(() => {
+    dispatch(appActions.handleBatchDeselectTask(item.id))
+  }, [item.id]);
+
+  const handleDetails = useCallback(() => {
     if (width < 768) {
       dispatch(
         appActions.handleSetTask(item.id)
       )
       showModal(modals.TASK_OPTS)
     } else {
-      if (item.id !== selectedTask) {
+      if (!isSelected) {
         dispatch(appActions.handleSetTask(item.id))
       }
       if (!isRightPanelOpened) {
@@ -182,37 +174,37 @@ const TaskItem = (props) => {
         dispatch(appActions.handleSetRightPanel(true))
       }
     }
-  }
+  }, [item.id, width, isRightPanelOpened, isSelected]);
 
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
     window.localStorage.setItem(
       "tasksClipboard",
       "COPIEDTASKSTART=>" +
       JSON.stringify(item) +
       "<=COPIEDTASKEND"
     );
-  }
+  }, [item]);
 
-  const handleDuplicate = () => {
+  const handleDuplicate = useCallback(() => {
     dispatch(
       tasksActions.handleCreateTask(
         copyTaskCore(
           item,
-          selectedProject,
+          item.projectId,
           generateRank(item.rank, nextTaskRank),
         )
       )
     );
-  }
+  }, [item, nextTaskRank]);
 
-  const handleShare = () => {
+  const handleShare = useCallback(() => {
     const linkToBeCopied = window.location.href
     navigator.clipboard.writeText(linkToBeCopied)
-  }
+  }, []);
 
-  const handleRemove = () => {
+  const handleRemove = useCallback(() => {
     dispatch(tasksActions.handleRemoveTask(item, prevTask))
-  }
+  }, [item, prevTask]);
 
   return (
     <Task
@@ -222,6 +214,8 @@ const TaskItem = (props) => {
       due={item.due}
       onChange={handleChange}
       onSelect={handleSelect}
+      onBatchSelect={handleBatchSelect}
+      onBatchDeselect={handleBatchDeselect}
       onToggleStatus={handleToggleStatus}
       onCopy={handleCopy}
       onRemove={handleRemove}
@@ -241,12 +235,13 @@ const TaskItem = (props) => {
       showDuplicateButton={showDuplicateButton}
       showShareButton={showShareButton}
       assignees={processedAssingees}
-      selected={item.id === selectedTask}
-      command={command}
+      selected={isSelected}
+      batchSelected={batchSelected}
       readOnly={readOnly}
       listeners={listeners}
       isSorting={isSorting}
       isDragging={isDragging}
+      isBatchSelecting={isBatchSelecting}
     />
   );
 };

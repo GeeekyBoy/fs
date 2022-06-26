@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import * as mutations from "../../graphql/mutations"
 import * as appActions from "../../actions/app";
 import * as notificationsActions from "../../actions/notifications";
-import styles from "./Notifications.module.scss"
 import { ReactComponent as NoNotificationsIllustration } from "../../assets/undraw_notify_re_65on.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
 import Notification from '../UI/Notification';
 import { navigate } from '../Router';
 import API from '../../amplify/API';
+import Illustration from '../UI/Illustration';
 
 const Notifications = forwardRef((_, ref) => {
   
@@ -45,10 +45,8 @@ const Notifications = forwardRef((_, ref) => {
   }));
   const dismissNotification = (e, id) => {
     e.stopPropagation()
-    API.execute(mutations.dismissNotification, { notificationID: id })
-      .then(() => {
-        console.log("Notification dismissed");
-      })
+    API.execute(mutations.dismissNotification, { input: { id } })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });
@@ -59,15 +57,14 @@ const Notifications = forwardRef((_, ref) => {
       notificationData={x}
       onOpen={handleOpenNotification}
       onDismiss={(e) => dismissNotification(e, x.id)}
-      senderData={users[x.sender]}
+      senderData={users[x.mutator]}
     />
   )) : (
-    <div className={styles.NoNotifications}>
-      <NoNotificationsIllustration />
-      <span>
-        All caught up!
-      </span>
-    </div>
+    <Illustration
+      illustration={NoNotificationsIllustration}
+      title="All caught up!"
+      secondary
+    />
   )
 });
 

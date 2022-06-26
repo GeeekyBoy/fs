@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styles from "./Status.module.scss"
 import * as tasksActions from "../../actions/tasks"
-import * as appActions from "../../actions/app"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Status = (props) => {
   const {
     commandParam,
-    app: {
-      selectedTask
-    },
+    onCommandChange,
     scrollableNodeRef,
-    dispatch
   } = props
+
+  const dispatch = useDispatch()
+
+  const selectedTask = useSelector(state => state.app.selectedTask);
 
   const supportedStatus = [["Todo", "#FF1744"], ["Started", "#FF9100"], ["Finished", "#00E676"]]
 
@@ -27,22 +27,28 @@ const Status = (props) => {
   const chooseStatus = (selectedStatus) => {
     switch(selectedStatus) {
       case "TODO":
-        dispatch(appActions.setCommand(""))
+        onCommandChange(null)
         return dispatch(tasksActions.handleUpdateTask({
           id: selectedTask,
-          status: "todo"
+          action: "update",
+          field: "status",
+          value: "todo"
         }))
       case "STARTED":
-        dispatch(appActions.setCommand(""))
+        onCommandChange(null)
         return dispatch(tasksActions.handleUpdateTask({
           id: selectedTask,
-          status: "pending"
+          action: "update",
+          field: "status",
+          value: "pending"
         }))
       case "FINISHED":
-        dispatch(appActions.setCommand(""))
+        onCommandChange(null)
         return dispatch(tasksActions.handleUpdateTask({
           id: selectedTask,
-          status: "done"
+          action: "update",
+          field: "status",
+          value: "done"
         }))
       default:
         return 0
@@ -109,8 +115,4 @@ const Status = (props) => {
   );
 };
 
-export default connect((state) => ({
-	app: {
-    selectedTask: state.app.selectedTask
-  }
-}))(Status);
+export default Status;

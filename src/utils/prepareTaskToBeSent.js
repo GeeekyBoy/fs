@@ -1,7 +1,7 @@
 export default (taskState) => {
   return {
     id: taskState.id,
-    projectID: taskState.projectID,
+    projectId: taskState.projectId,
     rank: taskState.rank,
     task: taskState.task,
     description: taskState.description,

@@ -1,18 +1,19 @@
 import React, { useEffect, useMemo } from 'react';
 import styles from "./Tags.module.scss"
 import * as tasksActions from "../../actions/tasks"
-import * as appActions from "../../actions/app"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Tags = (props) => {
   const {
     commandParam,
-    app: {
-      selectedTask
-    },
-    tasks,
-    dispatch
+    onCommandChange,
   } = props
+
+  const dispatch = useDispatch()
+
+  const selectedTask = useSelector(state => state.app.selectedTask);
+
+  const tasks = useSelector(state => state.tasks);
 
   const getSuggestedTags = (commandParam) => {
     return commandParam ? [...new Set(commandParam.split(/(?:\s*,\s*)+/).filter(x => x))] : null
@@ -22,10 +23,12 @@ const Tags = (props) => {
 
   const chooseTags = () => {
     if (suggestedTags){
-      dispatch(appActions.setCommand(""))
+      onCommandChange(null)
       dispatch(tasksActions.handleUpdateTask({
           id: selectedTask,
-          tags: [...new Set([...tasks[selectedTask].tags, ...suggestedTags])]
+          action: "update",
+          field: "tags",
+          value: [...new Set([...tasks[selectedTask].tags, ...suggestedTags])]
       }))
     }
   }
@@ -65,9 +68,4 @@ const Tags = (props) => {
   );
 };
 
-export default connect((state) => ({
-	app: {
-    selectedTask: state.app.selectedTask
-  },
-	tasks: state.tasks
-}))(Tags);
+export default Tags;

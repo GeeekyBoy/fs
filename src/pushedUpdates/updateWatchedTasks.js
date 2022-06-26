@@ -23,8 +23,8 @@ const updateWatchedTasks = async (dispatch, getState, pushedUpdate) => {
     } else {
       try {
         const newWatchedProjectData = (await API.execute(queries.getProjectById, {
-          projectID: newWatchedProject
-        })).data.getProjectByID
+          projectId: newWatchedProject
+        })).data.getProjectById
         if (newWatchedProjectData) {
           dispatch(projectsActions.createProject(newWatchedProjectData, "watched"))
           PubSub.subscribeTopic("project", newWatchedProject)

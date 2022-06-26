@@ -1,10 +1,10 @@
 .NoTasksContainer {
   display: flex;
-  flex-direction: column;
-  width: 100%;
   flex: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   text-align: center;
   &.loader {
     & > svg {
@@ -19,33 +19,31 @@
   & > svg {
     width: 250px;
     height: 250px;
-    transition: color 0.2s;
     color: var(--primary);
+    transition: color 0.2s;
   }
   & > div {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     & > span {
-      font-weight: bold;
+      color: var(--color-fill-color-text-primary);
       font-size: 1.75rem;
       transition: color 0.2s;
       transition: color 0.2s;
-      color: var(--color-fill-color-text-primary);
     }
     & > button {
-      border-radius: 8px;
       max-width: fit-content;
-      outline: none;
-      border: none;
-      cursor: pointer;
       padding: 5px 10px;
-      font-weight: 600;
-      font-size: 1.125rem;
-      transition: background-color 0.2s, color 0.2s;
-      color: var(--primary);
+      border: none;
+      border-radius: 8px;
+      outline: none;
       background-color: var(--color-fill-color-subtle-secondary);
+      color: var(--primary);
+      font-size: 1.125rem;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
     }
     & > *:not(:last-child) {
       margin-bottom: 40px;

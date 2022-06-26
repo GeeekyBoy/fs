@@ -16,14 +16,14 @@ const Projects = () => {
   return assignedProjects.length ? (
     assignedProjects.map((project) => (
       <Fragment key={project.id}>
-        <ProjectItem project={project} readOnly={true} />
+        <ProjectItem project={project} readOnly />
       </Fragment>
     ))
   ) : (
     <Illustration
       illustration={NoAssignedIllustartion}
       title="No Projects Assigned To You"
-      secondary={true}
+      secondary
     />
   );
 };

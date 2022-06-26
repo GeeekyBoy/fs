@@ -11,6 +11,7 @@ class PubSub {
     this.apiEndpoint = awsconfig.aws_appsync_graphqlEndpoint;
     this.wsEndpoint = this.apiEndpoint
       .replace("https://", "wss://")
+      .replace("http://", "ws://")
       .replace("-api", "-realtime-api");
     this.wsHost = new URL(this.apiEndpoint).host;
     this.region = awsconfig.aws_appsync_region;
@@ -73,7 +74,7 @@ class PubSub {
   }
   onMessage(event) {
     const data = JSON.parse(event.data);
-    console.log(data)
+    // console.log(data)
     if (data.id) {
       const { id, type } = data;
       switch (type) {

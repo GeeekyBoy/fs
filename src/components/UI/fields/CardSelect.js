@@ -15,7 +15,7 @@ const CardSelect = (props) => {
     disabled,
     row,
     centeredText,
-    class: className,
+    className,
     style
 	} = props;
 

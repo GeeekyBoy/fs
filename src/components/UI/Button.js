@@ -5,11 +5,21 @@ const Button = (props) => {
   const {
     label,
     children,
-    class: className,
+    className,
     style,
     ...nativeProps
   } = props;
-  return (
+  return props.type === "submit" ? (
+    <input
+      value={label}
+      className={[
+        className || "",
+        styles.Button
+      ].join(" ")}
+      style={style}
+      {...nativeProps}
+    />
+  ) : (
     <button
       className={[
         className || "",

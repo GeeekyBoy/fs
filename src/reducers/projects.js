@@ -45,12 +45,13 @@ export default function (state = {}, action) {
     case EMPTY_PROJECTS:
       return {}
     case FETCH_PROJECTS:
+      const incomingIds = action.projects.map(x => x.id);
       if (action.scope === "owned") {
-        stateClone = filterObj(stateClone, x => !x.isOwned && (x.isAssigned || x.isTemp || x.isWatched))
+        stateClone = filterObj(stateClone, x => (!x.isOwned || incomingIds.includes(x.id)) && (x.isAssigned || x.isTemp || x.isWatched))
       } else if (action.scope === "assigned") {
-        stateClone = filterObj(stateClone, x => !x.isAssigned && (x.isOwned || x.isTemp || x.isWatched))
+        stateClone = filterObj(stateClone, x => (!x.isAssigned || incomingIds.includes(x.id)) && (x.isOwned || x.isTemp || x.isWatched))
       } else if (action.scope === "watched") {
-        stateClone = filterObj(stateClone, x => !x.isWatched && (x.isOwned || x.isTemp || x.isAssigned))
+        stateClone = filterObj(stateClone, x => (!x.isWatched || incomingIds.includes(x.id)) && (x.isOwned || x.isTemp || x.isAssigned))
       }
       for (const project of action.projects) {
         stateClone[project.id] = {
@@ -58,7 +59,7 @@ export default function (state = {}, action) {
           isTemp: false,
           isOwned: stateClone[project.id]?.isOwned || action.scope === "owned",
           isAssigned: stateClone[project.id]?.isAssigned || action.scope === "assigned",
-          isWatched: stateClone[project.id]?.isAssigned || action.scope === "watched"
+          isWatched: stateClone[project.id]?.isWatched || action.scope === "watched"
         }
       }
       return stateClone

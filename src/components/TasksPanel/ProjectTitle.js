@@ -17,16 +17,15 @@ const ProjectTitle = (props) => {
   const dispatch = useDispatch();
 
   const isProjectTitleSelected = useSelector(state => state.app.isProjectTitleSelected);
-  const selectedProject = useSelector(state => state.app.selectedProject);
   const taskAddingStatus = useSelector(state => state.app.taskAddingStatus);
 
-  const projects = useSelector(state => state.projects);
+  const selectedProject = useSelector(state => state.projects[state.app.selectedProject]);
 
   const tasks = useSelector(state => state.tasks);
 
   const onChange = (e) => {
-    dispatch(projectsActions.handleUpdateProject({
-      id: selectedProject,
+    dispatch(projectsActions.handleUpdateProjectTitle({
+      id: selectedProject.id,
       title: e.target.value
     }))
   };
@@ -39,8 +38,9 @@ const ProjectTitle = (props) => {
         dispatch(
           tasksActions.handleCreateTask(
             initTaskState(
-              selectedProject,
+              selectedProject.id,
               generateRank(undefined, firstTask?.rank),
+              selectedProject.defaultStatus
             )
           )
         )
@@ -66,10 +66,10 @@ const ProjectTitle = (props) => {
           <input
             type="text"
             placeholder="Project Title…"
-            value={projects[selectedProject].title || ""}
+            value={selectedProject.title || ""}
             onKeyUp={onKeyUp}
             onChange={onChange}
-            autoFocus={true}
+            autoFocus
             readOnly={readOnly}
           />
         </div>
@@ -77,11 +77,11 @@ const ProjectTitle = (props) => {
         <span
           className={[
             styles.ProjectTitleHeader,
-            ...(!projects[selectedProject].title && [styles.placeholder] || [])
+            ...(!selectedProject.title && [styles.placeholder] || [])
           ].join(" ")}
           onClick={selectTitle}
         >
-          {projects[selectedProject].title || "Project Title…"}
+          {selectedProject.title || "Project Title…"}
         </span>
       )}
     </div>

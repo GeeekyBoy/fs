@@ -1,45 +1,53 @@
 import React, { useState, useMemo, forwardRef, useImperativeHandle } from 'react';
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app";
 import * as projectsActions from "../../actions/projects";
 import { AuthState } from "../../constants";
 import styles from "./ProjectSettings.module.scss"
 import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
 import TextField from '../UI/fields/TextField';
-import CardSelect from '../UI/fields/CardSelect';
+import ComboBox from '../UI/fields/ComboBox';
+import StatusSet from '../UI/fields/StatusSet';
 
-const ProjectSettings = forwardRef((props, ref) => {
-  const {
-    app: {
-      selectedProject,
-      isSynced
-    },
-    user,
-    projects,
-    dispatch
-  } = props;
+const ProjectSettings = forwardRef((_, ref) => {
+
+  const dispatch = useDispatch();
+
+  const selectedProject = useSelector(state => state.app.selectedProject);
+  const isSynced = useSelector(state => state.app.isSynced);
+
+  const userState = useSelector(state => state.user.state);
+  const username = useSelector(state => state.user.data?.username);
+
+  const projects = useSelector(state => state.projects);
 
   const {
     [selectedProject]: {
       id,
       title,
+      rank,
       permalink,
       privacy,
-      permissions
+      permissions,
+      statusSet
     }
   } = projects
 
   const getReadOnly = (user, projects, selectedProject, isSynced) => {
-    return user.state === AuthState.SignedIn &&
-    ((projects[selectedProject]?.owner !== user.data.username &&
+    return userState === AuthState.SignedIn &&
+    ((projects[selectedProject]?.owner !== username &&
     projects[selectedProject]?.permissions === "r") || !isSynced)
   }
-  const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
+  const readOnly = useMemo(
+    () => getReadOnly(userState, username, projects, selectedProject, isSynced),
+    [userState, username, projects, selectedProject, isSynced]
+  );
 
   const [newTitle, setNewTitle] = useState(title || "")
   const [newPermalink, setNewPermalink] = useState(/\w+\/(.*)/.exec(permalink)?.[1] || permalink)
   const [newPrivacy, setNewPrivacy] = useState(privacy)
   const [newPermissions, setNewPermissions] = useState(permissions)
+  const [newStatusSet, setNewStatusSet] = useState(statusSet)
 
   const checkIsChanaged = (
     newTitle,
@@ -52,7 +60,7 @@ const ProjectSettings = forwardRef((props, ref) => {
     permissions
   ) => (
     !(newTitle === (title || "") &&
-    newPermalink === (/\w+\/(.*)/.exec(permalink)?.[1] || permalink) &&
+    newPermalink === permalink &&
     newPrivacy === privacy &&
     newPermissions === permissions)
   )
@@ -86,10 +94,11 @@ const ProjectSettings = forwardRef((props, ref) => {
   const saveChanges = () => {
     dispatch(projectsActions.handleUpdateProject({
       id,
-      ...(newTitle !== (title || "") && { title: newTitle }),
-      ...(newPermalink !== (/\w+\/(.*)/.exec(permalink)?.[1] || permalink) && { permalink: newPermalink }),
-      ...(newPrivacy !== privacy && { privacy: newPrivacy }),
-      ...(newPermissions !== permissions && { permissions: newPermissions })
+      title: newTitle,
+      rank,
+      permalink: newPermalink,
+      privacy: newPrivacy,
+      permissions: newPermissions
     }))
   }
   useImperativeHandle(ref, () => ({
@@ -99,6 +108,7 @@ const ProjectSettings = forwardRef((props, ref) => {
       submitLabel: isSynced
         ? "Save Changes"
         : "No Connection!",
+      submitDisabled: !isChanged || readOnly,
       onClose: () => {
         closePanel()
       },
@@ -135,36 +145,39 @@ const ProjectSettings = forwardRef((props, ref) => {
           </span>
         )}
       />
-      {user.state === AuthState.SignedIn && (
+      {userState === AuthState.SignedIn && (
         <>
-          <CardSelect
+          <ComboBox
             name="privacy"
             value={newPrivacy}
             label="Privacy"
-            values={["public", "private"]}
-            options={["Public", "Private"]}
-            descriptions={[
-              "Make this project accessible to others via its unique permalink.",
-              "Make this project not visible to anyone other than you."
-            ]}
+            options={{
+              public: "Public",
+              private: "Private"
+            }}
             onChange={(e) => setNewPrivacy(e.target.value)}
             readOnly={readOnly}
           />
-          {(privacy === "public" || newPrivacy === "public") && (
-            <CardSelect
+          {newPrivacy === "public" && (
+            <ComboBox
               name="permissions"
               value={newPermissions}
               label="Permissions"
-              values={["rw", "r"]}
-              options={["Read Write", "Read Only"]}
-              descriptions={[
-                "Make this project writable by other users who have the permission to access its tasks.",
-                "Prevent other users who have the permission to access this project from modifying its contents."
-              ]}
+              options={{
+                rw: "Read Write",
+                r: "Read Only"
+              }}
               onChange={(e) => setNewPermissions(e.target.value)}
               readOnly={readOnly}
             />
           )}
+          <StatusSet
+            name="statusSet"
+            label="Status Set"
+            value={newStatusSet}
+            onChange={(e) => setNewStatusSet(e.target.value)}
+            readOnly={readOnly}
+          />
         </>
       )}
     </form>
@@ -173,16 +186,4 @@ const ProjectSettings = forwardRef((props, ref) => {
 
 ProjectSettings.displayName = "ProjectSettings";
 
-export default connect((state) => ({
-  app: {
-    selectedProject: state.app.selectedProject,
-    isSynced: state.app.isSynced
-  },
-  projects: state.projects,
-  user: {
-    state: state.user.state,
-    data: {
-      username: state.user.data.username
-    }
-  }
-}), null, null, { forwardRef: true })(ProjectSettings);
+export default ProjectSettings;

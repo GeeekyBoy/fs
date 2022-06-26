@@ -41,8 +41,6 @@ const ByTag = () => {
             <TaskItem
               key={value.id}
               item={value}
-              isSorting={false}
-              isDragging={false}
               nextTask={
                 (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
                 (sortedTasks[tagIndex + 1]?.[1][0].id !== value.id && sortedTasks[tagIndex + 1]?.[1][0].id) ||

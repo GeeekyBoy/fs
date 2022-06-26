@@ -12,12 +12,18 @@ const Textarea = (props) => {
     error,
     label,
     disabled,
-    class: className,
+    className,
     style
   } = props
   const [ id ] = useState("Textarea" + nanoid(11))
   const [isFocused, setIsFocused] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   const textareaRef = useRef(null)
+  const handleFieldClick = () => {
+    if (!isFocused && !disabled && textareaRef.current) {
+      textareaRef.current.focus()
+    }
+  }
   const adjustSize = ({ target }) => {
     target.parentNode.dataset.replicatedValue = target.value
   }
@@ -32,6 +38,7 @@ const Textarea = (props) => {
         styles.TextareaContainer,
         ...(error && [styles.error] || []),
         ...(isFocused && [styles.focused] || []),
+        ...(isHovered && [styles.hovered] || []),
         ...(readOnly && [styles.readOnly] || []),
         ...(disabled && [styles.disabled] || []),
         ...(value && [styles.filled] || []),
@@ -39,12 +46,20 @@ const Textarea = (props) => {
       ].join(" ")}
       style={style}
     >
-      <div>
-        {label && (
-          <label htmlFor={id}>
-            {label}
-          </label>
-        )}
+      {label && (
+        <label
+          htmlFor={id}
+          onPointerEnter={() => setIsHovered(true)}
+          onPointerLeave={() => setIsHovered(false)}
+        >
+          {label}
+        </label>
+      )}
+      <div
+        onClick={handleFieldClick}
+        onPointerEnter={() => setIsHovered(true)}
+        onPointerLeave={() => setIsHovered(false)}
+      >
         <textarea
           id={id}
           name={name}

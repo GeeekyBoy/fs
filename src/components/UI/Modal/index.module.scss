@@ -1,22 +1,35 @@
-
 .ModalHeaderBody {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  overflow: hidden;
   background-color: var(--color-background-fill-color-layer-alt);
 }
 
 .ModalHeader {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   margin-bottom: 15px;
-  font-weight: 600;
   color: var(--color-fill-color-text-primary);
+  font-weight: 600;
+}
+
+.ModalBody {
+  flex: 1 1;
+  min-height: 0;
+  max-height: calc(100vh - 300px);
+  overflow: auto;
+  & :global(.simplebar-content-wrapper) {
+    min-height: 100%;
+    color: var(--color-fill-color-text-primary);
+  }
 }
 
 .ModalFooter {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 15px 20px;
   & > *:not(:last-child) {
     margin-right: 10px;
@@ -25,24 +38,26 @@
 
 .ModalButton {
   position: relative;
-  outline: none;
-  border: none;
-  padding: 5px 10px;
-  font-weight: 600;
-  font-size: 0.75rem;
   flex: 1;
   padding: 10px 0;
-  cursor: pointer;
+  border: none;
   border-radius: 8px;
+  outline: none;
+  font-size: 0.875rem;
+  cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
   &.primary {
-    color: var(--color-fill-color-text-on-accent-primary);
     background-color: var(--primary);
+    color: var(--color-fill-color-text-on-accent-primary);
   }
   &.secondary {
     border: 1px solid;
     border-color: var(--color-stroke-color-card-stroke-default);
-    color: var(--color-fill-color-text-primary);
     background-color: var(--color-fill-color-control-default);
+    color: var(--color-fill-color-text-primary);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 }

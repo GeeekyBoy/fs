@@ -31,7 +31,13 @@ const Toolbar = () => {
     return navigate("/login")
   }
   return (
-    <div className={`${styles.ToolbarContainer} no-keyboard-portrait-flex`}>
+    <div
+      className={[
+        styles.ToolbarContainer,
+        ...(isLeftPanelOpened ? [styles.selected] : []),
+        "no-keyboard-portrait-flex"
+      ].join(" ")}
+    >
       <div className={styles.TopControls}>
         <span className={styles.Logo}>/.</span>
         <div className={styles.Spacer} />
@@ -78,8 +84,8 @@ const Toolbar = () => {
       <div className={styles.BottomControls}>
           {user.state === AuthState.SignedIn ? (
               <button
-                className={styles.ToolbarAction}
-                style={{padding: 0}}
+                className={styles.AvatarBtn}
+                style={{ padding: 0 }}
                 onClick={() => openLeftPanel(panelPages.ACCOUNT_SETTINGS)}
               >
                 <Avatar user={user.data} size={42} />

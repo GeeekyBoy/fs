@@ -23,8 +23,6 @@ const ByStatus = () => {
           <TaskItem
             key={value.id}
             item={value}
-            isSorting={false}
-            isDragging={false}
             nextTask={
               sortedTasks.todo[index + 1]?.id ||
               sortedTasks.pending[0]?.id ||
@@ -44,8 +42,6 @@ const ByStatus = () => {
           <TaskItem
             key={value.id}
             item={value}
-            isSorting={false}
-            isDragging={false}
             nextTask={
               sortedTasks.pending[index + 1]?.id ||
               sortedTasks.done[0]?.id ||
@@ -68,8 +64,6 @@ const ByStatus = () => {
           <TaskItem
             key={value.id}
             item={value}
-            isSorting={false}
-            isDragging={false}
             nextTask={sortedTasks.done[index + 1]?.id || null}
             prevTask={
               sortedTasks.done[index - 1]?.id ||

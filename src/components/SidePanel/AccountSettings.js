@@ -1,33 +1,35 @@
-import React, { useState, useMemo, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { connect } from "react-redux";
+import React, { useState, useMemo, useImperativeHandle, forwardRef } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import * as mutations from "../../graphql/mutations"
 import * as appActions from "../../actions/app";
 import * as userActions from "../../actions/user";
 import styles from "./AccountSettings.module.scss"
 import { ReactComponent as LogOutIcon } from "../../assets/log-out-outline.svg"
-import Button from '../UI/Button';
 import TextField from '../UI/fields/TextField';
 import Avatar from '../UI/Avatar';
 import API from '../../amplify/API';
+import { useModal } from '../ModalManager';
+import modals from '../modals';
 
-const AccountSettings = forwardRef((props, ref) => {
+const AccountSettings = forwardRef((_, ref) => {
+
+  const { showModal } = useModal();
+
+  const dispatch = useDispatch();
+
+  const userData = useSelector(state => state.user.data);
+
+  const isSynced = useSelector(state => state.app.isSynced);
+
   const {
-    user: {
-      data: {
-        username,
-        firstName,
-        lastName,
-        email,
-        plan,
-        avatar,
-        abbr
-      },
-    },
-    app: {
-      isSynced
-    },
-    dispatch
-  } = props;
+    username,
+    firstName,
+    lastName,
+    email,
+    plan,
+    avatar,
+    abbr
+  } = userData;
 
   const [isBusy, setIsBusy] = useState(false)
   const [newFirstName, setNewFirstName] = useState(firstName)
@@ -61,17 +63,24 @@ const AccountSettings = forwardRef((props, ref) => {
     return dispatch(appActions.handleSetLeftPanel(false))
   }
 	const logOut = () => {
-    return dispatch(userActions.handleSignOut(true))
+    showModal(modals.CONFIRMATION, {
+      title: "Log out",
+      question: "Are you sure you want to log out?",
+      acceptLabel: "Log out",
+      onAccept: () => {
+        dispatch(userActions.handleSignOut());
+      }
+    })
 	}
   const saveChanges = () => {
     setIsBusy(true)
     API.execute(mutations.updateUser, {
       input: {
         username,
-        ...(newFirstName !== firstName && { firstName: newFirstName }),
-        ...(newLastName !== lastName && { lastName: newLastName })
+        firstName: newFirstName,
+        lastName: newLastName
       }
-    }).then((res) => {
+    }).then((_) => {
       setIsBusy(false)
     }).catch(() => {
       setIsBusy(false)
@@ -89,7 +98,7 @@ const AccountSettings = forwardRef((props, ref) => {
       submitDisabled: isBusy || !isChanged || !isSynced,
       header: (
         <div className={styles.AccountSettingsHeader}>
-          <Avatar user={props.user.data} size={128} />
+          <Avatar user={userData} size={128} />
           <span>
             {firstName} {lastName}
           </span>
@@ -146,9 +155,4 @@ const AccountSettings = forwardRef((props, ref) => {
 
 AccountSettings.displayName = "AccountSettings";
 
-export default connect((state) => ({
-  user: state.user,
-  app: {
-    isSynced: state.app.isSynced,
-  }
-}), null, null, { forwardRef: true })(AccountSettings);
+export default AccountSettings;

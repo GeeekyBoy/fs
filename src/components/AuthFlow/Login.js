@@ -4,10 +4,10 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import * as userActions from "../../actions/user"
 import * as cacheController from "../../controllers/cache"
-import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import Auth from '../../amplify/Auth';
 import { navigate } from '../Router';
+import Button from '../UI/Button';
 
 const Login = () => {
   const [verificationCode, setVerificationCode] = useState("")
@@ -132,8 +132,9 @@ const Login = () => {
         >
           Forgot Password?
         </span>
-        <SubmitBtn
+        <Button
           type="submit"
+          style={{ width: "100%" }}
           value={isBusy ? "Signing In" : "Sign In"}
           disabled={isBusy || !username.trim() || !password.trim()}
         />
@@ -159,7 +160,7 @@ const Login = () => {
           error={verificationCodeError}
           value={verificationCode}
         />
-        <SubmitBtn
+        <Button
           type="submit"
           style={{width: "100%"}}
           value={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}

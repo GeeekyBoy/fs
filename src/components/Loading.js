@@ -56,7 +56,8 @@ const Loading = (props) => {
       let reqProject = null;
       try {
         reqProject = (await API.execute(queries.getProjectByPermalink, {
-          permalink: `${routeParams.username}/${routeParams.projectPermalink}`
+          permalink: routeParams.projectPermalink,
+          owner: routeParams.username
         })).data.getProjectByPermalink
         dispatch(projectsActions.createProject(reqProject, "temp"))
       } catch {
@@ -95,11 +96,12 @@ const Loading = (props) => {
         const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
         setProgressValue(progressValue + 4)
         PubSub.subscribeTopic("ownedProjects")
-        let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
+        let reqProject = Object.values(projects).filter(x => x.permalink === routeParams.projectPermalink)[0]
         if (!reqProject) {
           try {
             reqProject = (await API.execute(queries.getProjectByPermalink, {
-              permalink: `${routeParams.username}/${routeParams.projectPermalink}`
+              permalink: routeParams.projectPermalink,
+              owner: routeParams.username
             })).data.getProjectByPermalink
             dispatch(projectsActions.createProject(reqProject, "temp"))
           } catch {
@@ -141,7 +143,7 @@ const Loading = (props) => {
           const firstProject = sortByRank(Object.values(projects).filter(x => x.isOwned))?.[0]
           if (firstProject) {
             dispatch(appActions.handleSetProject(firstProject.id, false))
-            navigate(`/${firstProject.permalink}`, { replace: true })
+            navigate(`/${firstProject.owner}/${firstProject.permalink}`, { replace: true })
           }
         } else {
           setProgressMax(1)

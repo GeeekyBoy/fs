@@ -10,13 +10,13 @@ exports.handler = async (event, context, callback) => {
     }
   }
   const sessionData = await docClient.get(getSessionParams).promise()
-  const { projectID, username } = sessionData.Item
+  const { projectId, username } = sessionData.Item
   const getAvailConnectionsParams = {
     TableName: CONNECTIONTABLE,
     IndexName: "byProject",
-    KeyConditionExpression: "projectID = :projectID",
+    KeyConditionExpression: "projectId = :projectId",
     ExpressionAttributeValues: {
-      ":projectID": projectID
+      ":projectId": projectId
     }
   }
   const availConnections = await docClient.query(getAvailConnectionsParams).promise()

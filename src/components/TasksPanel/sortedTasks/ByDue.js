@@ -9,11 +9,6 @@ import TaskPlaceholder from '../TaskPlaceholder';
 
 const ByDue = () => {
   const tasks = useSelector(state => state.tasks);
-  // const getSortedTasks = (tasks) => {
-  //   return sortByRank(tasks).sort(
-  //     (a, b) => (b.due || 0) - (a.due || 0)
-  //   )
-  // }
   const getSortedTasks = (tasks) => {
     let result = {}
     const noDue = [];
@@ -28,8 +23,7 @@ const ByDue = () => {
         noDue.push(task)
       }
     }
-    result = sortObj(result, true)
-    result = Object.entries(result).map(x => [parseInt(x[0], 10), x[1]]);
+    result = Object.entries(result).map(x => [x[0], x[1]]);
     if (noDue.length) {
       result.push([0, noDue])
     }
@@ -44,8 +38,6 @@ const ByDue = () => {
             <TaskItem
               key={value.id}
               item={value}
-              isSorting={false}
-              isDragging={false}
               nextTask={
                 (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
                 (sortedTasks[tagIndex + 1]?.[1][0].id !== value.id && sortedTasks[tagIndex + 1]?.[1][0].id) ||

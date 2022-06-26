@@ -1,17 +1,17 @@
 .AppSettingsForm {
   display: flex;
+  display: flex;
   flex-direction: column;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0 25px;
   & > h2 > span {
     cursor: pointer;
   }
   & > input[type="submit"] {
     display: none;
   }
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  margin: 0 25px;
   & > *:not(:last-child) {
     margin-bottom: 5px;
   }
@@ -21,25 +21,23 @@
 }
 
 .AppSetting {
+  display: flex;
   position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
   width: 100%;
   padding: 10px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-direction: column;
   border-radius: 8px;
   font-size: 0.875rem;
-  font-weight: 400;
   & > *:not(:last-child) {
     margin-bottom: 5px;
   }
   & > span {
     width: max-content;
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: color 0.2s;
     color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
+    transition: color 0.2s;
     &.AppSettingSectionHeader {
       margin-top: 5px;
       color: var(--color-fill-color-text-secondary);
@@ -53,7 +51,6 @@
   border: 1px solid #c0c0c0;
   border-radius: 8px;
   font-size: 0.875rem;
-  font-weight: 400;
   &:disabled {
     background-color: #fafafa;
   }

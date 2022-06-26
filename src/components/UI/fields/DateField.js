@@ -32,7 +32,12 @@ const DateField = (props) => {
   const pickValue = ({ day, month, year }) => {
     if (!readOnly) {
       togglePicker()
-      onChange({ target: { value: new Date(`${month}/${day}/${year} GMT`).getTime(), name: name }})
+      onChange({
+        target: {
+          value: new Date(`${month}/${day}/${year} GMT`).toISOString(),
+          name: name,
+        },
+      });
     }
   }
   const getPickerValue = (value) => {
@@ -57,6 +62,11 @@ const DateField = (props) => {
   }, [readOnly, isPickerOpened, setIsPickerOpened])
   return (
     <div className={styles.DateFieldShell} style={style}>
+      {label && (
+        <label htmlFor={name}>
+          {label}
+        </label>
+      )}
       <div
         className={[
           styles.DateFieldContainer,
@@ -65,16 +75,10 @@ const DateField = (props) => {
           ...(value && [styles.filled] || [])
         ].join(" ")}
       >
-        {label && (
-          <label htmlFor={name}>
-            {label}
-          </label>
-        )}
         <input
           name={name}
           value={value ? formatDate(value) : ""}
           placeholder={label ? null : placeholder}
-          contentEditable={false}
           onClick={togglePicker}
           readOnly
         />  

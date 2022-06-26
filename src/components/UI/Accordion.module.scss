@@ -1,6 +1,6 @@
 .AccordionContainer {
-  overflow: hidden;
   padding-bottom: 15px;
+  overflow: hidden;
   @media only screen and (max-width: 768px) {
     font-size: 1.031rem;
   }
@@ -9,9 +9,9 @@
     padding: 15px;
     border: 1px solid;
     border-radius: 15px;
-    transition: background-color 0.2s, border-color 0.2s;
     border-color: var(--color-stroke-color-card-stroke-default);
     background-color: var(--color-background-fill-color-card-background-default);
+    transition: background-color 0.2s, border-color 0.2s;
     @media only screen and (max-width: 768px) {
       padding: 5px;
       border-radius: 0;
@@ -31,16 +31,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
-  font-weight: 500;
+  padding: 0 52px;
+  color: var(--color-fill-color-text-primary);
   font-size: 1.3rem;
   transition: color 0.2s;
-  color: var(--color-fill-color-text-primary);
   & > svg {
     cursor: pointer;
   }
   @media only screen and (max-width: 768px) {
-    padding: 5px 20px 5px 20px;
+    padding: 5px 25px 5px 25px;
     font-size: 1.031rem;
   }
 }

@@ -16,38 +16,51 @@ const TextField = (props) => {
     suffix,
     readOnly,
     disabled,
-    class: className,
+    className,
     style,
     inputRef
   } = props
   const [ id ] = useState("TextField_" + nanoid(11))
   const [isFocused, setIsFocused] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const handleFieldClick = () => {
+    if (!isFocused && !disabled) {
+      document.getElementById(id).focus()
+    }
+  }
   return (
     <div
       className={[
         styles.TextFieldShell,
         ...(disabled && [styles.disabled] || []),
         ...(error && [styles.error] || []),
-        ...(isFocused && [styles.focused] || []),
         ...(value && [styles.filled] || []),
         className || ""
       ].join(" ")}
       style={style}
     >
+      {label && (
+        <label
+          htmlFor={id}
+          onPointerEnter={() => setIsHovered(true)}
+          onPointerLeave={() => setIsHovered(false)}
+        >
+          {label}
+        </label>
+      )}
       <div
         className={[
           styles.TextFieldContainer,
           ...(error && [styles.error] || []),
           ...(isFocused && [styles.focused] || []),
+          ...(isHovered && [styles.hovered] || []),
           ...(readOnly && [styles.readOnly] || []),
           ...((value || prefix) && [styles.filled] || [])
         ].join(" ")}
+        onClick={handleFieldClick}
+        onPointerEnter={() => setIsHovered(true)}
+        onPointerLeave={() => setIsHovered(false)}
       >
-        {label && (
-          <label htmlFor={id}>
-            {label}
-          </label>
-        )}
         {prefix && (
           typeof prefix === 'string' ?
           (<span>{prefix}</span>) :

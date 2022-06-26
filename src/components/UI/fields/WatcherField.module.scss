@@ -4,11 +4,10 @@
   align-items: flex-start;
   justify-content: center;
   & > label {
-    margin-bottom: 0;
     width: max-content;
-    font-size: 0.875rem;
-    font-weight: 600;
+    margin-bottom: 0;
     color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -16,40 +15,38 @@
 }
 
 .NewWatcherBtn {
-  position: relative;
   display: flex;
-  padding: 10px 15px;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  border: 1px solid;
-  outline: none;
-  height: 91.8px;
   min-width: 80px;
-  font-weight: 500;
-  cursor: pointer;
+  height: 91.8px;
   margin-left: 5px;
+  padding: 10px 15px;
+  border: 1px solid;
   border-radius: 8px;
   border-color: var(--color-stroke-color-card-stroke-default);
+  outline: none;
   background-color: var(--color-background-fill-color-card-background-default);
+  font-size: 1.25rem;
+  cursor: pointer;
   & > div {
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 0;
-    border-radius: 100%;
-    min-width: 32px;
-    min-height: 32px;
     width: 32px;
+    min-width: 32px;
     height: 32px;
-    color: var(--color-fill-color-text-on-accent-primary);
+    min-height: 32px;
+    border-radius: 100%;
     background-color: var(--primary);
+    color: var(--color-fill-color-text-on-accent-primary);
+    line-height: 0;
   }
   & > span {
-    font-weight: 600;
-    font-size: 0.875rem;
     color: var(--primary);
+    font-size: 0.875rem;
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -57,35 +54,39 @@
 }
 
 .NoWatchers {
-  position: relative;
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: calc(100% - 20px);
+  height: fit-content;
   padding: 10px;
   border: 1px solid;
   border-radius: 8px;
-  outline: none;
-  height: fit-content;
   border-color: var(--color-stroke-color-card-stroke-default);
+  outline: none;
   background-color: var(--color-background-fill-color-card-background-default);
   & > span {
-    font-weight: 600;
-    font-size: 0.875rem;
     color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
   }
   & > button {
-    position: relative;
-    outline: none;
-    border-radius: 100000000000000px;
-    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     padding: 5px 10px;
-    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background-color: var(--primary);
+    color: var(--color-fill-color-text-on-accent-primary);
     font-size: 0.75rem;
     cursor: pointer;
-    color: var(--color-fill-color-text-on-accent-primary);
-    background-color: var(--primary);
+    & > *:not(:last-child) {
+      margin-right: 5px;
+    }
   }
   & > *:not(:last-child) {
     margin-bottom: 5px;
@@ -93,15 +94,15 @@
 }
 
 .WatcherItem {
-  position: relative;
   display: flex;
-  padding: 10px;
-  min-width: 80px;
-  max-width: 80px;
-  border: 1px solid;
-  border-radius: 8px;
+  position: relative;
   flex-direction: column;
   align-items: center;
+  min-width: 80px;
+  max-width: 80px;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 8px;
   border-color: var(--color-stroke-color-card-stroke-default);
   background-color: var(--color-background-fill-color-card-background-default);
   color: var(--color-fill-color-text-primary);
@@ -119,19 +120,19 @@
   align-items: center;
   justify-content: center;
   & > span {
+    max-width: 80px;
+    overflow: hidden;
+    line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden;
-    max-width: 80px;
-    line-height: 1.2;
   }
   & > span:nth-child(1) {
+    color: var(--color-fill-color-text-primary);
     font-size: 0.875rem;
-    font-weight: 600;
   }
   & > span:nth-child(2) {
+    color: var(--color-fill-color-text-secondary);
     font-size: 0.625rem;
-    font-weight: 400;
   }
 }
 
@@ -139,12 +140,12 @@
   position: absolute;
   top: 5px;
   right: 5px;
-  outline: none;
-  border: none;
-  line-height: 0;
   padding: 0;
+  border: none;
   border-radius: 100%;
-  cursor: pointer;
-  color: var(--color-fill-color-text-on-accent-primary);
+  outline: none;
   background-color: var(--primary);
+  color: var(--color-fill-color-text-on-accent-primary);
+  line-height: 0;
+  cursor: pointer;
 }

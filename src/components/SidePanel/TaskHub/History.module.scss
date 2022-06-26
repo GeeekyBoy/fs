@@ -1,0 +1,72 @@
+.HistoryItem {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  color: var(--color-fill-color-text-primary);
+  & > *:not(:last-child) {
+    margin-right: 15px;
+  }
+  &:first-child:not(:last-child) .Line {
+    align-self: flex-end !important;
+    height: 60px !important;
+  }
+  &:last-child:not(:first-child) .Line {
+    align-self: flex-start !important;
+    height: 60px !important;
+  }
+}
+
+.HistoryOwnerAvatar {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 120px;
+  .HistoryItem:not(:first-child) &::before {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    height: 30px;
+    border-left: 1px solid var(--outline);
+    content: '';
+  }
+  .HistoryItem:not(:last-child) &::after {
+    z-index: -1;
+    position: absolute;
+    bottom: 0;
+    height: 30px;
+    border-left: 1px solid var(--outline);
+    content: '';
+  }
+  & > .AvatarContainer {
+    width: 42px;
+    height: 42px;
+    border-radius: 100%;
+    background-color: var(--auxiliarySurface);
+  }
+}
+
+.HistoryContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.HistoryDate {
+  color: var(--outline);
+  font-size: 0.75rem;
+}
+
+.HistoryItemInfo {
+  & span {
+    display: inline-block;
+    & > *:not(b) {
+      vertical-align: middle;
+    }
+  }
+}

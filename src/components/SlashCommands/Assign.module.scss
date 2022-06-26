@@ -2,10 +2,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 20px;
+  padding: 8px 8px 8px 12px;
+  border-radius: 6px;
   background-color: transparent;
-  transition: background-color 0.2s;
+  color: var(--color-fill-color-text-primary);
   cursor: pointer;
+  transition: background-color 0.2s;
   &.selected {
     background-color: var(--color-fill-color-subtle-secondary);
   }
@@ -13,16 +15,14 @@
     display: flex;
     flex-direction: column;
     & > span:nth-child(1) {
-      font-weight: 600;
+      color: var(--color-fill-color-text-primary);
       font-size: 0.875rem;
       transition: color 0.2s;
-      color: var(--color-fill-color-text-primary);
     }
     & > span:nth-child(2) {
-      font-weight: 400;
+      color: var(--color-fill-color-text-secondary);
       font-size: 0.75rem;
       transition: color 0.2s;
-      color: var(--color-fill-color-text-primary);
     }
   }
   & > *:not(:last-child) {
@@ -32,10 +32,10 @@
 
 .NoKeyword {
   display: flex;
-  width: 100%;
-  font-size: 0.875rem;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s;
+  width: 100%;
   color: var(--color-fill-color-text-primary);
+  font-size: 0.875rem;
+  transition: color 0.2s;
 }

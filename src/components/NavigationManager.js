@@ -27,11 +27,12 @@ const NavigationManager = () => {
         username, projectPermalink, taskPermalink
       } = routeParams;
       if (username && projectPermalink) {
-        let reqProject = Object.values(projects).filter(x => x.permalink === `${username}/${projectPermalink}`)[0]
+        let reqProject = Object.values(projects).filter(x => `${x.owner}/${x.permalink}` === `${username}/${projectPermalink}`)[0]
         if (!reqProject) {
           try {
             reqProject = (await API.execute(queries.getProjectByPermalink, {
-              permalink: `${username}/${projectPermalink}`
+              permalink: projectPermalink,
+              owner: username
             })).data.getProjectByPermalink
             dispatch(projectsActions.createProject(reqProject, "temp"))
           } catch {

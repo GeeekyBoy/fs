@@ -1,13 +1,13 @@
 .ToolbarContainer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   & > div {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    flex-direction: row;
     width: 100%;
     & > span {
       font-size: 0.75rem;
@@ -31,8 +31,8 @@
   justify-content: center;
   font-size: 0.875rem;
   & > span {
-    transition: color 0.2s;
     color: var(--color-fill-color-text-primary);
+    transition: color 0.2s;
   }
   & > div {
     width: 105px;
@@ -44,19 +44,16 @@
 
 .ToolbarActionBtn {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  line-height: 0;
-  padding: 8px 10px;
+  padding: 5px 10px;
   border: none;
+  border-radius: 8px;
   outline: none;
-  cursor: pointer;
-  border-radius: 50px;
-  transition: background-color 0.2s, color 0.2s;
-  color: var(--color-fill-color-text-on-accent-primary);
   background-color: var(--primary);
+  color: var(--color-fill-color-text-on-accent-primary);
+  font-size: 0.75rem;
+  cursor: pointer;
   & > *:not(:last-child) {
     margin-right: 3px;
   }

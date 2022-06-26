@@ -1,17 +1,17 @@
 import React, { useEffect, useMemo } from 'react';
 import styles from "./Due.module.scss"
 import * as tasksActions from "../../actions/tasks"
-import * as appActions from "../../actions/app"
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 const Due = (props) => {
   const {
     commandParam,
-    app: {
-      selectedTask
-    },
-    dispatch
+    onCommandChange,
   } = props
+
+  const dispatch = useDispatch()
+
+  const selectedTask = useSelector(state => state.app.selectedTask);
 
   const getSuggestedDue = (commandParam) => {
     const isValidPattern = /^((\d{1,2}-?)|(\d{2}-\d{1,2}-?)|(\d{2}-\d{2}-\d{1,4})|())$/.test(commandParam)
@@ -51,10 +51,12 @@ const Due = (props) => {
 
   const chooseDue = () => {
     if (suggestedDue) {
-      dispatch(appActions.setCommand(""))
+      onCommandChange(null)
       dispatch(tasksActions.handleUpdateTask({
           id: selectedTask,
-          due: new Date(suggestedDue).getTime()
+          action: "update",
+          field: "due",
+          value: new Date(suggestedDue).toISOString()
       }))
     }
   }
@@ -89,9 +91,4 @@ const Due = (props) => {
   );
 };
 
-export default connect((state) => ({
-	app: {
-    selectedTask: state.app.selectedTask
-  },
-	tasks: state.tasks
-}))(Due);
+export default Due;

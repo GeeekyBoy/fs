@@ -1,6 +1,6 @@
 import React from "react"
 import { AuthState } from '../../constants';
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useWindowSize } from "../../components/WindowSizeListener";
 import AvatarGroup from "../UI/AvatarGroup";
 import styles from "./ProjectHeader.module.scss"

@@ -20,33 +20,33 @@ const setIsJoined = (isJoined, projectViewers = []) => ({
   projectViewers
 });
 
-const setJoinedProject = (projectID, username) => ({
+const setJoinedProject = (projectId, username) => ({
   type: JOIN_PROEJCT,
-  projectID,
+  projectId,
   username
 });
 
-const setLeftProject = (projectID, username) => ({
+const setLeftProject = (projectId, username) => ({
   type: LEAVE_PROJECT,
-  projectID,
+  projectId,
   username
 });
 
-const setFocusedTask = (taskID, username) => ({
+const setFocusedTask = (taskId, username) => ({
   type: FOCUS_TASK,
-  taskID,
+  taskId,
   username
 });
 
-const setUnfocusedTask = (taskID, username) => ({
+const setUnfocusedTask = (taskId, username) => ({
   type: UNFOCUS_TASK,
-  taskID,
+  taskId,
   username
 });
 
-const setTxtCursor = (taskID, pos, username) => ({
+const setTxtCursor = (taskId, pos, username) => ({
   type: SET_TXT_CURSOR,
-  taskID,
+  taskId,
   pos,
   username
 });
@@ -61,7 +61,7 @@ export const handleInitSession = () => async (dispatch, getState) => {
   const user = getState().user;
   if (session?.readyState !== WebSocket.OPEN) {
     await (() => new Promise((resolve, reject) => {
-      if (isOffline) resolve({ errors: [{ message: "Network Error" }] })
+      if (isOffline) resolve(new Error("Failed to fetch"));
       const nextSession = new WebSocket(`wss://18gbulyifd.execute-api.us-east-1.amazonaws.com/Prod`)
       nextSession.onopen = () => {
         console.log("Websocket opened")
@@ -74,21 +74,21 @@ export const handleInitSession = () => async (dispatch, getState) => {
           await dispatch(usersActions.handleAddUsers([username]))
           switch (action) {
             case "JOIN_PROJECT":
-              dispatch(setJoinedProject(data.projectID, username))
+              dispatch(setJoinedProject(data.projectId, username))
               break;
             case "LEAVE_PROJECT":
               if (username !== user.data.username) {
-                dispatch(setLeftProject(data.projectID, username))
+                dispatch(setLeftProject(data.projectId, username))
               }
               break;
             case "FOCUS_TASK":
-              dispatch(setFocusedTask(data.taskID, username))
+              dispatch(setFocusedTask(data.taskId, username))
               break;
             case "UNFOCUS_TASK":
-              dispatch(setUnfocusedTask(data.taskID, username))
+              dispatch(setUnfocusedTask(data.taskId, username))
               break;
             case "MOVE_TXT_CURSOR":
-              dispatch(setTxtCursor(data.taskID, data.pos, username))
+              dispatch(setTxtCursor(data.taskId, data.pos, username))
               break;
           }
         } else if (action.includes("ACK")) {
@@ -106,28 +106,28 @@ export const handleInitSession = () => async (dispatch, getState) => {
       nextSession.onerror = (err) => {
         console.log("Websocket error")
         console.log(err)
-        reject(err)
+        resolve(err)
       }
       nextSession.onclose = (event) => {
         console.log("Websocket closed")
         console.log(event)
       }
-    }))()
+    }))();
   }
 }
 
-export const handleJoinProject = (projectID) => async (dispatch, getState) => {
+export const handleJoinProject = (projectId) => async (dispatch, getState) => {
   const userData = getState().user.data;
   await dispatch(usersActions.handleAddUsers([userData.username]))
   dispatch(resetCollabData())
-  dispatch(setJoinedProject(projectID, userData.username))
+  dispatch(setJoinedProject(projectId, userData.username))
   const session = getState().collaboration.session;
   if (session?.readyState === WebSocket.OPEN) {
     dispatch(setIsJoined(false))
     const dataToSend = {
       action: "joinproject",
       data: {
-        projectID: projectID,
+        projectId: projectId,
         jwt: userData.jwt
       }
     }

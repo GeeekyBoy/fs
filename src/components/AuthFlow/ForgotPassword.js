@@ -2,10 +2,10 @@ import React from 'react';
 import styles from "./ForgotPassword.module.scss"
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import Auth from '../../amplify/Auth';
 import { navigate } from '../Router';
+import Button from '../UI/Button';
 
 const ForgotPassword = () => {
   const [username, setUsername] = useState("")
@@ -132,8 +132,9 @@ const ForgotPassword = () => {
           error={usernameError}
           value={username}
         />
-        <SubmitBtn
+        <Button
           type="submit"
+          style={{ width: "100%" }}
           value={isBusy ? "Processing" : "Next"}
           disabled={isBusy || !username.trim()}
         />
@@ -159,8 +160,9 @@ const ForgotPassword = () => {
           error={verificationCodeError}
           value={verificationCode}
         />
-        <SubmitBtn
+        <Button
           type="submit"
+          style={{ width: "100%" }}
           value={isBusy ? "Processing" : "Next"}
           disabled={isBusy || !verificationCode.trim()}
         />
@@ -195,9 +197,9 @@ const ForgotPassword = () => {
           error={newPasswordError}
           value={newPassword}
         />
-        <SubmitBtn
+        <Button
           type="submit"
-          style={{width: "100%"}}
+          style={{ width: "100%" }}
           value={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}
           disabled={isBusy || !verificationCode.trim() || !newPassword.trim() || newPasswordError || isOffline}
         />

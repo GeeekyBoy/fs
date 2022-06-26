@@ -2,12 +2,15 @@ import { panelPages, AuthState } from "../constants"
 import * as tasksActions from "./tasks"
 import * as collaborationActions from "./collaboration"
 import * as commentsActions from "./comments"
+import * as attachmentsActions from "./attachments"
+import * as historyActions from "./history"
 import { navigate } from "../components/Router"
 import PubSub from "../amplify/PubSub"
 
 export const SET_PROJECT = "SET_PROJECT";
 export const SET_TASK = "SET_TASK";
-export const SET_COMMAND = "SET_COMMAND";
+export const BATCH_SELECT_TASK = "BATCH_SELECT_TASK";
+export const BATCH_DESELECT_TASK = "BATCH_DESELECT_TASK";
 export const SET_PROJECT_ADDING_STATUS = "SET_PROJECT_ADDING_STATUS";
 export const SET_TASK_ADDING_STATUS = "SET_TASK_ADDING_STATUS";
 export const SET_NAVIGATE = "SET_NAVIGATE";
@@ -30,6 +33,16 @@ const setTask = (id) => ({
   id
 });
 
+const batchSelectTask = (id) => ({
+  type: BATCH_SELECT_TASK,
+  id
+});
+
+const batchDeselectTask = (id) => ({
+  type: BATCH_DESELECT_TASK,
+  id
+});
+
 const setProjectTitle = (status) => ({
   type: SET_PROJECT_TITLE,
   status
@@ -43,11 +56,6 @@ const setLeftPanel = (status) => ({
 const setRightPanel = (status) => ({
   type: SET_DETAILS_PANEL,
   status
-});
-
-export const setCommand = (command) => ({
-  type: SET_COMMAND,
-  command
 });
 
 export const setOffline = (isOffline) => ({
@@ -101,7 +109,7 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
         dispatch(setProject(id))
         if (shouldChangeURL) {
           if (user.state === AuthState.SignedIn || projects[id].isTemp) {
-            navigate(`/${projects[id].permalink}`)
+            navigate(`/${projects[id].owner}/${projects[id].permalink}`)
           } else {
             navigate(`/local/${projects[id].permalink}`)
           }
@@ -127,15 +135,16 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
 
 export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState) => {
   const { user, projects, tasks, app } = getState()
+  dispatch(attachmentsActions.emptyAttachments())
+  dispatch(historyActions.emptyHistory())
   PubSub.unsubscribeTopic("comments")
   dispatch(commentsActions.emptyComments())
   dispatch(setProjectTitle(false))
-  if (id !== app.selectedTask) dispatch(setCommand(""))
   if (!id && app.selectedTask) {
     if (user.state === AuthState.SignedIn) {
       dispatch(collaborationActions.handleSendAction({
         action: "UNFOCUS_TASK",
-        taskID: app.selectedTask
+        taskId: app.selectedTask
       }))
     }
     if (app.isRightPanelOpened) {
@@ -143,7 +152,7 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
     }
     if (shouldChangeURL) {
       if (app.selectedProject && (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp)) {
-        navigate(`/${projects[app.selectedProject].permalink}`)
+        navigate(`/${projects[app.selectedProject].owner}/${projects[app.selectedProject].permalink}`)
       }
     }
     dispatch(setTask(null))
@@ -158,23 +167,45 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
     }
     if (shouldChangeURL) {
       if (app.selectedProject && (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp)) {
-        navigate(`/${projects[app.selectedProject].permalink}/${tasks[id].permalink}`)
+        navigate(`/${projects[app.selectedProject].owner}/${projects[app.selectedProject].permalink}/${tasks[id].permalink}`)
       }
     }
     dispatch(setTask(id))
     dispatch(setLockedTaskField(null))
     if (!tasks[id].isVirtual) {
+      dispatch(attachmentsActions.handleFetchAttachments(id))
+      dispatch(historyActions.handleFetchHistory(id))
       dispatch(commentsActions.handleFetchComments(id))
       if (user.state === AuthState.SignedIn) {
         dispatch(collaborationActions.handleSendAction({
           action: "FOCUS_TASK",
-          taskID: id
+          taskId: id
         }))
         PubSub.subscribeTopic("comments", id)
       }
     }
   }
 }
+
+export const handleBatchSelectTask = (id) => (dispatch, getState) => {
+  const { app } = getState();
+  if (app.selectedTask) {
+    dispatch(handleSetTask(null));
+  }
+  dispatch(batchSelectTask(id));
+  dispatch(setRightPanel(true));
+  dispatch(setRightPanelPage(panelPages.BATCH_HUB));
+};
+
+export const handleBatchDeselectTask = (id) => (dispatch, getState) => {
+  const { app } = getState();
+  if (app.selectedTasks?.length === 1) {
+    dispatch(handleSetTask(app.selectedTasks[0]));
+    dispatch(setRightPanel(true));
+    dispatch(setRightPanelPage(panelPages.TASK_HUB));
+  }
+  dispatch(batchDeselectTask(id));
+};
 
 export const handleSetProjectTitle = (status) => (dispatch) => {
   if (status) {

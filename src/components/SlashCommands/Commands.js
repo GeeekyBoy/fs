@@ -5,7 +5,7 @@ import * as appActions from "../../actions/app"
 import copyTask from "../../utils/copyTask"
 import sortByRank from "../../utils/sortByRank"
 import generateRank from "../../utils/generateRank"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { supportedCommands } from "../../constants"
 import { ReactComponent as AssignIcon } from "../../assets/person-add-outline.svg"
 import { ReactComponent as CalenderIcon } from "../../assets/calendar-outline.svg"
@@ -18,21 +18,23 @@ import { ReactComponent as DuplicateIcon } from "../../assets/duplicate-outline.
 
 const Commands = (props) => {
   const {
-    app: {
-      command,
-      selectedTask,
-      selectedProject
-    },
+    command,
+    onCommandChange,
     scrollableNodeRef,
-    tasks,
-    dispatch
   } = props
+
+  const dispatch = useDispatch();
+
+  const selectedTask = useSelector(state => state.app.selectedTask);
+  const selectedProject = useSelector(state => state.app.selectedProject);
+
+  const tasks = useSelector(state => state.tasks);
 
   const supportedIntents = Object.keys(supportedCommands)
   const supportedAlias = Object.fromEntries(Object.entries(supportedCommands).map(x => [x[1].alias, x[0]]).filter(x => x[0]))
 
   const getSuggestedIntents = (command) => {
-    const commandTokens = /^\/(\w*)\s*(.*)\s*$/m.exec(command)
+    const commandTokens = /^(\w*)\s*(.*)\s*$/m.exec(command)
     let results = supportedIntents.filter(x => new RegExp(`^${commandTokens[1]}`, "i").test(x))
     if (supportedAlias[commandTokens[1].toLowerCase()]) {
       if (results.includes(supportedAlias[commandTokens[1].toLowerCase()])) {
@@ -50,7 +52,7 @@ const Commands = (props) => {
   const chooseCommand = (selectedCommand) => {
     switch(selectedCommand) {
       case "COPY":
-        dispatch(appActions.setCommand(""))
+        onCommandChange(null)
         window.localStorage.setItem("tasksClipboard",
           "COPIEDTASKSTART=>" +
           JSON.stringify(tasks[selectedTask]) +
@@ -58,7 +60,7 @@ const Commands = (props) => {
         )
         return dispatch(appActions.handleSetTask(null))
       case "DUPLICATE":
-        dispatch(appActions.setCommand(""))
+        onCommandChange(null)
         dispatch(tasksActions.handleCreateTask(
           copyTask(
             tasks[selectedTask],
@@ -68,10 +70,10 @@ const Commands = (props) => {
         ))
         return dispatch(appActions.handleSetTask(null))
       case "DELETE":
-        dispatch(appActions.setCommand(""))
+        onCommandChange(null)
         return dispatch(tasksActions.handleRemoveTask(tasks[selectedTask]))
       default:
-        return dispatch(appActions.setCommand("/" + selectedCommand.toLowerCase() + " "))
+        return onCommandChange(selectedCommand.toLowerCase() + " ")
     }
   }
 
@@ -145,11 +147,4 @@ const Commands = (props) => {
   )
 };
 
-export default connect((state) => ({
-	app: {
-    command: state.app.command,
-    selectedTask: state.app.selectedTask,
-    selectedProject: state.app.selectedProject
-  },
-	tasks: state.tasks
-}))(Commands);
+export default Commands;

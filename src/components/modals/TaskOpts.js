@@ -21,7 +21,7 @@ const TaskOpts = () => {
   const { modalRef, hideModal } = useModal();
   const dispatch = useDispatch();
 
-  const selectedProjectID = useSelector(state => state.app.selectedProject)
+  const selectedProjectId = useSelector(state => state.app.selectedProject)
 
   const tasks = useSelector(state => state.tasks)
   const selectedTask = useSelector(state => state.tasks[state.app.selectedTask])
@@ -42,7 +42,7 @@ const TaskOpts = () => {
       tasksActions.handleCreateTask(
         copyTaskCore(
           selectedTask,
-          selectedProjectID,
+          selectedProjectId,
           generateRank(
             selectedTask.rank,
             getNextItem(selectedTask.rank, tasks)?.rank
@@ -72,7 +72,9 @@ const TaskOpts = () => {
     dispatch(
       tasksActions.handleUpdateTask({
         id: selectedTask?.id,
-        status: "done",
+        action: "update",
+        field: "status",
+        value: "done",
       })
     );
   }

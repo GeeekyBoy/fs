@@ -2,26 +2,29 @@ import React from "react";
 import { useArgs } from "@storybook/client-api";
 import { withPerformance } from "storybook-addon-performance";
 
-import Select from "../components/UI/fields/Select";
+import ComboBox from "../components/UI/fields/ComboBox";
 
 export default {
-  title: "ForwardSlash/Fields/Select",
-  component: Select,
+  title: "ForwardSlash/Fields/ComboBox",
+  component: ComboBox,
   decorators: [withPerformance()],
 };
 
 const Template = (args) => {
   const [_, updateArgs] = useArgs();
   const handleChange = (e) => updateArgs({ value: e.target.value });
-  return <Select onChange={handleChange} {...args} />;
+  return <ComboBox onChange={handleChange} {...args} />;
 };
 
 export const Default = Template.bind({});
 Default.args = {
   value: "todo",
   label: "Status",
-  values: ["todo", "pending", "done"],
-  options: ["Todo", "Pending", "Done"],
+  options: {
+    "todo": "Todo",
+    "pending": "Pending",
+    "done": "Done",
+  },
   readOnly: false,
   disabled: false
 };

@@ -3,17 +3,17 @@
 }
 
 .NotificationContainer {
-  position: relative;
   display: flex;
+  position: relative;
   flex-direction: column;
-  padding: 15px;
   width: calc(100% - 32px);
+  padding: 15px;
   border: 1px solid;
   border-radius: 8px;
-  transition: background-color 0.2s, color 0.2s;
   border-color: var(--color-stroke-color-card-stroke-default);
   background-color: var(--color-background-fill-color-card-background-default);
   color: var(--color-fill-color-text-primary);
+  transition: background-color 0.2s, color 0.2s;
   &.clickable {
     cursor: pointer;
     &:hover {
@@ -22,9 +22,9 @@
   }
   &.expanded {
     & .NotificationBottomPart > span {
-      white-space: normal;
       overflow: hidden;
       text-overflow: initial;
+      white-space: normal;
     }
   }
 }
@@ -32,17 +32,17 @@
 .NotificationControls {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   margin-bottom: 5px;
   & > div {
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
-    font-size: 0.75rem;
+    justify-content: center;
     font-weight: 600;
+    font-size: 0.75rem;
     & > *:not(:last-child) {
       margin-right: 5px;
     }
@@ -56,8 +56,8 @@
   justify-content: flex-start;
   border: none;
   background-color: transparent;
-  transition: color 0.2s;
   color: var(--color-fill-color-text-primary);
+  transition: color 0.2s;
 }
 
 .NotificationContent {
@@ -78,23 +78,23 @@
 .NotificationTopPart {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  font-size: 0.75rem;
   font-weight: 600;
+  font-size: 0.75rem;
 }
 
 .NotificationBottomPart {
-  font-size: 0.625rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  font-size: 0.625rem;
   & > span {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
   

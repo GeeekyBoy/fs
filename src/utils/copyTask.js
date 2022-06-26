@@ -1,9 +1,9 @@
-import generateID from "./generateID";
+import generateId from "./generateId";
 
-export default (taskState, projectID, rank) => {
+export default (taskState, projectId, rank) => {
   return {
-    id: generateID(),
-    projectID: projectID,
+    id: generateId(),
+    projectId: projectId,
     rank: rank,
     task: taskState.task,
     description: taskState.description,
@@ -12,5 +12,7 @@ export default (taskState, projectID, rank) => {
     status: taskState.status,
     priority: taskState.priority,
     assignees: [],
+    anonymousAssignees: [],
+    invitedAssignees: [],
   };
 };

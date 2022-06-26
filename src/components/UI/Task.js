@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, memo, useEffect } from "react"
+import React, { useRef, useMemo, memo, useEffect, useState } from "react"
 import styles from "./Task.module.scss"
 import formatDate from "../../utils/formatDate"
 import { ReactComponent as CheckmarkIcon } from "../../assets/checkmark-outline.svg";
@@ -8,8 +8,12 @@ import { ReactComponent as CopyIcon } from "../../assets/copy-outline.svg"
 import { ReactComponent as DuplicateIcon } from "../../assets/duplicate-outline.svg"
 import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
 import { ReactComponent as DetailsIcon } from "../../assets/information-circle-outline.svg";
-//import SlashCommands from "../SlashCommands";
+import { ReactComponent as DragIcon } from "../../assets/DragHandleMinor.svg";
+import SlashCommands from "../SlashCommands";
 import AvatarGroup from "../UI/AvatarGroup";
+import Checkbox from "./fields/Checkbox";
+
+const lastTaskCaretPos = { current: null };
 
 const TaskItem = (props) => {
 
@@ -30,6 +34,8 @@ const TaskItem = (props) => {
     onArrowDown,
     onEnter,
     onEscape,
+    onBatchSelect,
+    onBatchDeselect,
     mobile,
     taskViewers,
     showDueDate,
@@ -40,42 +46,53 @@ const TaskItem = (props) => {
     showShareButton,
     assignees,
     selected,
-    command,
+    batchSelected,
     readOnly,
     listeners,
     isSorting,
-    isDragging
+    isDragging,
+    isBatchSelecting,
   } = props;
 
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
+  const wasUnselected = useRef(true);
+  const shellLongPressTimeout = useRef(null);
+  const typingIdleTimeout = useRef(null);
+  const taskCaretPos = useRef(task.length);
+  const commandCaretPos = useRef(null);
+
+  const [command, setCommand] = useState(null);
 
   const getSlashCommandsPos = (inputRef) => {
-    if (inputRef.current) {
-      const inputPos = inputRef.current.getBoundingClientRect()
-      const cursorPos = 
-        inputRef.current.selectionStart * 9.6 < inputPos.left - 40 ?
-        inputPos.left - 40 :
-        inputRef.current.selectionStart * 9.6
+    if (document.activeElement === inputRef.current) {
+      const selection = document.getSelection();
+      const caretPos = selection.getRangeAt(0).getBoundingClientRect();
+      const leftPos = caretPos.left - 160;
       return {
-        top: inputPos.top + 40,
-        left: inputPos.left - 160 + cursorPos
-      }
+        top: caretPos.top + 30,
+        left: leftPos < 120
+          ? 120
+          : leftPos > window.innerWidth - 360
+            ? window.innerWidth - 360
+            : leftPos,
+      };
     } else {
       return {
         top: 0,
-        left: 0
-      }
+        left: 0,
+      };
     }
-  }
+  };
 
-  const slashCommandsPos = useMemo(() => getSlashCommandsPos(inputRef), [task])
-
-  const handleChange = (e) => {
+  const slashCommandsPos = useMemo(() => getSlashCommandsPos(inputRef), [taskCaretPos.current, commandCaretPos.current]);
+  
+  const handleTaskInput = (e) => {
     if (onChange) {
+      taskCaretPos.current = document.getSelection().focusOffset;
       onChange({
         target: {
           id: id,
-          value: e.target.value,
+          value: e.target.innerText,
         },
       });
     }
@@ -83,86 +100,189 @@ const TaskItem = (props) => {
 
   const handleToggleStatus = () => {
     if (onToggleStatus) {
-      onToggleStatus(status === "done" ? "todo" : "done")
-    }
-  }
-
-  const handleKeyUp = (e) => {
-    if (!command) {
-      if (e.key === "Enter") {
-        if (onEnter) onEnter(id)
-      } else if (e.key === "ArrowUp") {
-        if (onArrowUp) onArrowUp(id)
-      } else if (e.key === "ArrowDown") {
-        if (onArrowDown) onArrowDown(id)
-      } else if (e.key === "Escape") {
-        if (onEscape) onEscape(id)
-      }
+      onToggleStatus(status === "done" ? "todo" : "done");
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "ArrowUp" || e.key === "ArrowDown" || e.key === "Enter") {
-      e.preventDefault()
+  const handleKeyUp = (e) => {
+    if (
+      e.key === "Enter" ||
+      e.key === "ArrowUp" ||
+      e.key === "ArrowDown" ||
+      e.key === "Escape" ||
+      e.key === "/"
+    ) {
+      e.preventDefault();
     }
+    taskCaretPos.current = document.getSelection().focusOffset;
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (onEnter) onEnter(id);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (onArrowUp) {
+        lastTaskCaretPos.current = taskCaretPos.current;
+        onArrowUp(id);
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (onArrowDown) {
+        lastTaskCaretPos.current = taskCaretPos.current;
+        onArrowDown(id);
+      }
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      if (onEscape) onEscape(id);
+    } else if (e.key === "/" && !command) {
+      e.preventDefault();
+      commandCaretPos.current = 0;
+      clearTimeout(typingIdleTimeout.current);
+      setCommand("");
+    }
+  };
+
+  const handleCommandInput = (e) => {
+    commandCaretPos.current = document.getSelection().focusOffset;
+    setCommand(e.target.innerText || null);
+  };
+
+  const handleCommandKeyUp = (e) => {
+    if (
+      e.key === "Enter" ||
+      e.key === "ArrowUp" ||
+      e.key === "ArrowDown" ||
+      e.key === "Escape"
+    ) {
+      e.preventDefault();
+    }
+    commandCaretPos.current = document.getSelection().focusOffset;
+  };
+
+  const setCommandAndMoveCaretToEnd = (nextCommand) => {
+    commandCaretPos.current = nextCommand.length;
+    setCommand(nextCommand);
   }
 
   const handleSelect = () => {
-    if (onSelect) {
-      onSelect(id)
+    if (onSelect && !selected) {
+      onSelect(id);
     }
-  }
+    taskCaretPos.current = document.getSelection().focusOffset;
+  };
 
   const handleCopy = () => {
     if (onCopy) {
-      onCopy(id)
+      onCopy(id);
     }
-  }
+  };
 
   const handleDuplicate = () => {
     if (onDuplicate && !readOnly) {
-      onDuplicate(id)
+      onDuplicate(id);
     }
-  }
+  };
 
   const handleShare = () => {
-    const linkToBeCopied = window.location.href
-    navigator.clipboard.writeText(linkToBeCopied)
+    const linkToBeCopied = window.location.href;
+    navigator.clipboard.writeText(linkToBeCopied);
     if (onShare) {
-      onShare(id)
+      onShare(id);
     }
-  }
+  };
 
   const handleRemove = () => {
     if (onRemove && !readOnly) {
-      onRemove(id)
+      onRemove(id);
     }
-  }
+  };
 
   const handleDetails = () => {
     if (onDetails) {
-      onDetails(id)
+      onDetails(id);
     }
+  };
+
+  const handleBatchToggle = () => {
+    if (batchSelected) {
+      onBatchDeselect && onBatchDeselect(id);
+    } else {
+      onBatchSelect && onBatchSelect(id);
+    }
+  };
+
+  const handleShellClick = () => {
+    if (isBatchSelecting) {
+      handleBatchToggle();
+    }
+  }
+
+  const handleShellPointerDown = () => {
+    if (!isBatchSelecting && !isSorting && mobile) {
+      shellLongPressTimeout.current = setTimeout(() => {
+        handleBatchToggle();
+      }, 500);
+    }
+  }
+
+  const handleShellPointerUp = () => {
+    clearTimeout(shellLongPressTimeout.current);
+  }
+
+  const setCaretPos = (caretPos) => {
+    if (inputRef.current) {
+      const textNode = inputRef.current.childNodes[0];
+      const selection = document.getSelection();
+      selection.collapse(textNode, caretPos);
+    }
+  }
+
+  const focusInput = () => {
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 0);
   }
 
   useEffect(() => {
     if (selected) {
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.focus()
+      if (wasUnselected.current) {
+        if (lastTaskCaretPos.current !== null) {
+          const caretPos = lastTaskCaretPos.current < task.length
+            ? lastTaskCaretPos.current
+            : task.length
+          lastTaskCaretPos.current = null;
+          taskCaretPos.current = caretPos;
+          setCaretPos(caretPos);
         }
-      }, 0)
+        wasUnselected.current = false;
+      } else {
+        if (command !== null) {
+          setCaretPos(commandCaretPos.current);
+        } else {
+          setCaretPos(taskCaretPos.current);
+        }
+      }
+      focusInput();
+    } else {
+      setCommand(null);
+      wasUnselected.current = true;
     }
-  }, [selected])
+  }, [selected, command, task]);
 
   return (
     <div
-      {...listeners}
       className={[
         styles.TaskItemShell,
         ...(isSorting && [styles.sorting] || []),
         ...(isDragging && [styles.dragging] || [])
       ].join(" ")}
+      onClick={handleShellClick}
+      onPointerDown={handleShellPointerDown}
+      onPointerUp={handleShellPointerUp}
     >
       <div
         className={[
@@ -170,15 +290,35 @@ const TaskItem = (props) => {
           ...(isSorting && [styles.sorting] || []),
           ...(isDragging && [styles.dragging] || []),
           ...(taskViewers[id] && [styles.collaborativeFocused] || []),
-          ...(selected && [styles.focused] || [])
+          ...(selected && [styles.focused] || []),
+          ...(batchSelected && [styles.batchSelected] || []),
+          ...(isBatchSelecting && [styles.isBatchSelecting] || [])
         ].join(" ")}
         // style={{
         //   borderColor: taskViewers[id] && users[taskViewers[id][0]].color,
         // }}
       >
+        <div className={styles.TaskItemExtras}>
+          {!isBatchSelecting && (
+            <DragIcon
+              {...listeners}
+              width={16}
+              height={16}
+              color="var(--color-fill-color-text-tertiary)"
+              cursor="grab"
+            />
+          )}
+          {!(mobile && !isBatchSelecting) && (
+            <Checkbox
+              value={batchSelected}
+              onChange={handleBatchToggle}
+              className={styles.BatchCheckboxOverride}
+            />
+          )}
+        </div>
         <div className={styles.TaskItemLeftPart}>
           <div className={styles.TaskItemLeftLeftPart}>
-            {showDoneIndicator && (
+            {showDoneIndicator && !isBatchSelecting && (
               <button
                 className={[
                   styles.TaskItemStatusToggle,
@@ -195,36 +335,41 @@ const TaskItem = (props) => {
                 )}
               </button>
             )}
-            {selected ? (
-              <div className={styles.TaskItemInput}>
-                <input
-                  type="text"
+            {command !== null && selected ? (
+              <div className={styles.TaskItemCommandInput}>
+                <span>{task.slice(0, taskCaretPos.current)}</span>
+                <span
                   ref={inputRef}
-                  className="task"
-                  placeholder="Task…"
-                  value={(task || "") + (command || "")}
-                  onKeyUp={handleKeyUp}
-                  onKeyDown={handleKeyDown}
-                  onChange={handleChange}
-                  contentEditable={false}
-                  readOnly={readOnly}
-                />
+                  onKeyUp={handleCommandKeyUp}
+                  onInput={handleCommandInput}
+                  contentEditable 
+                  suppressContentEditableWarning
+                >
+                  {command}
+                </span>
+                <span>{task.slice(taskCaretPos.current)}</span>
               </div>
             ) : (
               <span
-                onClick={handleSelect}
                 className={[
-                  styles.TaskItemHeader,
-                  ...(!task && [styles.placeholder] || []),
+                  styles.TaskItemInput,
                   ...(status === "done" && [styles.done] || [])
                 ].join(" ")}
+                ref={inputRef}
+                onClick={handleSelect}
+                onKeyUp={handleKeyUp}
+                onKeyDown={handleKeyDown}
+                onInput={handleTaskInput}
+                contentEditable 
+                readOnly={readOnly}
+                suppressContentEditableWarning
               >
-                {task || "Untitled Task"}
+                {task || ""}
               </span>
             )}
           </div>
           <div className={styles.TaskItemLeftRightPart}>
-            {!mobile &&
+            {!mobile && !isBatchSelecting && !isSorting &&
             <div className={styles.TaskItemActions}>
               {((selected && showCopyButton) || !selected) && (
                 <button className={styles.TaskItemAction} onClick={handleCopy}>
@@ -258,28 +403,32 @@ const TaskItem = (props) => {
             ...(selected && [styles.focused] || []),
           ].join(" ")}
         >
-          {showAssignees && (
+          {showAssignees && !batchSelected && (
             <AvatarGroup
               max={!mobile ? 4 : 3}
               users={assignees}
               size={!mobile ? 24 : 18}
             />
           )}
-          {showDueDate && (
+          {showDueDate && !batchSelected && (
             <span className={styles.TaskItemDueDate}>
               {due ? formatDate(due) : "No Due"}
             </span>
           )}
         </div>
-        {mobile && (
+        {mobile && !isBatchSelecting && (
           <button className={styles.TaskItemOptsBtn} onClick={handleDetails}>
             <OptionsIcon width={18} />
           </button>
         )}
       </div>
-      {/* {(command && selected) && (
-        <SlashCommands posInfo={slashCommandsPos} />
-      )} */}
+      {(command !== null && selected) && (
+        <SlashCommands
+          command={command}
+          posInfo={slashCommandsPos}
+          onCommandChange={setCommandAndMoveCaretToEnd}
+        />
+      )}
     </div>
   );
 };

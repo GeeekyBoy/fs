@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from "./FileField.module.scss"
+import { ReactComponent as UploadIllustration } from "../../../assets/undraw_add_files_re_v09g.svg";
 
 const FileField = (props) => {
 
@@ -35,13 +36,17 @@ const FileField = (props) => {
   };
 
   useEffect(() => {
-    if (fileList[0]) {
-      const latestFile = fileList[fileList.length - 1];
+    const result = [];
+    for (const file of fileList) {
       const reader = new FileReader();
-      reader.readAsDataURL(latestFile);
+      reader.readAsArrayBuffer(file);
       reader.onloadend = function () {
-        const base64data = reader.result;
-        onChange && onChange(base64data);
+        const blob = new Blob([reader.result], { type: file.type });
+        blob["name"] = file.name;
+        result.push(blob);
+        if (onChange && result.length === fileList.length) {
+          onChange(result);
+        }
       };
     }
   }, [fileList]);
@@ -50,18 +55,24 @@ const FileField = (props) => {
     <div
       id="FileFielddnd-container"
       className={styles.FileFieldContainer}
-      onDrop={(event) => handleDrop(event)}
-      onDragOver={(event) => handleDragOver(event)}
-      onDragEnter={(event) => handleDragEnter(event)}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
       onClick={() => inputFile.current.click()}
     >
       <div>
         <div className={styles.FieldLabel}>
+          <UploadIllustration width={150} height={150} />
           <span>Drag and drop file here</span>
           <span>or click to select file</span>
         </div>
       </div>
-      <input type='file' ref={inputFile} onChange={handleDrop} />
+      <input
+        type='file'
+        ref={inputFile}
+        onChange={handleDrop}
+        multiple={multiple}
+      />
     </div>
   );
 }

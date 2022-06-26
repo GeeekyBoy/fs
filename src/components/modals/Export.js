@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { useWindowSize } from "../../components/WindowSizeListener";
 import sortByRank from "../../utils/sortByRank";
 import { useModal } from "../ModalManager";
@@ -7,14 +7,12 @@ import { stringify } from 'csv-stringify/browser/esm';
 import CardSelect from "../UI/fields/CardSelect";
 import Modal from "../UI/Modal/";
 
-const Export = (props) => {
-  const {
-    app: {
-      selectedProject
-    },
-    projects,
-    tasks
-  } = props
+const Export = () => {
+
+  const selectedProject = useSelector(state => state.projects[state.app.selectedProject])
+
+  const tasks = useSelector(state => state.tasks)
+
   const [fileType, setFileType] = useState("csv");
   const { modalRef ,hideModal } = useModal();
   const { width } = useWindowSize();
@@ -35,14 +33,14 @@ const Export = (props) => {
         const a = document.createElement('a');
         const file = new Blob([output], {type: "text/csv"});
         a.href = URL.createObjectURL(file);
-        a.download = projects[selectedProject].title + "_" + new Date().toLocaleString() + ".csv";
+        a.download = selectedProject.title + "_" + new Date().toLocaleString() + ".csv";
         a.click();
       });
     } else if (fileType === "json") {
       const a = document.createElement('a');
       const file = new Blob([JSON.stringify(preparedTasks, null, 2)], {type: "text/json"});
       a.href = URL.createObjectURL(file);
-      a.download = projects[selectedProject].title + "_" + new Date().toLocaleString() + ".json";
+      a.download = selectedProject.title + "_" + new Date().toLocaleString() + ".json";
       a.click();
     }
     hideModal();
@@ -53,8 +51,8 @@ const Export = (props) => {
       title="Export Tasks"
       primaryButtonText="Export"
       secondaryButtonText="Cancel"
-      onPrimaryButtonClick={() => handleExport()}
-      onSecondaryButtonClick={() => hideModal()}
+      onPrimaryButtonClick={handleExport}
+      onSecondaryButtonClick={hideModal}
       modalRef={modalRef}
     >
       <CardSelect
@@ -68,17 +66,10 @@ const Export = (props) => {
         ]}
         onChange={(e) => setFileType(e.target.value)}
         row={width > 768}
-        readOnly={false}
-        centeredText={true}
+        centeredText
       />
     </Modal>
   );
 };
 
-export default connect((state) => ({
-  app: {
-    selectedProject: state.app.selectedProject,
-  },
-  projects: state.projects,
-  tasks: state.tasks,
-}))(Export);
+export default Export;

@@ -6,19 +6,19 @@ export default function (state = {}, action) {
     case CREATE_TASK:
       return {...stateClone, [action.taskState.id]: action.taskState}
     case UPDATE_TASK:
-      const update = Object.fromEntries(Object.entries(action.update).filter(item => (
-        item[0] === "task" ||
-        item[0] === "description" ||
-        item[0] === "due" ||
-        item[0] === "tags" ||
-        item[1] != null
-      )))
-      return {
-        ...stateClone,
-        [update.id]: {
-          ...stateClone[update.id],
-          ...update
-        }}
+      const { id, field, value, action: updateAction } = action.update
+      if (updateAction === "append") {
+        if (!stateClone[id][field]) stateClone[id][field] = []
+        if (stateClone[id][field].indexOf(value) === -1) {
+          stateClone[id][field].push(value)
+        }
+      } else if (updateAction === "remove") {
+        if (!stateClone[id][field]) stateClone[id][field] = []
+        stateClone[id][field] = stateClone[id][field].filter(item => item !== value)
+      } else {
+        stateClone[id][field] = value
+      }
+      return stateClone
     case REMOVE_TASK:
       delete stateClone[action.id]
       return stateClone

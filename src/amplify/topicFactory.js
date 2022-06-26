@@ -5,11 +5,12 @@ import * as notificationsActions from "../actions/notifications"
 import * as appActions from "../actions/app"
 import * as userActions from "../actions/user"
 import * as usersActions from "../actions/users"
-import * as mutationID from "../utils/mutationID"
+import * as historyActions from "../actions/history"
+import * as mutationId from "../utils/mutationId"
 import filterObj from "../utils/filterObj";
 import updateAssignedTasks from "../pushedUpdates/updateAssignedTasks";
 import updateWatchedTasks from "../pushedUpdates/updateWatchedTasks";
-import generateID from "../utils/generateID";
+import generateId from "../utils/generateId";
 import store from "../store"
 import { navigate } from "../components/Router"
 import PubSub from "./PubSub"
@@ -21,7 +22,7 @@ const subscriptionsTemplates = {
       const { notifications } = store.getState()
       const incoming = e.value.data.onPushNotification
       if (!notifications.stored.filter(x => x.id === incoming.id).length) {
-        await store.dispatch(usersActions.handleAddUsers([incoming.sender]))
+        await store.dispatch(usersActions.handleAddUsers([incoming.mutator]))
         store.dispatch(notificationsActions.add(incoming))
         store.dispatch(notificationsActions.push(incoming))
       }
@@ -59,7 +60,7 @@ const subscriptionsTemplates = {
         const { projects } = store.getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
         const incoming = e.value.data.onCreateOwnedProject
-        if (!mutationID.isLocal(incoming.mutationID)) {
+        if (!mutationId.isLocal(incoming.mutationId)) {
           if (!Object.keys(ownedProjects).includes(incoming.id)) {
             store.dispatch(projectsActions.createProject(incoming, "owned"))
           }
@@ -67,27 +68,27 @@ const subscriptionsTemplates = {
       },
       error: error => console.warn(error)
     },
-    {
-      type: "onImportOwnedProjects",
-      next: e => {
-        const { projects } = store.getState()
-        const ownedProjects = filterObj(projects, x => x.isOwned)
-        const incoming = e.value.data.onImportOwnedProjects.items
-        for (const project of incoming) {
-          if (!Object.keys(ownedProjects).includes(project.id)) {
-            store.dispatch(projectsActions.createProject(project))
-          }
-        }
-      },
-      error: error => console.warn(error)
-    },
+    // {
+    //   type: "onImportOwnedProjects",
+    //   next: e => {
+    //     const { projects } = store.getState()
+    //     const ownedProjects = filterObj(projects, x => x.isOwned)
+    //     const incoming = e.value.data.onImportOwnedProjects.items
+    //     for (const project of incoming) {
+    //       if (!Object.keys(ownedProjects).includes(project.id)) {
+    //         store.dispatch(projectsActions.createProject(project))
+    //       }
+    //     }
+    //   },
+    //   error: error => console.warn(error)
+    // },
     {
       type: "onUpdateOwnedProject",
       next: e => {
         const { projects } = store.getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
         const incoming = e.value.data.onUpdateOwnedProject
-        if (!mutationID.isLocal(incoming.mutationID)) {
+        if (!mutationId.isLocal(incoming.mutationId)) {
           if (Object.keys(ownedProjects).includes(incoming.id)) {
             const lastMutationDate = projects[incoming.id].mutatedAt || null
             const mutationDate = new Date(incoming.updatedAt).getTime()
@@ -108,7 +109,7 @@ const subscriptionsTemplates = {
         const { app, projects } = store.getState()
         const ownedProjects = filterObj(projects, x => x.isOwned)
         const incoming = e.value.data.onDeleteOwnedProject;
-        if (!mutationID.isLocal(incoming.mutationID)) {
+        if (!mutationId.isLocal(incoming.mutationId)) {
           if (Object.keys(ownedProjects).includes(incoming.id)) {
             if (app.selectedProject === incoming.id) {
               store.dispatch(appActions.handleSetTask(null))
@@ -127,7 +128,7 @@ const subscriptionsTemplates = {
         const { projects, app } = store.getState()
         const incoming = e.value.data.onUpdateProject
         if (projects[incoming.id]) {
-          if (!mutationID.isLocal(incoming.mutationID)) {
+          if (!mutationId.isLocal(incoming.mutationId)) {
             const lastMutationDate = projects[incoming.id].mutatedAt || null
             const mutationDate = new Date(incoming.updatedAt).getTime()
             if (!mutationDate || (mutationDate && lastMutationDate < mutationDate)) {
@@ -137,7 +138,7 @@ const subscriptionsTemplates = {
                 mutatedAt: mutationDate
               }))
               if (app.selectedProject === incoming.id && incoming.permalink !== prevPermalink) {
-                navigate("/" + incoming.permalink, { replace: true })
+                navigate("/" + incoming.owner + "/" + incoming.permalink, { replace: true })
               }
             }
           }
@@ -151,10 +152,10 @@ const subscriptionsTemplates = {
         const { app, projects } = store.getState()
         const incoming = e.value.data.onDeleteProject;
         if (projects[incoming.id]) {
-          if (!mutationID.isLocal(incoming.mutationID)) {
+          if (!mutationId.isLocal(incoming.mutationId)) {
             PubSub.unsubscribeTopic("project", incoming.id)
             if (app.selectedProject === incoming.id) {
-              store.dispatch(appActions.handleSetTask(null))
+              store.dispatch(appActions.handleSetProject(null))
             }
             store.dispatch(projectsActions.removeProject(incoming.id))
           }
@@ -168,8 +169,8 @@ const subscriptionsTemplates = {
       type: "onCreateTaskByProjectId",
       next: async (e) => {
         const { tasks } = store.getState()
-        const incoming = e.value.data.onCreateTaskByProjectID
-        if (!mutationID.isLocal(incoming.mutationID)) {
+        const incoming = e.value.data.onCreateTaskByProjectId
+        if (!mutationId.isLocal(incoming.mutationId)) {
           if (!Object.keys(tasks).includes(incoming.id)) {
             const usersToBeFetched = [...new Set([
               ...incoming.assignees.filter(x => /^user:.*$/.test(x)).map(x => x.replace(/^user:/, "")),
@@ -185,20 +186,45 @@ const subscriptionsTemplates = {
     {
       type: "onUpdateTaskByProjectId",
       next: async (e) => {
-        const { tasks } = store.getState()
-        const incoming = e.value.data.onUpdateTaskByProjectID
-        if (!mutationID.isLocal(incoming.mutationID)) {
+        const { app, tasks } = store.getState()
+        const incoming = e.value.data.onUpdateTaskByProjectId
+        if (
+          app.selectedTask === incoming.id && (
+          incoming.field === "due" ||
+          incoming.field === "status" ||
+          incoming.field === "priority" ||
+          incoming.field === "assignees" ||
+          incoming.field === "anonymousAssignees" ||
+          incoming.field === "invitedAssignees" ||
+          incoming.field === "watchers")
+        ) {
+          store.dispatch(historyActions.createHistory({
+            id: incoming.mutationId,
+            action: incoming.action,
+            field: incoming.field,
+            value: incoming.value,
+            createdAt: incoming.updatedAt,
+            updatedAt: incoming.updatedAt,
+            owner: /(.*?)-\w+-\w+$/.exec(incoming.mutationId)[1],
+          }))
+        }
+        if (!mutationId.isLocal(incoming.mutationId)) {
           if (Object.keys(tasks).includes(incoming.id)) {
             const lastMutationDate = tasks[incoming.id].mutatedAt || null
             const mutationDate = new Date(incoming.updatedAt).getTime()
             if (!mutationDate || (mutationDate && lastMutationDate < mutationDate)) {
               const usersToBeFetched = [...new Set([
-                ...(incoming.assignees?.filter(x => /^user:.*$/.test(x))?.map(x => x.replace(/^user:/, "")) || []),
+                ...(incoming.assignees || []),
                 ...(incoming.watchers || [])
               ])]
               await store.dispatch(usersActions.handleAddUsers(usersToBeFetched))
               store.dispatch(tasksActions.updateTask({
-                ...incoming,
+                id: incoming.id,
+                action: incoming.action,
+                field: incoming.field,
+                value: incoming.field === "tags"
+                  ? JSON.parse(incoming.value)
+                  : incoming.value,
                 mutatedAt: mutationDate
               }))
             }
@@ -211,8 +237,8 @@ const subscriptionsTemplates = {
       type: "onDeleteTaskByProjectId",
       next: e => {
         const { tasks, app } = store.getState()
-        const incoming = e.value.data.onDeleteTaskByProjectID;
-        if (!mutationID.isLocal(incoming.mutationID)) {
+        const incoming = e.value.data.onDeleteTaskByProjectId;
+        if (!mutationId.isLocal(incoming.mutationId)) {
           if (Object.keys(tasks).includes(incoming.id)) {
             if (app.selectedTask === incoming.id) {
               store.dispatch(appActions.handleSetTask(null))
@@ -228,9 +254,20 @@ const subscriptionsTemplates = {
     {
       type: "onCreateCommentByTaskId",
       next: async (e) => {
-        const { comments } = store.getState()
-        const incoming = e.value.data.onCreateCommentByTaskID
-        if (!mutationID.isLocal(incoming.mutationID)) {
+        const { app, comments } = store.getState()
+        const incoming = e.value.data.onCreateCommentByTaskId
+        if (app.selectedTask === incoming.taskId) {
+          store.dispatch(historyActions.createHistory({
+            id: incoming.id,
+            action: "create",
+            field: "comment",
+            value: incoming.contents,
+            createdAt: incoming.createdAt,
+            updatedAt: incoming.updatedAt,
+            owner: incoming.owner,
+          }))
+        }
+        if (!mutationId.isLocal(incoming.mutationId)) {
           if (!Object.keys(comments).includes(incoming.id)) {
             await store.dispatch(usersActions.handleAddUsers([incoming.owner]))
             store.dispatch(commentsActions.createComment(incoming))
@@ -240,31 +277,11 @@ const subscriptionsTemplates = {
       error: error => console.warn(error)
     },
     {
-      type: "onUpdateCommentByTaskId",
-      next: e => {
-        const { comments } = store.getState()
-        const incoming = e.value.data.onUpdateCommentByTaskID
-        if (!mutationID.isLocal(incoming.mutationID)) {
-          if (Object.keys(comments).includes(incoming.id)) {
-            const lastMutationDate = comments[incoming.id].mutatedAt || null
-            const mutationDate = new Date(incoming.updatedAt).getTime()
-            if (!mutationDate || (mutationDate && lastMutationDate < mutationDate)) {
-              store.dispatch(commentsActions.updateComment({
-                ...incoming,
-                mutatedAt: mutationDate
-              }))
-            }
-          }
-        }
-      },
-      error: error => console.warn(error)
-    },
-    {
       type: "onDeleteCommentByTaskId",
       next: e => {
         const { comments } = store.getState()
-        const incoming = e.value.data.onDeleteCommentByTaskID;
-        if (!mutationID.isLocal(incoming.mutationID)) {
+        const incoming = e.value.data.onDeleteCommentByTaskId;
+        if (!mutationId.isLocal(incoming.mutationId)) {
           if (Object.keys(comments).includes(incoming.id)) {
             store.dispatch(commentsActions.removeComment(incoming.id))
           }
@@ -285,14 +302,14 @@ const variablesGetters = {
   ownedProjects: () => ({
     owner: store.getState().user.data.username
   }),
-  project: (projectID) => ({
-    id: projectID
+  project: (projectId) => ({
+    id: projectId
   }),
-  tasks: (projectID) => ({
-    projectID: projectID
+  tasks: (projectId) => ({
+    projectId: projectId
   }),
-  comments: (taskID) => ({
-    taskID: taskID
+  comments: (taskId) => ({
+    taskId: taskId
   }),
 }
 
@@ -301,7 +318,7 @@ export const getTopic = (topic, variant = null) => {
   const variables = variablesGetters[topic](variant);
   for (const subscription of subscriptionsTemplates[topic]) {
     result.push({
-      id: generateID(),
+      id: generateId(),
       type: subscription.type,
       variables: variables,
       variant: variant,

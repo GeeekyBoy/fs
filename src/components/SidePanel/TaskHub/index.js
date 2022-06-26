@@ -6,9 +6,12 @@ import Comments from "./Comments";
 import { ReactComponent as ShareIcon } from "../../../assets/share-outline.svg"
 import PanelTabs from '../../UI/PanelTabs';
 import Details from './Details';
+import History from './History';
+import { useModal } from '../../ModalManager';
+import modals from '../../modals';
 
 const TaskHub = forwardRef((_, ref) => {
-  
+
   const idleTrigger = useRef(null)
   const dispatch = useDispatch();
 
@@ -18,7 +21,9 @@ const TaskHub = forwardRef((_, ref) => {
   const selectedProject = useSelector(state => state.app.selectedProject);
 
   const projects = useSelector(state => state.projects);
-	
+
+  const { showModal } = useModal();
+
 	const forceIdle = () => {
 		if (["task", "description"].includes(lockedTaskField)) {
 			dispatch(appActions.setLockedTaskField(null))
@@ -38,6 +43,9 @@ const TaskHub = forwardRef((_, ref) => {
 		const linkToBeCopied = window.location.href
 		navigator.clipboard.writeText(linkToBeCopied)
 	}
+  const openAttachmentsUploader = (importedBlobs) => {
+    showModal(modals.UPLOAD, { importedBlobs })
+  }
   useImperativeHandle(ref, () => ({
     panelProps: {
       title: "Task Hub",
@@ -50,6 +58,7 @@ const TaskHub = forwardRef((_, ref) => {
             tabs={[
               ["details", "Details"],
               ["comments", "Comments"],
+              ["history", "History"],
             ]}
             value={tab}
             onChange={(newVal) => setTab(newVal)}
@@ -61,13 +70,18 @@ const TaskHub = forwardRef((_, ref) => {
       },
       onAction: () => {
         shareTask();
-      }
+      },
+      onFilesDrop: tab === "details"
+        ? openAttachmentsUploader
+        : null,
     }
   }));
   return tab === "details" ? (
     <Details />
   ) : tab === "comments" ? (
     <Comments />
+  ) : tab === "history" ? (
+    <History />
   ) : null;
 });
 

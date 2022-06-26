@@ -1,10 +1,12 @@
 * {
-  font-family: 'Rubik', sans-serif !important;
   -webkit-tap-highlight-color: transparent;
   outline: none;
+  font-family: 'Rubik', sans-serif !important;
 }
 
 html {
+  background-image: url(../../public/3.png);
+  background-size: cover;
   font-size: 16px;
 }
 
@@ -14,12 +16,12 @@ html {
 }
 
 body {
-  width: 100vw;
-  height: 100%;
-  margin: 0;
-  background-color: var(--auxiliarySurface);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background: var(--color-background-fill-color-mica-background);
 }
 
 button,
@@ -37,25 +39,38 @@ input::selection.noselect {
   color:transparent;
 }
 
-input:read-only {
-  color: transparent;
-  text-shadow: 0 0 0 #222222;
-}
-
 input:-webkit-autofill::first-line,
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--auxiliarySurface) inset !important;
+  box-shadow: 0 0 0 30px var(--auxiliarySurface) inset !important;
+  color: var(--color-fill-color-text-primary) !important;
+  caret-color: var(--color-fill-color-text-primary) !important;
   font-family: "Rubik", sans-serif !important;
-  box-shadow: 0 0 0 30px white inset !important;
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 input, textarea, select {
-  appearance: none !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   -webkit-border-radius: 0;
+  appearance: none !important;
   border-radius: 0;
+}
+
+.simplebar-track.simplebar-vertical {
+  width: 8px !important;
+}
+
+.simplebar-track.simplebar-horizontal {
+  height: 8px !important;
+}
+
+.simplebar-scrollbar:before {
+  background-color: var(--color-fill-color-control-strong-default) !important;
+}
+
+.simplebar-scrollbar.simplebar-visible:before {
+  opacity: 1 !important;
 }

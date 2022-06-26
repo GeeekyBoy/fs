@@ -7,7 +7,7 @@ const PanelTabs = (props) => {
     value,
     onChange,
     disabled,
-    class: className,
+    className,
     style
   } = props;
   const handleChange = (nextVal) => {

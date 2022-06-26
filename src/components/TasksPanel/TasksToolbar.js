@@ -3,7 +3,7 @@ import styles from "./TasksToolbar.module.scss"
 import { useDispatch, useSelector } from "react-redux"
 import * as appActions from "../../actions/app"
 import { ReactComponent as SearchIcon } from "../../assets/search-outline.svg"
-import HeadingTextField from '../UI/fields/HeadingTextField';
+import TextField from '../UI/fields/TextField'
 
 const TasksToolbar = (props) => {
   const {
@@ -12,16 +12,16 @@ const TasksToolbar = (props) => {
   } = props;
   const dispatch = useDispatch()
 
-  const selectedProject = useSelector(state => state.app.selectedProject)
-
-  const projects = useSelector(state => state.projects)
+  const selectedProject = useSelector(state => state.projects[state.app.selectedProject])
 
   return (
     <div className={styles.ToolbarContainer}>
-      <HeadingTextField
+      <TextField
         name="searchKeyword"
-        placeholder={"Search " + projects[selectedProject].permalink}
+        placeholder={selectedProject ? "Search " + selectedProject.permalink : "Select a project to search"}
         value={searchKeyword}
+        disabled={!selectedProject}
+        autoComplete="off"
         onChange={(e) => setSearchKeyword(e.target.value)}
         onFocus={() => dispatch(appActions.handleSetTask(null))}
         prefix={() => (

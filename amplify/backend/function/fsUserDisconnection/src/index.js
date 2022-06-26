@@ -11,13 +11,13 @@ exports.handler = async (event, context, callback) => {
     ReturnValues: "ALL_OLD",
   };
   try {
-    const { Attributes: { projectID, username }} = await docClient.delete(deleteParams).promise();
+    const { Attributes: { projectId, username }} = await docClient.delete(deleteParams).promise();
     const getAvailConnectionsParams = {
       TableName: CONNECTIONTABLE,
       IndexName: "byProject",
-      KeyConditionExpression: "projectID = :projectID",
+      KeyConditionExpression: "projectId = :projectId",
       ExpressionAttributeValues: {
-        ":projectID": projectID
+        ":projectId": projectId
       }
     }
     const availConnections = await docClient.query(getAvailConnectionsParams).promise()

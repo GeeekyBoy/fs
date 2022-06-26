@@ -3,9 +3,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  opacity: 0;
   width: 0;
   background-color: transparent;
+  opacity: 0;
   &:hover {
     transition: opacity 0.2s;
   }
@@ -18,15 +18,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  padding: 5px;
-  border: none;
-  outline: none;
-  border-radius: 100%;
-  cursor: pointer;
   width: 28px;
   height: 28px;
+  padding: 5px;
+  border: none;
+  border-radius: 100%;
   border-radius: 6px;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
   & > svg {
     color: var(--primary);
   }
@@ -43,83 +43,114 @@
   flex-direction: column;
   &.sorting {
     z-index: -1;
-    & * {
-      cursor: grab !important;
-    }
   }
   &.dragging {
     z-index: 99;
-    & * {
-      cursor: grab !important;
-    }
   }
 }
 
 .TaskItemCore {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  padding: 2px 12px;
+  justify-content: space-between;
+  min-height: 28px;
   margin: 2px 0;
+  padding: 2px 52px 2px 10px;
   overflow: hidden;
-  transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+  transition: transform 0.2s, background-color 0.2s;
+  @media only screen and (max-width: 768px) {
+    min-height: 30px;
+    margin: 0;
+    padding: 2px 20px 2px 0px;
+    & > *:not(:last-child) {
+      margin-right: 2px;
+    }
+  }
   & > *:not(:last-child) {
     margin-right: 10px;
   }
   &.focused {
-    border-color: var(--primary) !important;
     & .TaskItemActions {
-      opacity: 1;
       width: auto;
+      opacity: 1;
+    }
+  }
+  &.batchSelected {
+    background-color: var(--primary);
+    .TaskItemExtras {
+      opacity: 1;
+    }
+    .TaskItemInput {
+      color: var(--color-fill-color-text-on-accent-primary) !important;
     }
   }
   &.dragging {
-    transform: scale(1.03);
-    background-color: #eaefef;
+    background-color: var(--color-fill-color-subtle-secondary);
   }
-  &.sorting {
+  &.sorting:not(.dragging) {
     opacity: 0.5;
   }
-  &:not(.focused):not(.dragging):not(.sorting):hover {
-    border-color: var(--color-stroke-color-card-stroke-default);
-    background-color: var(--color-background-fill-color-card-background-secondary);
-    & .TaskItemActions {
-      opacity: 1;
-      width: auto;
+  &.dragging,
+  &.sorting,
+  &.isBatchSelecting {
+    & * {
+      pointer-events: none !important;
     }
   }
+  &:not(.focused):not(.dragging):not(.sorting):hover {
+    & .TaskItemActions {
+      width: auto;
+      opacity: 1;
+    }
+  }
+  &:not(.dragging):not(.sorting):hover,
+  &.isBatchSelecting {
+    & .TaskItemExtras {
+      opacity: 1;
+    }
+  }
+  &.isBatchSelecting {
+    cursor: pointer;
+  }
+}
+
+.TaskItemExtras {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 37px;
+  margin-right: 5px !important;
+  opacity: 0;
+  transition: opacity 0.2s;
   @media only screen and (max-width: 768px) {
-    margin: 0;
-    padding: 2px 20px;
-    border: none;
-    border-radius: 0;
-    background-color: transparent !important;
-    & > *:not(:last-child) {
-      margin-right: 2px;
-    }
-    &.focused {
-      background-color: rgba(255, 255, 255, 0.5);
-    }
+    width: 20px;
+    margin-right: 5px !important;
+    opacity: 1;
+  }
+  & > .BatchCheckboxOverride {
+    padding: 0 !important;
+  }
+  & > *:not(:last-child) {
+    margin-right: 5px;
   }
 }
 
 .TaskItemLeftPart {
   display: flex;
   flex: 1;
-  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  width: 100%;
   @media only screen and (max-width: 768px) {
     & > *:not(:last-child) {
       margin-right: 2px;
     }
+  }
+  & > *:not(:last-child) {
+    margin-right: 10px;
   }
 }
 
@@ -138,57 +169,72 @@
   }
 }
 
-.TaskItemHeader {
+.TaskItemInput {
+  flex: 1 1;
+  width: 0;
+  overflow: hidden;
+  color: var(--color-fill-color-text-primary);
   font-size: 1rem;
-  width: 0px;
-  font-weight: 400;
+  text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
   cursor: text;
-  flex: 1;
-  text-decoration: none;
   transition: color 0.2s;
-  color: var(--color-fill-color-text-primary);
-  &.done {
-    text-decoration: line-through;
-  }
-  &.placeholder {
+  &:empty::after {
+    content: "Untitled Task";
     color: var(--color-fill-color-text-secondary) !important;
+  }
+  &:focus:empty::after {
+    content: "Task…";
+  }
+  &:not(:focus).done {
+    text-decoration: line-through;
   }
 }
 
-.TaskItemInput {
+.TaskItemCommandInput {
+  display: block;
+  flex: 1;
   width: 100%;
-  & > input {
-    border: none;
-    background-color: transparent;
-    font-size: 1rem;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    font-weight: 400;
-    transition: color 0.2s;
+  word-break: break-all;
+  & > span:not([contenteditable]) {
+    color: var(--color-fill-color-text-tertiary);
+  }
+  & > span[contenteditable] {
+    display: inline-block;
+    position: relative;
+    margin-left: 15.54px;
     color: var(--color-fill-color-text-primary);
-    &::placeholder {
-      color: var(--color-fill-color-text-secondary) !important;
+    font-size: 1rem;
+    transition: color 0.2s;
+    &::before {
+      position: absolute;
+      left: -15.54px;
+      content: "\00a0 /\00a0 ";
+    }
+    &:empty::after {
+      content: "Type a command here\00a0 ";
+      color: var(--outline);
+      cursor: text;
+    }
+    &::after {
+      content: "\00a0 ";
     }
   }
 }
 
 .TaskItemDueDate {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 64px;
-  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background-color: var(--primary);
+  color: var(--color-fill-color-text-on-accent-primary);
   font-size: 0.7rem;
   white-space: nowrap;
-  border-radius: 10px;
-  padding: 3px 10px;
   transition: background-color 0.2s, color 0.2s;
-  color: var(--color-fill-color-text-on-accent-primary);
-  background-color: var(--primary);
   @media only screen and (max-width: 768px) {
     width: 48px;
     font-size: 0.5rem;
@@ -199,30 +245,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  padding: 5px;
-  border: none;
-  outline: none;
-  border-radius: 100%;
-  cursor: pointer;
   width: 30px;
   height: 30px;
+  padding: 5px;
+  border: none;
+  border-radius: 100%;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
   & > svg {
-    transition: fill 0.2s;
     fill: var(--color-fill-color-text-primary);
+    transition: fill 0.2s;
   }
 }
 
 .TaskItemLeftLeftPart {
   display: flex;
+  flex: 1;
   flex-direction: row;
   align-items: center;
-  flex: 1;
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
   @media only screen and (max-width: 768px) {
     justify-content: flex-start;
+  }
+  & > *:not(:last-child) {
+    margin-right: 10px;
   }
 }
 
@@ -230,11 +276,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
   @media only screen and (max-width: 768px) {
     justify-content: flex-start;
+  }
+  & > *:not(:last-child) {
+    margin-right: 10px;
   }
 }
 
@@ -242,23 +288,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  outline: none;
-  border: 1px solid;
-  background-color: transparent;
-  border-radius: 100%;
   width: 20px;
+  min-width: 20px;
   height: 20px;
   min-height: 20px;
-  min-width: 20px;
   padding: 2.5px;
+  border: 1px solid;
+  border-radius: 100%;
+  border-color: var(--color-stroke-color-control-strong-stroke-default);
+  outline: none;
+  background-color: transparent;
+  background-color: var(--color-fill-color-control-alt-secondary);
   cursor: pointer;
   transition: border-color 0.2s;
-  border-color: var(--color-stroke-color-control-strong-stroke-default);
-  background-color: var(--color-fill-color-control-alt-secondary);
   &.done {
-    color: var(--color-fill-color-text-on-accent-primary);
     border-color: var(--primary);
     background-color: var(--primary);
+    color: var(--color-fill-color-text-on-accent-primary);
     & > svg * {
       stroke-width: 64px;
     }

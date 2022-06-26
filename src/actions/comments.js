@@ -30,10 +30,10 @@ export const emptyComments = () => ({
   type: EMPTY_COMMENTS
 });
 
-const fetchComments = (comments, taskID) => ({
+const fetchComments = (comments, taskId) => ({
   type: FETCH_COMMENTS,
   comments,
-  taskID
+  taskId
 });
 
 const fetchCachedComments = (comments) => ({
@@ -98,7 +98,7 @@ export const handleRemoveComment = (commentState) => (dispatch, getState) => {
       variables: { id: commentState.id },
       success: null,
       error: () => {
-        if (getState().app.selectedTask === commentState.taskID) {
+        if (getState().app.selectedTask === commentState.taskId) {
           dispatch(createComment(commentState))
         }
       }
@@ -106,11 +106,11 @@ export const handleRemoveComment = (commentState) => (dispatch, getState) => {
   }
 }
 
-export const handleFetchComments = (taskID) => async (dispatch, getState) => {
+export const handleFetchComments = (taskId) => async (dispatch, getState) => {
   const { user, app, projects } = getState()
   if (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp) {
     try {
-      const res = await API.execute(listCommentsForTask, { taskID })
+      const res = await API.execute(listCommentsForTask, { taskId })
       const items = res.data.listCommentsForTask.items;
       let usersToBeFetched = []
       for (const item of items) {
@@ -120,10 +120,10 @@ export const handleFetchComments = (taskID) => async (dispatch, getState) => {
         ])]
       }
       await dispatch(usersActions.handleAddUsers(usersToBeFetched))
-      dispatch(fetchComments(items, taskID))
+      dispatch(fetchComments(items, taskId))
     } catch (err) {
-      if (err.errors[0].message === 'Network Error') {
-        dispatch(fetchCachedComments(cacheController.getCommentsByTaskID(taskID)))
+      if (err.message === 'Failed to fetch') {
+        dispatch(fetchCachedComments(cacheController.getCommentsByTaskId(taskId)))
       }
     }
     return getState().comments

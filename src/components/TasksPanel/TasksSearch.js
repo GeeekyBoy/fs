@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Fuse from "fuse.js"
 import sortByRank from "../../utils/sortByRank";
 import TaskItem from "./TaskItem";
+import NoTasks from './NoTasks';
 
 const TasksSearch = (props) => {
   const { searchKeyword } = props;
@@ -17,20 +18,21 @@ const TasksSearch = (props) => {
     return fuse.search(searchKeyword).map(x => x.item)
   }
   const searchResults = useMemo(() => getSearchResults(tasks, searchKeyword), [tasks, searchKeyword])
-  return (
-    <div>
-      {searchResults.map((value, index) => (
-        <TaskItem
-          key={value.id}
-          item={value}
-          isSorting={false}
-          isDragging={false}
-          nextTask={searchResults[index + 1]?.id || null}
-          prevTask={searchResults[index - 1]?.id || null}
-        />
-      ))}
-    </div>
-  )
+  return searchResults.length
+    ? (
+      <div style={{ flex: 1 }}>
+        {searchResults.map((value, index) => (
+          <TaskItem
+            key={value.id}
+            item={value}
+            nextTask={searchResults[index + 1]?.id || null}
+            prevTask={searchResults[index - 1]?.id || null}
+          />
+        ))}
+      </div>
+    ) : (
+      <NoTasks msgId="NO_RESULTS" />
+    )
 }
 
 export default TasksSearch;

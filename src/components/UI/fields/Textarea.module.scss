@@ -1,58 +1,60 @@
 .TextareaContainer {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  width: 100%;
+  & > label {
+    width: max-content;
+    margin-bottom: 0;
+    color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
+    cursor: text;
+    transition: color 0.2s;
+  }
   & > div {
-    position: relative;
     display: grid;
+    position: relative;
     width: calc(100% - 24px);
-    padding: 10px;
-    border-radius: 8px;
-    border: 2px solid transparent;
-    background-color: transparent;
-    border-color: var(--outline);
-    & > label {
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    border-color: var(--color-stroke-color-card-stroke-default);
+    border-bottom-color: var(--color-stroke-color-control-strong-stroke-default);
+    background-color: var(--color-fill-color-control-default);
+    cursor: text;
+    &::before {
       position: absolute;
-      top: 1px;
-      left: 0px;
-      margin-bottom: 0;
-      width: max-content;
-      font-size: 0.875rem;
-      font-weight: 600;
-      padding: 0 3px;
-      margin-left: -3px;
-      transform-origin: bottom left;
-      transform: scale(1) translate3d(10px, 10px, 0);
-      transition: transform 150ms cubic-bezier(0.4,0,0.2,1);
-      color: var(--outline);
-      background-color: var(--auxiliarySurface);
+      bottom: -1px;
+      left: -1px;
+      width: calc(100% + 2px);
+      height: 0;
+      background-color: var(--color-stroke-color-control-strong-stroke-default);
+      content: "";
     }
     &::after {
+      visibility: hidden;
       content: attr(data-replicated-value) " ";
       white-space: pre-wrap;
-      visibility: hidden;
     }
     & > textarea {
-      resize: none;
+      padding: 0;
       overflow: hidden;
+      resize: none;
       &::placeholder {
         color: #c0c0c0;
       }
     }
     & > textarea,
     &::after {
-      width: calc(100% - 24px);
-      outline: none;
-      border: none;
-      background: none;
-      font-size: 0.875rem;
-      font-weight: 400;
       z-index: 1;
       grid-area: 1 / 1 / 2 / 2;
+      width: calc(100% - 24px);
+      border: none;
+      outline: none;
+      background: none;
       color: var(--color-fill-color-text-primary);
+      caret-color: var(--color-fill-color-text-primary);
+      font-size: 0.875rem;
     }
   }
   &.error {
@@ -69,6 +71,11 @@
       cursor: not-allowed;
     }
   }
+  &.hovered:not(.focused) {
+    & > div {
+      background-color: var(--color-fill-color-control-secondary);
+    }
+  }
   &.focused:not(.readOnly:not(.filled)), &.filled {
     & > div {
       & > label {
@@ -78,15 +85,20 @@
   }
   &.focused:not(.readOnly:not(.filled)) {
     & > div {
-      border-color: var(--primary);
-      & > label {
-        color: var(--primary);
+      border-radius: 4px 4px 0 0;
+      background-color: var(--color-fill-color-control-input-active);
+      &::before {
+        height: 2px;
+        background-color: var(--primary);
       }
     }
   }
   & > span {
+    margin-left: 10px;
     color: #FF0000;
     font-size: 0.75rem;
-    margin-left: 10px;
+  }
+  & > *:not(:last-child) {
+    margin-bottom: 5px;
   }
 }

@@ -10,7 +10,7 @@ const Checkbox = (props) => {
     value = false,
     readOnly,
     disabled,
-    class: className,
+    className,
     style
   } = props;
 

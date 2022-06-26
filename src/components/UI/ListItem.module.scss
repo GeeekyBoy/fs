@@ -1,0 +1,61 @@
+.ListItemContainer {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: calc(100% - 24px);
+  padding: 8px 12px;
+  overflow: hidden;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  & * {
+    z-index: 2;
+  }
+  &:hover {
+    background-color: var(--color-fill-color-subtle-secondary);
+  }
+  &:active {
+    background-color: var(--color-fill-color-subtle-tertiary);
+  }
+  &.selected {
+    background-color: var(--color-fill-color-subtle-secondary);
+    &:hover {
+      background-color: var(--color-fill-color-subtle-tertiary);
+    }
+    &:active {
+      background-color: var(--color-fill-color-subtle-secondary);
+    }
+    &:after {
+      display: block;
+      position: absolute;
+      top: calc(28%);
+      left: 1px;
+      width: 4px;
+      height: 44%;
+      margin: 0;
+      padding: 0;
+      border-radius: 10px;
+      background-color: var(--primary);
+      content: "";
+    }
+  }
+}
+
+.ListItemPrimary {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--color-fill-color-text-primary);
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.ListItemSecondary {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--color-fill-color-text-secondary);
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s;
+}

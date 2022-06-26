@@ -1,15 +1,15 @@
 .BannerContainer {
-  text-align: center;
   width: calc(100% + 40px);
-  padding: 8px 20px;
-  font-size: 0.875rem;
   margin-top: -20px;
   margin-left: -40px;
-  cursor: pointer;
-  color: var(--color-fill-color-text-on-accent-primary);
+  padding: 8px 20px;
   background-color: var(--primary);
+  color: var(--color-fill-color-text-on-accent-primary);
+  font-size: 0.875rem;
+  text-align: center;
+  cursor: pointer;
   @media only screen and (max-width: 768px) {
-    margin: 0;
     width: calc(100% - 40px);
+    margin: 0;
   }
 }

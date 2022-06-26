@@ -43,6 +43,7 @@ const TaskPlaceholder = (props) => {
           initTaskState(
             selectedProject,
             generateRank(sortByRank(tasks, true)[0]?.rank),
+            projects[selectedProject].defaultStatus,
             preset
           )
         )

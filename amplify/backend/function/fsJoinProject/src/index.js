@@ -19,11 +19,11 @@ const cognitoExpress = new CognitoExpress({
 	tokenExpiration: 3600000
 });
 
-async function getProject(projectID) {
+async function getProject(projectId) {
   const params = {
     TableName: PROJECTTABLE,
     Key: {
-      "id": projectID
+      "id": projectId
     }
   }
   try {
@@ -38,9 +38,9 @@ async function getProject(projectID) {
   }
 }
 
-async function isProjectSharedWithClient(projectID, client) {
+async function isProjectSharedWithClient(projectId, client) {
   try {
-    const { privacy, members, owner } = await getProject(projectID)
+    const { privacy, members, owner } = await getProject(projectId)
     return "public" === privacy || members?.includes(client) || client === owner
   } catch (err) {
     throw new Error(err)
@@ -49,7 +49,7 @@ async function isProjectSharedWithClient(projectID, client) {
 
 exports.handler = async (event, context, callback) => {
   const connectionId = event.requestContext.connectionId
-  const { projectID, jwt } = JSON.parse(event.body).data;
+  const { projectId, jwt } = JSON.parse(event.body).data;
   let username;
   try {
     username = (await cognitoExpress.validate(jwt)).username;
@@ -57,12 +57,12 @@ exports.handler = async (event, context, callback) => {
     callback(null, { statusCode: 401, body: UNAUTHORIZED });
   }
   try {
-    if (await isProjectSharedWithClient(projectID, username)) {
+    if (await isProjectSharedWithClient(projectId, username)) {
       const putParams = {
         TableName: CONNECTIONTABLE,
         Item: {
           id: connectionId,
-          projectID: projectID,
+          projectId: projectId,
           username: username
         },
       };
@@ -70,9 +70,9 @@ exports.handler = async (event, context, callback) => {
       const getAvailConnectionsParams = {
         TableName: CONNECTIONTABLE,
         IndexName: "byProject",
-        KeyConditionExpression: "projectID = :projectID",
+        KeyConditionExpression: "projectId = :projectId",
         ExpressionAttributeValues: {
-          ":projectID": projectID
+          ":projectId": projectId
         }
       }
       const availConnections = await docClient.query(getAvailConnectionsParams).promise()
@@ -91,7 +91,7 @@ exports.handler = async (event, context, callback) => {
           } else {
             const joinAck = JSON.stringify({
               action: "JOIN_PROJECT_ACK",
-              projectID: projectID,
+              projectId: projectId,
               usernames: JSON.stringify([...new Set(availConnections.Items.map(({ username }) => username))])
             });
             await apigwManagementApi.postToConnection({ ConnectionId: id, Data: joinAck }).promise();

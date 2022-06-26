@@ -16,14 +16,14 @@ const Projects = (props) => {
   return watchedProjects.length ? (
     watchedProjects.map((project) => (
       <Fragment key={project.id}>
-        <ProjectItem project={project} readOnly={true} />
+        <ProjectItem project={project} readOnly />
       </Fragment>
     ))
   ) : (
     <Illustration
       illustration={NoWatchedIllustartion}
       title="No Projects Watched By You"
-      secondary={true}
+      secondary
     />
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import * as appActions from "../actions/app"
 import * as projectsActions from "../actions/projects"
@@ -17,7 +17,6 @@ import PubSub from "../amplify/PubSub"
 
 const SyncManager = () => {
   const [isInitial, setIsInitial] = useState(true)
-  const ws = useRef(null)
   const { routeParams } = useRouterNoUpdates();
   const dispatch = useDispatch()
 
@@ -46,11 +45,12 @@ const SyncManager = () => {
               await dispatch(projectsActions.handleFetchAssignedProjects(true))
               const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))
               PubSub.subscribeTopic("ownedProjects")
-              let reqProject = Object.values(projects).filter(x => x.permalink === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
+              let reqProject = Object.values(projects).filter(x => x.permalink === routeParams.projectPermalink)[0]
               if (!reqProject) {
                 try {
                   reqProject = (await API.execute(queries.getProjectByPermalink, {
-                    permalink: `${routeParams.username}/${routeParams.projectPermalink}`
+                    permalink: routeParams.projectPermalink,
+                    owner: routeParams.username
                   })).data.getProjectByPermalink
                   dispatch(projectsActions.createProject(reqProject, "temp"))
                 } catch {

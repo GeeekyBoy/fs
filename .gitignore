@@ -24,6 +24,9 @@ yarn-debug.log*
 yarn-error.log*
 build-storybook.log
 
+amplify/backend/api/fsCoreAPI/pipelineFunctions
+amplify/backend/api/fsCoreAPI/resolvers
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*

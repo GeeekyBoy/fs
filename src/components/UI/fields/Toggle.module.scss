@@ -1,9 +1,9 @@
 .ToggleShell {
   width: 100%;
   & > span {
+    margin-left: 10px;
     color: #FF0000;
     font-size: 0.75rem;
-    margin-left: 10px;
   }
   &.disabled {
     opacity: 0.6;
@@ -14,25 +14,24 @@
 }
   
 .ToggleContainer {
+  display: flex;
   position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   width: calc(100% - 22px);
   padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
   border: 1px solid;
   border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 400;
   border-color: var(--color-stroke-color-card-stroke-default);
   background-color: var(--color-background-fill-color-card-background-default);
+  font-size: 0.875rem;
   & > label {
-    color: var(--color-fill-color-text-primary);
-    margin-bottom: 0;
     width: max-content;
+    margin-bottom: 0;
+    color: var(--color-fill-color-text-primary);
     font-size: 0.875rem;
-    font-weight: 600;
+    transition: color 0.2s;
   }
   &.error {
     border-color: #FF0000!important;
@@ -47,14 +46,14 @@
   }
 }
 .ToggleHandle {
-  border-radius: 50px;
   width: 35px;
   padding: 3px 5px;
   border: 1px solid transparent;
-  transition: background-color 0.2s ease-in-out;
-  cursor: pointer;
-  background-color: var(--color-fill-color-control-alt-secondary);
+  border-radius: 50px;
   border-color: var(--color-stroke-color-control-strong-stroke-default);
+  background-color: var(--color-fill-color-control-alt-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
   &.selected {
     border-color: var(--primary);
     background-color: var(--primary);
@@ -64,11 +63,11 @@
     }
   }
   & > div {
-    height: 15px;
     width: 15px;
-    border-radius: 100%;
+    height: 15px;
     transform: translateX(0);
-    transition: transform 0.2s ease-in-out;
+    border-radius: 100%;
     background-color: var(--color-fill-color-text-secondary);
+    transition: transform 0.2s ease-in-out;
   }
 }

@@ -5,7 +5,8 @@ export default (projectState) => {
     permalink: projectState.permalink,
     privacy: projectState.privacy,
     permissions: projectState.permissions,
-    members: projectState.members,
     title: projectState.title,
+    statusSet: JSON.stringify(projectState.statusSet),
+    defaultStatus: projectState.defaultStatus,
   };
 };

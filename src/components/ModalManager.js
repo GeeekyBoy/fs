@@ -16,9 +16,9 @@ const ModalManager = ({ children }) => {
 
   const modalRef = useRef(null);
 
-  const showModal = (nextModal) => {
+  const showModal = (nextModal, props = {}) => {
     setIsModalOpened(true);
-    setModal(React.createElement(nextModal));
+    setModal(React.createElement(nextModal, props));
   };
 
   const hideModal = () => {

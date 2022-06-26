@@ -1,4 +1,4 @@
-import generateID from './utils/generateID'
+import generateId from './utils/generateId'
 import generateRandomWords from './utils/generateRandomWords';
 
 export const PENDING = "PENDING"
@@ -61,39 +61,52 @@ export const panelPages = {
   TASK_HUB: "TASK_HUB",
   PROJECTS: "PROJECTS",
   NOTIFICATIONS: "NOTIFICATIONS",
-  ASSIGNEE_CHOOSER: "ASSIGNEE_CHOOSER",
-  WATCHER_CHOOSER: "WATCHER_CHOOSER",
+  BATCH_HUB: "BATCH_HUB",
   ACCOUNT_SETTINGS: "ACCOUNT_SETTINGS",
   PROJECT_SETTINGS: "PROJECT_SETTINGS",
   APP_SETTINGS: "APP_SETTINGS"
 }
 
 export const initProjectState = async (rank) => {
+  const todoStatusId = generateId();
   return {
-    id: generateID(),
-    title: null,
+    id: generateId(),
+    title: '',
     permalink: (await generateRandomWords()).join("-"),
     rank: rank,
-    todoCount: 0,
-    pendingCount: 0,
-    doneCount: 0,
     privacy: "public",
     permissions: "rw",
-    members: [],
+    totalTasks: 0,
+    statusSet: [{
+      id: todoStatusId,
+      title: "Todo",
+      synonym: "todo",
+    }, {
+      id: generateId(),
+      title: "Pending",
+      synonym: "pending",
+    }, {
+      id: generateId(),
+      title: "Finished",
+      synonym: "done",
+    }],
+    defaultStatus: todoStatusId,
     createdAt: new Date().toISOString()
   }
 }
 
-export const initTaskState = (projectID, rank = "", preset = {}) => ({
-  id: generateID(),
-  projectID: projectID,
+export const initTaskState = (projectId, rank, status, preset = {}) => ({
+  id: generateId(),
+  projectId: projectId,
   task: preset.task || "",
   rank: rank,
-  description: preset.description || null,
+  description: preset.description || "",
   due: preset.due || null,
   tags: preset.tags || [],
   assignees: [],
-  status: preset.status || "todo",
+  anonymousAssignees: [],
+  invitedAssignees: [],
+  status: preset.status || status,
   priority: preset.priority || "normal"
 })
 

@@ -38,17 +38,9 @@ const Sortable = (props) => {
   const [activeId, setActiveId] = useState(null);
   const getIndex = items.indexOf.bind(items);
   const activeIndex = activeId ? getIndex(activeId) : -1;
-  const activationConstraint = {
-    delay: 250,
-    tolerance: 5,
-  }
   const sensors = useSensors(
-    useSensor(MouseSensor, {
-      activationConstraint,
-    }),
-    useSensor(TouchSensor, {
-      activationConstraint,
-    })
+    useSensor(MouseSensor),
+    useSensor(TouchSensor)
   );
 
   return (
@@ -168,7 +160,7 @@ const Owned = () => {
     <Illustration
       illustration={NoOwnedIllustartion}
       title="No Projects Owned By You"
-      secondary={true}
+      secondary
     />
   );  
 }

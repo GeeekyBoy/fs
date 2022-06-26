@@ -56,7 +56,7 @@ export const handleCreateProject = (projectState) => (dispatch, getState) => {
   if (user.state === AuthState.SignedIn) {
     dispatch(createProject({
       ...projectState,
-      permalink: user.data.username + "/" + projectState.permalink,
+      permalink: projectState.permalink,
       owner: user.data.username,
       isVirtual: true
     }, OWNED))
@@ -114,6 +114,24 @@ export const handleUpdateProject = (update) => (dispatch, getState) => {
   }
 }
 
+export const handleUpdateProjectTitle = (update) => (dispatch, getState) => {
+  const { user, projects } = getState()
+  const prevProjectState = {...projects[update.id]}
+  dispatch(updateProject(update, OWNED))
+  if (user.state === AuthState.SignedIn) {
+    return API.mutate({
+      type: "updateProjectTitle",
+      variables: update,
+      success: null,
+      error: () => {
+        if (getState().projects[update.id]) {
+          dispatch(updateProject(prevProjectState))
+        }
+      }
+    })
+  }
+}
+
 export const handleRemoveProject = (projectState) => (dispatch, getState) => {
   const { user, app } = getState()
   if (app.selectedProject === projectState.id) {
@@ -140,7 +158,7 @@ export const handleFetchOwnedProjects = (isSync = false) => async (dispatch, get
       const res = await API.execute(listOwnedProjects)
       dispatch(fetchProjects(res.data.listOwnedProjects.items, OWNED))
     } catch (err) {
-      if (err.errors[0].message === 'Network Error') {
+      if (err.message === 'Failed to fetch') {
         dispatch(fetchCachedProjects(cacheController.getProjects()))
       }
     }
@@ -162,7 +180,7 @@ export const handleFetchAssignedProjects = (isSync = false) => async (dispatch, 
         PubSub.subscribeTopic("project", fetchedAssignedProject.id)
       }
     } catch(err) {
-      if (err.errors.message === 'Network Error') {
+      if (err.message === 'Failed to fetch') {
         dispatch(fetchCachedProjects(cacheController.getProjects()))
       }
     }
@@ -184,7 +202,7 @@ export const handleFetchWatchedProjects = (isSync = false) => async (dispatch, g
         PubSub.subscribeTopic("project", fetchedWatchedProject.id)
       }
     } catch(err) {
-      if (err.errors.message === 'Network Error') {
+      if (err.message === 'Failed to fetch') {
         dispatch(fetchCachedProjects(cacheController.getProjects()))
       }
     }
@@ -192,22 +210,4 @@ export const handleFetchWatchedProjects = (isSync = false) => async (dispatch, g
     dispatch(fetchProjects([], WATCHED))
   }
   return getState().projects
-}
-
-export const handleUpdateTaskCount = (projectID, prevStatus, nextStatus) => (dispatch, getState) => {
-  const { projects } = getState()
-  const prevProjectState = {...projects[projectID]}
-  const prevTodoCount = prevProjectState.todoCount
-  const prevPendingCount = prevProjectState.pendingCount
-  const prevDoneCount = prevProjectState.doneCount
-  const todoCountInc = (prevStatus === "todo" ? -1 : 0) || (nextStatus === "todo" ? 1 : 0)
-  const pendingCountInc = (prevStatus === "pending" ? -1 : 0) || (nextStatus === "pending" ? 1 : 0)
-  const doneCountInc = (prevStatus === "done" ? -1 : 0) || (nextStatus === "done" ? 1 : 0)
-  const update = {
-    id: projectID,
-    todoCount: prevTodoCount + todoCountInc,
-    pendingCount: prevPendingCount + pendingCountInc,
-    doneCount: prevDoneCount + doneCountInc
-  }
-  dispatch(updateProject(update, OWNED));
 }

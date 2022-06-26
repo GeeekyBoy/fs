@@ -9,7 +9,7 @@ const Illustration = (props) => {
     onAction,
     actionDisabled,
     secondary,
-    class: className,
+    className,
     style
   } = props
   const handleAction = () => {

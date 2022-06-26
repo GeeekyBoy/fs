@@ -6,8 +6,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s, color 0.2s;
-  line-height: 0;
-  color: var(--primary);
   background-color: var(--color-fill-color-subtle-secondary);
+  color: var(--primary);
+  line-height: 0;
+  transition: background-color 0.2s, color 0.2s;
 }

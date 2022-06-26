@@ -1,24 +1,23 @@
 .CheckboxShell {
-  position: relative;
   display: flex;
+  position: relative;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
+  width: fit-content;
   padding: 5px 10px;
   border: none;
-  background-color: transparent;
-  width: fit-content;
   border-color: var(--outline);
+  background-color: transparent;
   & > *:not(:last-child) {
     margin-right: 10px;
   }
   & > label {
-    margin-bottom: 0;
     width: max-content;
-    font-size: 0.875rem;
-    font-weight: 400;
-    cursor: pointer;
+    margin-bottom: 0;
     color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
   }
   &.disabled {
     opacity: 0.6;
@@ -35,23 +34,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  outline: none;
-  border: 2px solid;
-  background-color: transparent;
-  border-radius: 3px;
   width: 18px;
+  min-width: 18px;
   height: 18px;
   min-height: 18px;
-  min-width: 18px;
   padding: 0;
+  border: 1px solid;
+  border-radius: 3px;
+  border-color: var(--color-stroke-color-control-strong-stroke-default);
+  outline: none;
+  background-color: transparent;
+  background-color: var(--color-fill-color-control-alt-secondary);
   cursor: pointer;
   transition: border-color 0.2s;
-  border-color: var(--color-stroke-color-control-strong-stroke-default);
-  background-color: var(--color-fill-color-control-alt-secondary);
   &.checked {
-  color: var(--color-fill-color-text-on-accent-primary);
     border-color: var(--primary);
     background-color: var(--primary);
+  color: var(--color-fill-color-text-on-accent-primary);
     & > svg * {
       stroke-width: 64px;
     }

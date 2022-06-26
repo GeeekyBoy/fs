@@ -42,20 +42,29 @@ const App = () => {
     }
   };
 
+  const checkConnection = async () => {
+    const result = await isOnline();
+    const {
+      app: { isOffline },
+    } = store.getState();
+    if (result && isOffline) {
+      store.dispatch(appActions.setOffline(false));
+    } else if (!result && !isOffline) {
+      store.dispatch(appActions.setOffline(true));
+    }
+  }
+
   useEffect(() => {
     window.addEventListener("storage", fetchAppSettings);
     window.addEventListener("beforeunload", checkReloadAbility);
-    const checkConnectionInterval = setInterval(async () => {
-      const result = await isOnline();
-      const {
-        app: { isOffline },
-      } = store.getState();
-      if (result && isOffline) {
-        store.dispatch(appActions.setOffline(false));
-      } else if (!result && !isOffline) {
-        store.dispatch(appActions.setOffline(true));
-      }
-    }, 3000);
+    checkConnection();
+    window.addEventListener("dragover", (e) => {
+      e.preventDefault();
+    }, false);
+    window.addEventListener("drop", (e) => {
+      e.preventDefault();
+    }, false);
+    const checkConnectionInterval = setInterval(checkConnection, 3000);
     return () => {
       clearInterval(checkConnectionInterval);
       window.removeEventListener("storage", fetchAppSettings);

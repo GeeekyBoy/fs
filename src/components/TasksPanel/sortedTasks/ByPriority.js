@@ -23,8 +23,6 @@ const ByPriority = () => {
           <TaskItem
             key={value.id}
             item={value}
-            isSorting={false}
-            isDragging={false}
             nextTask={
               sortedTasks.high[index + 1]?.id ||
               sortedTasks.normal[0]?.id ||
@@ -44,8 +42,6 @@ const ByPriority = () => {
           <TaskItem
             key={value.id}
             item={value}
-            isSorting={false}
-            isDragging={false}
             nextTask={
               sortedTasks.normal[index + 1]?.id ||
               sortedTasks.low[0]?.id ||
@@ -68,8 +64,6 @@ const ByPriority = () => {
           <TaskItem
             key={value.id}
             item={value}
-            isSorting={false}
-            isDragging={false}
             nextTask={sortedTasks.low[index + 1]?.id || null}
             prevTask={
               sortedTasks.low[index - 1]?.id ||

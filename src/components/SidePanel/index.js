@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from "react-redux";
 import "draft-js/dist/Draft.css";
 import SidPanel from "../UI/SidePanel";
-import ASSIGNEE_CHOOSER from "./AssigneeChooser";
-import WATCHER_CHOOSER from "./WatcherChooser";
 import TASK_HUB from "./TaskHub";
+import BATCH_HUB from "./BatchHub";
 import PROJECTS from "./Projects";
 import ACCOUNT_SETTINGS from "./AccountSettings";
 import PROJECT_SETTINGS from "./ProjectSettings";
@@ -12,9 +11,8 @@ import APP_SETTINGS from "./AppSettings";
 import NOTIFICATIONS from "./Notifications";
 
 const sidePanelPages = {
-    ASSIGNEE_CHOOSER,
-    WATCHER_CHOOSER,
     TASK_HUB,
+    BATCH_HUB,
     PROJECTS,
     ACCOUNT_SETTINGS,
     PROJECT_SETTINGS,

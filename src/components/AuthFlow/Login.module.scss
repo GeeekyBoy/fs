@@ -1,16 +1,16 @@
 .LoginFormContainer {
   display: flex;
   flex-direction: column;
-  margin: 40px 0;
   justify-content: center;
+  width: 350px;
+  height: fit-content;
+  margin: 40px 0;
+  padding: 35px;
   border: 1px solid;
   border-radius: 25px;
-  height: fit-content;
-  width: 350px;
-  padding: 35px;
-  transition: background-color 0.2s, border-color 0.2s;
   border-color: var(--color-stroke-color-card-stroke-default);
   background-color: var(--color-background-fill-color-card-background-default);
+  transition: background-color 0.2s, border-color 0.2s;
   & > *:not(:last-child) {
     margin-bottom: 15px;
   }
@@ -18,28 +18,27 @@
     position: absolute;
     width: calc(100% - 70px);
     height: calc(100% - 70px);
-    border-radius: 0;
     margin: 0;
+    border-radius: 0;
   }
 }
 
 .LoginFormHeader {
   display: flex;
   flex-direction: column;
-  text-align: center;
   color: var(--color-fill-color-text-primary);
+  text-align: center;
   & > span:nth-child(1) {
+    color: var(--primary);
     font-weight: bold;
     font-size: 1.5rem;
     transition: color 0.2s;
-    color: var(--primary);
   }
   & > span:nth-child(2) {
     font-weight: 600;
     font-size: 1.5rem;
   }
   & > span:nth-child(3) {
-    font-weight: 400;
     font-size: 1rem;
   }
 }
@@ -69,8 +68,8 @@
     grid-area: signIn;
   }
   & > *:nth-child(3) > span:first-child {
-    transition: color 0.2s;
     color: var(--color-fill-color-text-primary);
+    transition: color 0.2s;
   }
   & > h2 > span {
     cursor: pointer;
@@ -96,20 +95,20 @@
 }
 
 .NewAccountLink {
-  font-size: 0.875rem;
   justify-self: flex-start;
+  font-size: 0.875rem;
   cursor: pointer;
   & > span:nth-child(2) {
-    transition: color 0.2s;
     color: var(--primary);
+    transition: color 0.2s;
   }
 }
 
 .ForgotPasswordLink {
   display: block;
-  font-size: 0.875rem;
   justify-self: flex-end;
+  color: var(--primary);
+  font-size: 0.875rem;
   cursor: pointer;
   transition: color 0.2s;
-  color: var(--primary);
 }

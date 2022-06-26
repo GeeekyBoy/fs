@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux"
 import * as userActions from "../../actions/user"
 import * as cacheController from "../../controllers/cache"
 import { AuthState } from '../../constants';
-import SubmitBtn from '../UI/fields/SubmitBtn';
 import TextField from '../UI/fields/TextField';
 import Auth from '../../amplify/Auth';
 import { navigate } from '../Router';
+import Button from '../UI/Button';
 
 const NewAccount = () => {
   const [verificationCode, setVerificationCode] = useState("")
@@ -260,8 +260,9 @@ const NewAccount = () => {
           error={passwordError}
           value={password}
         />
-        <SubmitBtn
+        <Button
           type="submit"
+          style={{ width: "100%" }}
           value={isBusy ? "Signing Up" : "Sign Up"}
           disabled={!isSubmissionPossible || isBusy}
         />
@@ -287,9 +288,9 @@ const NewAccount = () => {
           error={verificationCodeError}
           value={verificationCode}
         />
-        <SubmitBtn
+        <Button
           type="submit"
-          style={{width: "100%"}}
+          style={{ width: "100%" }}
           value={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}
           disabled={isBusy || !verificationCode.trim() || isOffline}
         />

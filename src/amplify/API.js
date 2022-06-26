@@ -2,7 +2,7 @@ import awsconfig from "../aws-exports";
 import Auth from "./Auth";
 import signAwsReq from "./signAwsReq";
 import * as mutationsGraphQL from "../graphql/mutations";
-import * as mutationID from "../utils/mutationID";
+import * as mutationId from "../utils/mutationId";
 
 class API {
   constructor() {
@@ -64,16 +64,16 @@ class API {
       }
       const mutation = this.mutationQueue[0];
       try {
-        const generatedMutationID = mutationID.generate((await Auth.getUser()).username);
+        const generatedMutationId = mutationId.generate((await Auth.getUser()).username);
         const result = await this.execute(mutationsGraphQL[mutation.type], {
           input: {
             ...mutation.variables,
-            mutationID: generatedMutationID,
+            mutationId: generatedMutationId,
           }
         });
         if (mutation.success) mutation.success(result);
       } catch (e) {
-        if (retries < 3) {
+        if (retries < 0) {
           return this.sendNextMutation(retries + 1);
         } else {
           if (mutation.error) mutation.error(e);

@@ -1,25 +1,24 @@
 .LoadingContainer {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
   position: fixed;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s;
+  width: 100%;
+  height: 100%;
   background-color: var(--color-background-fill-color-layer-default);
+  transition: background-color 0.2s;
   & > span:nth-child(1) {
+    color: var(--primary);
     font-weight: bold;
     font-size: 2.625rem;
     transition: color 0.2s;
-    color: var(--primary);
   }
   & > span:nth-child(3) {
-    font-weight: bold;
+    color: var(--color-fill-color-text-primary);
     font-size: 1.125rem;
     text-align: center;
     transition: color 0.2s;
-    color: var(--color-fill-color-text-primary);
   }
   & > div {
     width: 250px;

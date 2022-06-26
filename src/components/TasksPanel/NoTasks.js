@@ -2,32 +2,32 @@ import React from "react";
 import { ReactComponent as LoadingSpinner } from "../../assets/infinity-1s-200px.svg";
 import { ReactComponent as EmptyTasksIllustration } from "../../assets/undraw_note_list_re_r4u9.svg";
 import { ReactComponent as OfflineIllustration } from "../../assets/undraw_signal_searching_bhpc.svg";
-import { ReactComponent as NoResultsIllustration } from "../../assets/infinity-1s-200px.svg";
+import { ReactComponent as NoResultsIllustration } from "../../assets/undraw_not_found_60pq.svg";
 import Illustration from "../UI/Illustration";
 
 const NoTasks = (props) => {
-  const { msgID } = props;
+  const { msgId } = props;
   return (
     <Illustration
       illustration={
-        msgID === "LOADING"
+        msgId === "LOADING"
           ? LoadingSpinner
-          : msgID === "EMPTY"
+          : msgId === "EMPTY"
           ? EmptyTasksIllustration
-          : msgID === "NO_RESULTS"
+          : msgId === "NO_RESULTS"
           ? NoResultsIllustration
-          : msgID === "OFFLINE"
+          : msgId === "OFFLINE"
           ? OfflineIllustration
           : null
       }
       title={
-        msgID === "LOADING"
+        msgId === "LOADING"
           ? "Tasks Are Being Fetched"
-          : msgID === "EMPTY"
+          : msgId === "EMPTY"
           ? "Tap To Create New Task"
-          : msgID === "NO_RESULTS"
+          : msgId === "NO_RESULTS"
           ? "No Results Found"
-          : msgID === "OFFLINE"
+          : msgId === "OFFLINE"
           ? "You Are Offline Now"
           : null
       }

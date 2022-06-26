@@ -1,6 +1,6 @@
 import 'react-app-polyfill/stable';
 import React, { StrictMode } from "react";
-import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import store from "./store";
 import "./scss/index.scss";
@@ -23,20 +23,17 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+getAnalytics(app);
 
 const container = document.getElementById("root");
-const root = ReactDOM.createRoot(container);
+const root = createRoot(container);
 root.render(
-  <StrictMode>
-    <WindowSizeListener>
-      <Provider store={store}>
-        <ModalManager>
-          <App />
-        </ModalManager>
-      </Provider>
-    </WindowSizeListener>
-  </StrictMode>,
-  container
+  <WindowSizeListener>
+    <Provider store={store}>
+      <ModalManager>
+        <App />
+      </ModalManager>
+    </Provider>
+  </WindowSizeListener>
 );
 serviceWorkerRegistration.register();

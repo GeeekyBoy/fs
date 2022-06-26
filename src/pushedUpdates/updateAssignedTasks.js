@@ -23,8 +23,8 @@ const updateAssignedTasks = async (dispatch, getState, pushedUpdate) => {
     } else {
       try {
         const newAssignedProjectData = (await API.execute(queries.getProjectById, {
-          projectID: newAssignedProject
-        })).data.getProjectByID
+          projectId: newAssignedProject
+        })).data.getProjectById
         if (newAssignedProjectData) {
           dispatch(projectsActions.createProject(newAssignedProjectData, "assigned"))
           PubSub.subscribeTopic("project", newAssignedProject)

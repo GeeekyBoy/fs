@@ -1,0 +1,40 @@
+.FilesList {
+  display: flex;
+  flex-direction: column;
+  & > *:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.FileItem {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: calc(100% - 22px);
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: var(--color-stroke-color-card-stroke-default);
+  background-color: var(--color-background-fill-color-card-background-default);
+  font-size: 0.875rem;
+  & > *:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  &.error {
+    border-color: #ff0000 !important;
+    & > label {
+      color: #ff0000 !important;
+    }
+  }
+}
+
+.FileName {
+  color: var(--color-fill-color-text-primary);
+}
+
+.FileSize {
+  color: var(--color-fill-color-text-secondary);
+  font-size: 0.875rem;
+}

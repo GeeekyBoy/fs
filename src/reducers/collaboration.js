@@ -17,21 +17,21 @@ export default function (state = initState, action) {
       return {...state, projectViewers: [...new Set([ action.username, ...state.projectViewers ])]}
     case LEAVE_PROJECT:
       state.projectViewers.splice(state.projectViewers.indexOf(action.username), 1)
-      for (const taskID in state.taskViewers) {
-        if (state.taskViewers[taskID].includes(action.username)) {
-          state.taskViewers[taskID] = state.taskViewers[taskID].filter(user => user !== action.username)
+      for (const taskId in state.taskViewers) {
+        if (state.taskViewers[taskId].includes(action.username)) {
+          state.taskViewers[taskId] = state.taskViewers[taskId].filter(user => user !== action.username)
         }
-        if (state.taskViewers[taskID]?.length === 0) {
-          delete state.taskViewers[taskID]
+        if (state.taskViewers[taskId]?.length === 0) {
+          delete state.taskViewers[taskId]
         }
       }
       return {...state}
     case FOCUS_TASK:
-      for (const taskID in state.taskViewers) {
-        if (state.taskViewers[taskID].includes(action.username)) {
-          state.taskViewers[taskID].splice(state.taskViewers[taskID].indexOf(action.username), 1)
-          if (state.taskViewers[taskID]?.length === 0) {
-            delete state.taskViewers[taskID]
+      for (const taskId in state.taskViewers) {
+        if (state.taskViewers[taskId].includes(action.username)) {
+          state.taskViewers[taskId].splice(state.taskViewers[taskId].indexOf(action.username), 1)
+          if (state.taskViewers[taskId]?.length === 0) {
+            delete state.taskViewers[taskId]
           }
         }
       }
@@ -39,13 +39,13 @@ export default function (state = initState, action) {
         ...state,
         taskViewers: {
           ...state.taskViewers,
-          [action.taskID]: [...new Set([ ...(state.taskViewers[action.taskID] || []), action.username])]
+          [action.taskId]: [...new Set([ ...(state.taskViewers[action.taskId] || []), action.username])]
         }
       }
     case UNFOCUS_TASK:
-      state.taskViewers[action.taskID]?.splice(state.taskViewers[action.taskID].indexOf(action.username), 1)
-      if (state.taskViewers[action.taskID]?.length === 0) {
-        delete state.taskViewers[action.taskID]
+      state.taskViewers[action.taskId]?.splice(state.taskViewers[action.taskId].indexOf(action.username), 1)
+      if (state.taskViewers[action.taskId]?.length === 0) {
+        delete state.taskViewers[action.taskId]
       }
       return {...state}
     case SET_TXT_CURSOR:

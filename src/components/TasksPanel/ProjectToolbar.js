@@ -12,9 +12,7 @@ import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
 import { ReactComponent as SettingsIcon } from "../../assets/settings-outline.svg"
 import { ReactComponent as ExportIcon } from "../../assets/download-outline.svg"
 import { ReactComponent as ImportIcon } from "../../assets/cloud-upload-outline.svg"
-import { ReactComponent as UndoIcon } from "../../assets/arrow-undo-outline.svg"
-import { ReactComponent as RedoIcon } from "../../assets/arrow-redo-outline.svg"
-import Dropdown from '../UI/fields/Dropdown';
+import ComboBox from '../UI/fields/ComboBox';
 import ShadowScroll from '../ShadowScroll';
 import { useModal } from '../ModalManager';
 import modals from '../modals';
@@ -69,26 +67,19 @@ const ProjectToolbar = () => {
   return (
     <div className={styles.ToolbarContainer}>
       <ShadowScroll style={{ maxWidth: "fit-content" }}>
-        {/* <button
-          className={styles.ToolbarActionBtn}
-          onClick={pasteTask}
-        >
-          <UndoIcon
-            width={14}
-            height={14}
+        <div className={styles.SortingSettings}>
+          <ComboBox
+            onChange={handleChangeSortingCriteria}
+            value={tasksSortingCriteria}
+            options={{
+              BY_DEFAULT: "by default",
+              BY_DUE: "by due",
+              BY_STATUS: "by status",
+              BY_PRIORITY: "by priority",
+              BY_TAG: "by tag"
+            }}
           />
-          <span>Undo</span>
-        </button>
-        <button
-          className={styles.ToolbarActionBtn}
-          onClick={pasteTask}
-        >
-          <RedoIcon
-            width={14}
-            height={14}
-          />
-          <span>Redo</span>
-        </button> */}
+        </div>
         <button
           className={styles.ToolbarActionBtn}
           onClick={pasteTask}
@@ -99,7 +90,7 @@ const ProjectToolbar = () => {
           />
           <span>Paste</span>
         </button>
-        {/* <button
+        <button
           className={styles.ToolbarActionBtn}
           onClick={openImportModal}
         >
@@ -108,7 +99,7 @@ const ProjectToolbar = () => {
             height={14}
           />
           <span>Import</span>
-        </button> */}
+        </button>
         <button
           className={styles.ToolbarActionBtn}
           onClick={openExportModal}
@@ -142,19 +133,6 @@ const ProjectToolbar = () => {
           />
           <span>Settings</span>
         </button>
-        <div className={styles.SortingSettings}>
-          <Dropdown
-            onChange={handleChangeSortingCriteria}
-            value={tasksSortingCriteria}
-            options={{
-              BY_DEFAULT: "by default",
-              BY_DUE: "by due",
-              BY_STATUS: "by status",
-              BY_PRIORITY: "by priority",
-              BY_TAG: "by tag"
-            }}
-          />
-        </div>
       </ShadowScroll>
     </div>     
   )
