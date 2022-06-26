@@ -24,6 +24,7 @@ yarn-debug.log*
 yarn-error.log*
 build-storybook.log
 
+team-provider-info.json
 amplify/backend/api/fsCoreAPI/pipelineFunctions
 amplify/backend/api/fsCoreAPI/resolvers
 
