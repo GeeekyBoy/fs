@@ -9,7 +9,7 @@ backend:
         - echo "RDS_USER=$RDS_USER" >> amplify/backend/function/fsCoreApiResolver/src/.env
         - echo "RDS_PASSWORD=$RDS_PASSWORD" >> amplify/backend/function/fsCoreApiResolver/src/.env
         - echo "SENDGRID_API_KEY=$SENDGRID_API_KEY" >> amplify/backend/function/fsCognitoPostConfirmation/src/.env
-        - amplifyPush -e $AWS_BRANCH --simple
+        - amplifyPush --simple
 frontend:
   phases:
     preBuild:
