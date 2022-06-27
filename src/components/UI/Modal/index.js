@@ -4,6 +4,7 @@ import SimpleBar from "simplebar-react";
 import Sheet from "./Sheet";
 import Dialog from "./Dialog";
 import styles from "./index.module.scss"
+import Button from "../Button";
 
 const Modal = (props) => {
 	const {
@@ -29,27 +30,22 @@ const Modal = (props) => {
 				</SimpleBar>
 			</div>
 			<div className={styles.ModalFooter}>
-				<button 
-					className={[
-						styles.ModalButton,
-						styles.primary,
-					].join(" ")}
+				<Button
+          fullWidth
           disabled={primaryButtonDisabled}
 					onClick={onPrimaryButtonClick}
 				>
 					{primaryButtonText}
-				</button>
+				</Button>
 				{secondaryButtonText && (
-					<button 
-						className={[
-							styles.ModalButton,
-							styles.secondary,
-						].join(" ")}
+					<Button
+            fullWidth
+            secondary
             disabled={secondaryButtonDisabled}
 						onClick={onSecondaryButtonClick}
 					>
 						{secondaryButtonText}
-					</button>
+					</Button>
 				)}
 			</div>
 		</>

@@ -4,6 +4,8 @@ import styles from "./Button.module.scss";
 const Button = (props) => {
   const {
     label,
+    secondary,
+    fullWidth,
     children,
     className,
     style,
@@ -14,7 +16,9 @@ const Button = (props) => {
       value={label}
       className={[
         className || "",
-        styles.Button
+        styles.Button,
+        ...(secondary && [styles.secondary] || []),
+        ...(fullWidth && [styles.fullWidth] || []),
       ].join(" ")}
       style={style}
       {...nativeProps}
@@ -23,7 +27,9 @@ const Button = (props) => {
     <button
       className={[
         className || "",
-        styles.Button
+        styles.Button,
+        ...(secondary && [styles.secondary] || []),
+        ...(fullWidth && [styles.fullWidth] || []),
       ].join(" ")}
       style={style}
       {...nativeProps}

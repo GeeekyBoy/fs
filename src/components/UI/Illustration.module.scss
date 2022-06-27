@@ -25,18 +25,6 @@
       font-size: 1.75rem;
       transition: color 0.2s;
     }
-    & > button {
-      max-width: fit-content;
-      padding: 5px 15px;
-      border: none;
-      border-radius: 100000000000000px;
-      outline: none;
-      background-color: var(--color-fill-color-accent-primary);
-      color: var(--color-fill-color-text-on-accent-primary);
-      font-size: 1.125rem;
-      cursor: pointer;
-      transition: background-color 0.2s, color 0.2s;
-    }
     & > *:not(:last-child) {
       margin-bottom: 10px;
     }
@@ -60,9 +48,6 @@
     & > div {
       & > span {
         font-size: 1.25rem;
-      }
-      & > button {
-        font-size: 1rem;
       }
     }
   }

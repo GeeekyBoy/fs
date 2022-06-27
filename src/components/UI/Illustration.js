@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import Button from './Button';
 import styles from "./Illustration.module.scss"
 
 const Illustration = (props) => {
@@ -32,12 +33,12 @@ const Illustration = (props) => {
           {title}
         </span>
         {actionLabel && (
-          <button
+          <Button
             onClick={handleAction}
             disabled={actionDisabled}
           >
             {actionLabel}
-          </button>
+          </Button>
         )}
       </div>
     </div>

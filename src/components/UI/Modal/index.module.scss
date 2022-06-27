@@ -35,29 +35,3 @@
     margin-right: 10px;
   }
 }
-
-.ModalButton {
-  position: relative;
-  flex: 1;
-  padding: 10px 0;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-  &.primary {
-    background-color: var(--color-fill-color-accent-primary);
-    color: var(--color-fill-color-text-on-accent-primary);
-  }
-  &.secondary {
-    border: 1px solid;
-    border-color: var(--color-stroke-color-card-stroke-default);
-    background-color: var(--color-fill-color-control-default);
-    color: var(--color-fill-color-text-primary);
-  }
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-}

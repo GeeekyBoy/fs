@@ -1,20 +1,50 @@
 .Button {
   width: 100px;
-  padding: 10px 0;
-  border: none;
-  border-radius: 8px;
+  padding: 7px 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
   outline: none;
+  border-color: var(--color-stroke-color-control-stroke-default);
+  border-bottom-color: var(--color-stroke-color-control-stroke-secondary);
   background-color: var(--color-fill-color-accent-primary);
   color: var(--color-fill-color-text-on-accent-primary);
   font-size: 0.875rem;
   cursor: pointer;
   transition: background-color 0.3s, color 0.2s;
+  &.fullWidth {
+    width: 100%;
+  }
+  &.secondary {
+    background-color: var(--color-fill-color-control-default);
+    color: var(--color-fill-color-text-primary);
+  }
   &:hover {
-    background-color: var(--primaryHover);
+    background-color: var(--color-fill-color-accent-secondary);
+    &.secondary {
+      background-color: var(--color-fill-color-control-secondary);
+    }
+  }
+  &:active {
+    background-color: var(--color-fill-color-accent-tertiary);
+    color: var(--color-fill-color-text-on-accent-secondary);
+    border-color: var(--color-stroke-color-control-stroke-on-accent-default);
+    border-bottom-color: var(--color-stroke-color-control-stroke-on-accent-default);
+    &.secondary {
+      border-color: var(--color-stroke-color-control-stroke-default);
+      border-bottom-color: var(--color-stroke-color-control-stroke-default);
+    }
   }
   &:disabled {
-    background-color: #CCCCCC!important;
-    color: #FFFFFF!important;
+    background-color: var(--color-fill-color-accent-disabled) !important;
+    color: var(--color-fill-color-text-on-accent-disabled) !important;
+    border-color: transparent !important;
+    border-bottom-color: transparent !important;
+    &.secondary {
+      background-color: var(--color-fill-color-control-disabled) !important;
+      color: var(--color-fill-color-text-disabled) !important;
+      border-color: var(--color-stroke-color-control-stroke-default) !important;
+      border-bottom-color: var(--color-stroke-color-control-stroke-default) !important;
+    }
     cursor: not-allowed;
   }
 }

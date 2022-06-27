@@ -14,11 +14,25 @@ const Template = (args) => <Button {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   label: "Button",
+  fullWidth: false,
+  secondary: false,
   disabled: false,
+};
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  ...Default.args,
+  secondary: true,
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   ...Default.args,
   disabled: true,
+};
+
+export const SecondaryDefault = Template.bind({});
+SecondaryDefault.args = {
+  ...Disabled.args,
+  secondary: true,
 };
