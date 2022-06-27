@@ -9,7 +9,7 @@
   background-color: var(--color-background-fill-color-layer-default);
   transition: background-color 0.2s;
   & > span:nth-child(1) {
-    color: var(--primary);
+    color: var(--color-fill-color-accent-primary);
     font-weight: bold;
     font-size: 2.625rem;
     transition: color 0.2s;

@@ -30,7 +30,7 @@
   text-align: center;
   transition: color 0.2s;
   & > span:nth-child(1) {
-    color: var(--primary);
+    color: var(--color-fill-color-accent-primary);
     font-weight: bold;
     font-size: 1.5rem;
     transition: color 0.2s;

@@ -10,7 +10,7 @@
     position: absolute;
     height: 5px;
     border-radius: 100px;
-    background-color: var(--primary);
+    background-color: var(--color-fill-color-accent-primary);
     transition: width 0.5s linear, background-color 0.2s;
   }
   & > div:nth-child(1) {

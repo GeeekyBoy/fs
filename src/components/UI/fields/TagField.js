@@ -11,8 +11,6 @@ const TagField = (props) => {
     error,
     readOnly,
     disabled,
-    className,
-    style
   } = props
   const tagFieldRef = useRef(null)
   const tagFieldInputRef = useRef(null)
@@ -79,9 +77,7 @@ const TagField = (props) => {
       className={[
         styles.TagFieldShell,
         ...(disabled && [styles.disabled] || []),
-        className || ""
       ].join(" ")}
-      style={style}
     >
       {label && (
         <label
@@ -100,9 +96,7 @@ const TagField = (props) => {
           ...(isHovered && !isTagHovered && [styles.hovered] || []),
           ...((value || []).length && [styles.filled] || []),
           ...(error && [styles.error] || []),
-          className
         ].join(" ")}
-        style={style}
         onClick={handleFieldClick}
         onPointerEnter={() => setIsHovered(true)}
         onPointerLeave={() => setIsHovered(false)}

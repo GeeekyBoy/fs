@@ -19,7 +19,7 @@
   & > svg {
     width: 250px;
     height: 250px;
-    color: var(--primary);
+    color: var(--color-fill-color-accent-primary);
     transition: color 0.2s;
   }
   & > div {
@@ -40,7 +40,7 @@
       border-radius: 8px;
       outline: none;
       background-color: var(--color-fill-color-subtle-secondary);
-      color: var(--primary);
+      color: var(--color-fill-color-accent-primary);
       font-size: 1.125rem;
       cursor: pointer;
       transition: background-color 0.2s, color 0.2s;

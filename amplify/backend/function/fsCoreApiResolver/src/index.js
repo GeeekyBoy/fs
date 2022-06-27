@@ -1150,9 +1150,9 @@ exports.handler = async function (ctx) {
 
   async function listOwnedProjects(ctx) {
     const client = ctx.identity.username;
-    const { owner = client } = ctx.arguments;
+    const { owner } = ctx.arguments;
     const query = 'CALL list_projects_by_owner(?, ?)';
-    const params = [owner, client];
+    const params = [owner || client, client];
     try {
       const data = (await pool.execute(query, params))[0];
       return { items: data || [] };
@@ -1163,9 +1163,9 @@ exports.handler = async function (ctx) {
 
   async function listAssignedProjects(ctx) {
     const client = ctx.identity.username;
-    const { assignee = client } = ctx.arguments;
+    const { assignee } = ctx.arguments;
     const query = 'CALL list_assigned_projects(?, ?)';
-    const params = [assignee, client];
+    const params = [assignee || client, client];
     try {
       const data = (await pool.execute(query, params))[0];
       return { items: data || [] };
@@ -1176,9 +1176,9 @@ exports.handler = async function (ctx) {
 
   async function listWatchedProjects(ctx) {
     const client = ctx.identity.username;
-    const { watcher = client } = ctx.arguments;
+    const { watcher } = ctx.arguments;
     const query = 'CALL list_watched_projects(?, ?)';
-    const params = [watcher, client];
+    const params = [watcher || client, client];
     try {
       const data = (await pool.execute(query, params))[0];
       return { items: data || [] };

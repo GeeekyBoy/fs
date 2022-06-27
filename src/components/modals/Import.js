@@ -22,7 +22,8 @@ const Import = ({ importedBlob }) => {
   const [isBusy, setIsBusy] = useState(false);
   const { modalRef, hideModal } = useModal();
 
-  const handleChange = async (blobs) => {
+  const handleChange = async (e) => {
+    const blobs = e.target.files;
     const fileContents = await blobs[0].text();
     const type = blobs[0].type;
     if (type === "text/csv") {
@@ -83,7 +84,11 @@ const Import = ({ importedBlob }) => {
 
   useEffect(() => {
     if (importedBlob) {
-      handleChange([importedBlob]);
+      handleChange({
+        target: {
+          files: [importedBlob]
+        }
+      });
     }
   }, [importedBlob]);
 

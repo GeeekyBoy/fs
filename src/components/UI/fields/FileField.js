@@ -5,6 +5,7 @@ import { ReactComponent as UploadIllustration } from "../../../assets/undraw_add
 const FileField = (props) => {
 
   const {
+    name,
     multiple,
     onChange
   } = props;
@@ -40,12 +41,17 @@ const FileField = (props) => {
     for (const file of fileList) {
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
-      reader.onloadend = function () {
+      reader.onloadend = () => {
         const blob = new Blob([reader.result], { type: file.type });
         blob["name"] = file.name;
         result.push(blob);
         if (onChange && result.length === fileList.length) {
-          onChange(result);
+          onChange({
+            target: {
+              files: result,
+              name: name,
+            },
+          });
         }
       };
     }
@@ -53,7 +59,6 @@ const FileField = (props) => {
 
   return (
     <div
-      id="FileFielddnd-container"
       className={styles.FileFieldContainer}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
@@ -68,6 +73,7 @@ const FileField = (props) => {
         </div>
       </div>
       <input
+        name={name}
         type='file'
         ref={inputFile}
         onChange={handleDrop}

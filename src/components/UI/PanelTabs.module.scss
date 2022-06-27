@@ -34,7 +34,7 @@
   cursor: pointer;
   transition: color 0.2s;
   &.selected {
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid var(--color-fill-color-accent-primary);
     cursor: default;
   }
 }

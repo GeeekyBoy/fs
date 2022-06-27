@@ -83,7 +83,7 @@
     background-color: var(--color-fill-color-control-input-active);
     &::after {
       height: 2px;
-      background-color: var(--primary);
+      background-color: var(--color-fill-color-accent-primary);
     }
   }
   &.error {

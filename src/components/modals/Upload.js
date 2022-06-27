@@ -17,8 +17,8 @@ const Upload = ({ importedBlobs }) => {
   const [isBusy, setIsBusy] = useState(false);
   const { modalRef, hideModal } = useModal();
 
-  const handleChange = (blobs) => {
-    setFiles(blobs);
+  const handleChange = (e) => {
+    setFiles(e.target.files);
   }
 
   const handleUpload = async () => {
@@ -41,7 +41,7 @@ const Upload = ({ importedBlobs }) => {
 
   useEffect(() => {
     if (importedBlobs) {
-      handleChange(importedBlobs);
+      setFiles(importedBlobs);
     }
   }, [importedBlobs]);
 

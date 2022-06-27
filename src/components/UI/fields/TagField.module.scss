@@ -11,14 +11,15 @@
     cursor: text;
     transition: color 0.2s;
   }
-  & > span {
-    margin-left: 10px;
-    color: #FF0000;
-    font-size: 0.75rem;
-  }
   &.disabled {
-    opacity: 0.6;
-    &, & * {
+    .TagFieldContainer {
+      border-bottom-color: var(--color-stroke-color-control-stroke-default);
+      background-color: var(--color-fill-color-control-disabled);
+      & > span {
+        color: var(--color-fill-color-text-disabled);
+      }
+    }
+    & * {
       cursor: not-allowed;
     }
   }
@@ -33,7 +34,7 @@
   padding: 6px 10px;
   border: 1px solid transparent;
   border-radius: 4px;
-  border-color: var(--color-stroke-color-card-stroke-default);
+  border-color: var(--color-stroke-color-control-stroke-default);
   border-bottom-color: var(--color-stroke-color-control-strong-stroke-default);
   background-color: var(--color-fill-color-control-default);
   font-size: 0.875rem;
@@ -58,7 +59,7 @@
     background-color: var(--color-fill-color-control-input-active);
     &::after {
       height: 2px;
-      background-color: var(--primary) !important;
+      background-color: var(--color-fill-color-accent-primary) !important;
     }
   }
   &.error {
@@ -91,7 +92,7 @@
   margin: 3px 0;
   padding: 2px 6px;
   border: 1px solid;
-  border-radius: 100000000000000px;
+  border-radius: 20px;
   border-color: var(--color-stroke-color-card-stroke-default);
   background-color: var(--color-background-fill-color-card-background-default);
   color: var(--color-fill-color-text-secondary);
@@ -132,9 +133,6 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
-  margin: 0;
-  border: none;
-  background-color: transparent;
   color: var(--color-fill-color-text-primary);
   caret-color: var(--color-fill-color-text-primary);
   font-size: 0.875rem;

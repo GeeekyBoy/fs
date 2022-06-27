@@ -29,7 +29,7 @@
   color: var(--color-fill-color-text-primary);
   text-align: center;
   & > span:nth-child(1) {
-    color: var(--primary);
+    color: var(--color-fill-color-accent-primary);
     font-weight: bold;
     font-size: 1.5rem;
     transition: color 0.2s;
@@ -99,7 +99,7 @@
   font-size: 0.875rem;
   cursor: pointer;
   & > span:nth-child(2) {
-    color: var(--primary);
+    color: var(--color-fill-color-accent-primary);
     transition: color 0.2s;
   }
 }
@@ -107,7 +107,7 @@
 .ForgotPasswordLink {
   display: block;
   justify-self: flex-end;
-  color: var(--primary);
+  color: var(--color-fill-color-accent-primary);
   font-size: 0.875rem;
   cursor: pointer;
   transition: color 0.2s;

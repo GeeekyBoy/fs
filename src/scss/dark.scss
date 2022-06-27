@@ -28,6 +28,9 @@ html.dark {
   --color-fill-color-control-alt-tertiary: rgba(255,255,255,0.042);
   --color-fill-color-control-alt-quarternary: rgba(255,255,255,0.070);
   --color-fill-color-control-alt-disabled: rgba(255,255,255,0.000);
+  --color-fill-color-accent-primary: rgba(var(--primary), 1);
+  --color-fill-color-accent-secondary: rgba(var(--primary), 0.90);
+  --color-fill-color-accent-tertiary: rgba(var(--primary), 0.80);
   --color-fill-color-accent-disabled: rgba(255,255,255,0.158);
   --color-fill-color-system-critical: rgba(255,153,164,1);
   --color-fill-color-system-success: rgba(108,203,95,1);
@@ -91,80 +94,70 @@ html.dark {
       radial-gradient(ellipse at bottom right, var(--micaCore) 0%, var(--micaBounds) 75%) no-repeat fixed;
   }
   &.red {
-    --primary: #f46762;
-    --primaryHover: #e1615d;
+    --primary: 244, 103, 98;
     --auxiliarySurface: #2e1a1b;
     --micaCore: #3b1e1f;
     --micaBounds: #211b1c;
     --outline: #938f99;
   }
   &.gold {
-    --primary: #ffd52a;
-    --primaryHover: #eac42a;
+    --primary: 255, 213, 42;
     --auxiliarySurface: #22201a;
     --micaCore: #3b331d;
     --micaBounds: #211e1b;
     --outline: #938f99;
   }
   &.orange {
-    --primary: #fb9a44;
-    --primaryHover: #e78f42;
+    --primary: 251, 154, 68;
     --auxiliarySurface: #261e1a;
     --micaCore: #3b2c1d;
     --micaBounds: #211d1b;
     --outline: #938f99;
   }
   &.green {
-    --primary: #45e532;
-    --primaryHover: #43d332;
+    --primary: 69, 229, 50;
     --auxiliarySurface: #1a241a;
     --micaCore: #1f3b1e;
     --micaBounds: #1c211b;
     --outline: #938f99;
   }
   &.turquoise {
-    --primary: #29f7ff;
-    --primaryHover: #29e3ea;
+    --primary: 41, 247, 255;
     --auxiliarySurface: #1a2323;
     --micaCore: #173139;
     --micaBounds: #151b1b;
     --outline: #938f99;
   }
   &.blue {
-    --primary: #4cc2ff;
-    --primaryHover: #49b3eb;
+    --primary: 76, 194, 255;
     --auxiliarySurface: #1a2229;
     --micaCore: #1d253b;
     --micaBounds: #1b1d21;
     --outline: #938f99;
   }
   &.pink {
-    --primary: #ff4fcb;
-    --primaryHover: #eb4cbb;
+    --primary: 255, 79, 203;
     --auxiliarySurface: #2b1a24;
     --micaCore: #3b1d34;
     --micaBounds: #211b20;
     --outline: #938f99;
   }
   &.purple {
-    --primary: #b5adeb;
-    --primaryHover: #a7a0d9;
+    --primary: 181, 173, 235;
     --auxiliarySurface: #1e1d33;
     --micaCore: #241d3b;
     --micaBounds: #1b1b21;
     --outline: #938f99;
   }
   &.grey {
-    --primary: #adbbc5;
-    --primaryHover: #a0adb6;
+    --primary: 173, 187, 197;
     --auxiliarySurface: #1e2024;
     --micaCore: #1D1D1D;
     --micaBounds: #1D1D1D;
     --outline: #938f99;
   }
   &.black {
-    --primary: #ffffff;
-    --primaryHover: #ffffff;
+    --primary: 255, 255, 255;
     --auxiliarySurface: #202020;
     --micaCore: #202020;
     --micaBounds: #202020;

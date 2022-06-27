@@ -9,7 +9,7 @@
   & > svg {
     width: 360px;
     height: 250px;
-    color: var(--primary);
+    color: var(--color-fill-color-accent-primary);
     transition: color 0.2s;
   }
 	& > *:not(:last-child) {
@@ -31,7 +31,7 @@
       border: none;
       border-radius: 100000000000000px;
       outline: none;
-      background-color: var(--primary);
+      background-color: var(--color-fill-color-accent-primary);
       color: var(--color-fill-color-text-on-accent-primary);
       font-size: 1.125rem;
       cursor: pointer;

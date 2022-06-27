@@ -15,8 +15,6 @@ const CardSelect = (props) => {
     disabled,
     row,
     centeredText,
-    className,
-    style
 	} = props;
 
 	const onSelect = (nextVal) => {
@@ -29,13 +27,7 @@ const CardSelect = (props) => {
 	};
 
 	return (
-    <div
-      className={[
-        styles.SelectShell,
-        className || ""
-      ].join(" ")}
-      style={style}
-    >
+    <div className={styles.SelectShell}>
       {label && (
         <label htmlFor={name}>
           {label}

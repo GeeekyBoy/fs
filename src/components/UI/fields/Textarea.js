@@ -12,8 +12,6 @@ const Textarea = (props) => {
     error,
     label,
     disabled,
-    className,
-    style
   } = props
   const [ id ] = useState("Textarea" + nanoid(11))
   const [isFocused, setIsFocused] = useState(false)
@@ -41,10 +39,8 @@ const Textarea = (props) => {
         ...(isHovered && [styles.hovered] || []),
         ...(readOnly && [styles.readOnly] || []),
         ...(disabled && [styles.disabled] || []),
-        ...(value && [styles.filled] || []),
-        className || ""
+        ...(value && [styles.filled] || [])
       ].join(" ")}
-      style={style}
     >
       {label && (
         <label

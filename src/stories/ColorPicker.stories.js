@@ -50,15 +50,8 @@ Default.args = {
     "#586579",
     "#000000",
   ],
-  error: "",
   readOnly: false,
   disabled: false,
-};
-
-export const Error = Template.bind({});
-Error.args = {
-  ...Default.args,
-  error: "error message",
 };
 
 export const ReadOnly = Template.bind({});

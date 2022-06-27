@@ -15,10 +15,10 @@
     display: grid;
     position: relative;
     width: calc(100% - 24px);
-    padding: 6px 10px;
+    padding: 4px 11px;
     border: 1px solid transparent;
     border-radius: 4px;
-    border-color: var(--color-stroke-color-card-stroke-default);
+    border-color: var(--color-stroke-color-control-stroke-default);
     border-bottom-color: var(--color-stroke-color-control-strong-stroke-default);
     background-color: var(--color-fill-color-control-default);
     cursor: text;
@@ -59,10 +59,7 @@
   }
   &.error {
     & > div {
-      border-color: #FF0000!important;
-      & > label {
-        color: #FF0000!important;
-      }
+      border-color: var(--color-fill-color-system-critical) !important;
     }
   }
   &.disabled {
@@ -76,26 +73,19 @@
       background-color: var(--color-fill-color-control-secondary);
     }
   }
-  &.focused:not(.readOnly:not(.filled)), &.filled {
-    & > div {
-      & > label {
-        transform: scale(0.9) translate3d(10px, -14px, 0);
-      }
-    }
-  }
   &.focused:not(.readOnly:not(.filled)) {
     & > div {
       border-radius: 4px 4px 0 0;
       background-color: var(--color-fill-color-control-input-active);
       &::before {
         height: 2px;
-        background-color: var(--primary);
+        background-color: var(--color-fill-color-accent-primary);
       }
     }
   }
   & > span {
-    margin-left: 10px;
-    color: #FF0000;
+    margin-left: 12px;
+    color:  var(--color-fill-color-system-critical);
     font-size: 0.75rem;
   }
   & > *:not(:last-child) {

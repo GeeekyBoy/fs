@@ -10,8 +10,6 @@ const Checkbox = (props) => {
     value = false,
     readOnly,
     disabled,
-    className,
-    style
   } = props;
 
   const handleCheck = (nextVal) => {
@@ -31,9 +29,7 @@ const Checkbox = (props) => {
         styles.CheckboxShell,
         ...(disabled && [styles.disabled] || []),
         ...(readOnly && [styles.readOnly] || []),
-        className || ""
       ].join(" ")}
-      style={style}
     >
       <button
         className={[
@@ -42,7 +38,7 @@ const Checkbox = (props) => {
         ].join(" ")}
         onClick={() => handleCheck(!value)}
       >
-        {value && <CheckmarkIcon width={24} height={24} />}
+        {value && <CheckmarkIcon width={14} height={14} />}
       </button>
       {label && (
         <label htmlFor={name} onClick={() => handleCheck(!value)}>

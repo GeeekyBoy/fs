@@ -7,7 +7,7 @@
   display: inline;
   border: 2px solid;
   border-radius: 100%;
-  border-color: var(--primary);
+  border-color: var(--color-fill-color-accent-primary);
   transition: border-color 0.2s;
 }
 
@@ -17,9 +17,9 @@
   justify-content: center;
   border: 2px solid;
   border-radius: 100%;
-  border-color: var(--primary);
+  border-color: var(--color-fill-color-accent-primary);
   background-color: var(--auxiliarySurface);
-  color: var(--primary);
+  color: var(--color-fill-color-accent-primary);
   line-height: 0;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }

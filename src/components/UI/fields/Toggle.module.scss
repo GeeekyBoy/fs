@@ -55,8 +55,8 @@
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   &.selected {
-    border-color: var(--primary);
-    background-color: var(--primary);
+    border-color: var(--color-fill-color-accent-primary);
+    background-color: var(--color-fill-color-accent-primary);
     & > div {
       transform: translateX(calc(100% + 7.5px));
       background-color: var(--color-fill-color-text-on-accent-primary);

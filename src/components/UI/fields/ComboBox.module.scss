@@ -10,6 +10,10 @@
     font-size: 0.875rem;
     transition: color 0.2s;
   }
+  &.disabled * {
+    cursor: not-allowed !important;
+    touch-action: none;
+  }
   & > *:not(:last-child) {
     margin-bottom: 5px;
   }
@@ -22,22 +26,35 @@
   align-items: center;
   justify-content: space-between;
   width: calc(100% - 22px);
-  padding: 5px 10px;
+  padding: 4px 11px;
   border: 1px solid transparent;
+  color: var(--color-fill-color-text-primary);
   border-radius: 4px;
-  border-color: var(--color-stroke-color-card-stroke-default);
-  border-bottom-color: var(--color-stroke-color-control-strong-stroke-default);
-  background-color: var(--color-background-fill-color-card-background-default);
+  border-color: var(--color-stroke-color-control-stroke-default);
+  border-bottom-color: var(--color-stroke-color-control-stroke-secondary);
+  background-color: var(--color-fill-color-control-default);
   cursor: pointer;
-  & > input {
+  &:hover {
+    background-color: var(--color-fill-color-control-secondary);
+  }
+  &:active {
+    background-color: var(--color-fill-color-control-tertiary);
+    color: var(--color-fill-color-text-secondary);
+    border-bottom-color: var(--color-stroke-color-control-stroke-default);
+  }
+  &.disabled {
+    border-bottom-color: var(--color-stroke-color-control-stroke-default);
+    background-color: var(--color-fill-color-control-disabled);
+    color: var(--color-fill-color-text-disabled);
+  }
+  & > span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    color: var(--color-fill-color-text-primary);
+    height: 22px;
     font-size: 0.875rem;
     cursor: pointer;
-    pointer-events: none;
   }
 }
 
@@ -45,7 +62,6 @@
   display: flex;
   z-index: 10;
   position: fixed;
-  left: 0;
   flex-direction: column;
   min-width: max-content;
   padding: 4px;
@@ -54,7 +70,6 @@
   border-color: var(--color-stroke-color-card-stroke-default);
   background-image: var(--color-background-fill-color-acrylic-background);
   box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
-  font-size: 0.875rem;
   & > *:not(:last-child) {
     margin-bottom: 4px;
   }

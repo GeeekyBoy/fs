@@ -7,13 +7,10 @@ const ColorPicker = (props) => {
     onChange,
     colors,
     options,
-    error,
     label,
     name,
     readOnly,
     disabled,
-    className,
-    style
   } = props
 
   const handlePick = (nextVal) => {
@@ -28,13 +25,7 @@ const ColorPicker = (props) => {
   };
 
   return (
-    <div
-      className={[
-        styles.ColorPickerShell,
-        className || ""
-      ].join(" ")}
-      style={style}
-    >
+    <div className={styles.ColorPickerShell}>
       {label && (
         <label htmlFor={name}>
           {label}
@@ -44,8 +35,6 @@ const ColorPicker = (props) => {
         className={[
           styles.ColorPickerContainer,
           ...(disabled && [styles.disabled] || []),
-          ...(error && [styles.error] || []),
-          className || "",
         ].join(" ")}
       >
         {colors.map((color, index) => (
@@ -63,7 +52,6 @@ const ColorPicker = (props) => {
           </div>
         ))}
       </div>
-      {error && <span>{error}</span>}
     </div>
   )
 }

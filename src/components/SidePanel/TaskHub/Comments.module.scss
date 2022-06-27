@@ -27,7 +27,7 @@
   border: none;
   outline: none;
   background-color: transparent;
-  color: var(--primary);
+  color: var(--color-fill-color-accent-primary);
   line-height: 0;
   cursor: pointer;
   transition: color 0.2s;
@@ -81,13 +81,13 @@
       border-radius: 16px 16px 0 16px;
       border-color: var(--color-stroke-color-card-stroke-default);
       background-color: var(--color-background-fill-color-card-background-default) !important;
-      color: var(--primary);
+      color: var(--color-fill-color-accent-primary);
       transition: background-color 0.2s, color 0.2s;
     }
   }
   & .CommentBox {
     border-radius: 16px 16px 16px 0;
-    background-color: var(--primary);
+    background-color: var(--color-fill-color-accent-primary);
     color: var(--color-fill-color-text-on-accent-primary);
     transition: background-color 0.2s, color 0.2s;
   }
@@ -139,7 +139,7 @@
         border: none;
         border-radius: 8px;
         outline: none;
-        background-color: var(--primary);
+        background-color: var(--color-fill-color-accent-primary);
         color: var(--color-fill-color-text-on-accent-primary);
         font-size: 0.875rem;
         cursor: pointer;

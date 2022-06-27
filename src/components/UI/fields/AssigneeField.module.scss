@@ -42,13 +42,13 @@
     height: 32px;
     min-height: 32px;
     border-radius: 100%;
-    background-color: var(--primary);
+    background-color: var(--color-fill-color-accent-primary);
     color: var(--color-fill-color-text-on-accent-primary);
     line-height: 0;
     transition: background-color 0.2 ease ,color 0.2s;
   }
   & > span {
-    color: var(--primary);
+    color: var(--color-fill-color-accent-primary);
     font-size: 0.875rem;
     transition: color 0.2s;
   }
@@ -86,7 +86,7 @@
     border: none;
     border-radius: 8px;
     outline: none;
-    background-color: var(--primary);
+    background-color: var(--color-fill-color-accent-primary);
     color: var(--color-fill-color-text-on-accent-primary);
     font-size: 0.75rem;
     cursor: pointer;
@@ -151,7 +151,7 @@
   border: none;
   border-radius: 100%;
   outline: none;
-  background-color: var(--primary);
+  background-color: var(--color-fill-color-accent-primary);
   color: var(--color-fill-color-text-on-accent-primary);
   line-height: 0;
   cursor: pointer;
