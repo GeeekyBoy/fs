@@ -126,6 +126,24 @@ const Notification = (props) => {
                   to the task &quot;<b>{notificationData.hint}</b>&quot;.
                 </span>
               )}
+              {notificationData.field === "watchers" &&
+                notificationData.action === "append" && (
+                <span>
+                  Made&nbsp;
+                  {notificationData.value ? 
+                  (<b>@{notificationData.value}</b>) : "you"} watches the task&nbsp;
+                  &quot;<b>{notificationData.hint}</b>&quot;.
+                </span>
+              )}
+              {notificationData.field === "watchers" &&
+                notificationData.action === "remove" && (
+                <span>
+                  Prevented&nbsp;
+                  {notificationData.value ? 
+                  (<b>@{notificationData.value}</b>) : "you"} from watching the task&nbsp;
+                  &quot;<b>{notificationData.hint}</b>&quot;.
+                </span>
+              )}
               {notificationData.field === "due" &&
                 notificationData.action === "update" && (
                 parseInt(notificationData.value, 10) ? (

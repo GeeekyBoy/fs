@@ -45,7 +45,7 @@ const Home = () => {
           <NavigationManager />
           <SyncManager />
 					<Toolbar />
-					<div className={`${styles.MainPage} no-keyboard-portrait-padding-bottom-90`}>
+					<div className={`${styles.MainPage} no-keyboard-portrait-padding-bottom-68`}>
 						<SidePanel />
 						<TasksPanel />
 						<SidePanel right />

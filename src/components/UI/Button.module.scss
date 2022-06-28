@@ -1,6 +1,9 @@
 .Button {
-  width: 100px;
-  padding: 7px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 86px;
+  padding: 7px 14px;
   border: 1px solid transparent;
   border-radius: 4px;
   outline: none;
@@ -30,6 +33,7 @@
     border-color: var(--color-stroke-color-control-stroke-on-accent-default);
     border-bottom-color: var(--color-stroke-color-control-stroke-on-accent-default);
     &.secondary {
+      color: var(--color-fill-color-text-secondary);
       border-color: var(--color-stroke-color-control-stroke-default);
       border-bottom-color: var(--color-stroke-color-control-stroke-default);
     }
@@ -47,4 +51,12 @@
     }
     cursor: not-allowed;
   }
+}
+
+.ButtonIcon {
+  min-width: 16px;
+  min-height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  margin-right: 4px;
 }

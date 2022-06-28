@@ -9,6 +9,23 @@ export default {
   decorators: [withPerformance()]
 };
 
+const testIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 512 512"
+    {...props}
+  >
+    <circle
+      cx={256}
+      cy={256}
+      r={192}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={32}
+    />
+  </svg>
+);
+
 const Template = (args) => <Button {...args} />;
 
 export const Default = Template.bind({});
@@ -31,8 +48,14 @@ Disabled.args = {
   disabled: true,
 };
 
-export const SecondaryDefault = Template.bind({});
-SecondaryDefault.args = {
+export const SecondaryDisabled = Template.bind({});
+SecondaryDisabled.args = {
   ...Disabled.args,
   secondary: true,
+};
+
+export const WithIcon = Template.bind({});
+WithIcon.args = {
+  ...Default.args,
+  icon: testIcon,
 };

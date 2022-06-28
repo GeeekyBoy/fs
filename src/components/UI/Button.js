@@ -4,6 +4,7 @@ import styles from "./Button.module.scss";
 const Button = (props) => {
   const {
     label,
+    icon,
     secondary,
     fullWidth,
     children,
@@ -34,6 +35,9 @@ const Button = (props) => {
       style={style}
       {...nativeProps}
     >
+      {icon ? React.createElement(icon, {
+        className: styles.ButtonIcon,
+      }) : null}
       {label || children}
     </button>
   );

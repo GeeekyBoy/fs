@@ -103,6 +103,7 @@ const SidePanel = (props) => {
         ...(open && [styles.opened] || []),
         ...(disabled && [styles.disabled] || []),
         ...(inDropZone && [styles.inDropZone] || []),
+        "no-keyboard-portrait-padding-bottom-83",
         className || ""
       ].join(" ")}
       style={style}

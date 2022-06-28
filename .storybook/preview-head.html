@@ -33,16 +33,16 @@
   document.documentElement.className = appSettings.theme + " " + (appSettings.isDarkMode ? "dark" : "light");
   document.querySelector('meta[name="theme-color"]').setAttribute('content', appSettings.isDarkMode ? "#272727" : availColors[appSettings.theme]);
   document.write([
-   "<style>",
-     "@media only screen and (max-width: 768px) and (orientation: portrait) and (max-height: " + (Math.max(window.innerWidth, window.innerHeight) - 80) + "px)",
-     "{ .no-keyboard-portrait-flex, .no-keyboard-portrait-block { display: none !important; } .no-keyboard-portrait-padding-bottom-90 { padding-bottom: 0 !important; } }",
-     "@media only screen and (max-width: 768px) and (orientation: portrait) and (min-height: " + (Math.max(window.innerWidth, window.innerHeight) - 80) + "px)",
-     "{ .no-keyboard-portrait-block { display: block !important; } .no-keyboard-portrait-flex { display: flex !important; } .no-keyboard-portrait-padding-bottom-90 { padding-bottom: 68px !important; } }",
-     "@media only screen and (max-width: 768px) and (orientation: landscape)",
-     "{ .no-keyboard-portrait-block { display: block !important; } .no-keyboard-portrait-flex { display: flex !important; } .no-keyboard-portrait-padding-bottom-90 { padding-bottom: 68px !important; } }",
-     "@media only screen and (max-width: 768px) and (hover: hover)",
-     "{ .no-keyboard-portrait-block { display: block !important; } .no-keyboard-portrait-flex { display: flex !important; } .no-keyboard-portrait-padding-bottom-90 { padding-bottom: 68px !important; } }",
-   "</style>"
+    "<style>",
+      "@media only screen and (max-width: 768px) and (orientation: portrait) and (max-height: " + (Math.max(window.innerWidth, window.innerHeight) - 80) + "px)",
+      "{ .no-keyboard-portrait-flex, .no-keyboard-portrait-block { display: none !important; } .no-keyboard-portrait-padding-bottom-68 { padding-bottom: 0 !important; } .no-keyboard-portrait-padding-bottom-83 { padding-bottom: 15px !important; } }",
+      "@media only screen and (max-width: 768px) and (orientation: portrait) and (min-height: " + (Math.max(window.innerWidth, window.innerHeight) - 80) + "px)",
+      "{ .no-keyboard-portrait-block { display: block !important; } .no-keyboard-portrait-flex { display: flex !important; } .no-keyboard-portrait-padding-bottom-68 { padding-bottom: 68px !important; } .no-keyboard-portrait-padding-bottom-83 { padding-bottom: 83px !important; } }",
+      "@media only screen and (max-width: 768px) and (orientation: landscape)",
+      "{ .no-keyboard-portrait-block { display: block !important; } .no-keyboard-portrait-flex { display: flex !important; } .no-keyboard-portrait-padding-bottom-68 { padding-bottom: 68px !important; } .no-keyboard-portrait-padding-bottom-83 { padding-bottom: 83px !important; } }",
+      "@media only screen and (max-width: 768px) and (hover: hover)",
+      "{ .no-keyboard-portrait-block { display: block !important; } .no-keyboard-portrait-flex { display: flex !important; } .no-keyboard-portrait-padding-bottom-68 { padding-bottom: 68px !important; } .no-keyboard-portrait-padding-bottom-83 { padding-bottom: 83px !important; } }",
+    "</style>"
   ].join(" "));
 </script>
 <title>Forward Slash</title>

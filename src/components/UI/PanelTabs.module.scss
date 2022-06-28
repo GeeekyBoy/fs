@@ -28,13 +28,13 @@
   display: flex;
   justify-content: center;
   padding: 4px 15px;
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
   color: var(--color-fill-color-text-primary);
   font-size: 0.875rem;
   cursor: pointer;
   transition: color 0.2s;
   &.selected {
-    border-bottom: 2px solid var(--color-fill-color-accent-primary);
+    border-bottom-color: var(--color-fill-color-accent-primary);
     cursor: default;
   }
 }

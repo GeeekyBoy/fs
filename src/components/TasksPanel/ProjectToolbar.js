@@ -17,6 +17,7 @@ import ShadowScroll from '../ShadowScroll';
 import { useModal } from '../ModalManager';
 import modals from '../modals';
 import generateRank from '../../utils/generateRank'
+import Button from '../UI/Button'
 
 const ProjectToolbar = () => {
   const { showModal } = useModal();
@@ -67,7 +68,7 @@ const ProjectToolbar = () => {
   return (
     <div className={styles.ToolbarContainer}>
       <ShadowScroll style={{ maxWidth: "fit-content" }}>
-        <div className={styles.SortingSettings}>
+        {/* <div className={styles.SortingSettings}>
           <ComboBox
             onChange={handleChangeSortingCriteria}
             value={tasksSortingCriteria}
@@ -79,60 +80,40 @@ const ProjectToolbar = () => {
               BY_TAG: "by tag"
             }}
           />
-        </div>
-        <button
-          className={styles.ToolbarActionBtn}
+        </div> */}
+        <Button
+          icon={ClipboardIcon}
           onClick={pasteTask}
         >
-          <ClipboardIcon
-            width={14}
-            height={14}
-          />
-          <span>Paste</span>
-        </button>
-        <button
-          className={styles.ToolbarActionBtn}
+          Paste
+        </Button>
+        <Button
+          icon={ImportIcon}
           onClick={openImportModal}
         >
-          <ImportIcon
-            width={14}
-            height={14}
-          />
-          <span>Import</span>
-        </button>
-        <button
-          className={styles.ToolbarActionBtn}
+          Import
+        </Button>
+        <Button
+          icon={ExportIcon}
           onClick={openExportModal}
         >
-          <ExportIcon
-            width={14}
-            height={14}
-          />
-          <span>Export</span>
-        </button>
-        <button
-          className={styles.ToolbarActionBtn}
+          Export
+        </Button>
+        <Button
+          icon={ShareIcon}
           onClick={() => {
             const linkToBeCopied = window.location.href.replace(/\/\d+/, "")
             navigator.clipboard.writeText(linkToBeCopied)
           }}
         >
-          <ShareIcon
-            width={14}
-            height={14}
-          />
-          <span>Share</span>
-        </button>
-        <button
-          className={styles.ToolbarActionBtn}
+          Share
+        </Button>
+        <Button
+          icon={SettingsIcon}
           onClick={openProjectSettings}
         >
-          <SettingsIcon
-            width={14}
-            height={14}
-          />
-          <span>Settings</span>
-        </button>
+          Settings
+        </Button>
       </ShadowScroll>
     </div>     
   )

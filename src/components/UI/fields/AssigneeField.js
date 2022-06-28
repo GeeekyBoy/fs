@@ -7,6 +7,7 @@ import ShadowScroll from '../../ShadowScroll';
 import Avatar from '../Avatar';
 import { useModal } from '../../ModalManager';
 import modals from '../../modals';
+import Button from '../Button';
 
 const AssigneeField = (props) => {
   const {
@@ -113,9 +114,9 @@ const AssigneeField = (props) => {
         <div className={styles.NoAssignees}>
           <span>{emptyMsg}</span>
           {!readOnly && (
-            <button onClick={() => showModal(modals.ASSIGNEE_CHOOSER)}>
+            <Button onClick={() => showModal(modals.ASSIGNEE_CHOOSER)}>
               + Add Assignee
-            </button>
+            </Button>
           )}
         </div>
       )}
