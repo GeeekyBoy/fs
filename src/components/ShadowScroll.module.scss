@@ -7,11 +7,11 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 10px;
+    width: 20px;
     background: linear-gradient(
       to left,
       rgba(255, 255, 255, 0),
-      rgba(50, 50, 50, 0.15)
+      rgba(50, 50, 50, 0.40)
     );
     content: "";
   }
@@ -21,11 +21,11 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: 10px;
+    width: 20px;
     background: linear-gradient(
       to right,
       rgba(255, 255, 255, 0),
-      rgba(50, 50, 50, 0.15)
+      rgba(50, 50, 50, 0.40)
     );
     content: "";
   }
@@ -37,7 +37,6 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  padding: 5px 0;
   overflow: hidden;
   scroll-behavior: smooth;
   & > *:not(:last-child) {

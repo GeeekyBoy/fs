@@ -2,13 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import styles from "./WatcherField.module.scss"
 import * as tasksActions from "../../../actions/tasks"
-import * as appActions from "../../../actions/app";
 import { ReactComponent as RemoveIcon } from "../../../assets/close-outline.svg"
-import { panelPages } from "../../../constants";
+import { ReactComponent as AddIcon } from "../../../assets/add-outline.svg"
 import ShadowScroll from '../../ShadowScroll';
 import Avatar from '../Avatar';
 import { useModal } from '../../ModalManager';
 import modals from '../../modals';
+import Button from '../Button';
 
 const WatcherField = (props) => {
   const {
@@ -17,7 +17,6 @@ const WatcherField = (props) => {
     emptyMsg = "No Watchers Added Yet",
     value,
     readOnly,
-    style
   } = props
 
   const { showModal } = useModal();
@@ -50,23 +49,24 @@ const WatcherField = (props) => {
   }
 
   return (
-    <div className={styles.WatcherFieldShell} style={style}>
-      {label && (
-        <label htmlFor={name}>
-          {label}
-        </label>
-      )}
+    <div className={styles.WatcherFieldShell}>
+      <div className={styles.WatcherFieldHeader}>
+        {label && (
+          <label htmlFor={name}>
+            {label}
+          </label>
+        )}
+        {!readOnly && (
+          <Button
+            sm
+            secondary
+            icon={AddIcon}
+            onClick={() => showModal(modals.WATCHER_CHOOSER)}
+          />
+        )}
+      </div>
       {(value.length) ? (
         <ShadowScroll>
-          {!readOnly && (
-            <button
-              className={styles.NewWatcherBtn}
-              onClick={() => showModal(modals.WATCHER_CHOOSER)}
-            >
-              <div>+</div>
-              <span>Add</span>
-            </button>
-          )}
           {value.map(x => (
             <span className={styles.WatcherItem} key={x}>
               {!readOnly && (
@@ -80,9 +80,9 @@ const WatcherField = (props) => {
                   />
                 </button>
               )}
-              <Avatar user={users[x]} size={36} circular />
+              <Avatar user={users[x]} size={32} circular />
               <div className={styles.WatcherDetails}>
-                <span>{users[x].firstName}</span>
+                <span>{users[x].firstName} {users[x].lastName[0]}.</span>
                 <span>@{x}</span>
               </div>
             </span>
@@ -90,12 +90,7 @@ const WatcherField = (props) => {
         </ShadowScroll>
       ) : (
         <div className={styles.NoWatchers}>
-          <span>{emptyMsg}</span>
-          {!readOnly && (
-            <button onClick={() => showModal(modals.WATCHER_CHOOSER)}>
-              + Add Watcher
-            </button>
-          )}
+          {emptyMsg}
         </div>
       )}
     </div>

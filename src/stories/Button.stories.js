@@ -31,6 +31,7 @@ const Template = (args) => <Button {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   label: "Button",
+  sm: false,
   fullWidth: false,
   secondary: false,
   disabled: false,
@@ -58,4 +59,12 @@ export const WithIcon = Template.bind({});
 WithIcon.args = {
   ...Default.args,
   icon: testIcon,
+};
+
+export const Small = Template.bind({});
+Small.args = {
+  ...Default.args,
+  label: "",
+  icon: testIcon,
+  sm: true,
 };

@@ -14,7 +14,7 @@
     "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@react-spring/web": "^9.4.5",
     "@use-gesture/react": "^10.2.16",
-    "aws-sdk": "^2.1162.0",
+    "aws-sdk": "^2.1163.0",
     "big-integer": "^1.6.51",
     "blueimp-md5": "^2.19.0",
     "csv": "^6.1.3",

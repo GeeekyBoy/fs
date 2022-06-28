@@ -14,6 +14,10 @@
   font-size: 0.875rem;
   cursor: pointer;
   transition: background-color 0.3s, color 0.2s;
+  &.sm {
+    padding: 3px;
+    min-width: 0;
+  }
   &.fullWidth {
     width: 100%;
   }
@@ -51,6 +55,9 @@
     }
     cursor: not-allowed;
   }
+  & > *:not(:last-child) {
+    margin-right: 4px;
+  }
 }
 
 .ButtonIcon {
@@ -58,5 +65,4 @@
   min-height: 16px;
   max-width: 16px;
   max-height: 16px;
-  margin-right: 4px;
 }

@@ -5,34 +5,30 @@ const Button = (props) => {
   const {
     label,
     icon,
+    sm,
     secondary,
     fullWidth,
     children,
-    className,
-    style,
     ...nativeProps
   } = props;
   return props.type === "submit" ? (
     <input
       value={label}
       className={[
-        className || "",
         styles.Button,
         ...(secondary && [styles.secondary] || []),
         ...(fullWidth && [styles.fullWidth] || []),
       ].join(" ")}
-      style={style}
       {...nativeProps}
     />
   ) : (
     <button
       className={[
-        className || "",
         styles.Button,
         ...(secondary && [styles.secondary] || []),
         ...(fullWidth && [styles.fullWidth] || []),
+        ...(sm && [styles.sm] || []),
       ].join(" ")}
-      style={style}
       {...nativeProps}
     >
       {icon ? React.createElement(icon, {

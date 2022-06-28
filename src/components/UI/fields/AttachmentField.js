@@ -5,6 +5,7 @@ import { useModal } from '../../ModalManager';
 import { ReactComponent as RemoveIcon } from "../../../assets/trash-outline.svg"
 import { ReactComponent as UploadIcon } from "../../../assets/cloud-upload-outline.svg";
 import modals from '../../modals';
+import Button from '../Button';
 
 const AttachmentField = (props) => {
   const {
@@ -30,17 +31,13 @@ const AttachmentField = (props) => {
             {label}
           </label>
         )}
-        {!readOnly && value.length !== 0 && (
-          <button
-            className={styles.NewAttachmentBtn}
+        {!readOnly && (
+          <Button
+            sm
+            secondary
+            icon={UploadIcon}
             onClick={() => showModal(modals.UPLOAD)}
-          >
-            <UploadIcon
-              width="1rem"
-              height="1rem"
-            />
-            <span>Upload</span>
-          </button>
+          />
         )}
       </div>
       {value.length ? value.map(attachment => (
@@ -67,20 +64,8 @@ const AttachmentField = (props) => {
         </div>
       )) : (
         <div className={styles.NoAttachments}>
-        <span>{emptyMsg}</span>
-        {!readOnly && (
-          <button
-            className={styles.NewAttachmentBtn}
-            onClick={() => showModal(modals.UPLOAD)}
-          >
-            <UploadIcon
-              width="1rem"
-              height="1rem"
-            />
-            <span>Upload</span>
-          </button>
-        )}
-      </div>
+          {emptyMsg}
+        </div>
       )}
     </div>
   )

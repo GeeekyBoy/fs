@@ -3,104 +3,47 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  & > *:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}
+
+.WatcherFieldHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   & > label {
     width: max-content;
     margin-bottom: 0;
     color: var(--color-fill-color-text-primary);
     font-size: 0.875rem;
-  }
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
-}
-
-.NewWatcherBtn {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 80px;
-  height: 91.8px;
-  margin-left: 5px;
-  padding: 10px 15px;
-  border: 1px solid;
-  border-radius: 8px;
-  border-color: var(--color-stroke-color-card-stroke-default);
-  outline: none;
-  background-color: var(--color-background-fill-color-card-background-default);
-  font-size: 1.25rem;
-  cursor: pointer;
-  & > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    min-width: 32px;
-    height: 32px;
-    min-height: 32px;
-    border-radius: 100%;
-    background-color: var(--color-fill-color-accent-primary);
-    color: var(--color-fill-color-text-on-accent-primary);
-    line-height: 0;
-  }
-  & > span {
-    color: var(--color-fill-color-accent-primary);
-    font-size: 0.875rem;
-  }
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
+    transition: color 0.2s;
   }
 }
 
 .NoWatchers {
   display: flex;
-  position: relative;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: calc(100% - 20px);
-  height: fit-content;
   padding: 10px;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 4px;
   border-color: var(--color-stroke-color-card-stroke-default);
-  outline: none;
   background-color: var(--color-background-fill-color-card-background-default);
-  & > span {
-    color: var(--color-fill-color-text-primary);
-    font-size: 0.875rem;
-  }
-  & > button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 8px;
-    outline: none;
-    background-color: var(--color-fill-color-accent-primary);
-    color: var(--color-fill-color-text-on-accent-primary);
-    font-size: 0.75rem;
-    cursor: pointer;
-    & > *:not(:last-child) {
-      margin-right: 5px;
-    }
-  }
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  color: var(--color-fill-color-text-primary);
+  font-size: 0.875rem;
 }
 
 .WatcherItem {
   display: flex;
   position: relative;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   min-width: 80px;
-  max-width: 80px;
-  padding: 10px;
+  padding: 4px 8px;
   border: 1px solid;
   border-radius: 8px;
   border-color: var(--color-stroke-color-card-stroke-default);
@@ -110,14 +53,14 @@
     margin-right: 5px;
   }
   & > *:not(:last-child) {
-    margin-bottom: 5px;
+    margin-right: 5px;
   }
 }
 
 .WatcherDetails {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   & > span {
     max-width: 80px;
