@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import styles from "./AssigneeField.module.scss"
 import * as tasksActions from "../../../actions/tasks"
-import { ReactComponent as RemoveIcon } from "../../../assets/close-outline.svg"
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_16_regular.svg"
 import ShadowScroll from '../../ShadowScroll';
 import Avatar from '../Avatar';
 import { useModal } from '../../ModalManager';
@@ -96,10 +96,7 @@ const AssigneeField = (props) => {
                   className={styles.RemoveBtn}
                   onClick={() => handleRemoveAssignee(x)}
                 >
-                  <RemoveIcon
-                    height={16}
-                    width={16}
-                  />
+                  <RemoveIcon fill="currentColor" />
                 </button>
               )}
               <Avatar

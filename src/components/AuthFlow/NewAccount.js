@@ -262,8 +262,8 @@ const NewAccount = () => {
         />
         <Button
           type="submit"
-          style={{ width: "100%" }}
-          value={isBusy ? "Signing Up" : "Sign Up"}
+          fullWidth
+          label={isBusy ? "Signing Up" : "Sign Up"}
           disabled={!isSubmissionPossible || isBusy}
         />
       </form>
@@ -290,8 +290,8 @@ const NewAccount = () => {
         />
         <Button
           type="submit"
-          style={{ width: "100%" }}
-          value={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}
+          fullWidth
+          label={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}
           disabled={isBusy || !verificationCode.trim() || isOffline}
         />
       </form>

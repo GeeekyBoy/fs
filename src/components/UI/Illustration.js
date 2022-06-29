@@ -34,11 +34,10 @@ const Illustration = (props) => {
         </span>
         {actionLabel && (
           <Button
+            label={actionLabel}
             onClick={handleAction}
             disabled={actionDisabled}
-          >
-            {actionLabel}
-          </Button>
+          />
         )}
       </div>
     </div>

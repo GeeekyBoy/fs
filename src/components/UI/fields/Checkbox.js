@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import styles from "./Checkbox.module.scss";
-import { ReactComponent as CheckmarkIcon } from "../../../assets/checkmark-outline.svg";
+import { ReactComponent as CheckmarkIcon } from "@fluentui/svg-icons/icons/checkmark_12_regular.svg";
 
 const Checkbox = (props) => {
   const {
@@ -38,7 +38,7 @@ const Checkbox = (props) => {
         ].join(" ")}
         onClick={() => handleCheck(!value)}
       >
-        {value && <CheckmarkIcon width={14} height={14} />}
+        {value && <CheckmarkIcon fill="currentColor" width={14} height={14} />}
       </button>
       {label && (
         <label htmlFor={name} onClick={() => handleCheck(!value)}>

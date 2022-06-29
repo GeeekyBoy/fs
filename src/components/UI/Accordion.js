@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Accordion.module.scss";
-import { ReactComponent as ChevronUpIcon } from "../../assets/chevron-up-outline.svg"
-import { ReactComponent as ChevronDownIcon } from "../../assets/chevron-down-outline.svg"
+import { ReactComponent as ChevronUpIcon } from "@fluentui/svg-icons/icons/chevron_up_24_regular.svg"
+import { ReactComponent as ChevronDownIcon } from "@fluentui/svg-icons/icons/chevron_down_24_regular.svg"
 
 const Accordion = (props) => {
   const {
@@ -30,17 +30,9 @@ const Accordion = (props) => {
       >
         <span>{title}</span>
         {isAccordionOpened ? (
-          <ChevronUpIcon
-            width={24}
-            height={24}
-            strokeWidth={48}
-          />
+          <ChevronUpIcon fill="currentColor" />
         ) : (
-          <ChevronDownIcon
-            width={24}
-            height={24}
-            strokeWidth={48}
-          />
+          <ChevronDownIcon fill="currentColor" />
         )}
       </div>
       {isAccordionOpened && (

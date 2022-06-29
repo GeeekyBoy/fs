@@ -3,7 +3,7 @@ import { createPortal } from "react-dom"
 import { Calendar } from "@hassanmojab/react-modern-calendar-datepicker";
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import styles from "./DateField.module.scss"
-import { ReactComponent as RemoveIcon } from "../../../assets/close-outline.svg"
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/dismiss_16_regular.svg"
 import formatDate from '../../../utils/formatDate';
 
 const BodyOverlay = ({ children }) => createPortal(children, window.document.querySelector("body"))
@@ -87,10 +87,7 @@ const DateField = (props) => {
             className={styles.ClearBtn}
             onClick={clearValue}
           >
-            <RemoveIcon
-              height={16}
-              width={16}
-            />
+            <RemoveIcon fill="currentColor" />
           </button>
         )}
         <BodyOverlay>

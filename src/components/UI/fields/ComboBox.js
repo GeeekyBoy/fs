@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo } from 'react';
 import { useOuterClick } from 'react-outer-click';
 import styles from "./ComboBox.module.scss"
-import { ReactComponent as ChevronDownIcon } from "../../../assets/chevron-down-outline.svg"
+import { ReactComponent as ChevronDownIcon } from "@fluentui/svg-icons/icons/chevron_down_16_regular.svg"
 import { nanoid } from 'nanoid';
 import ListItem from '../ListItem';
 
@@ -59,12 +59,7 @@ const ComboBox = (props) => {
         <span className="noselect">
           {options[value]}
         </span>
-        <ChevronDownIcon
-          width={18}
-          height={18}
-          strokeWidth={48}
-          color="#C0C0C0"
-        />
+        <ChevronDownIcon fill="currentColor" />
         {(isComboBoxOpened && !disabled) && (
           <div
             ref={optionsRef}

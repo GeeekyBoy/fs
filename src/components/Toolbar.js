@@ -9,7 +9,7 @@ import { ReactComponent as NotificationIcon } from "@fluentui/svg-icons/icons/al
 import { ReactComponent as NotificationFilledIcon } from "@fluentui/svg-icons/icons/alert_24_filled.svg";
 import { ReactComponent as SettingsIcon } from "@fluentui/svg-icons/icons/settings_24_regular.svg";
 import { ReactComponent as SettingsFilledIcon } from "@fluentui/svg-icons/icons/settings_24_filled.svg";
-import { ReactComponent as LoginIcon } from "../assets/person-circle-outline.svg"
+import { ReactComponent as LoginIcon } from "@fluentui/svg-icons/icons/person_add_24_regular.svg";
 import Avatar from './UI/Avatar';
 import { navigate } from './Router';
 
@@ -112,10 +112,7 @@ const Toolbar = () => {
               ].join(" ")}
               onClick={goToLoginPage}
             >
-              <LoginIcon
-                width={32}
-                height={32}
-              />
+              <LoginIcon fill="currentColor" />
             </button>
           )}
       </div>

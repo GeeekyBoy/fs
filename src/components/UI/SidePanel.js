@@ -151,6 +151,7 @@ const SidePanel = (props) => {
         {submitLabel && (
           <Button
             className={styles.SidePanelSubmit}
+            label={submitLabel}
             onClick={handleSubmit}
             disabled={submitDisabled}
           >

@@ -134,8 +134,8 @@ const Login = () => {
         </span>
         <Button
           type="submit"
-          style={{ width: "100%" }}
-          value={isBusy ? "Signing In" : "Sign In"}
+          fullWidth
+          label={isBusy ? "Signing In" : "Sign In"}
           disabled={isBusy || !username.trim() || !password.trim()}
         />
       </form>
@@ -162,8 +162,8 @@ const Login = () => {
         />
         <Button
           type="submit"
-          style={{width: "100%"}}
-          value={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}
+          fullWidth
+          label={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}
           disabled={isBusy || !verificationCode.trim() || isOffline}
         />
       </form>

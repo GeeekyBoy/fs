@@ -134,8 +134,8 @@ const ForgotPassword = () => {
         />
         <Button
           type="submit"
-          style={{ width: "100%" }}
-          value={isBusy ? "Processing" : "Next"}
+          fullWidth
+          label={isBusy ? "Processing" : "Next"}
           disabled={isBusy || !username.trim()}
         />
       </form>
@@ -162,8 +162,8 @@ const ForgotPassword = () => {
         />
         <Button
           type="submit"
-          style={{ width: "100%" }}
-          value={isBusy ? "Processing" : "Next"}
+          fullWidth
+          label={isBusy ? "Processing" : "Next"}
           disabled={isBusy || !verificationCode.trim()}
         />
       </form>
@@ -199,8 +199,8 @@ const ForgotPassword = () => {
         />
         <Button
           type="submit"
-          style={{ width: "100%" }}
-          value={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}
+          fullWidth
+          label={isBusy ? "Processing" : isOffline ? "No Connection!" : "Submit"}
           disabled={isBusy || !verificationCode.trim() || !newPassword.trim() || newPasswordError || isOffline}
         />
       </form>

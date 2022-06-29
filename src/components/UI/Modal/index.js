@@ -31,21 +31,19 @@ const Modal = (props) => {
 			</div>
 			<div className={styles.ModalFooter}>
 				<Button
+          label={primaryButtonText}
           fullWidth
           disabled={primaryButtonDisabled}
 					onClick={onPrimaryButtonClick}
-				>
-					{primaryButtonText}
-				</Button>
+				/>
 				{secondaryButtonText && (
 					<Button
+            label={secondaryButtonText}
             fullWidth
             secondary
             disabled={secondaryButtonDisabled}
 						onClick={onSecondaryButtonClick}
-					>
-						{secondaryButtonText}
-					</Button>
+					/>
 				)}
 			</div>
 		</>

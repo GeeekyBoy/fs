@@ -5,7 +5,7 @@ import Login from './Login';
 import NewAccount from './NewAccount';
 import ForgotPassword from './ForgotPassword';
 import Auth from "../../amplify/Auth"
-import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
+import { ReactComponent as BackArrowIcon } from "@fluentui/svg-icons/icons/chevron_left_24_filled.svg";
 import { navigate, useRouterNoUpdates } from '../Router';
 
 const AuthFlow = () => {
@@ -41,10 +41,7 @@ const AuthFlow = () => {
         className={[styles.backBtn, "noselect"].join(" ")}
         onClick={handleGoBack}
       >
-        <BackArrowIcon
-          width={24}
-          height={24}
-        />
+        <BackArrowIcon fill="currentColor" />
         <span>Go back</span>
       </button>
       {currPage}
