@@ -19,7 +19,9 @@ const History = () => {
             <div className={styles.AvatarContainer}>
               <Avatar
                 size={42}
-                user={users[owner]}
+                image={users[owner].avatar}
+                initials={users[owner].initials}
+                alt={`${users[owner].firstName} ${users[owner].lastName}`}
                 circular
               />
             </div>
@@ -41,7 +43,9 @@ const History = () => {
                   {
                     <Avatar
                       size={24}
-                      user={users[value]}
+                      image={users[value].avatar}
+                      initials={users[value].initials}
+                      alt={`${users[value].firstName} ${users[value].lastName}`}
                       circular
                     />
                   }
@@ -54,7 +58,9 @@ const History = () => {
                   {
                     <Avatar
                       size={24}
-                      user={users[value]}
+                      image={users[value].avatar}
+                      initials={users[value].initials}
+                      alt={`${users[value].firstName} ${users[value].lastName}`}
                       circular
                     />
                   }
@@ -91,7 +97,9 @@ const History = () => {
                   {
                     <Avatar
                       size={24}
-                      user={users[value]}
+                      image={users[value].avatar}
+                      initials={users[value].initials}
+                      alt={`${users[value].firstName} ${users[value].lastName}`}
                       circular
                     />
                   }
@@ -104,7 +112,9 @@ const History = () => {
                   {
                     <Avatar
                       size={24}
-                      user={users[value]}
+                      image={users[value].avatar}
+                      initials={users[value].initials}
+                      alt={`${users[value].firstName} ${users[value].lastName}`}
                       circular
                     />
                   }

@@ -102,7 +102,13 @@ const AssigneeField = (props) => {
                   />
                 </button>
               )}
-              <Avatar user={x} size={36} circular />
+              <Avatar
+                image={x.avatar}
+                initials={x.initials || x.name.charAt(0)}
+                alt={x.firstName ? `${x.firstName} ${x.lastName}` : x.name}
+                size={36}
+                circular
+              />
               <div className={styles.AssigneeDetails}>
                 <span>{x.firstName || x.name}</span>
                 <span>{x.username ? `@${x.username}` : "Anonymous"}</span>

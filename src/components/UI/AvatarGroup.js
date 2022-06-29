@@ -16,7 +16,7 @@ const AvatarGroup = (props) => {
         minWidth: (users.length ? size : 0) + (users.length > 1 ? ((users.length > max ? max : users.length) * (size - size * 0.398)) : 0)
       }}
 		>
-			{users.slice(0, users.length > max ? max - 1 : max).map(({ avatar, abbr, name, color }, i) => (
+			{users.slice(0, users.length > max ? max - 1 : max).map(({ avatar, initials, name, color }, i) => (
 				<Fragment key={i}>
 					{avatar ?
 						<img
@@ -46,7 +46,7 @@ const AvatarGroup = (props) => {
                 })
               }}
             >
-              {abbr || name[0]}
+              {initials || name[0]}
             </div>
 					}
 				</Fragment>

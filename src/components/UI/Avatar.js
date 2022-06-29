@@ -4,14 +4,13 @@ import styles from "./Avatar.module.scss";
 const Avatar = (props) => {
   const { 
     size,
-    user: {
-      avatar,
-      abbr,
-      name
-    },
+    image,
+    alt,
+    initials,
+    icon,
     circular
    } = props
-  return avatar ? (
+  return image ? (
     <img
       className={styles.ImageAvatar}
       style={{
@@ -19,22 +18,22 @@ const Avatar = (props) => {
         width: size,
         height: size
       }}
-      alt={name}
-      src={avatar}
+      alt={alt}
+      src={image}
     />
   ) : (
     <div
       className={styles.LetterAvatar}
       style={{
         borderRadius: circular ? "100%" : 0.315 * size,
-        fontSize: size / 2.4,
-        minWidth: size,
-        minHeight: size,
-        width: size,
-        height: size
+        fontSize: (size - 1) / 2.4,
+        minWidth: size - 1,
+        minHeight: size - 1,
+        width: size - 1,
+        height: size - 1
       }}
     >
-      {abbr || name[0]}
+      {initials || React.createElement(icon, {})}
     </div>
   )
 }

@@ -4,7 +4,7 @@ import * as mutations from "../../graphql/mutations"
 import * as appActions from "../../actions/app";
 import * as userActions from "../../actions/user";
 import styles from "./AccountSettings.module.scss"
-import { ReactComponent as LogOutIcon } from "../../assets/log-out-outline.svg"
+import { ReactComponent as LogOutIcon } from "@fluentui/svg-icons/icons/sign_out_24_regular.svg";
 import TextField from '../UI/fields/TextField';
 import Avatar from '../UI/Avatar';
 import API from '../../amplify/API';
@@ -28,7 +28,7 @@ const AccountSettings = forwardRef((_, ref) => {
     email,
     plan,
     avatar,
-    abbr
+    initials
   } = userData;
 
   const [isBusy, setIsBusy] = useState(false)
@@ -98,7 +98,12 @@ const AccountSettings = forwardRef((_, ref) => {
       submitDisabled: isBusy || !isChanged || !isSynced,
       header: (
         <div className={styles.AccountSettingsHeader}>
-          <Avatar user={userData} size={128} />
+          <Avatar
+            image={userData.avatar}
+            initials={userData.initials}
+            alt={`${userData.firstName} ${userData.lastName}`}
+            size={128}
+          />
           <span>
             {firstName} {lastName}
           </span>

@@ -4,7 +4,7 @@ import * as mutations from "../../graphql/mutations"
 import * as appActions from "../../actions/app";
 import * as notificationsActions from "../../actions/notifications";
 import { ReactComponent as NoNotificationsIllustration } from "../../assets/undraw_notify_re_65on.svg";
-import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_24_regular.svg";
 import Notification from '../UI/Notification';
 import { navigate } from '../Router';
 import API from '../../amplify/API';

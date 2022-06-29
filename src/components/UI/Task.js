@@ -1,17 +1,18 @@
 import React, { useRef, useMemo, memo, useEffect, useState } from "react"
 import styles from "./Task.module.scss"
 import formatDate from "../../utils/formatDate"
-import { ReactComponent as CheckmarkIcon } from "../../assets/checkmark-outline.svg";
-import { ReactComponent as OptionsIcon } from "../../assets/ellipsis-vertical.svg";
-import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
-import { ReactComponent as CopyIcon } from "../../assets/copy-outline.svg"
-import { ReactComponent as DuplicateIcon } from "../../assets/duplicate-outline.svg"
-import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
-import { ReactComponent as DetailsIcon } from "../../assets/information-circle-outline.svg";
-import { ReactComponent as DragIcon } from "../../assets/DragHandleMinor.svg";
+import { ReactComponent as CheckmarkIcon } from "@fluentui/svg-icons/icons/checkmark_16_filled.svg";
+import { ReactComponent as OptionsIcon } from "@fluentui/svg-icons/icons/more_vertical_16_filled.svg";
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_16_regular.svg"
+import { ReactComponent as CopyIcon } from "@fluentui/svg-icons/icons/copy_16_regular.svg"
+import { ReactComponent as DuplicateIcon } from "@fluentui/svg-icons/icons/document_copy_16_regular.svg"
+import { ReactComponent as ShareIcon } from "@fluentui/svg-icons/icons/share_16_regular.svg"
+import { ReactComponent as DetailsIcon } from "@fluentui/svg-icons/icons/chevron_right_16_regular.svg"
+import { ReactComponent as DragIcon } from "@fluentui/svg-icons/icons/re_order_dots_vertical_16_filled.svg";
 import SlashCommands from "../SlashCommands";
 import AvatarGroup from "../UI/AvatarGroup";
 import Checkbox from "./fields/Checkbox";
+import IconButton from "./IconButton";
 
 const lastTaskCaretPos = { current: null };
 
@@ -297,8 +298,7 @@ const TaskItem = (props) => {
           {!isBatchSelecting && (
             <DragIcon
               {...listeners}
-              width={16}
-              height={16}
+              fill="currentColor"
               color="var(--color-fill-color-text-tertiary)"
               cursor="grab"
             />
@@ -324,6 +324,7 @@ const TaskItem = (props) => {
               >
                 {status === "done" && (
                   <CheckmarkIcon
+                    fill="currentColor"
                     width={24}
                     height={24}
                   />
@@ -367,53 +368,45 @@ const TaskItem = (props) => {
             {!mobile && !isBatchSelecting && !isSorting &&
             <div className={styles.TaskItemActions}>
               {((selected && showCopyButton) || !selected) && (
-                <button className={styles.TaskItemAction} onClick={handleCopy}>
-                  <CopyIcon height={18} />
-                </button>
+                <IconButton icon={CopyIcon} onClick={handleCopy} />
               )}
               {!readOnly && ((selected && showDuplicateButton) || !selected) && (
-                <button className={styles.TaskItemAction} onClick={handleDuplicate}>
-                  <DuplicateIcon height={18} />
-                </button>
+                <IconButton icon={DuplicateIcon} onClick={DuplicateIcon} />
               )}
               {((selected && showShareButton) || !selected) && (
-                <button className={styles.TaskItemAction} onClick={handleShare}>
-                  <ShareIcon height={18} />
-                </button>
+                <IconButton icon={ShareIcon} onClick={handleShare} />
               )}
               {!readOnly && (
-                <button className={styles.TaskItemAction} onClick={handleRemove}>
-                  <RemoveIcon height={18} />
-                </button>
+                <IconButton icon={RemoveIcon} onClick={handleRemove} />
               )}
-              <button className={styles.TaskItemAction} onClick={handleDetails}>
-                <DetailsIcon height={18} />
-              </button>
+              <IconButton icon={DetailsIcon} onClick={handleDetails} />
             </div>}
           </div>
         </div>
-        <div
-          className={[
-            styles.TaskItemRightPart,
-            ...(selected && [styles.focused] || []),
-          ].join(" ")}
-        >
-          {showAssignees && !batchSelected && (
-            <AvatarGroup
-              max={!mobile ? 4 : 3}
-              users={assignees}
-              size={!mobile ? 24 : 18}
-            />
-          )}
-          {showDueDate && !batchSelected && (
-            <span className={styles.TaskItemDueDate}>
-              {due ? formatDate(due) : "No Due"}
-            </span>
-          )}
-        </div>
+        {!selected && (
+          <div
+            className={[
+              styles.TaskItemRightPart,
+              ...(selected && [styles.focused] || []),
+            ].join(" ")}
+          >
+            {showAssignees && !batchSelected && (
+              <AvatarGroup
+                max={!mobile ? 4 : 3}
+                users={assignees}
+                size={!mobile ? 24 : 18}
+              />
+            )}
+            {showDueDate && !batchSelected && (
+              <span className={styles.TaskItemDueDate}>
+                {due ? formatDate(due) : "No Due"}
+              </span>
+            )}
+          </div>
+        )}
         {mobile && !isBatchSelecting && (
           <button className={styles.TaskItemOptsBtn} onClick={handleDetails}>
-            <OptionsIcon width={18} />
+            <OptionsIcon fill="currentColor" />
           </button>
         )}
       </div>

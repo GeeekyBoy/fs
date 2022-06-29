@@ -14,11 +14,9 @@ const Textarea = (props) => {
     disabled,
   } = props
   const [ id ] = useState("Textarea" + nanoid(11))
-  const [isFocused, setIsFocused] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
   const textareaRef = useRef(null)
   const handleFieldClick = () => {
-    if (!isFocused && !disabled && textareaRef.current) {
+    if (!disabled && textareaRef.current) {
       textareaRef.current.focus()
     }
   }
@@ -35,27 +33,17 @@ const Textarea = (props) => {
       className={[
         styles.TextareaContainer,
         ...(error && [styles.error] || []),
-        ...(isFocused && [styles.focused] || []),
-        ...(isHovered && [styles.hovered] || []),
         ...(readOnly && [styles.readOnly] || []),
         ...(disabled && [styles.disabled] || []),
         ...(value && [styles.filled] || [])
       ].join(" ")}
     >
       {label && (
-        <label
-          htmlFor={id}
-          onPointerEnter={() => setIsHovered(true)}
-          onPointerLeave={() => setIsHovered(false)}
-        >
+        <label htmlFor={id}>
           {label}
         </label>
       )}
-      <div
-        onClick={handleFieldClick}
-        onPointerEnter={() => setIsHovered(true)}
-        onPointerLeave={() => setIsHovered(false)}
-      >
+      <div onClick={handleFieldClick}>
         <textarea
           id={id}
           name={name}
@@ -65,8 +53,6 @@ const Textarea = (props) => {
           placeholder={label ? null : placeholder}
           onChange={onChange}
           readOnly={readOnly}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
           disabled={disabled}
         ></textarea>
       </div>

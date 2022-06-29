@@ -14,11 +14,9 @@ const Template = (args) => <Avatar {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   size: 128,
-  user: {
-    avatar: "https://i.pravatar.cc/150?img=68",
-    abbr: "JD",
-    name: "John Doe",
-  },
+  image: "https://i.pravatar.cc/150?img=68",
+  initials: "JD",
+  alt: "John Doe",
   circular: false,
 };
 
@@ -31,19 +29,15 @@ Circular.args = {
 export const Initials = Template.bind({});
 Initials.args = {
   ...Default.args,
-  user: {
-    avatar: null,
-    abbr: "JD",
-    name: "John Doe",
-  },
+  avatar: null,
+  initials: "JD",
+  name: "John Doe",
 };
 
 export const Initial = Template.bind({});
 Initial.args = {
   ...Default.args,
-  user: {
-    avatar: null,
-    abbr: null,
-    name: "John Doe",
-  },
+  avatar: null,
+  initials: null,
+  name: "John Doe",
 };

@@ -68,12 +68,12 @@
       cursor: not-allowed;
     }
   }
-  &.hovered:not(.focused) {
+  &:hover:not(:focus-within) {
     & > div {
       background-color: var(--color-fill-color-control-secondary);
     }
   }
-  &.focused:not(.readOnly:not(.filled)) {
+  &:focus-within:not(.readOnly:not(.filled)) {
     & > div {
       border-radius: 4px 4px 0 0;
       background-color: var(--color-fill-color-control-input-active);

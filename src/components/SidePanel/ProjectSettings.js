@@ -4,7 +4,7 @@ import * as appActions from "../../actions/app";
 import * as projectsActions from "../../actions/projects";
 import { AuthState } from "../../constants";
 import styles from "./ProjectSettings.module.scss"
-import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_24_regular.svg";
 import TextField from '../UI/fields/TextField';
 import ComboBox from '../UI/fields/ComboBox';
 import StatusSet from '../UI/fields/StatusSet';

@@ -1,8 +1,8 @@
 import React, { memo, useState } from 'react';
 import styles from "./Notification.module.scss"
-import { ReactComponent as CloseIcon } from "../../assets/close-outline.svg"
-import { ReactComponent as ChevronUpIcon } from "../../assets/chevron-up-outline.svg"
-import { ReactComponent as ChevronDownIcon } from "../../assets/chevron-down-outline.svg"
+import { ReactComponent as CloseIcon } from "@fluentui/svg-icons/icons/dismiss_16_regular.svg"
+import { ReactComponent as ChevronUpIcon } from "@fluentui/svg-icons/icons/chevron_up_12_regular.svg"
+import { ReactComponent as ChevronDownIcon } from "@fluentui/svg-icons/icons/chevron_down_12_regular.svg"
 import Avatar from './Avatar';
 import { convertFromRaw } from 'draft-js';
 import formatDate from '../../utils/formatDate';
@@ -50,29 +50,25 @@ const Notification = (props) => {
               {new Date(notificationData.createdAt).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}
             </span>
             {isExpanded ? (
-              <ChevronUpIcon
-                width={12}
-                height={12}
-              />
+              <ChevronUpIcon fill="currentColor" />
             ) : (
-              <ChevronDownIcon
-                width={12}
-                height={12}
-              />
+              <ChevronDownIcon fill="currentColor" />
             )}
           </div>
           <button
             className={styles.NotificationCloseBtn}
             onClick={onDismiss}
           >
-            <CloseIcon
-              height={16}
-              width={16}
-            />
+            <CloseIcon fill="currentColor" />
           </button>
         </div>
         <div className={styles.NotificationContent}>
-          <Avatar user={senderData} size={32} />
+          <Avatar
+            image={senderData.avatar}
+            initials={senderData.initials}
+            alt={`${senderData.firstName} ${senderData.lastName}`}
+            size={32}
+          />
           <div>
             <div className={styles.NotificationTopPart}>
               <span>

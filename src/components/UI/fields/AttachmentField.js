@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import formatSize from '../../../utils/formatSize';
 import styles from './AttachmentField.module.scss';
 import { useModal } from '../../ModalManager';
-import { ReactComponent as RemoveIcon } from "../../../assets/trash-outline.svg"
-import { ReactComponent as UploadIcon } from "../../../assets/cloud-upload-outline.svg";
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_24_regular.svg"
+import { ReactComponent as UploadIcon } from "@fluentui/svg-icons/icons/cloud_arrow_up_16_regular.svg";
 import modals from '../../modals';
 import Button from '../Button';
 
@@ -55,10 +55,7 @@ const AttachmentField = (props) => {
           </div>
           {!readOnly && (
             <button className={styles.AttachmentControl}>
-              <RemoveIcon
-                width={24}
-                height={24}
-              />
+              <RemoveIcon fill="currentColor" />
             </button>
           )}
         </div>

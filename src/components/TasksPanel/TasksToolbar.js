@@ -2,7 +2,7 @@ import React from 'react'
 import styles from "./TasksToolbar.module.scss"
 import { useDispatch, useSelector } from "react-redux"
 import * as appActions from "../../actions/app"
-import { ReactComponent as SearchIcon } from "../../assets/search-outline.svg"
+import { ReactComponent as SearchIcon } from "@fluentui/svg-icons/icons/search_16_regular.svg";
 import TextField from '../UI/fields/TextField'
 
 const TasksToolbar = (props) => {
@@ -26,9 +26,7 @@ const TasksToolbar = (props) => {
         onFocus={() => dispatch(appActions.handleSetTask(null))}
         prefix={() => (
           <SearchIcon
-            width={18}
-            height={18}
-            strokeWidth={32}
+            fill="currentColor"
             style={{
               marginRight: 5
             }}

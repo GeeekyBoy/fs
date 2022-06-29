@@ -18,29 +18,29 @@ Default.args = {
   users: [
     {
       avatar: "https://i.pravatar.cc/150?img=4",
-      abbr: "JD",
+      initials: "JD",
       name: "John Doe",
       color: "orange",
     },
     {
       avatar: null,
-      abbr: "JD",
+      initials: "JD",
       name: "John Doe",
       color: "hotpink",
     },
     {
       avatar: "https://i.pravatar.cc/150?img=59",
-      abbr: "JD",
+      initials: "JD",
       name: "John Doe",
     },
     {
       avatar: "https://i.pravatar.cc/150?img=65",
-      abbr: "JD",
+      initials: "JD",
       name: "John Doe",
     },
     {
       avatar: "https://i.pravatar.cc/150?img=70",
-      abbr: "JD",
+      initials: "JD",
       name: "John Doe",
     },
   ],

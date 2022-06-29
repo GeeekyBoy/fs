@@ -1,7 +1,8 @@
 import React, { memo, useState } from 'react';
 import SimpleBar from 'simplebar-react';
 import styles from "./SidePanel.module.scss";
-import { ReactComponent as BackArrowIcon } from "../../assets/chevron-back-outline.svg";
+import { ReactComponent as BackRightArrowIcon } from "@fluentui/svg-icons/icons/chevron_right_24_regular.svg";
+import { ReactComponent as BackLeftArrowIcon } from "@fluentui/svg-icons/icons/chevron_left_24_regular.svg";
 import Button from './Button';
 
 const SidePanel = (props) => {
@@ -119,7 +120,11 @@ const SidePanel = (props) => {
             className={styles.SidePanelToolbarAction}
             onClick={handleClose}
           >
-            <BackArrowIcon />
+            {right ? (
+              <BackRightArrowIcon fill="currentColor" />
+            ) : (
+              <BackLeftArrowIcon fill="currentColor" />
+            )}
           </button>
         ) : (
           <div className={styles.SidePanelToolbarDumpAction} />
@@ -132,7 +137,7 @@ const SidePanel = (props) => {
             className={styles.SidePanelToolbarAction}
             onClick={handleAction}
           >
-            {React.createElement(actionIcon)}
+            {React.createElement(actionIcon, { fill: "currentColor" })}
           </button>
         ) : (
           <div className={styles.SidePanelToolbarDumpAction} />

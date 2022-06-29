@@ -14,30 +14,6 @@
   }
 }
 
-.TaskItemAction {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  padding: 5px;
-  border: none;
-  border-radius: 100%;
-  border-radius: 6px;
-  outline: none;
-  background-color: transparent;
-  cursor: pointer;
-  & > svg {
-    color: var(--color-fill-color-accent-primary);
-  }
-  &:hover {
-    background-color: var(--color-fill-color-accent-primary);
-    & > svg {
-      color: var(--color-fill-color-text-on-accent-primary) !important;
-    }
-  }
-}
-
 .TaskItemShell {
   display: flex;
   flex-direction: column;
@@ -120,20 +96,16 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  width: 37px;
+  width: fit-content;
   margin-right: 5px !important;
   opacity: 0;
   transition: opacity 0.2s;
   @media only screen and (max-width: 768px) {
-    width: 20px;
     margin-right: 5px !important;
     opacity: 1;
   }
   & > .BatchCheckboxOverride {
     padding: 0 !important;
-  }
-  & > *:not(:last-child) {
-    margin-right: 5px;
   }
 }
 

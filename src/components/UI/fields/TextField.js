@@ -21,10 +21,8 @@ const TextField = (props) => {
     inputRef
   } = props
   const [ id ] = useState("TextField_" + nanoid(11))
-  const [isFocused, setIsFocused] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
   const handleFieldClick = () => {
-    if (!isFocused && !disabled) {
+    if (!disabled) {
       document.getElementById(id).focus()
     }
   }
@@ -40,11 +38,7 @@ const TextField = (props) => {
       style={style}
     >
       {label && (
-        <label
-          htmlFor={id}
-          onPointerEnter={() => setIsHovered(true)}
-          onPointerLeave={() => setIsHovered(false)}
-        >
+        <label htmlFor={id}>
           {label}
         </label>
       )}
@@ -52,14 +46,10 @@ const TextField = (props) => {
         className={[
           styles.TextFieldContainer,
           ...(error && [styles.error] || []),
-          ...(isFocused && [styles.focused] || []),
-          ...(isHovered && [styles.hovered] || []),
           ...(readOnly && [styles.readOnly] || []),
           ...((value || prefix) && [styles.filled] || [])
         ].join(" ")}
         onClick={handleFieldClick}
-        onPointerEnter={() => setIsHovered(true)}
-        onPointerLeave={() => setIsHovered(false)}
       >
         {prefix && (
           typeof prefix === 'string' ?
@@ -74,8 +64,6 @@ const TextField = (props) => {
           onChange={onChange}
           value={value || ""}
           placeholder={label ? null : placeholder}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
           readOnly={readOnly}
           disabled={disabled}
           ref={inputRef}

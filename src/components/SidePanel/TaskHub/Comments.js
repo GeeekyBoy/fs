@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { stateToHTML } from 'draft-js-export-html';
 import { Editor, EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 import { ReactComponent as CommentsIllustartion } from "../../../assets/undraw_Public_discussion_re_w9up.svg"
-import { ReactComponent as RemoveIcon } from "../../../assets/trash-outline.svg"
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_24_regular.svg"
 import * as commentsActions from "../../../actions/comments";
 import Avatar from '../../UI/Avatar';
 import generateId from '../../../utils/generateId';
@@ -105,7 +105,13 @@ const Comments = () => {
               key={x.id}
             >
               {x.owner !== user.data?.username && (
-                <Avatar user={users[x.owner]} size={32} circular />
+                <Avatar
+                  image={users[x.owner].avatar}
+                  initials={users[x.owner].initials}
+                  alt={`${users[x.owner].firstName} ${users[x.owner].lastName}`}
+                  size={32}
+                  circular
+                />
               )}
               <div className={styles.CommentContent}>
                 <div className={styles.CommentBox}>
@@ -120,10 +126,7 @@ const Comments = () => {
                       className={styles.RemoveBtn}
                       onClick={() => removeComment(x)}
                     >         
-                      <RemoveIcon
-                        height={16}
-                        width={16}
-                      />
+                      <RemoveIcon fill="currentColor" />
                     </button>
                   </div>
                   <div
@@ -164,7 +167,13 @@ const Comments = () => {
         </span>
       ) : (
         <div className={styles.NewComment}>
-          <Avatar user={user.data} size={32} circular />
+          <Avatar
+            image={users[user.data].avatar}
+            initials={users[user.data].initials}
+            alt={`${users[user.data].firstName} ${users[user.data].lastName}`}
+            size={32}
+            circular
+          />
           <div
             className={styles.CommentField}
             onClick={openNewComment}

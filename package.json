@@ -11,6 +11,7 @@
     "@dnd-kit/modifiers": "^6.0.0",
     "@dnd-kit/sortable": "^7.0.1",
     "@dnd-kit/utilities": "^3.2.0",
+    "@fluentui/svg-icons": "^1.1.174",
     "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@react-spring/web": "^9.4.5",
     "@use-gesture/react": "^10.2.16",

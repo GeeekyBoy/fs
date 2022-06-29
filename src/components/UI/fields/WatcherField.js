@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import styles from "./WatcherField.module.scss"
 import * as tasksActions from "../../../actions/tasks"
-import { ReactComponent as RemoveIcon } from "../../../assets/trash-outline.svg"
-import { ReactComponent as AddIcon } from "../../../assets/add-outline.svg"
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_16_regular.svg"
+import { ReactComponent as AddIcon } from "@fluentui/svg-icons/icons/add_16_regular.svg"
 import ShadowScroll from '../../ShadowScroll';
 import Avatar from '../Avatar';
 import { useModal } from '../../ModalManager';
 import modals from '../../modals';
 import Button from '../Button';
-import IconButton from '../IconButton';
+import Chip from '../Chip';
 
 const WatcherField = (props) => {
   const {
@@ -69,20 +69,15 @@ const WatcherField = (props) => {
       {(value.length) ? (
         <ShadowScroll>
           {value.map(x => (
-            <span className={styles.WatcherItem} key={x}>
-              <Avatar user={users[x]} size={32} circular />
-              <div className={styles.WatcherDetails}>
-                <span>{users[x].firstName} {users[x].lastName[0]}.</span>
-                <span>@{x}</span>
-              </div>
-              {!readOnly && (
-                <IconButton
-                  icon={RemoveIcon}
-                  onClick={() => handleRemoveWatcher(x)}
-                >
-                </IconButton>
-              )}
-            </span>
+            <Chip
+              key={x}
+              user={users[x]}
+              primaryLabel={`${users[x].firstName} ${users[x].lastName[0]}.`}
+              secondaryLabel={`@${x}`}
+              actionIcon={RemoveIcon}
+              onAction={() => handleRemoveWatcher(x)}
+              actionAllowed={!readOnly}
+            />
           ))}
         </ShadowScroll>
       ) : (

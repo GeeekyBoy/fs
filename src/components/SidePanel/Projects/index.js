@@ -4,7 +4,7 @@ import * as projectsActions from "../../../actions/projects"
 import * as appActions from "../../../actions/app"
 import { initProjectState, OK, PENDING, AuthState } from "../../../constants"
 import sortByRank from "../../../utils/sortByRank"
-import { ReactComponent as AddIcon } from "../../../assets/add-outline.svg";
+import { ReactComponent as AddIcon } from "@fluentui/svg-icons/icons/add_24_regular.svg";
 import filterObj from "../../../utils/filterObj";
 import PanelTabs from "../../UI/PanelTabs";
 import Assigned from "./Assigned";

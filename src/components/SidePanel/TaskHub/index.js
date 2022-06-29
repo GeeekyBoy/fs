@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../../actions/app";
 import { AuthState } from "../../../constants";
 import Comments from "./Comments";
-import { ReactComponent as ShareIcon } from "../../../assets/share-outline.svg"
+import { ReactComponent as ShareIcon } from "@fluentui/svg-icons/icons/share_24_regular.svg"
 import PanelTabs from '../../UI/PanelTabs';
 import Details from './Details';
 import History from './History';

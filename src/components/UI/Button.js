@@ -31,10 +31,11 @@ const Button = (props) => {
       ].join(" ")}
       {...nativeProps}
     >
-      {icon ? React.createElement(icon, {
+      {icon && React.createElement(icon, {
         className: styles.ButtonIcon,
-      }) : null}
-      {label || children}
+        fill: "currentColor",
+      })}
+      {label && (<span>{label}</span>)}
     </button>
   );
 };

@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app"
 import * as tasksActions from "../../actions/tasks"
 import copyTaskCore from "../../utils/copyTask"
-import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
-import { ReactComponent as CopyIcon } from "../../assets/copy-outline.svg"
-import { ReactComponent as DuplicateIcon } from "../../assets/duplicate-outline.svg"
-import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
-import { ReactComponent as DetailsIcon } from "../../assets/information-circle-outline.svg";
-import { ReactComponent as CheckmarkIcon } from "../../assets/checkmark-circle-outline.svg";
+import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_24_regular.svg"
+import { ReactComponent as CopyIcon } from "@fluentui/svg-icons/icons/copy_24_regular.svg"
+import { ReactComponent as DuplicateIcon } from "@fluentui/svg-icons/icons/document_copy_24_regular.svg"
+import { ReactComponent as ShareIcon } from "@fluentui/svg-icons/icons/share_24_regular.svg"
+import { ReactComponent as DetailsIcon } from "@fluentui/svg-icons/icons/info_24_regular.svg"
+import { ReactComponent as CheckmarkIcon } from "@fluentui/svg-icons/icons/checkmark_circle_24_regular.svg"
 import styles from "./TaskOpts.module.scss"
 import Modal from '../UI/Modal/';
 import { useModal } from '../ModalManager';

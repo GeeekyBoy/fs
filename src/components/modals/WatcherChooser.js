@@ -4,7 +4,7 @@ import styles from "./WatcherChooser.module.scss"
 import * as tasksActions from "../../actions/tasks"
 import * as usersActions from "../../actions/users"
 import { AuthState } from "../../constants";
-import { ReactComponent as SearchIcon } from "../../assets/search-outline.svg"
+import { ReactComponent as SearchIcon } from "@fluentui/svg-icons/icons/search_16_regular.svg";
 import { ReactComponent as WatcherSearchIllustartion } from "../../assets/undraw_People_search_re_5rre.svg"
 import { ReactComponent as NoResultsIllustartion } from "../../assets/undraw_not_found_60pq.svg"
 import Avatar from '../UI/Avatar';
@@ -72,9 +72,7 @@ const WatcherChooser = () => {
         value={keyword}
         prefix={() => (
           <SearchIcon
-            width={18}
-            height={18}
-            strokeWidth={32}
+            fill="currentColor"
             style={{
               marginRight: 5
             }}
@@ -89,7 +87,13 @@ const WatcherChooser = () => {
             disabled={isBusy}
             onClick={() => handleAddWatcher(x)}
           >
-            <Avatar user={users[x]} size={32} circular />
+            <Avatar
+              image={users[x].avatar}
+              initials={users[x].initials}
+              alt={`${users[x].firstName} ${users[x].lastName}`}
+              size={32}
+              circular
+            />
             <div>
               <span>{`${users[x].firstName} ${users[x].lastName}`}</span>
               <span>@{x}</span>

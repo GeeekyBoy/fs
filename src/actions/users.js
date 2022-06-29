@@ -23,8 +23,8 @@ export const handleAddUsers = (usernames) => async (dispatch, getState) => {
     const res = await API.execute(listUsersByUsernames, { usernames })
     const items = res.data.listUsersByUsernames.items
     const itemsWithAbbr = items.map(x => {
-      const abbr = x.firstName[0].toUpperCase() + x.lastName[0].toUpperCase()
-      return { ...x, abbr }
+      const initials = x.firstName[0].toUpperCase() + x.lastName[0].toUpperCase()
+      return { ...x, initials }
     });
     (async ([...itemsWithAvatar], dispatch) => {
       let shouldDispatch = false
@@ -54,8 +54,8 @@ export const handleSearchUsers = (keyword, taskId, purpose = "toAssign") => asyn
         : (await API.execute(searchUserToWatch, { searchQuery: keyword, taskId })).data.searchUserToWatch.items || []
       const newUsersData = usersData.filter(x => !users[x.username])
       const itemsWithAbbr = newUsersData.map(x => {
-        const abbr = x.firstName[0].toUpperCase() + x.lastName[0].toUpperCase()
-        return { ...x, abbr }
+        const initials = x.firstName[0].toUpperCase() + x.lastName[0].toUpperCase()
+        return { ...x, initials }
       });
       (async ([...itemsWithAvatar], dispatch) => {
         let shouldDispatch = false

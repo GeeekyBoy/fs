@@ -14,12 +14,9 @@ const TagField = (props) => {
   } = props
   const tagFieldRef = useRef(null)
   const tagFieldInputRef = useRef(null)
-  const [isFocused, setIsFocused] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
-  const [isTagHovered, setIsTagHovered] = useState(false)
   const handleFieldClick = (e) => {
     if (e.target === e.currentTarget || e.target.className === styles.TagFieldValues) {
-      if (!isFocused && !disabled && tagFieldInputRef.current) {
+      if (!disabled && tagFieldInputRef.current) {
         tagFieldInputRef.current.focus()
       }
     }
@@ -66,8 +63,7 @@ const TagField = (props) => {
   }
 
   useOuterClick(tagFieldRef, () => {
-    if (isFocused) {
-      setIsFocused(false);
+    if (tagFieldInputRef.current?.innerText) {
       tagFieldInputRef.current.innerText = ""
     }
   })
@@ -80,38 +76,24 @@ const TagField = (props) => {
       ].join(" ")}
     >
       {label && (
-        <label
-          htmlFor={name}
-          onClick={handleFieldClick}
-          onPointerEnter={() => setIsHovered(true)}
-          onPointerLeave={() => setIsHovered(false)}
-        >
+        <label htmlFor={name} onClick={handleFieldClick}>
           {label}
         </label>
       )}
       <div
         className={[
           styles.TagFieldContainer,
-          ...(isFocused && [styles.focused] || []),
-          ...(isHovered && !isTagHovered && [styles.hovered] || []),
           ...((value || []).length && [styles.filled] || []),
           ...(error && [styles.error] || []),
         ].join(" ")}
         onClick={handleFieldClick}
-        onPointerEnter={() => setIsHovered(true)}
-        onPointerLeave={() => setIsHovered(false)}
       >
         <div
           className={styles.TagFieldValues}
           ref={tagFieldRef}
         >
           {(value || []).map(x => (
-            <span
-              className={styles.TagItem}
-              onPointerEnter={() => setIsTagHovered(true)}
-              onPointerLeave={() => setIsTagHovered(false)}
-              key={x}
-            >
+            <span key={x} className={styles.TagItem}>
               <span onClick={handleTagClick}>{x}</span>
               {!(readOnly || disabled) && (
                 <span onClick={() => {
@@ -131,8 +113,6 @@ const TagField = (props) => {
             className={styles.TagInput}
             ref={tagFieldInputRef}
             onKeyDown={handleKeyDown}
-            onFocus={() => !(readOnly || disabled) && setIsFocused(true)}
-            onBlur={() => !(readOnly || disabled) && setIsFocused(false)}
             onInput={handleTagSubmit}
             contentEditable={!(readOnly || disabled)}
           />

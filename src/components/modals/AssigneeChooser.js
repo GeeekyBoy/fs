@@ -4,7 +4,8 @@ import * as usersActions from "../../actions/users";
 import styles from "./AssigneeChooser.module.scss"
 import * as tasksActions from "../../actions/tasks"
 import { AuthState } from "../../constants";
-import { ReactComponent as SearchIcon } from "../../assets/search-outline.svg"
+import { ReactComponent as MailIcon } from "@fluentui/svg-icons/icons/mail_28_regular.svg";
+import { ReactComponent as SearchIcon } from "@fluentui/svg-icons/icons/search_16_regular.svg";
 import { ReactComponent as AssigneeSearchIllustartion } from "../../assets/undraw_People_search_re_5rre.svg"
 import { ReactComponent as NoResultsIllustartion } from "../../assets/undraw_not_found_60pq.svg"
 import Avatar from '../UI/Avatar';
@@ -118,12 +119,10 @@ const AssigneeChooser = () => {
         value={keyword}
         prefix={() => (
           <SearchIcon
-            width={18}
-            height={18}
-            strokeWidth={32}
             style={{
               marginRight: 5
             }}
+            fill="currentColor"
           />
         )}
       />
@@ -137,7 +136,12 @@ const AssigneeChooser = () => {
             disabled={isBusy}
             onClick={() => handleAddAnonymousAssignee(keyword.trim())}
           >
-            <Avatar user={{name: keyword}} size={32} circular />
+            <Avatar 
+              initials={keyword.trim().charAt(0).toUpperCase()}
+              alt={keyword.trim()}
+              size={32}
+              circular
+            />
             <div>
               <span>{keyword.trim()}</span>
               <span>Anonymous Assignee</span>
@@ -153,7 +157,12 @@ const AssigneeChooser = () => {
             disabled={isBusy}
             onClick={() => handleAddInvitedAssignee(keyword.trim())}
           >
-            <Avatar user={{name: keyword}} size={32} circular />
+            <Avatar
+              icon={MailIcon}
+              alt={keyword}
+              size={32}
+              circular
+            />
             <div>
               <span>{keyword.trim()}</span>
               <span>Assign &amp; invite to Forwardslash</span>
@@ -167,7 +176,13 @@ const AssigneeChooser = () => {
             disabled={isBusy}
             onClick={() => handleAddAssignee(x)}
           >
-            <Avatar user={users[x]} size={32} circular />
+            <Avatar 
+              image={users[x].avatar}
+              initials={users[x].initials}
+              alt={`${users[x].firstName} ${users[x].lastName}`}
+              size={32}
+              circular
+            />
             <div>
               <span>{`${users[x].firstName} ${users[x].lastName}`}</span>
               <span>@{x}</span>

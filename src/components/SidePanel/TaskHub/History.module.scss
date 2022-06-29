@@ -55,10 +55,11 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  font-size: 0.875rem;
 }
 
 .HistoryDate {
-  color: var(--outline);
+  color: var(--color-fill-color-text-secondary);
   font-size: 0.75rem;
 }
 

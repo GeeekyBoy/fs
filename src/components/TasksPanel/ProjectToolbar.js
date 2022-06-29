@@ -7,11 +7,11 @@ import * as appSettingsActions from "../../actions/appSettings"
 import sortByRank from "../../utils/sortByRank"
 import copyTask from "../../utils/copyTask"
 import { panelPages } from "../../constants";
-import { ReactComponent as ClipboardIcon } from "../../assets/clipboard-outline.svg"
-import { ReactComponent as ShareIcon } from "../../assets/share-outline.svg"
-import { ReactComponent as SettingsIcon } from "../../assets/settings-outline.svg"
-import { ReactComponent as ExportIcon } from "../../assets/download-outline.svg"
-import { ReactComponent as ImportIcon } from "../../assets/cloud-upload-outline.svg"
+import { ReactComponent as ClipboardIcon } from "@fluentui/svg-icons/icons/clipboard_paste_16_regular.svg"
+import { ReactComponent as ShareIcon } from "@fluentui/svg-icons/icons/share_16_regular.svg"
+import { ReactComponent as SettingsIcon } from "@fluentui/svg-icons/icons/settings_16_regular.svg"
+import { ReactComponent as ExportIcon } from "@fluentui/svg-icons/icons/cloud_arrow_down_16_regular.svg"
+import { ReactComponent as ImportIcon } from "@fluentui/svg-icons/icons/cloud_arrow_up_16_regular.svg"
 import ComboBox from '../UI/fields/ComboBox';
 import ShadowScroll from '../ShadowScroll';
 import { useModal } from '../ModalManager';
@@ -83,37 +83,32 @@ const ProjectToolbar = () => {
         </div> */}
         <Button
           icon={ClipboardIcon}
+          label="Paste"
           onClick={pasteTask}
-        >
-          Paste
-        </Button>
+        />
         <Button
           icon={ImportIcon}
+          label="Import"
           onClick={openImportModal}
-        >
-          Import
-        </Button>
+        />
         <Button
           icon={ExportIcon}
+          label="Export"
           onClick={openExportModal}
-        >
-          Export
-        </Button>
+        />
         <Button
           icon={ShareIcon}
+          label="Share"
           onClick={() => {
             const linkToBeCopied = window.location.href.replace(/\/\d+/, "")
             navigator.clipboard.writeText(linkToBeCopied)
           }}
-        >
-          Share
-        </Button>
+        />
         <Button
           icon={SettingsIcon}
+          label="Settings"
           onClick={openProjectSettings}
-        >
-          Settings
-        </Button>
+        />
       </ShadowScroll>
     </div>     
   )

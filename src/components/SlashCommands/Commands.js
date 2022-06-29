@@ -7,14 +7,14 @@ import sortByRank from "../../utils/sortByRank"
 import generateRank from "../../utils/generateRank"
 import { useDispatch, useSelector } from "react-redux"
 import { supportedCommands } from "../../constants"
-import { ReactComponent as AssignIcon } from "../../assets/person-add-outline.svg"
-import { ReactComponent as CalenderIcon } from "../../assets/calendar-outline.svg"
-import { ReactComponent as TagsIcon } from "../../assets/pricetags-outline.svg"
-import { ReactComponent as DescriptionIcon } from "../../assets/receipt-outline.svg"
-import { ReactComponent as StatusIcon } from "../../assets/checkbox-outline.svg"
-import { ReactComponent as RemoveIcon } from "../../assets/trash-outline.svg"
-import { ReactComponent as CopyIcon } from "../../assets/copy-outline.svg"
-import { ReactComponent as DuplicateIcon } from "../../assets/duplicate-outline.svg"
+import { ReactComponent as AssignIcon } from "@fluentui/svg-icons/icons/people_add_16_regular.svg"
+import { ReactComponent as CalenderIcon } from "@fluentui/svg-icons/icons/calendar_ltr_16_regular.svg"
+import { ReactComponent as TagsIcon } from "@fluentui/svg-icons/icons/tag_16_regular.svg"
+import { ReactComponent as DescriptionIcon } from "@fluentui/svg-icons/icons/text_align_left_16_regular.svg"
+import { ReactComponent as StatusIcon } from  "@fluentui/svg-icons/icons/checkbox_checked_16_regular.svg"
+import { ReactComponent as RemoveIcon } from  "@fluentui/svg-icons/icons/delete_16_regular.svg"
+import { ReactComponent as CopyIcon } from  "@fluentui/svg-icons/icons/copy_16_regular.svg"
+import { ReactComponent as DuplicateIcon } from  "@fluentui/svg-icons/icons/document_copy_16_regular.svg"
 
 const Commands = (props) => {
   const {
@@ -125,14 +125,14 @@ const Commands = (props) => {
       onMouseEnter={() => setSelection(i)}
       onClick={() => chooseCommand(x)}
     >
-      {x === "ASSIGN" && <AssignIcon height={18} />}
-      {x === "DUE" && <CalenderIcon height={18} />}
-      {x === "TAGS" && <TagsIcon height={18} />}
-      {x === "DESCRIPTION" && <DescriptionIcon height={18} />}
-      {x === "STATUS" && <StatusIcon height={18} />}
-      {x === "DELETE" && <RemoveIcon height={18} />}
-      {x === "COPY" && <CopyIcon height={18} />}
-      {x === "DUPLICATE" && <DuplicateIcon height={18} />}
+      {x === "ASSIGN" && <AssignIcon fill="currentColor" />}
+      {x === "DUE" && <CalenderIcon fill="currentColor" />}
+      {x === "TAGS" && <TagsIcon fill="currentColor" />}
+      {x === "DESCRIPTION" && <DescriptionIcon fill="currentColor" />}
+      {x === "STATUS" && <StatusIcon fill="currentColor" />}
+      {x === "DELETE" && <RemoveIcon fill="currentColor" />}
+      {x === "COPY" && <CopyIcon fill="currentColor" />}
+      {x === "DUPLICATE" && <DuplicateIcon fill="currentColor" />}
       <div>
         <div>
           <span>{x}</span>
