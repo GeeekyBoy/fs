@@ -5,7 +5,6 @@ import * as tasksActions from "../../../actions/tasks"
 import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_16_regular.svg"
 import { ReactComponent as AddIcon } from "@fluentui/svg-icons/icons/add_16_regular.svg"
 import ShadowScroll from '../../ShadowScroll';
-import Avatar from '../Avatar';
 import { useModal } from '../../ModalManager';
 import modals from '../../modals';
 import Button from '../Button';
@@ -71,7 +70,9 @@ const WatcherField = (props) => {
           {value.map(x => (
             <Chip
               key={x}
-              user={users[x]}
+              avatarImage={users[x].avatar}
+              avatarAlt={`${users[x].firstName} ${users[x].lastName}`}
+              avatarInitials={users[x].initials}
               primaryLabel={`${users[x].firstName} ${users[x].lastName[0]}.`}
               secondaryLabel={`@${x}`}
               actionIcon={RemoveIcon}

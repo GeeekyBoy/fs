@@ -8,6 +8,7 @@ const Avatar = (props) => {
     alt,
     initials,
     icon,
+    borderless,
     circular
    } = props
   return image ? (
@@ -23,17 +24,24 @@ const Avatar = (props) => {
     />
   ) : (
     <div
-      className={styles.LetterAvatar}
+      className={[
+        styles.LetterAvatar,
+        ...(borderless ? [styles.borderless] : [])
+      ].join(" ")}
       style={{
         borderRadius: circular ? "100%" : 0.315 * size,
-        fontSize: (size - 1) / 2.4,
-        minWidth: size - 1,
-        minHeight: size - 1,
-        width: size - 1,
-        height: size - 1
+        fontSize: (borderless ? size : size - 1) / 2.4,
+        minWidth: borderless ? size : size - 1,
+        minHeight: borderless ? size : size - 1,
+        width: borderless ? size : size - 1,
+        height: borderless ? size : size - 1
       }}
     >
-      {initials || React.createElement(icon, {})}
+      {initials || React.createElement(icon, {
+        width: size - 16,
+        height: size - 16,
+        fill: "currentColor"
+      })}
     </div>
   )
 }

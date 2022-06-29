@@ -12,4 +12,7 @@
   background-clip: padding-box;
   line-height: 0;
   transition: background-color 0.2s, color 0.2s;
+  &.borderless {
+    border: none;
+  }
 }

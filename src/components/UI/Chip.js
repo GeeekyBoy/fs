@@ -5,7 +5,10 @@ import IconButton from "./IconButton";
 
 const Chip = (props) => {
   const {
-    user,
+    avatarImage,
+    avatarAlt,
+    avatarInitials,
+    avatarIcon,
     primaryLabel,
     secondaryLabel,
     actionIcon,
@@ -13,8 +16,23 @@ const Chip = (props) => {
     actionAllowed,
   } = props;
   return (
-    <span className={styles.ChipContainer}>
-    {/* <Avatar user={user} size={36} circular /> */}
+    <span
+      className={[
+        styles.ChipContainer,
+        ...((avatarImage || avatarInitials || avatarIcon) ? [styles.withAvatar] : []),
+      ].join(" ")}
+    >
+    {(avatarImage || avatarInitials || avatarIcon) && (
+      <Avatar
+        image={avatarImage}
+        alt={avatarAlt}
+        initials={avatarInitials}
+        icon={avatarIcon}
+        size={36}
+        borderless
+        circular
+      />
+    )}
     <div className={styles.ChipDetails}>
       <span>{primaryLabel}</span>
       {secondaryLabel && (

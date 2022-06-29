@@ -5,13 +5,16 @@
   align-items: center;
   min-width: 80px;
   width: fit-content;
-  padding: 0 8px 0 0;
+  padding: 0 8px;
   border: 1px solid;
   border-radius: 20px;
   border-color: var(--color-stroke-color-card-stroke-default);
   background-clip: padding-box;
   background-color: var(--color-background-fill-color-card-background-default);
   color: var(--color-fill-color-text-primary);
+  &.withAvatar {
+    padding: 0 8px 0 0;
+  }
   &:last-child {
     margin-right: 5px;
   }

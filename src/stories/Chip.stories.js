@@ -30,11 +30,6 @@ const Template = (args) => <Chip {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  user: {
-    avatar: "https://i.pravatar.cc/150?img=68",
-    initials: "JD",
-    name: "John Doe",
-  },
   primaryLabel: "John D.",
   secondary: "@Johny",
   actionIcon: testIcon,
@@ -45,4 +40,26 @@ export const ActionNotAllowed = Template.bind({});
 ActionNotAllowed.args = {
   ...Default.args,
   actionAllowed: false,
+};
+
+export const WithImageAvatar = Template.bind({});
+WithImageAvatar.args = {
+  ...Default.args,
+  avatarImage: "https://i.pravatar.cc/150?img=68",
+  avatarInitials: "JD",
+  avatarAlt: "John Doe",
+};
+
+export const WithLetterAvatar = Template.bind({});
+WithLetterAvatar.args = {
+  ...Default.args,
+  avatarInitials: "JD",
+  avatarAlt: "John Doe",
+};
+
+export const WithIconAvatar = Template.bind({});
+WithIconAvatar.args = {
+  ...Default.args,
+  avatarIcon: testIcon,
+  avatarAlt: "John Doe",
 };
