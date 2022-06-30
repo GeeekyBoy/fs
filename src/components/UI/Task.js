@@ -371,7 +371,7 @@ const TaskItem = (props) => {
                 <IconButton icon={CopyIcon} onClick={handleCopy} />
               )}
               {!readOnly && ((selected && showDuplicateButton) || !selected) && (
-                <IconButton icon={DuplicateIcon} onClick={DuplicateIcon} />
+                <IconButton icon={DuplicateIcon} onClick={handleDuplicate} />
               )}
               {((selected && showShareButton) || !selected) && (
                 <IconButton icon={ShareIcon} onClick={handleShare} />

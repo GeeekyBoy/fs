@@ -1,14 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux"
-import styles from "./WatcherField.module.scss"
 import * as tasksActions from "../../../actions/tasks"
-import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_16_regular.svg"
-import { ReactComponent as AddIcon } from "@fluentui/svg-icons/icons/add_16_regular.svg"
-import ShadowScroll from '../../ShadowScroll';
 import { useModal } from '../../ModalManager';
 import modals from '../../modals';
-import Button from '../Button';
-import Chip from '../Chip';
+import UsersField from './UsersField';
 
 const WatcherField = (props) => {
   const {
@@ -26,17 +21,6 @@ const WatcherField = (props) => {
   const selectedTasks = useSelector(state => state.app.selectedTasks)
 
   const users = useSelector(state => state.users)
-  
-  const watcherFieldRef = useRef(null)
-
-  useEffect(() => {
-    if (watcherFieldRef.current) {
-      watcherFieldRef.current.addEventListener("wheel", (e) => {
-        e.preventDefault();
-        watcherFieldRef.current.scrollLeft += e.deltaY;
-      });
-    }
-  }, [watcherFieldRef])
 
   const handleRemoveWatcher = (username) => {
     if (selectedTask) {
@@ -48,45 +32,28 @@ const WatcherField = (props) => {
     }
   }
 
+  const getWatchersValue = (users, watchers) => {
+    return watchers.map((watcher) => ({
+      username: watcher,
+      firstName: users[watcher].firstName,
+      lastName: users[watcher].lastName,
+      initials: users[watcher].initials,
+      avatar: users[watcher].avatar,
+    }));
+  };
+
+  const watchersValue = useMemo(() => getWatchersValue(users, value), [users, value]);
+
   return (
-    <div className={styles.WatcherFieldShell}>
-      <div className={styles.WatcherFieldHeader}>
-        {label && (
-          <label htmlFor={name}>
-            {label}
-          </label>
-        )}
-        {!readOnly && (
-          <Button
-            sm
-            secondary
-            icon={AddIcon}
-            onClick={() => showModal(modals.WATCHER_CHOOSER)}
-          />
-        )}
-      </div>
-      {(value.length) ? (
-        <ShadowScroll>
-          {value.map(x => (
-            <Chip
-              key={x}
-              avatarImage={users[x].avatar}
-              avatarAlt={`${users[x].firstName} ${users[x].lastName}`}
-              avatarInitials={users[x].initials}
-              primaryLabel={`${users[x].firstName} ${users[x].lastName[0]}.`}
-              secondaryLabel={`@${x}`}
-              actionIcon={RemoveIcon}
-              onAction={() => handleRemoveWatcher(x)}
-              actionAllowed={!readOnly}
-            />
-          ))}
-        </ShadowScroll>
-      ) : (
-        <div className={styles.NoWatchers}>
-          {emptyMsg}
-        </div>
-      )}
-    </div>
+    <UsersField
+      name={name}
+      label={label}
+      emptyMsg={emptyMsg}
+      onAdd={() => showModal(modals.WATCHER_CHOOSER)}
+      onRemove={handleRemoveWatcher}
+      value={watchersValue}
+      readOnly={readOnly}
+    />
   )
 }
 

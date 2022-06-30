@@ -1,13 +1,9 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux"
-import styles from "./AssigneeField.module.scss"
 import * as tasksActions from "../../../actions/tasks"
-import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_16_regular.svg"
-import ShadowScroll from '../../ShadowScroll';
-import Avatar from '../Avatar';
 import { useModal } from '../../ModalManager';
 import modals from '../../modals';
-import Button from '../Button';
+import UsersField from './UsersField';
 
 const AssigneeField = (props) => {
   const {
@@ -16,7 +12,6 @@ const AssigneeField = (props) => {
     name,
     value,
     readOnly,
-    style
   } = props
 
   const { showModal } = useModal();
@@ -27,103 +22,66 @@ const AssigneeField = (props) => {
 
   const users = useSelector(state => state.users)
 
-  const assigneeFieldRef = useRef(null)
-
-  useEffect(() => {
-    if (assigneeFieldRef.current) {
-      assigneeFieldRef.current.addEventListener("wheel", (e) => {
-        e.preventDefault();
-        assigneeFieldRef.current.scrollLeft += e.deltaY;
-      });
-    }
-  }, [assigneeFieldRef])
-
-  const processValue = (value, users) => {
-    const result = []
-    for (const assigneeId of value.assignees) {
-      result.push({...users[assigneeId], username: assigneeId, isUser: true})
-    }
-    for (const assigneeId of value.anonymousAssignees) {
-      result.push({ name: assigneeId, isUser: false })
-    }
-    return result
-  }
-
-  const processedValue = useMemo(() => processValue(value, users), [value, users]);
-
-  const handleRemoveAssignee = (assignee) => {
-    if (assignee.isUser) {
+  const handleRemoveAssignee = (e) => {
+    const { value, type } = e.target;
+    if (type === "registered") {
       if (selectedTask) {
-        dispatch(tasksActions.handleRemoveAssignee(selectedTask, assignee.username))
+        dispatch(tasksActions.handleRemoveAssignee(selectedTask, value))
       } else if (selectedTasks) {
         for (const task of selectedTasks) {
-          dispatch(tasksActions.handleRemoveAssignee(task, assignee.username))
+          dispatch(tasksActions.handleRemoveAssignee(task, value))
         }
       }
-    } else {
+    } else if (type === "anonymous") {
       if (selectedTask) {
-        dispatch(tasksActions.handleRemoveAnonymousAssignee(selectedTask, assignee.name))
+        dispatch(tasksActions.handleRemoveAnonymousAssignee(selectedTask, value))
       } else if (selectedTasks) {
         for (const task of selectedTasks) {
-          dispatch(tasksActions.handleRemoveAnonymousAssignee(task, assignee.name))
+          dispatch(tasksActions.handleRemoveAnonymousAssignee(task, value))
+        }
+      }
+    } else if (type === "invited") {
+      if (selectedTask) {
+        dispatch(tasksActions.handleRemoveInvitedAssignee(selectedTask, value))
+      } else if (selectedTasks) {
+        for (const task of selectedTasks) {
+          dispatch(tasksActions.handleRemoveInvitedAssignee(task, value))
         }
       }
     }
   }
+
+  const getAssigneesValue = (users, assignees, anonymousAssignees, invitedAssignees) => {
+    return [
+      ...assignees.map((assignee) => ({
+        username: assignee,
+        firstName: users[assignee].firstName,
+        lastName: users[assignee].lastName,
+        initials: users[assignee].initials,
+        avatar: users[assignee].avatar,
+      })),
+      ...anonymousAssignees.map((assignee) => ({
+        name: assignee,
+        initials: assignee[0],
+      })),
+      ...invitedAssignees.map((assignee) => ({
+        email: assignee,
+      })),
+    ]
+  };
+
+  const assigneesValue = useMemo(() => getAssigneesValue(users, value.assignees, value.anonymousAssignees, value.invitedAssignees), [value, users]);
 
   return (
-    <div className={styles.AssigneeFieldShell} style={style}>
-      {label && (
-        <label htmlFor={name}>
-          {label}
-        </label>
-      )}
-      {(processedValue.length) ? (
-        <ShadowScroll>
-          {!readOnly && (
-            <button
-              className={styles.NewAssigneeBtn}
-              onClick={() => showModal(modals.ASSIGNEE_CHOOSER)}
-            >
-              <div>+</div>
-              <span>Assign</span>
-            </button>
-          )}
-          {processedValue.map(x => (
-            <span className={styles.AssigneeItem} key={x.name || x.username}>
-              {!readOnly && (
-                <button
-                  className={styles.RemoveBtn}
-                  onClick={() => handleRemoveAssignee(x)}
-                >
-                  <RemoveIcon fill="currentColor" />
-                </button>
-              )}
-              <Avatar
-                image={x.avatar}
-                initials={x.initials || x.name.charAt(0)}
-                alt={x.firstName ? `${x.firstName} ${x.lastName}` : x.name}
-                size={36}
-                circular
-              />
-              <div className={styles.AssigneeDetails}>
-                <span>{x.firstName || x.name}</span>
-                <span>{x.username ? `@${x.username}` : "Anonymous"}</span>
-              </div>
-            </span>
-          ))}
-        </ShadowScroll>
-      ) : (
-        <div className={styles.NoAssignees}>
-          <span>{emptyMsg}</span>
-          {!readOnly && (
-            <Button onClick={() => showModal(modals.ASSIGNEE_CHOOSER)}>
-              + Add Assignee
-            </Button>
-          )}
-        </div>
-      )}
-    </div>
+    <UsersField
+      name={name}
+      label={label}
+      emptyMsg={emptyMsg}
+      onAdd={() => showModal(modals.ASSIGNEE_CHOOSER)}
+      onRemove={handleRemoveAssignee}
+      value={assigneesValue}
+      readOnly={readOnly}
+    />
   )
 }
 

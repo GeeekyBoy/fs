@@ -29,18 +29,14 @@
   align-items: flex-start;
   justify-content: center;
   & > span {
-    max-width: 80px;
-    overflow: hidden;
     line-height: 1.2;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  & > span:nth-child(1) {
-    color: var(--color-fill-color-text-primary);
-    font-size: 0.875rem;
-  }
-  & > span:nth-child(2) {
-    color: var(--color-fill-color-text-secondary);
-    font-size: 0.625rem;
+    &:nth-child(1) {
+      color: var(--color-fill-color-text-primary);
+      font-size: 0.875rem;
+    }
+    &:nth-child(2) {
+      color: var(--color-fill-color-text-secondary);
+      font-size: 0.625rem;
+    }
   }
 }
