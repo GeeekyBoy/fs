@@ -9,6 +9,7 @@ const Button = (props) => {
     secondary,
     fullWidth,
     children,
+    className,
     ...nativeProps
   } = props;
   return props.type === "submit" ? (
@@ -18,6 +19,8 @@ const Button = (props) => {
         styles.Button,
         ...(secondary && [styles.secondary] || []),
         ...(fullWidth && [styles.fullWidth] || []),
+        ...(sm && [styles.sm] || []),
+        className
       ].join(" ")}
       {...nativeProps}
     />
@@ -28,6 +31,7 @@ const Button = (props) => {
         ...(secondary && [styles.secondary] || []),
         ...(fullWidth && [styles.fullWidth] || []),
         ...(sm && [styles.sm] || []),
+        className
       ].join(" ")}
       {...nativeProps}
     >

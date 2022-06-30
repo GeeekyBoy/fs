@@ -74,7 +74,7 @@ const ComboBox = (props) => {
               <ListItem
                 key={x[0]}
                 id={x[0]}
-                primary={x[1]}
+                primaryLabel={x[1]}
                 selected={x[0] === value}
                 onSelect={() => {
                   toggleComboBox()

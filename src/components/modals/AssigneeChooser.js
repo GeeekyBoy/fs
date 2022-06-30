@@ -13,6 +13,7 @@ import Illustration from '../UI/Illustration';
 import { useModal } from '../ModalManager';
 import Modal from '../UI/Modal';
 import TextField from '../UI/fields/TextField';
+import ListItem from '../UI/ListItem';
 
 const AssigneeChooser = () => {
   const dispatch = useDispatch();
@@ -130,64 +131,58 @@ const AssigneeChooser = () => {
         {keyword &&
         ((pendingUser === keyword.trim() && pendingUserType === "anonymousAssignee") ||
         !tasks[selectedTask || selectedTasks[0]].anonymousAssignees.includes(keyword.trim())) && (
-          <button
-            className={styles.SearchResultsItem}
+          <ListItem
             key="::anonymous::"
+            primaryLabel={keyword.trim()}
+            secondaryLabel={"Anonymous Assignee"}
+            prefix={(
+              <Avatar 
+                initials={keyword.trim().charAt(0).toUpperCase()}
+                alt={keyword.trim()}
+                size={32}
+                circular
+              />
+            )}
             disabled={isBusy}
-            onClick={() => handleAddAnonymousAssignee(keyword.trim())}
-          >
-            <Avatar 
-              initials={keyword.trim().charAt(0).toUpperCase()}
-              alt={keyword.trim()}
-              size={32}
-              circular
-            />
-            <div>
-              <span>{keyword.trim()}</span>
-              <span>Anonymous Assignee</span>
-            </div>
-          </button>
+            onSelect={() => handleAddAnonymousAssignee(keyword.trim())}
+          />
         )}
         {keyword.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/) &&
         ((pendingUser === keyword.trim() && pendingUserType === "invitedAssignee") ||
         !tasks[selectedTask || selectedTasks[0]].invitedAssignees.includes(keyword.trim())) && (
-          <button
-            className={styles.SearchResultsItem}
+          <ListItem
             key="::invited::"
+            primaryLabel={keyword.trim()}
+            secondaryLabel={"Assign & invite to Forwardslash"}
+            prefix={(
+              <Avatar 
+                icon={MailIcon}
+                alt={keyword}
+                size={32}
+                circular
+              />
+            )}
             disabled={isBusy}
-            onClick={() => handleAddInvitedAssignee(keyword.trim())}
-          >
-            <Avatar
-              icon={MailIcon}
-              alt={keyword}
-              size={32}
-              circular
-            />
-            <div>
-              <span>{keyword.trim()}</span>
-              <span>Assign &amp; invite to Forwardslash</span>
-            </div>
-          </button>
+            onSelect={() => handleAddInvitedAssignee(keyword.trim())}
+          />
         )}
         {keyword && results.map(x => (
-          <button
-            className={styles.SearchResultsItem}
+          <ListItem
             key={x}
+            primaryLabel={`${users[x].firstName} ${users[x].lastName}`}
+            secondaryLabel={`@${x}`}
+            prefix={(
+              <Avatar 
+                image={users[x].avatar}
+                initials={users[x].initials}
+                alt={`${users[x].firstName} ${users[x].lastName}`}
+                size={32}
+                circular
+              />
+            )}
             disabled={isBusy}
-            onClick={() => handleAddAssignee(x)}
-          >
-            <Avatar 
-              image={users[x].avatar}
-              initials={users[x].initials}
-              alt={`${users[x].firstName} ${users[x].lastName}`}
-              size={32}
-              circular
-            />
-            <div>
-              <span>{`${users[x].firstName} ${users[x].lastName}`}</span>
-              <span>@{x}</span>
-            </div>
-          </button>
+            onSelect={() => handleAddAssignee(x)}
+          />
         ))}
         {!keyword && (
           <Illustration

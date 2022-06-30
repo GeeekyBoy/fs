@@ -168,9 +168,9 @@ const Comments = () => {
       ) : (
         <div className={styles.NewComment}>
           <Avatar
-            image={users[user.data].avatar}
-            initials={users[user.data].initials}
-            alt={`${users[user.data].firstName} ${users[user.data].lastName}`}
+            image={user.data.avatar}
+            initials={user.data.initials}
+            alt={`${user.data.firstName} ${user.data.lastName}`}
             size={32}
             circular
           />

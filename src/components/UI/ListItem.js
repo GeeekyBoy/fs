@@ -4,13 +4,13 @@ import styles from "./ListItem.module.scss"
 const ListItem = (props) => {
   const {
     id,
-    primary,
-    secondary,
-    selected,
+    primaryLabel,
+    secondaryLabel,
+    prefix,
     onSelect,
     listeners,
-    className,
-    style,
+    selected,
+    disabled,
   } = props
   const selectProject = () => {
     if (!selected && onSelect) {
@@ -19,28 +19,28 @@ const ListItem = (props) => {
   } 
   return (
     <div
-      className={[
-        "noselect",
-        className || "",
-      ].join(" ")}
+      className="noselect"
       onClick={() => selectProject(id)}
-      style={style}
       // {...listeners}
     >
       <div
         className={[
           styles.ListItemContainer,
           ...(selected && [styles.selected] || []),
+          ...(disabled && [styles.disabled] || []),
         ].join(" ")}
       >
-        <span className={styles.ListItemPrimary}>
-          {primary}
-        </span>
-        {secondary && (
-          <span className={styles.ListItemSecondary}>
-            {secondary}
+        {prefix}
+        <div className={styles.ListItemDetails}>
+          <span className={styles.ListItemPrimary}>
+            {primaryLabel}
           </span>
-        )}
+          {secondaryLabel && (
+            <span className={styles.ListItemSecondary}>
+              {secondaryLabel}
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import Illustration from '../UI/Illustration';
 import { useModal } from '../ModalManager';
 import Modal from '../UI/Modal';
 import TextField from '../UI/fields/TextField';
+import ListItem from '../UI/ListItem';
 
 const WatcherChooser = () => {
   const dispatch = useDispatch();
@@ -81,24 +82,22 @@ const WatcherChooser = () => {
       />
       <div className={styles.SearchResults}>
         {keyword && results.map(x => (
-          <button
-            className={styles.SearchResultsItem}
+          <ListItem
             key={x}
+            primaryLabel={`${users[x].firstName} ${users[x].lastName}`}
+            secondaryLabel={`@${x}`}
+            prefix={(
+              <Avatar
+                image={users[x].avatar}
+                initials={users[x].initials}
+                alt={`${users[x].firstName} ${users[x].lastName}`}
+                size={32}
+                circular
+              />
+            )}
             disabled={isBusy}
             onClick={() => handleAddWatcher(x)}
-          >
-            <Avatar
-              image={users[x].avatar}
-              initials={users[x].initials}
-              alt={`${users[x].firstName} ${users[x].lastName}`}
-              size={32}
-              circular
-            />
-            <div>
-              <span>{`${users[x].firstName} ${users[x].lastName}`}</span>
-              <span>@{x}</span>
-            </div>
-          </button>
+          />
         ))}
         {!keyword && (
           <Illustration

@@ -19,8 +19,8 @@ const ProjectItem = (props) => {
   return (
     <ListItem
       id={project.id}
-      primary={project.title || "Untitled Project"}
-      secondary={project.permalink}
+      primaryLabel={project.title || "Untitled Project"}
+      secondaryLabel={project.permalink}
       onSelect={selectProject}
       selected={selectedProject === project.id}
       listeners={listeners}
