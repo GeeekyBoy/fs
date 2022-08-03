@@ -183,3 +183,15 @@
   font-size: 0.75rem;
   text-align: center;
 }
+
+.HistoryItem {
+  font-size: 0.75rem;
+  text-align: center;
+  color: var(--color-fill-color-text-secondary);
+  & span {
+    display: inline-block;
+    & > *:not(b) {
+      vertical-align: middle;
+    }
+  }
+}

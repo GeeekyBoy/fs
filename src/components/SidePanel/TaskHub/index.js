@@ -6,7 +6,6 @@ import Comments from "./Comments";
 import { ReactComponent as ShareIcon } from "@fluentui/svg-icons/icons/share_24_regular.svg"
 import PanelTabs from '../../UI/PanelTabs';
 import Details from './Details';
-import History from './History';
 import { useModal } from '../../ModalManager';
 import modals from '../../modals';
 
@@ -58,7 +57,6 @@ const TaskHub = forwardRef((_, ref) => {
             tabs={[
               ["details", "Details"],
               ["comments", "Comments"],
-              ["history", "History"],
             ]}
             value={tab}
             onChange={(newVal) => setTab(newVal)}
@@ -80,8 +78,6 @@ const TaskHub = forwardRef((_, ref) => {
     <Details />
   ) : tab === "comments" ? (
     <Comments />
-  ) : tab === "history" ? (
-    <History />
   ) : null;
 });
 
