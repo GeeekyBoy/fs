@@ -139,8 +139,7 @@
     height: 100%;
     margin: 0;
     padding: 15px 0 calc(15px + 68px) 0;
-    // background: var(--color-background-fill-color-mica-background);
-    background-image: url(../../../public/3.png);
+    background: var(--color-background-fill-color-mica-background);
     animation-name: closingAnimLeftMobile;
     will-change: transform;
     &.opened {

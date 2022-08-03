@@ -295,13 +295,15 @@ const TaskItem = (props) => {
         ].join(" ")}
       >
         <div className={styles.TaskItemExtras}>
-          {!isBatchSelecting && (
+          {!isBatchSelecting ? (
             <DragIcon
               {...listeners}
               fill="currentColor"
               color="var(--color-fill-color-text-tertiary)"
               cursor="grab"
             />
+          ) : (
+            <div className={styles.DragIconPlaceholder} />
           )}
           {!(mobile && !isBatchSelecting) && (
             <Checkbox

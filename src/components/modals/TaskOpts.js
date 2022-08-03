@@ -101,6 +101,7 @@ const TaskOpts = () => {
             width={24}
             height={24}
             strokeWidth={32}
+            fill="currentColor"
           />
           <span>Copy</span>
         </button>
@@ -111,6 +112,7 @@ const TaskOpts = () => {
           <DuplicateIcon
             width={24}
             height={24}
+            fill="currentColor"
           />
           <span>Duplicate</span>
         </button>
@@ -121,6 +123,7 @@ const TaskOpts = () => {
           <ShareIcon
             width={24}
             height={24}
+            fill="currentColor"
           />
           <span>Share</span>
         </button>
@@ -131,6 +134,7 @@ const TaskOpts = () => {
           <RemoveIcon
             width={24}
             height={24}
+            fill="currentColor"
           />
           <span>Remove</span>
         </button>
@@ -141,6 +145,7 @@ const TaskOpts = () => {
           <CheckmarkIcon
             width={24}
             height={24}
+            fill="currentColor"
           />
           <span>Done</span>
         </button>
@@ -151,6 +156,7 @@ const TaskOpts = () => {
           <DetailsIcon
             width={24}
             height={24}
+            fill="currentColor"
           />
           <span>Details</span>
         </button>

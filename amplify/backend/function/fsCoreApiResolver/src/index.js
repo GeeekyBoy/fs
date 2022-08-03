@@ -27,6 +27,7 @@ const {
 const AWS = require('aws-sdk');
 const sgMail = require('@sendgrid/mail');
 const http = require('http');
+const https = require('https');
 const UrlParse = require('url').URL;
 const mariadb = require('mariadb');
 const { randomUUID } = require('crypto');
@@ -83,6 +84,7 @@ exports.handler = async function (ctx) {
     },
     Query: {
       initializeUpload,
+      uploadExternal,
       listAttachmentsByTaskId,
       getUserByUsername,
       searchUserToAssign,
@@ -174,6 +176,71 @@ exports.handler = async function (ctx) {
         Expires: 60 * 60 * 24,
       });
       return { presignedUrl };
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async function uploadExternal(ctx) {
+    try {
+      const client = ctx.identity.username;
+      const { url, taskId } = ctx.arguments;
+      const query = 'CALL get_project_of_task(?, ?, ?, ?)';
+      const params = [taskId, client, null, null];
+      const data = (await pool.execute(query, params))[0];
+      const { project_id: projectId, owner } = data[0];
+      const parsedUrl = new UrlParse(url);
+      const youtubeRe = /(https?:\/\/)?(((m|www)\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
+      const loomRe = /https:\/\/([\w.-]+\.)?loom.com\/(share|embed)\/(\w+)/i;
+      const figmaRe = /https:\/\/([\w.-]+\.)?figma.com\/(file|proto)\/([0-9a-zA-Z]{22,128})(?:\/.*)?$/i;
+      let provider = null;
+      let contentId = null;
+      if (youtubeRe.test(url)) {
+        provider = 'youtube';
+        [,,,,,,,, contentId] = url.match(youtubeRe);
+      } else if (loomRe.test(url)) {
+        provider = 'loom';
+        [,,, contentId] = url.match(loomRe);
+      } else if (figmaRe.test(url)) {
+        provider = 'figma';
+        [,,, contentId] = url.match(figmaRe);
+      }
+      if (provider) {
+        const title = await new Promise((resolve, reject) => {
+          https.get(parsedUrl, (res) => {
+            let content = '';
+            res.setEncoding('utf8');
+            res.on('data', (chunk) => {
+              content += chunk;
+            });
+
+            res.on('end', () => {
+              let title = null;
+              if (provider === 'youtube') {
+                title = /<meta name="twitter:title" content="(.*?)">/.exec(content)?.[1];
+              } else if (provider === 'loom') {
+                title = /"folder_id":"\w+?","name":"(.*)","cta":{"url":/.exec(content)?.[1];
+              } else if (provider === 'figma') {
+                title = /<meta name="twitter:title" content="(.*?)">/.exec(content)?.[1];
+              }
+              resolve(title);
+            });
+          }).on('error', (e) => {
+            console.error(e);
+          });
+        });
+        console.log(title);
+        const uploadRes = await s3.upload({
+          Bucket: 'fs-attachments',
+          Key: `${owner}/${projectId}/${taskId}/${provider}-${contentId}`,
+          ContentType: `embed/${provider}`,
+          ContentDisposition: `inline; filename="[${contentId}](${title})"`,
+          Body: '',
+        }).promise();
+        console.log(uploadRes);
+        return {};
+      }
+      throw new Error('Unsupported URL.');
     } catch (err) {
       throw new Error(err);
     }

@@ -1,5 +1,5 @@
 import API from "../amplify/API";
-import { initializeUpload, listAttachmentsByTaskId } from "../graphql/queries";
+import { initializeUpload } from "../graphql/queries";
 
 export default async (blob, taskId, onProgress) => {
   const urlQueryOpts = { contentType: blob.type, taskId };

@@ -38,3 +38,29 @@
   color: var(--color-fill-color-text-secondary);
   font-size: 0.875rem;
 }
+
+.SupportedProviders {
+  margin-top: 15px;
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 10px;
+    & > svg {
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
+
+.ModeChanger {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: var(--color-fill-color-accent-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  margin: auto;
+  margin-top: 15px;
+}

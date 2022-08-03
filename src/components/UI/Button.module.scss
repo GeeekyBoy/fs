@@ -6,17 +6,17 @@
   padding: 7px 14px;
   border: 1px solid transparent;
   border-radius: 4px;
-  outline: none;
   border-color: var(--color-stroke-color-control-stroke-default);
   border-bottom-color: var(--color-stroke-color-control-stroke-secondary);
+  outline: none;
   background-color: var(--color-fill-color-accent-primary);
   color: var(--color-fill-color-text-on-accent-primary);
   font-size: 0.875rem;
   cursor: pointer;
   transition: background-color 0.3s, color 0.2s;
   &.sm {
-    padding: 3px;
     min-width: 0;
+    padding: 3px;
   }
   &.fullWidth {
     width: 100%;
@@ -32,28 +32,28 @@
     }
   }
   &:active {
-    background-color: var(--color-fill-color-accent-tertiary);
-    color: var(--color-fill-color-text-on-accent-secondary);
     border-color: var(--color-stroke-color-control-stroke-on-accent-default);
     border-bottom-color: var(--color-stroke-color-control-stroke-on-accent-default);
+    background-color: var(--color-fill-color-accent-tertiary);
+    color: var(--color-fill-color-text-on-accent-secondary);
     &.secondary {
-      color: var(--color-fill-color-text-secondary);
       border-color: var(--color-stroke-color-control-stroke-default);
       border-bottom-color: var(--color-stroke-color-control-stroke-default);
+      color: var(--color-fill-color-text-secondary);
     }
   }
   &:disabled {
-    background-color: var(--color-fill-color-accent-disabled) !important;
-    color: var(--color-fill-color-text-on-accent-disabled) !important;
     border-color: transparent !important;
     border-bottom-color: transparent !important;
+    background-color: var(--color-fill-color-accent-disabled) !important;
+    color: var(--color-fill-color-text-on-accent-disabled) !important;
+    cursor: not-allowed;
     &.secondary {
-      background-color: var(--color-fill-color-control-disabled) !important;
-      color: var(--color-fill-color-text-disabled) !important;
       border-color: var(--color-stroke-color-control-stroke-default) !important;
       border-bottom-color: var(--color-stroke-color-control-stroke-default) !important;
+      background-color: var(--color-fill-color-control-disabled) !important;
+      color: var(--color-fill-color-text-disabled) !important;
     }
-    cursor: not-allowed;
   }
   & > *:not(:last-child) {
     margin-right: 4px;
@@ -62,7 +62,7 @@
 
 .ButtonIcon {
   min-width: 16px;
-  min-height: 16px;
   max-width: 16px;
+  min-height: 16px;
   max-height: 16px;
 }

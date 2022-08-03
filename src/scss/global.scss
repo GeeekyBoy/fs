@@ -1,12 +1,12 @@
 * {
   -webkit-tap-highlight-color: transparent;
   outline: none;
-  font-family: 'Rubik', sans-serif !important;
 }
 
 html {
-  background-image: url(../../public/3.png);
+  background: var(--color-background-fill-color-mica-background);
   background-size: cover;
+  font-family: 'Rubik', sans-serif !important;
   font-size: 16px;
 }
 
@@ -21,7 +21,6 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  // background: var(--color-background-fill-color-mica-background);
 }
 
 button,

@@ -185,6 +185,13 @@ export const initializeUpload = /* GraphQL */ `
     }
   }
 `;
+export const uploadExternal = /* GraphQL */ `
+  query UploadExternal($url: AWSURL!, $taskId: ID!) {
+    uploadExternal(url: $url, taskId: $taskId) {
+      presignedUrl
+    }
+  }
+`;
 export const listAttachmentsByTaskId = /* GraphQL */ `
   query ListAttachmentsByTaskId($taskId: ID!) {
     listAttachmentsByTaskId(taskId: $taskId) {

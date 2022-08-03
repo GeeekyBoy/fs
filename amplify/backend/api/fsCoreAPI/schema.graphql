@@ -241,6 +241,16 @@ type Query {
         { allow: private, provider: userPools }
       ]
     )
+  uploadExternal(url: AWSURL!, taskId: ID!): UploadedFile
+    @function(name: "fsCoreApiResolver-${env}")
+    @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   listAttachmentsByTaskId(taskId: ID!): AttachmentsList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
@@ -750,6 +760,10 @@ type IndividualHistory
 }
 
 type InitializedUpload @aws_iam @aws_cognito_user_pools {
+  presignedUrl: AWSURL!
+}
+
+type UploadedFile @aws_iam @aws_cognito_user_pools {
   presignedUrl: AWSURL!
 }
 

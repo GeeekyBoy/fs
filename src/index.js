@@ -1,5 +1,5 @@
 import 'react-app-polyfill/stable';
-import React, { StrictMode } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -11,6 +11,7 @@ import { getAnalytics } from "firebase/analytics";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import ModalManager from "./components/ModalManager";
 import WindowSizeListener from "./components/WindowSizeListener";
+import TabViewManager from './components/TabViewManager';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5qtc5aQFVBclDwYalib-qXn7DdK-tLEk",
@@ -31,7 +32,9 @@ root.render(
   <WindowSizeListener>
     <Provider store={store}>
       <ModalManager>
-        <App />
+        <TabViewManager>
+          <App />
+        </TabViewManager>
       </ModalManager>
     </Provider>
   </WindowSizeListener>

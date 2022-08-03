@@ -11,10 +11,17 @@ const Chip = (props) => {
     avatarIcon,
     primaryLabel,
     secondaryLabel,
+    onClick,
     actionIcon,
     onAction,
     actionAllowed,
   } = props;
+  
+  const handleClick = (e) => {
+    e.stopPropagation();
+    onClick && onClick(e);
+  }
+
   return (
     <span
       className={[
@@ -34,7 +41,9 @@ const Chip = (props) => {
       />
     )}
     <div className={styles.ChipDetails}>
-      <span>{primaryLabel}</span>
+      <span onClick={handleClick}>
+        {primaryLabel}
+      </span>
       {secondaryLabel && (
         <span>{secondaryLabel}</span>
       )}

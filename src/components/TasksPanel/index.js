@@ -7,9 +7,7 @@ import * as tasksActions from "../../actions/tasks";
 import { READY, LOADING, initTaskState, AuthState } from "../../constants";
 import sortedTasks from './sortedTasks';
 import ProjectToolbar from './ProjectToolbar';
-import TasksToolbar from './TasksToolbar';
 import NoTasks from './NoTasks';
-import TasksSearch from './TasksSearch';
 import ProjectHeader from './ProjectHeader';
 import SimpleBar from 'simplebar-react';
 import LoginBanner from './LoginBanner';
@@ -19,7 +17,6 @@ import modals from '../modals';
 
 const TasksPanel = () => {
   const { showModal } = useModal();
-  const [searchKeyword, setSearchKeyword] = useState("")
   const [inDropZone, setInDropZone] = useState(false)
   const dispatch = useDispatch();
 
@@ -103,12 +100,6 @@ const TasksPanel = () => {
   }, [selectedProject])
   return (
     <div className={styles.TasksPanelShell}>
-      <div className={styles.AppToolbar}>
-        <TasksToolbar
-          searchKeyword={searchKeyword}
-          setSearchKeyword={setSearchKeyword}
-        />
-      </div>
       <div
         name="TasksPanelContainer"
         className={[
@@ -131,9 +122,7 @@ const TasksPanel = () => {
             ) : (
               <>
                 <ProjectHeader />
-                {searchKeyword.trim() ? (
-                  <TasksSearch searchKeyword={searchKeyword} />
-                ) : Object.keys(tasks).length ? (
+                {Object.keys(tasks).length ? (
                   <SimpleBar name="TasksView" className={styles.TasksView}>
                     {React.createElement(sortedTasks[tasksSortingCriteria])}
                   </SimpleBar>

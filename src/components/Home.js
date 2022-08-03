@@ -10,10 +10,17 @@ import SidePanel from "./SidePanel";
 import Notifications from "./Notifications";
 import SyncManager from "./SyncManager";
 import NavigationManager from "./NavigationManager";
+import TabView from "./UI/TabView";
+import YoutubeViewer from "./viewers/YoutubeViewer";
+import LoomViewer from "./viewers/LoomViewer";
+import FigmaViewer from "./viewers/FigmaViewer";
+import CodeViewer from "./viewers/CodeViewer";
+import { useTabView } from "./TabViewManager";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+  const { tabs, currentTab, setCurrentTab, closeTab } = useTabView();
 
   const userState = useSelector(state => state.user.state);
 
@@ -47,7 +54,12 @@ const Home = () => {
 					<Toolbar />
 					<div className={`${styles.MainPage} no-keyboard-portrait-padding-bottom-68`}>
 						<SidePanel />
-						<TasksPanel />
+            <TabView
+              tabs={tabs}
+              value={currentTab}
+              onChange={setCurrentTab}
+              onCloseTab={closeTab}
+            />
 						<SidePanel right />
 					</div>
 				</>

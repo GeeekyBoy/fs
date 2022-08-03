@@ -25,8 +25,8 @@
       border-color: var(--color-stroke-color-control-strong-stroke-disabled);
       background-color: var(--color-fill-color-control-alt-disabled);
       &.checked {
-        background-color: var(--color-fill-color-accent-disabled);
         border-color: transparent;
+        background-color: var(--color-fill-color-accent-disabled);
         color: var(--color-fill-color-text-on-accent-disabled);
       }
     }

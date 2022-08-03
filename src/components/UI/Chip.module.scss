@@ -3,8 +3,8 @@
   position: relative;
   flex-direction: row;
   align-items: center;
+  max-width: 160px;
   min-width: 80px;
-  width: fit-content;
   padding: 0 8px;
   border: 1px solid;
   border-radius: 20px;
@@ -12,6 +12,7 @@
   background-clip: padding-box;
   background-color: var(--color-background-fill-color-card-background-default);
   color: var(--color-fill-color-text-primary);
+  flex-shrink: 0;
   &.withAvatar {
     padding: 0 8px 0 0;
   }
@@ -29,10 +30,18 @@
   align-items: flex-start;
   justify-content: center;
   & > span {
+    max-width: 92px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     line-height: 1.2;
     &:nth-child(1) {
       color: var(--color-fill-color-text-primary);
       font-size: 0.875rem;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
     }
     &:nth-child(2) {
       color: var(--color-fill-color-text-secondary);
