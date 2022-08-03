@@ -22,8 +22,9 @@ Default.args = {
   label: "Attachments",
   value: [{
     id: "1",
-    filename: "Spring - Blender Open Movie",
-    size: 1024,
+    filename: "[WhWc3b3KhnY](Spring - Blender Open Movie)",
+    contentType: "embed/youtube",
+    size: 0,
     url: "https://www.youtube.com/watch?v=WhWc3b3KhnY",
   }]
 };
