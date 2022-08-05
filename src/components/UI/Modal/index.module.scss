@@ -16,14 +16,10 @@
 }
 
 .ModalBody {
-  flex: 1 1;
-  min-height: 0;
+  flex: 1;
   max-height: calc(100vh - 300px);
   overflow: auto;
-  & :global(.simplebar-content-wrapper) {
-    min-height: 100%;
-    color: var(--color-fill-color-text-primary);
-  }
+  color: var(--color-fill-color-text-primary);
 }
 
 .ModalFooter {

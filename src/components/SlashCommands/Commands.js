@@ -81,6 +81,7 @@ const Commands = (props) => {
     const handleKeyUp = (e) => {
       const scrollableElem = scrollableNodeRef?.current
       const scrollableElemHeight = scrollableElem?.getBoundingClientRect().height
+      console.log(scrollableElemHeight)
       if (e.key === "Enter") {
         e.preventDefault()
         e.stopPropagation()
@@ -89,7 +90,7 @@ const Commands = (props) => {
         e.preventDefault()
         e.stopPropagation()
         if (selection > 0) {
-          const minHeight = scrollableElem?.scrollTop - 59 * (selection - 1) + scrollableElemHeight - 15
+          const minHeight = scrollableElem?.scrollTop - 36 * (selection - 1) + scrollableElemHeight - 5
           if (scrollableElemHeight < minHeight) {
             scrollableElem?.scrollBy(0, scrollableElemHeight - minHeight)
           }
@@ -99,7 +100,7 @@ const Commands = (props) => {
         e.preventDefault()
         e.stopPropagation()
         if (selection < suggestedIntents.length - 1) {
-          const minHeight = 15 + 59 * (selection + 2) - scrollableElem?.scrollTop
+          const minHeight = 5 + 36 * (selection + 2) - scrollableElem?.scrollTop
           if (scrollableElemHeight < minHeight) {
             scrollableElem?.scrollBy(0, minHeight - scrollableElemHeight)
           }

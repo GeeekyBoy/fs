@@ -1,5 +1,4 @@
 import "../src/scss/index.scss";
-import "simplebar/dist/simplebar.min.css";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -66,18 +66,33 @@ b {
   font-weight: 600;
 }
 
-.simplebar-track.simplebar-vertical {
-  width: 8px !important;
+[id^=DndLiveRegion-] {
+  height: 0 !important;
 }
 
-.simplebar-track.simplebar-horizontal {
-  height: 8px !important;
+.sleek-scrollbar {
+  scrollbar-width: thin;
 }
 
-.simplebar-scrollbar:before {
-  background-color: var(--color-fill-color-control-strong-default) !important;
+.sleek-scrollbar::-webkit-scrollbar {
+  appearance: none;
 }
 
-.simplebar-scrollbar.simplebar-visible:before {
-  opacity: 1 !important;
+.sleek-scrollbar::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+.sleek-scrollbar::-webkit-scrollbar:vertical {
+  width: 8px;
+}
+
+.sleek-scrollbar::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  background-clip: content-box;
+}
+
+.sleek-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
 }

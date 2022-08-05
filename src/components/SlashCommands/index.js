@@ -1,6 +1,5 @@
 import React, { useMemo, createRef } from 'react';
 import styles from "./index.module.scss"
-import SimpleBar from 'simplebar-react';
 import { supportedCommands } from "../../constants"
 import ASSIGN from "./Assign"
 import COMMANDS from "./Commands"
@@ -38,13 +37,13 @@ const SlashCommands = (props) => {
   const [commandIntent, commandParam] = useMemo(() => tokenizeCommand(command), [command])
 
   return slashCommandsPages[commandIntent] && (
-    <SimpleBar
-      className={styles.ComboBoxContainer}
+    <div
+      className={`${styles.ComboBoxContainer} sleek-scrollbar`}
       style={{
         top: posInfo.top,
         left: posInfo.left
       }}
-      scrollableNodeProps={{ ref: scrollableNodeRef }}
+      ref={scrollableNodeRef}
     >
       {React.createElement(slashCommandsPages[commandIntent], {
         command,
@@ -53,7 +52,7 @@ const SlashCommands = (props) => {
         onCommandChange,
         scrollableNodeRef,
       })}
-    </SimpleBar>
+    </div>
   )
 }
 

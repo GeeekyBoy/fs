@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./index.module.scss"
-import SimpleBar from 'simplebar-react';
 import Login from './Login';
 import NewAccount from './NewAccount';
 import ForgotPassword from './ForgotPassword';
@@ -36,7 +35,7 @@ const AuthFlow = () => {
     }
   }, [routeLocation])
   return (
-    <SimpleBar className={styles.AuthFlowContainer}>
+    <div className={`${styles.AuthFlowContainer} sleek-scrollbar`}>
       <button 
         className={[styles.backBtn, "noselect"].join(" ")}
         onClick={handleGoBack}
@@ -45,7 +44,7 @@ const AuthFlow = () => {
         <span>Go back</span>
       </button>
       {currPage}
-    </SimpleBar>
+    </div>
   )
 }
 

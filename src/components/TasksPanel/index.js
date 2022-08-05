@@ -9,7 +9,6 @@ import sortedTasks from './sortedTasks';
 import ProjectToolbar from './ProjectToolbar';
 import NoTasks from './NoTasks';
 import ProjectHeader from './ProjectHeader';
-import SimpleBar from 'simplebar-react';
 import LoginBanner from './LoginBanner';
 import generateRank from '../../utils/generateRank';
 import { useModal } from '../ModalManager';
@@ -36,7 +35,7 @@ const TasksPanel = () => {
   const addNewTask = (e) => {
     selectedProject &&
     (e.target.getAttribute("name") === "TasksPanelContainer" ||
-    (e.target.className === "simplebar-content-wrapper" && document.querySelector("[name='TasksView']")?.contains(e.target)) ||
+    (document.querySelector("[name='TasksView']") === e.target) ||
     document.querySelector("[class^='Illustration_IllustrationContainer']")?.contains(e.target) && !Object.keys(tasks).length) &&
     tasksStatus === READY &&
     isSynced &&
@@ -123,9 +122,9 @@ const TasksPanel = () => {
               <>
                 <ProjectHeader />
                 {Object.keys(tasks).length ? (
-                  <SimpleBar name="TasksView" className={styles.TasksView}>
+                  <div name="TasksView" className={`${styles.TasksView} sleek-scrollbar`}>
                     {React.createElement(sortedTasks[tasksSortingCriteria])}
-                  </SimpleBar>
+                  </div>
                 ) : isSynced ? (
                   <NoTasks name="NoTasks" msgId="EMPTY" />
                 ) : (

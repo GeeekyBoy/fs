@@ -1,5 +1,4 @@
 import React, { memo, useState } from 'react';
-import SimpleBar from 'simplebar-react';
 import styles from "./SidePanel.module.scss";
 import { ReactComponent as BackRightArrowIcon } from "@fluentui/svg-icons/icons/chevron_right_24_regular.svg";
 import { ReactComponent as BackLeftArrowIcon } from "@fluentui/svg-icons/icons/chevron_left_24_regular.svg";
@@ -144,9 +143,9 @@ const SidePanel = (props) => {
         )}
       </div>
         {header}
-        <SimpleBar className={styles.SidePanelContent}>
+        <div className={`${styles.SidePanelContent} sleek-scrollbar`}>
           {props.children}
-        </SimpleBar>
+        </div>
         {footer}
         {submitLabel && (
           <Button
