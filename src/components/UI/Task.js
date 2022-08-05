@@ -38,6 +38,7 @@ const TaskItem = (props) => {
     onBatchSelect,
     onBatchDeselect,
     mobile,
+    shouldAutoFocus,
     showDueDate,
     showAssignees,
     showDoneIndicator,
@@ -266,7 +267,7 @@ const TaskItem = (props) => {
           setCaretPos(taskCaretPos.current);
         }
       }
-      focusInput();
+      if (shouldAutoFocus) focusInput();
     } else {
       setCommand(null);
       wasUnselected.current = true;

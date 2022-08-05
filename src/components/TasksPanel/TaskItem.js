@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useCallback } from "react"
+import React, { useRef, useMemo, useEffect, useCallback, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useWindowSize } from "../../components/WindowSizeListener";
 import copyTaskCore from "../../utils/copyTask"
@@ -47,6 +47,8 @@ const TaskItem = (props) => {
   const users = useSelector(state => state.users)
   const user = useSelector(state => state.user)
   const projects = useSelector(state => state.projects)
+
+  const [shouldAutoFocus, setShouldAutoFocus] = useState(true)
 
   useEffect(() => {
     if (isSelected) {
@@ -160,8 +162,10 @@ const TaskItem = (props) => {
 
   const handleDetails = useCallback(() => {
     if (width < 768) {
+      setShouldAutoFocus(false)
       dispatch(appActions.handleSetTask(item.id))
       showModal(modals.TASK_OPTS)
+      setTimeout(() => setShouldAutoFocus(true), 100);
     } else {
       if (!isSelected) {
         dispatch(appActions.handleSetTask(item.id))
@@ -224,6 +228,7 @@ const TaskItem = (props) => {
       onEnter={handleEnter}
       onEscape={handleEscape}
       mobile={width < 768}
+      shouldAutoFocus={shouldAutoFocus}
       showDueDate={showDueDate}
       showAssignees={showAssignees}
       showDoneIndicator={showDoneIndicator}
