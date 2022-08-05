@@ -19,9 +19,7 @@
   &:last-child {
     margin-right: 5px;
   }
-  & > *:not(:last-child) {
-    margin-right: 5px;
-  }
+  gap: 5px;
 }
 
 .ChipDetails {

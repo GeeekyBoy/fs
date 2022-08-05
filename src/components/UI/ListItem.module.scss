@@ -53,9 +53,7 @@
       }
     }
   }
-  & > *:not(:last-child) {
-    margin-right: 12px;
-  }
+  gap: 12px;
 }
 
 .ListItemDetails {

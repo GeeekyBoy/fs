@@ -15,9 +15,7 @@
     cursor: not-allowed !important;
     touch-action: none;
   }
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  gap: 5px;
 }
 
 .ComboBoxContainer {
@@ -71,7 +69,5 @@
   border-color: var(--color-stroke-color-card-stroke-default);
   background-image: var(--color-background-fill-color-acrylic-background);
   box-shadow: rgb(0 0 0 / 14%) 0px 8px 16px 0px;
-  & > *:not(:last-child) {
-    margin-bottom: 4px;
-  }
+  gap: 4px;
 }

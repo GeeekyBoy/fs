@@ -3,9 +3,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  gap: 5px;
 }
 
 .UsersFieldHeader {

@@ -11,9 +11,7 @@
     font-size: 0.875rem;
     transition: color 0.2s;
   }
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  gap: 5px;
 }
   
 .ColorPickerContainer {

@@ -55,9 +55,7 @@
       color: var(--color-fill-color-text-disabled) !important;
     }
   }
-  & > *:not(:last-child) {
-    margin-right: 4px;
-  }
+  gap: 4px;
 }
 
 .ButtonIcon {

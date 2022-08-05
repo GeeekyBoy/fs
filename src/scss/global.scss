@@ -6,7 +6,7 @@
 html {
   background: var(--color-background-fill-color-mica-background);
   background-size: cover;
-  font-family: 'Rubik', sans-serif !important;
+  font-family: "Rubik", sans-serif !important;
   font-size: 16px;
 }
 
@@ -35,7 +35,7 @@ label,
 }
 
 input::selection.noselect {
-  color:transparent;
+  color: transparent;
 }
 
 input:-webkit-autofill::first-line,
@@ -50,7 +50,9 @@ input:-webkit-autofill:active {
   font-family: "Rubik", sans-serif !important;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
   -webkit-border-radius: 0;
@@ -59,40 +61,42 @@ input, textarea, select {
 }
 
 textarea {
-  font-family: 'Rubik', sans-serif !important;
+  font-family: "Rubik", sans-serif !important;
 }
 
 b {
   font-weight: 600;
 }
 
-[id^=DndLiveRegion-] {
+[id^="DndLiveRegion-"] {
   height: 0 !important;
 }
 
-.sleek-scrollbar {
-  scrollbar-width: thin;
-}
+@media (hover: hover) and (pointer: fine) {
+  .sleek-scrollbar {
+    scrollbar-width: thin;
+  }
 
-.sleek-scrollbar::-webkit-scrollbar {
-  appearance: none;
-}
+  .sleek-scrollbar::-webkit-scrollbar {
+    appearance: none;
+  }
 
-.sleek-scrollbar::-webkit-scrollbar:horizontal {
-  height: 8px;
-}
+  .sleek-scrollbar::-webkit-scrollbar:horizontal {
+    height: 8px;
+  }
 
-.sleek-scrollbar::-webkit-scrollbar:vertical {
-  width: 8px;
-}
+  .sleek-scrollbar::-webkit-scrollbar:vertical {
+    width: 8px;
+  }
 
-.sleek-scrollbar::-webkit-scrollbar-thumb {
-  background-color: grey;
-  border: 3px solid transparent;
-  border-radius: 10px;
-  background-clip: content-box;
-}
+  .sleek-scrollbar::-webkit-scrollbar-thumb {
+    background-color: grey;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    background-clip: content-box;
+  }
 
-.sleek-scrollbar::-webkit-scrollbar-track {
-  background-color: transparent;
+  .sleek-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 }

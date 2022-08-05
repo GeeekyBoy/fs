@@ -39,9 +39,7 @@
   width: 100%;
   overflow: hidden;
   scroll-behavior: smooth;
-  & > *:not(:last-child) {
-    margin-right: 5px;
-  }
+  gap: 5px;
   @media (hover: none) {
     overflow: auto;
   }

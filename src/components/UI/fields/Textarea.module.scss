@@ -88,7 +88,5 @@
     color:  var(--color-fill-color-system-critical);
     font-size: 0.75rem;
   }
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  gap: 5px;
 }

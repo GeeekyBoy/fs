@@ -11,24 +11,16 @@
     font-size: 0.875rem;
     transition: color 0.2s;
   }
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  gap: 5px;
 }
 
 .SelectContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  gap: 5px;
   &.row {
     flex-direction: row;
-    & > *:not(:last-child) {
-      margin-right: 5px;
-      margin-bottom: 0;
-    }
   }
   &.centeredText {
     text-align: center;

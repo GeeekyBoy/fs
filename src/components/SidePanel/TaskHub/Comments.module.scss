@@ -4,9 +4,7 @@
   flex-direction: column;
   width: 100%;
   overflow: auto;
-  & > *:not(:last-child) {
-    margin-bottom: 16px;
-  }
+  gap: 16px;
 }
 
 .CommentContent {
@@ -62,18 +60,14 @@
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
-  & > *:not(:last-child) {
-    margin-bottom: 8px;
-  }
+  gap: 8px;
 }
 
 .CommentUnit {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
   &.self {
     flex-direction: row-reverse;
     & .CommentBox {
@@ -96,9 +90,7 @@
 .NewComment {
   display: flex;
   flex-direction: row;
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
 }
 
 .CommentField {
@@ -152,9 +144,7 @@
         }
       }
     }
-    & > *:not(:last-child) {
-      margin-right: 10px;
-    }
+    gap: 10px;
   }
 }
 

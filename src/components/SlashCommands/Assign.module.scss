@@ -25,9 +25,7 @@
       transition: color 0.2s;
     }
   }
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
 }
 
 .NoKeyword {

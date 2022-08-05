@@ -43,9 +43,7 @@
     justify-content: center;
     font-weight: 600;
     font-size: 0.75rem;
-    & > *:not(:last-child) {
-      margin-right: 5px;
-    }
+    gap: 5px;
   }
 }
 
@@ -70,9 +68,7 @@
     width: 100%;
     min-width: 0;
   }
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
 }
 
 .NotificationTopPart {

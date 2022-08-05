@@ -160,9 +160,7 @@ const TaskItem = (props) => {
 
   const handleDetails = useCallback(() => {
     if (width < 768) {
-      dispatch(
-        appActions.handleSetTask(item.id)
-      )
+      dispatch(appActions.handleSetTask(item.id))
       showModal(modals.TASK_OPTS)
     } else {
       if (!isSelected) {

@@ -8,9 +8,7 @@
   & > input[type="submit"] {
     display: none;
   }
-  & > *:not(:last-child) {
-    margin-bottom: 15px;
-  }
+  gap: 15px;
 }
 
 .NonPrefixedInputField {

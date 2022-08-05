@@ -15,9 +15,7 @@
   &.active {
     background-color: var(--color-fill-color-subtle-secondary);
   }
-  & > *:not(:last-child) {
-    margin-right: 5px;
-  }
+  gap: 5px;
 }
 
 .NoDescription {

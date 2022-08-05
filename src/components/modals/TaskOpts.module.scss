@@ -17,9 +17,7 @@
   background-color: var(--auxiliarySurface);
   touch-action: none;
   transition: background-color 0.2s;
-  & > *:not(:last-child) {
-    margin-bottom: 10px;
-  }
+  gap: 10px;
 }
 
 .TaskOptsHeader {
@@ -52,8 +50,6 @@
   font-size: 0.875rem;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
-  & > *:not(:last-child) {
-    margin-right: 5px;
-  }
+  gap: 5px;
 }
   

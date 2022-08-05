@@ -126,9 +126,7 @@
     }
   }
 
-  & > *:not(:last-child) {
-    margin-bottom: 15px;
-  }
+  gap: 15px;
   @media only screen and (max-width: 768px) {
     -moz-box-sizing: border-box;
     box-sizing: border-box;

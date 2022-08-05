@@ -9,9 +9,7 @@
   &:hover {
     transition: opacity 0.2s;
   }
-  & > *:not(:last-child) {
-    margin-right: 2px;
-  }
+  gap: 2px;
 }
 
 .TaskItemShell {
@@ -39,9 +37,7 @@
     min-height: 20px;
     margin: 0;
     padding: 2px 5px 2px 5px;
-    & > *:not(:last-child) {
-      margin-right: 2px;
-    }
+    gap: 2px;
   }
   &.focused {
     & .TaskItemActions {
@@ -118,13 +114,9 @@
   justify-content: space-between;
   width: 100%;
   @media only screen and (max-width: 768px) {
-    & > *:not(:last-child) {
-      margin-right: 2px;
-    }
+    gap: 2px;
   }
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
 }
 
 .TaskItemRightPart {
@@ -134,9 +126,7 @@
   justify-content: center;
   overflow: hidden;
   transition: width 0.3s ease-in-out;
-  & > *:not(:last-child) {
-    margin-right: 8px;
-  }
+  gap: 8px;
   &.focused {
     width: 0;
   }
@@ -240,9 +230,7 @@
   @media only screen and (max-width: 768px) {
     justify-content: flex-start;
   }
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
 }
 
 .TaskItemLeftRightPart {
@@ -252,9 +240,7 @@
   @media only screen and (max-width: 768px) {
     justify-content: flex-start;
   }
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
 }
 
 .TaskItemStatusToggle {

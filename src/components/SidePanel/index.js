@@ -11,13 +11,13 @@ import APP_SETTINGS from "./AppSettings";
 import NOTIFICATIONS from "./Notifications";
 
 const sidePanelPages = {
-    TASK_HUB,
-    BATCH_HUB,
-    PROJECTS,
-    ACCOUNT_SETTINGS,
-    PROJECT_SETTINGS,
-    APP_SETTINGS,
-    NOTIFICATIONS
+  TASK_HUB,
+  BATCH_HUB,
+  PROJECTS,
+  ACCOUNT_SETTINGS,
+  PROJECT_SETTINGS,
+  APP_SETTINGS,
+  NOTIFICATIONS
 }
 
 const SidePanel = (props) => {

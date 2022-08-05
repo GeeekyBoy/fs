@@ -1,9 +1,7 @@
 .TasksList {
   display: flex;
   flex-direction: column;
-  & > *:not(:last-child) {
-    margin-bottom: 10px;
-  }
+  gap: 10px;
 }
 
 .TaskItem {
@@ -19,9 +17,7 @@
   border-color: var(--color-stroke-color-card-stroke-default);
   background-color: var(--color-background-fill-color-card-background-default);
   font-size: 0.875rem;
-  & > *:not(:last-child) {
-    margin-bottom: 10px;
-  }
+  gap: 10px;
   &.error {
     border-color: #ff0000 !important;
     & > label {

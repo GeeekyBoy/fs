@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  gap: 10px;
   text-align: center;
   & > svg {
     width: 360px;
@@ -12,9 +13,6 @@
     color: var(--color-fill-color-accent-primary);
     transition: color 0.2s;
   }
-	& > *:not(:last-child) {
-		margin-bottom: 10px;
-	}
   & > div {
     display: flex;
     flex-direction: column;
@@ -25,9 +23,7 @@
       font-size: 1.75rem;
       transition: color 0.2s;
     }
-    & > *:not(:last-child) {
-      margin-bottom: 10px;
-    }
+    gap: 10px;
   }
 	&.secondary {
 		& > svg {

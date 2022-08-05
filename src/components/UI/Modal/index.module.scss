@@ -27,7 +27,5 @@
   align-items: center;
   justify-content: center;
   padding: 15px 20px;
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
 }

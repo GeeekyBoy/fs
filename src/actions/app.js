@@ -12,11 +12,10 @@ export const BATCH_SELECT_TASK = "BATCH_SELECT_TASK";
 export const BATCH_DESELECT_TASK = "BATCH_DESELECT_TASK";
 export const SET_PROJECT_ADDING_STATUS = "SET_PROJECT_ADDING_STATUS";
 export const SET_TASK_ADDING_STATUS = "SET_TASK_ADDING_STATUS";
-export const SET_NAVIGATE = "SET_NAVIGATE";
 export const SET_OFFLINE = "SET_OFFLINE";
 export const SET_SYNCED = "SET_SYNCED";
-export const SET_PROJECT_PANEL = "SET_PROJECT_PANEL";
-export const SET_DETAILS_PANEL = "SET_DETAILS_PANEL";
+export const SET_LEFT_PANEL = "SET_LEFT_PANEL";
+export const SET_RIGHT_PANEL = "SET_RIGHT_PANEL";
 export const SET_PROJECT_TITLE = "SET_PROJECT_TITLE";
 export const SET_LOCKED_TASK_FIELD = "SET_LOCKED_TASK_FIELD";
 export const SET_RIGHT_PANEL_PAGE = "SET_RIGHT_PANEL_PAGE";
@@ -48,12 +47,12 @@ const setProjectTitle = (status) => ({
 });
 
 const setLeftPanel = (status) => ({
-  type: SET_PROJECT_PANEL,
+  type: SET_LEFT_PANEL,
   status
 });
 
 const setRightPanel = (status) => ({
-  type: SET_DETAILS_PANEL,
+  type: SET_RIGHT_PANEL,
   status
 });
 
@@ -90,11 +89,6 @@ export const setProjectAddingStatus = (status) => ({
 export const setTaskAddingStatus = (status) => ({
   type: SET_TASK_ADDING_STATUS,
   status
-});
-
-export const setNavigate = (navigate) => ({
-  type: SET_NAVIGATE,
-  navigate
 });
 
 export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getState) => {

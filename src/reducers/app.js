@@ -1,4 +1,4 @@
-import { SET_PROJECT, SET_TASK, SET_PROJECT_ADDING_STATUS, SET_TASK_ADDING_STATUS, SET_NAVIGATE, SET_PROJECT_PANEL, SET_DETAILS_PANEL, SET_PROJECT_TITLE, SET_LOCKED_TASK_FIELD, SET_RIGHT_PANEL_PAGE, SET_LEFT_PANEL_PAGE, SET_OFFLINE, SET_SYNCED, BATCH_SELECT_TASK, BATCH_DESELECT_TASK } from "../actions/app"
+import { SET_PROJECT, SET_TASK, SET_PROJECT_ADDING_STATUS, SET_TASK_ADDING_STATUS, SET_LEFT_PANEL, SET_RIGHT_PANEL, SET_PROJECT_TITLE, SET_LOCKED_TASK_FIELD, SET_RIGHT_PANEL_PAGE, SET_LEFT_PANEL_PAGE, SET_OFFLINE, SET_SYNCED, BATCH_SELECT_TASK, BATCH_DESELECT_TASK } from "../actions/app"
 import { OK } from "../constants"
 
 const initState = {
@@ -41,9 +41,9 @@ export default function (state = initState, action) {
         return {...state, selectedTasks: state.selectedTasks.filter(id => id !== action.id)}
       }
       return {...state}
-    case SET_PROJECT_PANEL:
+    case SET_LEFT_PANEL:
       return {...state, isLeftPanelOpened: action.status}
-    case SET_DETAILS_PANEL:
+    case SET_RIGHT_PANEL:
       return {...state, isRightPanelOpened: action.status}
     case SET_PROJECT_TITLE:
       return {...state, isProjectTitleSelected: action.status}
@@ -51,8 +51,6 @@ export default function (state = initState, action) {
       return {...state, projectAddingStatus: action.status}
     case SET_TASK_ADDING_STATUS:
       return {...state, taskAddingStatus: action.status}
-    case SET_NAVIGATE:
-      return {...state, navigate: action.navigate}
     case SET_LOCKED_TASK_FIELD:
       return {...state, lockedTaskField: action.fieldName}
     case SET_RIGHT_PANEL_PAGE:

@@ -50,14 +50,10 @@
         text-transform: lowercase;
         transition: background-color 0.2s, color 0.2s;
       }
-      & > *:not(:last-child) {
-        margin-right: 5px;
-      }
+      gap: 5px;
     }
   }
-  & > *:not(:last-child) {
-    margin-right: 10px;
-  }
+  gap: 10px;
 }
 
 .NoIntent {

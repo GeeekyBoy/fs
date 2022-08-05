@@ -4,9 +4,7 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  gap: 5px;
   & > label {
     width: max-content;
     margin-bottom: 0;

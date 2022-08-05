@@ -9,9 +9,7 @@
   & > input[type="submit"] {
     display: none;
   }
-  & > *:not(:last-child) {
-    margin-bottom: 15px;
-  }
+  gap: 15px;
 }
 
 .AccountSettingsHeader {
@@ -31,7 +29,5 @@
     line-height: 0;
     transition: color 0.2s;
   }
-  & > *:not(:last-child) {
-    margin-bottom: 25px;
-  }
+  gap: 25px;
 }

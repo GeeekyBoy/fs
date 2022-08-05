@@ -6,9 +6,7 @@
   height: calc(100% - 10px);
   min-width: 0;
   padding: 5px;
-  & > *:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  gap: 5px;
   &.disabled {
     opacity: 0.6;
     &, & * {
@@ -27,9 +25,7 @@
   flex-direction: row;
   width: calc(100% - 8px);
   padding: 4px;
-  & > *:not(:last-child) {
-    margin-right: 5px;
-  }
+  gap: 5px;
 }
 
 .TabViewTab {

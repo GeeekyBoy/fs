@@ -13,9 +13,7 @@
   width: calc(100% - 12px);
   height: calc(100% - 12px);
   padding: 5px;
-  & > *:not(:last-child) {
-    margin-right: 5px;
-  }
+  gap: 5px;
   &.disabled {
     opacity: 0.6;
     &, & * {
