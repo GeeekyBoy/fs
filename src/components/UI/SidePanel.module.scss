@@ -197,12 +197,6 @@
     width: 24px;
     height: 24px;
   }
-  &:first-child {
-    transform: rotate(180deg);
-    @media only screen and (max-width: 768px) {
-      transform: rotate(0);
-    }
-  }
 }
 
 .SidePanelToolbarDumpAction {
