@@ -56,6 +56,7 @@ const TaskItem = (props) => {
   } = props;
 
   const inputRef = useRef(null);
+  const grabberRef = useRef(null);
   const wasUnselected = useRef(true);
   const shellLongPressTimeout = useRef(null);
   const typingIdleTimeout = useRef(null);
@@ -220,8 +221,8 @@ const TaskItem = (props) => {
     }
   }
 
-  const handleShellPointerDown = () => {
-    if (!isBatchSelecting && !isSorting && mobile) {
+  const handleShellPointerDown = (e) => {
+    if (!isBatchSelecting && !isSorting && mobile && !grabberRef.current?.contains(e.target)) {
       shellLongPressTimeout.current = setTimeout(() => {
         handleBatchToggle();
       }, 500);
@@ -302,6 +303,7 @@ const TaskItem = (props) => {
               fill="currentColor"
               color="var(--color-fill-color-text-tertiary)"
               cursor="grab"
+              ref={grabberRef}
             />
           ) : (
             <div className={styles.DragIconPlaceholder} />
