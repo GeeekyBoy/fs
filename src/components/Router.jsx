@@ -1,4 +1,16 @@
 import React, { useState, createContext, useContext, useRef, useEffect } from "react";
+import AuthFlow from "./AuthFlow";
+import Home from "./Home";
+
+const supportedRoutes = [
+  "/login/*",
+  "/signup/*",
+  "/forgot-password/*",
+  "/local/:projectPermalink/*",
+  "/:username/:projectPermalink/:taskPermalink/*",
+  "/:username/:projectPermalink/*",
+  "/"
+]
 
 const getCurrentPath = () => {
   let path = window.location.pathname;
@@ -21,7 +33,9 @@ const compilePathPatterns = (patterns) => {
   return result;
 }
 
-const getCurrentPattern = (compiledPatterns, path) => {
+const compiledPatterns = compilePathPatterns(supportedRoutes);
+
+const getCurrentPattern = (path) => {
   const params = {};
   for (const { pattern, entities, regex } of compiledPatterns) {
     const match = regex.exec(path);
@@ -29,10 +43,14 @@ const getCurrentPattern = (compiledPatterns, path) => {
       for (let i = 1; i < match.length; i++) {
         params[entities[i - 1]] = match[i];
       }
-      return [pattern, params];
+      contextValue.routeLocation = path;
+      contextValue.routeParams = params;
+      return pattern;
     }
   }
-  return [null, null];
+  contextValue.routeLocation = path;
+  contextValue.routeParams = null;
+  return null;
 }
 
 const contextValue = {
@@ -47,22 +65,12 @@ export const navigate = function f(...args) {
   return f.contents.call(this, ...args);
 };
 
-const Router = ({ routes }) => {
-  const compiledPatterns = useRef(null);
-  const [CurrentElement, setCurrentElement] = useState(null);
-  
-  const updateRoute = (nextPath) => {
-    const [pattern, nextParams] = getCurrentPattern(compiledPatterns.current, nextPath);
-    contextValue.routeLocation = nextPath;
-    contextValue.routeParams = nextParams;
-    setCurrentElement(React.createElement(routes[pattern] || null, {}));
-  }
+const Router = () => {
+  const [currentPath, setCurrentPath] = useState(getCurrentPattern(getCurrentPath()));
 
   useEffect(() => {
-    compiledPatterns.current = compilePathPatterns(Object.keys(routes));
-    updateRoute(getCurrentPath());
     window.addEventListener("popstate", () => {
-      updateRoute(getCurrentPath());
+      setCurrentPath(getCurrentPattern(getCurrentPath()));
     });
   }, []);
 
@@ -71,13 +79,22 @@ const Router = ({ routes }) => {
       window.history.go(nextPath);
     } else {
       window.history[shouldReplace ? "replaceState" : "pushState"]({}, document.title, nextPath);
-      updateRoute(nextPath);
+      setCurrentPath(getCurrentPattern(nextPath));
     }
   };
 
   return (
     <RouterContext.Provider value={contextValue}>
-      {CurrentElement}
+      {
+        currentPath === "/login/*" ? <AuthFlow />
+        : currentPath === "/signup/*" ? <AuthFlow />
+        : currentPath === "/forgot-password/*" ? <AuthFlow />
+        : currentPath === "/local/:projectPermalink/*" ? <Home />
+        : currentPath === "/:username/:projectPermalink/:taskPermalink/*" ? <Home />
+        : currentPath === "/:username/:projectPermalink/*" ? <Home />
+        : currentPath === "/" ? <Home />
+        : <></>
+      }
     </RouterContext.Provider>
   );
 };

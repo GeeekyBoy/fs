@@ -8,16 +8,6 @@ import Home from "./Home";
 import AuthFlow from "./AuthFlow";
 import Router from "./Router";
 
-const routes = {
-  "/login/*": AuthFlow,
-  "/signup/*": AuthFlow,
-  "/forgot-password/*": AuthFlow,
-  "/local/:projectPermalink/*": Home,
-  "/:username/:projectPermalink/:taskPermalink/*": Home,
-  "/:username/:projectPermalink/*": Home,
-  "/": Home,
-}
-
 const App = () => {
   const dispatch = useDispatch();
   const theme = useSelector(state => state.appSettings.theme);
@@ -89,7 +79,7 @@ const App = () => {
     document.querySelector('meta[name="theme-color"]').setAttribute('content', isDarkMode ? "#272727" : availColors[theme])
   }, [theme, isDarkMode]);
 
-  return <Router routes={routes} />;
+  return <Router />;
 };
 
 export default App;
