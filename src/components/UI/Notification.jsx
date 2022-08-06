@@ -4,7 +4,6 @@ import { ReactComponent as CloseIcon } from "@fluentui/svg-icons/icons/dismiss_1
 import { ReactComponent as ChevronUpIcon } from "@fluentui/svg-icons/icons/chevron_up_12_regular.svg"
 import { ReactComponent as ChevronDownIcon } from "@fluentui/svg-icons/icons/chevron_down_12_regular.svg"
 import Avatar from './Avatar';
-import { convertFromRaw } from 'draft-js';
 import formatDate from '../../utils/formatDate';
 
 const Notification = (props) => {
@@ -175,7 +174,7 @@ const Notification = (props) => {
                 notificationData.action === "create" && (
                 <span>
                   Commented&nbsp;
-                  &quot;<b>{convertFromRaw(JSON.parse(notificationData.value)).getPlainText()}</b>&quot;&nbsp;
+                  &quot;<b>{notificationData.value}</b>&quot;&nbsp;
                   on the task:&nbsp;
                   &quot;<b>{notificationData.hint}</b>&quot;.
                 </span>

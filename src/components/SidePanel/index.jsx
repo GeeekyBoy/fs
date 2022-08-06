@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from "react-redux";
-import "draft-js/dist/Draft.css";
 import SidPanel from "../UI/SidePanel";
 import TASK_HUB from "./TaskHub";
 import BATCH_HUB from "./BatchHub";

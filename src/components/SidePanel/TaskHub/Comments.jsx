@@ -4,8 +4,6 @@ import { useState, useRef } from "react"
 import { AuthState } from "../../../constants";
 import styles from "./Comments.module.scss"
 import { useDispatch, useSelector } from "react-redux"
-import { stateToHTML } from 'draft-js-export-html';
-import { Editor, EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 import { ReactComponent as CommentsIllustartion } from "../../../assets/undraw_Public_discussion_re_w9up.svg"
 import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_24_regular.svg"
 import * as commentsActions from "../../../actions/comments";
@@ -34,9 +32,7 @@ const Comments = () => {
 
   const newCommentRef = useRef(null)
   const [isNewCommentOpened, setIsNewCommentOpened] = useState(false)
-  const [editorState, setEditorState] = useState(
-    () => EditorState.createEmpty(),
-  );
+  const [newCommentContent, setNewCommentContent] = useState('')
   const processComments = (comments, history) => {
     const commentsArr = [...Object.values(comments), ...Object.values(history)].sort((a, b) => {
       if (new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) {
@@ -81,13 +77,12 @@ const Comments = () => {
   const submitComment = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
     dispatch(commentsActions.handleCreateComment({
       id: generateId(),
       taskId: selectedTask,
-      content: content
+      content: newCommentContent
     }))
-    setEditorState(EditorState.push(editorState, ContentState.createFromText('')))
+    setNewCommentContent('')
     setIsNewCommentOpened(false);
   }
   useOuterClick(newCommentRef, () => {
@@ -136,12 +131,9 @@ const Comments = () => {
                       <RemoveIcon fill="currentColor" />
                     </button>
                   </div>
-                  <div
-                    className={styles.CommentBody}
-                    dangerouslySetInnerHTML={({
-                      __html: stateToHTML(convertFromRaw(JSON.parse(x.content)))
-                    })}
-                  />
+                  <div className={styles.CommentBody}>
+                    {x.content}
+                  </div>
                   <span className={styles.CommentTime}>
                     {!x.isVirtual ? (
                       new Date(x.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -275,7 +267,7 @@ const Comments = () => {
               {x.field === "comment" && x.action === "create" && (
                 <span>
                   commented
-                  &quot;<b>{convertFromRaw(JSON.parse(x.value)).getPlainText()}</b>&quot;
+                  &quot;<b>{x.value}</b>&quot;
                 </span>
               )}
             </span>
@@ -312,11 +304,10 @@ const Comments = () => {
             ref={newCommentRef}
           >
             <div className={styles.CommentInput}>
-              <Editor
-                editorState={editorState}
-                onChange={setEditorState}
-                placeholder="Ask a question or post an update…"
-                expanded={isNewCommentOpened}
+              <textarea
+                placeholder='Ask a question or post an update…'
+                value={newCommentContent}
+                onChange={(e) => setNewCommentContent(e.target.value)}
               />
             </div>
             {isNewCommentOpened && (
