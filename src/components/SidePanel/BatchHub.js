@@ -2,6 +2,7 @@ import React, { useMemo, forwardRef, useImperativeHandle } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { AuthState } from "../../constants";
 import DateField from "../UI/fields/DateField";
+import * as appActions from "../../actions/app";
 import * as tasksActions from "../../actions/tasks";
 import styles from "./BatchHub.module.scss";
 import TagField from "../UI/fields/TagField";
@@ -22,6 +23,10 @@ const TaskHub = forwardRef((_, ref) => {
   const selectedProject = useSelector(state => state.app.selectedProject);
   const selectedTasks = useSelector(state => state.app.selectedTasks);
   const isSynced = useSelector(state => state.app.isSynced);
+
+  const closePanel = () => {
+    return dispatch(appActions.handleSetRightPanel(false))
+  }
 
   const getReadOnly = (userState, username, projects, selectedProject, isSynced) => {
     return (userState === AuthState.SignedIn &&
@@ -111,7 +116,9 @@ const TaskHub = forwardRef((_, ref) => {
       title: `${selectedTasks.length} Task${
         selectedTasks.length > 1 ? "s" : ""
       } Selected`,
-      unclosable: true,
+      onClose: () => {
+        closePanel()
+      },
     },
   }));
   return selectedTasks && (

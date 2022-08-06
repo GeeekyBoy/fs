@@ -13,6 +13,7 @@ import LoginBanner from './LoginBanner';
 import generateRank from '../../utils/generateRank';
 import { useModal } from '../ModalManager';
 import modals from '../modals';
+import BatchRibbon from './BatchRibbon';
 
 const TasksPanel = () => {
   const { showModal } = useModal();
@@ -133,6 +134,7 @@ const TasksPanel = () => {
               </>
             )}
             <ProjectToolbar />
+            <BatchRibbon />
           </>
         ) : <ProjectNotSelected />}
       </div>

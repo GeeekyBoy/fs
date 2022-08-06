@@ -173,8 +173,6 @@ export const handleBatchSelectTask = (id) => (dispatch, getState) => {
     dispatch(handleSetTask(null));
   }
   dispatch(batchSelectTask(id));
-  dispatch(setRightPanel(true));
-  dispatch(setRightPanelPage(panelPages.BATCH_HUB));
 };
 
 export const handleBatchDeselectTask = (id) => (dispatch, getState) => {

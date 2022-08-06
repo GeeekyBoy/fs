@@ -11,7 +11,7 @@ const IconButton = (props) => {
     <button className={styles.IconButton} {...nativeProps}>
       {icon ? React.createElement(icon, {
         className: styles.ButtonIcon,
-        fill: "currentColor"
+        fill: "currentColor",
       }) : null}
     </button>
   );
