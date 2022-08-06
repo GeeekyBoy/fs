@@ -4,6 +4,9 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   root: "src",
+  build: {
+    outDir: "../build",
+  },
   plugins: [svgr({ svgrOptions: { ref: true } }), react()],
   define: {
     global: {},
