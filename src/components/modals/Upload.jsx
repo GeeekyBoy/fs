@@ -8,7 +8,7 @@ import upload from "../../utils/upload";
 import formatSize from "../../utils/formatSize";
 import ProgressBar from "../UI/ProgressBar";
 import API from "../../amplify/API";
-import { uploadExternal } from "../../graphql/queries";
+import { uploadExternal } from "../../graphql/mutations";
 import { ReactComponent as YoutubeIcon } from "../../assets/brands/youtube.svg";
 import { ReactComponent as VimeoIcon } from "../../assets/brands/vimeo.svg";
 import { ReactComponent as LoomIcon } from "../../assets/brands/loom.svg";

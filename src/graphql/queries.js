@@ -1,6 +1,13 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const initializeUpload = /* GraphQL */ `
+  query InitializeUpload($contentType: String!, $taskId: ID!) {
+    initializeUpload(contentType: $contentType, taskId: $taskId) {
+      presignedUrl
+    }
+  }
+`;
 export const listOwnedProjects = /* GraphQL */ `
   query ListOwnedProjects($owner: String) {
     listOwnedProjects(owner: $owner) {
@@ -175,20 +182,6 @@ export const listUsersByUsernames = /* GraphQL */ `
         createdAt
         updatedAt
       }
-    }
-  }
-`;
-export const initializeUpload = /* GraphQL */ `
-  query InitializeUpload($contentType: String!, $taskId: ID!) {
-    initializeUpload(contentType: $contentType, taskId: $taskId) {
-      presignedUrl
-    }
-  }
-`;
-export const uploadExternal = /* GraphQL */ `
-  query UploadExternal($url: AWSURL!, $taskId: ID!) {
-    uploadExternal(url: $url, taskId: $taskId) {
-      presignedUrl
     }
   }
 `;

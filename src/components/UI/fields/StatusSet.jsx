@@ -29,11 +29,11 @@ const StatusSet = (props) => {
             />
             <ComboBox
               value={x.synonym}
-              options={{
-                todo: "Todo",
-                pending: "Pending",
-                done: "Done",
-              }}
+              options={[
+                ["todo", "Todo"],
+                ["pending", "Pending"],
+                ["done", "Done"],
+              ]}
             />
           </Fragment>
         ))}

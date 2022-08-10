@@ -8,7 +8,7 @@ import ListItem from '../ListItem';
 const ComboBox = (props) => {
   const {
     value,
-    options = {},
+    options = [],
     onChange,
     label,
     name,
@@ -22,7 +22,7 @@ const ComboBox = (props) => {
   const [isComboBoxOpened, setIsComboBoxOpened] = useState(false)
   const getValueInvertedIndex = (options, value) => {
     const actualValue = value
-    const optsArr = Object.keys(options)
+    const optsArr = options.map(x => x[0])
     return optsArr.length - optsArr.findIndex(option => option === actualValue) - 1
   }
   const valueInvertedIndex = useMemo(() => getValueInvertedIndex(options, value), [options, value])
@@ -57,7 +57,7 @@ const ComboBox = (props) => {
         ].join(" ")}
       >
         <span className="noselect">
-          {options[value]}
+          {options.find(x => x[0] === value)[1]}
         </span>
         <ChevronDownIcon fill="currentColor" />
         {(isComboBoxOpened && !disabled) && (
@@ -70,7 +70,7 @@ const ComboBox = (props) => {
               width: selectRef.current.getBoundingClientRect().width - 10,
             }}
           >
-            {Object.entries(options).map(x => (
+            {options.map(x => (
               <ListItem
                 key={x[0]}
                 id={x[0]}

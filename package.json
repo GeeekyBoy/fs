@@ -15,7 +15,7 @@
     "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@react-spring/web": "^9.5.2",
     "@use-gesture/react": "^10.2.17",
-    "aws-sdk": "^2.1184.0",
+    "aws-sdk": "^2.1190.0",
     "big-integer": "^1.6.51",
     "blueimp-md5": "^2.19.0",
     "csv": "^6.2.0",
@@ -39,6 +39,7 @@
     "start": "vite serve",
     "dev": "vite serve",
     "build": "vite build",
+    "backend": "rm -rf amplify/backend/api/fsCoreAPI/build && rm -rf amplify/backend/api/fsCoreAPI/pipelineFunctions && rm -rf amplify/backend/api/fsCoreAPI/resolvers && amplify api gql-compile --allow-destructive-graphql-schema-updates && amplify mock api",
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -80,7 +81,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.18.9",
+    "@babel/core": "^7.18.10",
     "@babel/eslint-parser": "^7.18.9",
     "@storybook/addon-a11y": "^6.5.10",
     "@storybook/addon-actions": "^6.5.10",
@@ -113,7 +114,7 @@
     "storybook-addon-breakpoints": "^1.0.0",
     "storybook-addon-performance": "^0.16.1",
     "stream-browserify": "3.0.0",
-    "vite": "^3.0.4",
+    "vite": "^3.0.5",
     "vite-plugin-html": "^3.2.0",
     "webpack-bundle-analyzer": "^4.5.0"
   }

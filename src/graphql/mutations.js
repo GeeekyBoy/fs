@@ -30,6 +30,13 @@ export const pushUserUpdate = /* GraphQL */ `
     }
   }
 `;
+export const uploadExternal = /* GraphQL */ `
+  mutation UploadExternal($url: AWSURL!, $taskId: ID!) {
+    uploadExternal(url: $url, taskId: $taskId) {
+      success
+    }
+  }
+`;
 export const createProject = /* GraphQL */ `
   mutation CreateProject($input: CreateProjectInput!) {
     createProject(input: $input) {

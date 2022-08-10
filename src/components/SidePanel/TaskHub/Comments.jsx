@@ -11,16 +11,15 @@ import Avatar from '../../UI/Avatar';
 import generateId from '../../../utils/generateId';
 import Illustration from '../../UI/Illustration';
 import formatDate from '../../../utils/formatDate';
+import Button from '../../UI/Button';
 
 const Comments = () => {
 
   const dispatch = useDispatch()
 
-  const selectedProject = useSelector(state => state.app.selectedProject)
+  const selectedProject = useSelector(state => state.projects[state.app.selectedProject])
   const selectedTask = useSelector(state => state.app.selectedTask)
   const isSynced = useSelector(state => state.app.isSynced)
-
-  const projects = useSelector(state => state.projects)
 
   const comments = useSelector(state => state.comments)
 
@@ -56,14 +55,14 @@ const Comments = () => {
     }
     return results.length ? results : null
   }
-  const getReadOnly = (user, projects, selectedProject, isSynced) => {
+  const getReadOnly = (user, selectedProject, isSynced) => {
     return (user.state === AuthState.SignedIn &&
-    ((projects[selectedProject]?.owner !== user.data.username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
-    (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
+    ((selectedProject?.owner !== user.data.username &&
+    selectedProject?.permissions === "r") || !isSynced)) ||
+    (user.state !== AuthState.SignedIn && selectedProject?.isTemp)
   }
   const processedComments = useMemo(() => processComments(comments, history), [comments, history])
-  const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
+  const readOnly = useMemo(() => getReadOnly(user, selectedProject, isSynced), [user, selectedProject, isSynced])
   const openNewComment = () => {
     if (!isNewCommentOpened) {
       setIsNewCommentOpened(true);
@@ -243,7 +242,7 @@ const Comments = () => {
               {x.field === "due" && x.action === "update" && (
                 parseInt(x.value, 10) ? (
                   <span>
-                    changed due date to
+                    changed due date to&nbsp;
                     <b>{formatDate(x.value)}</b>.
                   </span>
                 ) : (
@@ -254,20 +253,14 @@ const Comments = () => {
               )}
               {x.field === "priority" && x.action === "update" && (
                 <span>
-                  changed priority to
+                  changed priority to&nbsp;
                   <b>{x.value}</b>.
                 </span>
               )}
               {x.field === "status" && x.action === "update" && (
                 <span>
-                  changed status to
-                  <b>{x.value}</b>
-                </span>
-              )}
-              {x.field === "comment" && x.action === "create" && (
-                <span>
-                  commented
-                  &quot;<b>{x.value}</b>&quot;
+                  changed status to&nbsp;
+                  <b>{selectedProject.statusSet.find(y => y.id === x.value).title}</b>
                 </span>
               )}
             </span>
@@ -307,6 +300,7 @@ const Comments = () => {
               <textarea
                 placeholder='Ask a question or post an update…'
                 value={newCommentContent}
+                rows={isNewCommentOpened ? 3 : 1}
                 onChange={(e) => setNewCommentContent(e.target.value)}
               />
             </div>
@@ -316,7 +310,7 @@ const Comments = () => {
 
                 </div>
                 <div>
-                  <button onClick={submitComment}>Comment</button>
+                  <Button label="Comment" onClick={submitComment} />
                 </div>
               </div>
             )}

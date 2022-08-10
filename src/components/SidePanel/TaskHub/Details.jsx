@@ -38,16 +38,6 @@ const Details = () => {
     () => getReadOnly(userState, username, selectedProject, isSynced),
     [userState, username, selectedProject, isSynced]
   );
-
-  const getStatusSet = (selectedProject) => {
-    const result = {}
-    for (const { id, title } of selectedProject.statusSet) {
-      result[id] = title
-    }
-    return result
-  }
-
-  const statusSet = useMemo(() => getStatusSet(selectedProject), [selectedProject])
   
   const handleChange = (e) => {
     dispatch(
@@ -127,7 +117,7 @@ const Details = () => {
         label="Status"
         onChange={handleChange}
         value={tasks[selectedTask].status}
-        options={statusSet}
+        options={selectedProject.statusSet.map(({ id, title }) => [id, title])}
         readOnly={readOnly}
       />
       <ComboBox
@@ -135,11 +125,11 @@ const Details = () => {
         label="Priority"
         onChange={handleChange}
         value={tasks[selectedTask].priority}
-        options={{
-          low: "Low",
-          normal: "Normal",
-          high: "High",
-        }}
+        options={[
+          ["low", "Low"],
+          ["normal", "Normal"],
+          ["high", "High"],
+        ]}
         readOnly={readOnly}
       />
     </form>

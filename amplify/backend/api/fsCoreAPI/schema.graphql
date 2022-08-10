@@ -53,7 +53,7 @@ type Comment
   @aws_cognito_user_pools {
   id: ID!
   taskId: ID!
-  content: AWSJSON!
+  content: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String!
@@ -107,6 +107,9 @@ type Mutation {
   pushUserUpdate(input: PushUserUpdateInput!): UserUpdate!
     @function(name: "fsCoreApiResolver-${env}")
     @aws_iam
+  uploadExternal(url: AWSURL!, taskId: ID!): Empty!
+    @function(name: "fsCoreApiResolver-${env}")
+    @aws_cognito_user_pools
   createProject(input: CreateProjectInput!): CreatedProject
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
@@ -231,26 +234,6 @@ type Query {
         { allow: private, provider: userPools }
       ]
     )
-  initializeUpload(contentType: String!, taskId: ID!): InitializedUpload
-    @function(name: "fsCoreApiResolver-${env}")
-    @aws_cognito_user_pools
-    @aws_iam
-    @auth(
-      rules: [
-        { allow: public, provider: iam }
-        { allow: private, provider: userPools }
-      ]
-    )
-  uploadExternal(url: AWSURL!, taskId: ID!): UploadedFile
-    @function(name: "fsCoreApiResolver-${env}")
-    @aws_cognito_user_pools
-    @aws_iam
-    @auth(
-      rules: [
-        { allow: public, provider: iam }
-        { allow: private, provider: userPools }
-      ]
-    )
   listAttachmentsByTaskId(taskId: ID!): AttachmentsList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
@@ -281,6 +264,9 @@ type Query {
         { allow: private, provider: userPools }
       ]
     )
+  initializeUpload(contentType: String!, taskId: ID!): InitializedUpload
+    @function(name: "fsCoreApiResolver-${env}")
+    @aws_cognito_user_pools
   listOwnedProjects(owner: String): ProjectsList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
@@ -503,7 +489,7 @@ input CreateTaskInput {
 input CreateCommentInput {
   id: ID!
   taskId: ID!
-  content: AWSJSON!
+  content: String!
   mutationId: ID
 }
 
@@ -672,7 +658,7 @@ type CreatedTask @aws_iam @aws_cognito_user_pools {
 type CreatedComment @aws_iam @aws_cognito_user_pools {
   id: ID!
   taskId: ID!
-  content: AWSJSON!
+  content: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String!
@@ -714,7 +700,7 @@ type TaskUpdate @aws_iam @aws_cognito_user_pools {
 type CommentUpdate @aws_iam @aws_cognito_user_pools {
   id: ID!
   taskId: ID!
-  content: AWSJSON!
+  content: String!
   updatedAt: AWSDateTime!
   mutationId: ID
 }
@@ -763,8 +749,8 @@ type InitializedUpload @aws_iam @aws_cognito_user_pools {
   presignedUrl: AWSURL!
 }
 
-type UploadedFile @aws_iam @aws_cognito_user_pools {
-  presignedUrl: AWSURL!
+type Empty @aws_iam @aws_cognito_user_pools {
+  success: Boolean!
 }
 
 type Attachment @aws_iam @aws_cognito_user_pools {

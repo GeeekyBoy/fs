@@ -31,6 +31,7 @@ const https = require('https');
 const UrlParse = require('url').URL;
 const mariadb = require('mariadb');
 const { randomUUID } = require('crypto');
+const getEmailContent = require('./email').getContent;
 
 const s3 = new AWS.S3();
 
@@ -41,6 +42,8 @@ const UNAUTHORIZED = 'UNAUTHORIZED';
 const USER_NOT_FOUND = 'USER_NOT_FOUND';
 const PROJECT_NOT_FOUND = 'PROJECT_NOT_FOUND';
 const ALREADY_EXISTS = 'ALREADY_EXISTS';
+const UNSUPPORTED_PROVIDER = 'UNSUPPORTED_PROVIDER';
+const METADATA_FETCH_ERROR = 'METADATA_FETCH_ERROR';
 
 const pool = mariadb.createPool({
   host: RDS_HOST,
@@ -50,11 +53,12 @@ const pool = mariadb.createPool({
   connectionLimit: 5,
 });
 
-exports.handler = async function (ctx) {
+exports.handler = async (ctx) => {
   const resolvers = {
     Mutation: {
       pushNotification: pushData,
       pushUserUpdate: pushData,
+      uploadExternal,
       createProject,
       createTask,
       createComment,
@@ -84,7 +88,6 @@ exports.handler = async function (ctx) {
     },
     Query: {
       initializeUpload,
-      uploadExternal,
       listAttachmentsByTaskId,
       getUserByUsername,
       searchUserToAssign,
@@ -225,22 +228,21 @@ exports.handler = async function (ctx) {
               }
               resolve(title);
             });
-          }).on('error', (e) => {
-            console.error(e);
+          }).on('error', () => {
+            reject(METADATA_FETCH_ERROR);
           });
         });
-        console.log(title);
-        const uploadRes = await s3.upload({
+        if (!title) throw new Error(METADATA_FETCH_ERROR);
+        await s3.upload({
           Bucket: 'fs-attachments',
           Key: `${owner}/${projectId}/${taskId}/${provider}-${contentId}`,
           ContentType: `embed/${provider}`,
           ContentDisposition: `inline; filename="[${contentId}](${title})"`,
           Body: '',
         }).promise();
-        console.log(uploadRes);
-        return {};
+        return { success: true };
       }
-      throw new Error('Unsupported URL.');
+      throw new Error(UNSUPPORTED_PROVIDER);
     } catch (err) {
       throw new Error(err);
     }
@@ -435,6 +437,22 @@ exports.handler = async function (ctx) {
           mutator: client,
         };
         await pushNotification(notificationTemplate, recipients);
+        const recipientsData = await _fetchRecipientsData(Object.keys(recipients));
+        const watchersEmails = recipientsData.map(({ email }) => email);
+        const emailToBeSentToWatchers = getEmailContent('commentation', {
+          UPDATER_USERNAME: client,
+          TASK: hint || '',
+          NEW_VALUE: content,
+          TASK_PERMALINK: 'https://forwardslash.ch/',
+        });
+        if (watchersEmails.length) {
+          await sgMail.sendMultiple({
+            to: [...watchersEmails],
+            from: 'notify@forwardslash.ch',
+            subject: emailToBeSentToWatchers.subject,
+            html: emailToBeSentToWatchers.body,
+          });
+        }
         return {
           id: commentId,
           taskId,
@@ -637,6 +655,22 @@ exports.handler = async function (ctx) {
         mutator: client,
       };
       await pushNotification(notificationTemplate, recipients);
+      const recipientsData = await _fetchRecipientsData(Object.keys(recipients));
+      const watchersEmails = recipientsData.map(({ email }) => email);
+      const emailToBeSentToWatchers = getEmailContent('dueUpdate', {
+        UPDATER_USERNAME: client,
+        TASK: hint || '',
+        NEW_VALUE: new Date(newDue).toLocaleDateString(),
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      if (watchersEmails.length) {
+        await sgMail.sendMultiple({
+          to: [...watchersEmails],
+          from: 'notify@forwardslash.ch',
+          subject: emailToBeSentToWatchers.subject,
+          html: emailToBeSentToWatchers.body,
+        });
+      }
       return {
         id: taskId,
         projectId,
@@ -684,11 +718,11 @@ exports.handler = async function (ctx) {
       status: newStatus,
       mutationId,
     } = ctx.arguments.input;
-    const query = 'CALL update_task_status(?, ?, ?, ?, ?, ?, ?, ?)';
-    const params = [taskId, newStatus, client, mutationId, null, null, null, null];
+    const query = 'CALL update_task_status(?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const params = [taskId, newStatus, client, mutationId, null, null, null, null, null];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, new_status_title: newStatusTitle } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -704,6 +738,22 @@ exports.handler = async function (ctx) {
         mutator: client,
       };
       await pushNotification(notificationTemplate, recipients);
+      const recipientsData = await _fetchRecipientsData(Object.keys(recipients));
+      const watchersEmails = recipientsData.map(({ email }) => email);
+      const emailToBeSentToWatchers = getEmailContent('statusUpdate', {
+        UPDATER_USERNAME: client,
+        TASK: hint || '',
+        NEW_VALUE: newStatusTitle,
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      if (watchersEmails.length) {
+        await sgMail.sendMultiple({
+          to: [...watchersEmails],
+          from: 'notify@forwardslash.ch',
+          subject: emailToBeSentToWatchers.subject,
+          html: emailToBeSentToWatchers.body,
+        });
+      }
       return {
         id: taskId,
         projectId,
@@ -745,6 +795,22 @@ exports.handler = async function (ctx) {
         mutator: client,
       };
       await pushNotification(notificationTemplate, recipients);
+      const recipientsData = await _fetchRecipientsData(Object.keys(recipients));
+      const watchersEmails = recipientsData.map(({ email }) => email);
+      const emailToBeSentToWatchers = getEmailContent('priorityUpdate', {
+        UPDATER_USERNAME: client,
+        TASK: hint || '',
+        NEW_VALUE: newPriority,
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      if (watchersEmails.length) {
+        await sgMail.sendMultiple({
+          to: [...watchersEmails],
+          from: 'notify@forwardslash.ch',
+          subject: emailToBeSentToWatchers.subject,
+          html: emailToBeSentToWatchers.body,
+        });
+      }
       return {
         id: taskId,
         projectId,
@@ -833,6 +899,36 @@ exports.handler = async function (ctx) {
         mutator: client,
       };
       await pushNotification(notificationTemplate, recipients);
+      const recipientsData = await _fetchRecipientsData(Object.keys(recipients));
+      const assigneeData = recipientsData
+        .splice(recipientsData.findIndex((recipient) => recipient.username === assignee), 1)[0];
+      const watchersEmails = recipientsData.map(({ email }) => email);
+      const emailToBeSentToAssignee = getEmailContent('assignment', {
+        ASSIGNEE_FIRST_NAME: assigneeData.firstName,
+        ASSIGNER_USERNAME: client,
+        TASK: hint || '',
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      const emailToBeSentToWatchers = getEmailContent('assignmentWatching', {
+        ASSIGNEE_USERNAME: assigneeData.username,
+        ASSIGNER_USERNAME: client,
+        TASK: hint || '',
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      await sgMail.send({
+        to: ctx.identity.claims.email,
+        from: 'notify@forwardslash.ch',
+        subject: emailToBeSentToAssignee.subject,
+        html: emailToBeSentToAssignee.body,
+      });
+      if (watchersEmails.length) {
+        await sgMail.sendMultiple({
+          to: [...watchersEmails],
+          from: 'notify@forwardslash.ch',
+          subject: emailToBeSentToWatchers.subject,
+          html: emailToBeSentToWatchers.body,
+        });
+      }
       return {
         id: taskId,
         projectId,
@@ -1670,6 +1766,30 @@ exports.handler = async function (ctx) {
     throw new Error(UNAUTHORIZED);
   }
 
+  async function _fetchRecipientsData(usernames) {
+    if (usernames.length) {
+      let query = 'SELECT `users`.`username`, '
+      + "`users`.`first_name` AS 'firstName', "
+      + "`users`.`last_name` AS 'lastName', "
+      + '`users`.`email` '
+      + 'FROM users WHERE username IN (';
+      for (let i = 0; i < usernames.length; i++) {
+        query += '?';
+        if (i < usernames.length - 1) {
+          query += ', ';
+        }
+      }
+      query += ')';
+      try {
+        const data = await pool.execute(query, usernames);
+        return data || [];
+      } catch (err) {
+        throw new Error(err);
+      }
+    }
+    return [];
+  }
+
   async function _pushData(graphqlQuery, opName, input) {
     const req = new AWS.HttpRequest(APIURL, REGION);
     const { hostname: endpoint, port } = new UrlParse(APIURL);
@@ -1695,7 +1815,6 @@ exports.handler = async function (ctx) {
           data += chunk;
         });
         result.on('end', () => {
-          console.log(data);
           resolve(JSON.parse(data.toString()));
         });
       });

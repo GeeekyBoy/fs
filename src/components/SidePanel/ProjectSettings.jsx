@@ -151,10 +151,10 @@ const ProjectSettings = forwardRef((_, ref) => {
             name="privacy"
             value={newPrivacy}
             label="Privacy"
-            options={{
-              public: "Public",
-              private: "Private"
-            }}
+            options={[
+              ["public", "Public"],
+              ["private", "Private"],
+            ]}
             onChange={(e) => setNewPrivacy(e.target.value)}
             readOnly={readOnly}
           />
@@ -163,10 +163,10 @@ const ProjectSettings = forwardRef((_, ref) => {
               name="permissions"
               value={newPermissions}
               label="Permissions"
-              options={{
-                rw: "Read Write",
-                r: "Read Only"
-              }}
+              options={[
+                ["rw", "Read Write"],
+                ["r", "Read Only"],
+              ]}
               onChange={(e) => setNewPermissions(e.target.value)}
               readOnly={readOnly}
             />

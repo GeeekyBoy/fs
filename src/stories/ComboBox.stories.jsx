@@ -20,11 +20,11 @@ export const Default = Template.bind({});
 Default.args = {
   value: "todo",
   label: "Status",
-  options: {
-    "todo": "Todo",
-    "pending": "Pending",
-    "done": "Done",
-  },
+  options: [
+    ["todo", "Todo"],
+    ["pending", "Pending"],
+    ["done", "Done"],
+  ],
   readOnly: false,
   disabled: false
 };

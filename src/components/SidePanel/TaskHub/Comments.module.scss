@@ -111,8 +111,15 @@
   overflow: auto;
   outline: none;
   font-size: 0.875rem;
-  &.expanded {
-    min-height: 50px;
+  & > textarea {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    resize: none;
+    width: 100%;
+    color: var(--color-fill-color-text-primary);
+    caret-color: var(--color-fill-color-text-primary);
+    font-size: 0.875rem;
   }
 }
 
@@ -125,25 +132,6 @@
   & > div {
     display: flex;
     flex-direction: row;
-    &:nth-child(2) {
-      & > button {
-        padding: 8px 12px;
-        border: none;
-        border-radius: 8px;
-        outline: none;
-        background-color: var(--color-fill-color-accent-primary);
-        color: var(--color-fill-color-text-on-accent-primary);
-        font-size: 0.875rem;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.2s;
-        &:hover {
-          background-color: var(--primaryHover);
-        }
-        &:disabled {
-          background-color: var(--color-fill-color-subtle-secondary);
-        }
-      }
-    }
     gap: 10px;
   }
 }
