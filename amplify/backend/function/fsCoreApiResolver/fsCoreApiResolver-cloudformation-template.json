@@ -360,6 +360,16 @@
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:*",
+                "s3-object-lambda:*"
+              ],
+              "Resource": [
+                "arn:aws:s3:::fs-attachments/*"
+              ]
             }
           ]
         }
