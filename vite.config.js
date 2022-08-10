@@ -8,7 +8,16 @@ export default defineConfig({
   build: {
     outDir: "../build",
   },
-  plugins: [svgr({ svgrOptions: { ref: true } }), react(), VitePWA()],
+  plugins: [
+    svgr({ svgrOptions: { ref: true } }),
+    react(),
+    VitePWA({
+      workbox: {
+        clientsClaim: true,
+        skipWaiting: true,
+      },
+    }),
+  ],
   define: {
     global: {},
   },
