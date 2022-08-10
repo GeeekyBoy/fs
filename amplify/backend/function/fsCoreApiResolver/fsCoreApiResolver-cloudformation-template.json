@@ -368,6 +368,7 @@
                 "s3-object-lambda:*"
               ],
               "Resource": [
+                "arn:aws:s3:::fs-attachments",
                 "arn:aws:s3:::fs-attachments/*"
               ]
             }
