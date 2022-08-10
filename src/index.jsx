@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import store from "./store";
 import "./scss/index.scss";
 import App from "./components/App";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import ModalManager from "./components/ModalManager";
 import WindowSizeListener from "./components/WindowSizeListener";
 import TabViewManager from './components/TabViewManager';
@@ -22,4 +21,3 @@ root.render(
     </Provider>
   </WindowSizeListener>
 );
-serviceWorkerRegistration.register();
