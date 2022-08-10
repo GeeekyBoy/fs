@@ -1792,7 +1792,8 @@ exports.handler = async (ctx) => {
 
   async function _pushData(graphqlQuery, opName, input) {
     const req = new AWS.HttpRequest(APIURL, REGION);
-    const { hostname: endpoint, port } = new UrlParse(APIURL);
+    const { hostname: endpoint, port, protocol } = new UrlParse(APIURL);
+    const client = protocol === 'https:' ? https : http;
     req.method = 'POST';
     req.path = '/graphql';
     req.headers.host = endpoint;
@@ -1809,7 +1810,7 @@ exports.handler = async (ctx) => {
     const signer = new AWS.Signers.V4(req, 'appsync', true);
     signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate());
     await new Promise((resolve) => {
-      const httpRequest = http.request(httpOpts, (result) => {
+      const httpRequest = client.request(httpOpts, (result) => {
         let data = '';
         result.on('data', (chunk) => {
           data += chunk;
