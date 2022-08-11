@@ -915,7 +915,7 @@ exports.handler = async (ctx) => {
         TASK_PERMALINK: 'https://forwardslash.ch/',
       });
       await sgMail.send({
-        to: ctx.identity.claims.email,
+        to: assigneeData.email,
         from: 'notify@forwardslash.ch',
         subject: emailToBeSentToAssignee.subject,
         html: emailToBeSentToAssignee.body,
@@ -1013,6 +1013,22 @@ exports.handler = async (ctx) => {
         mutator: client,
       };
       await pushNotification(notificationTemplate, recipients);
+      const recipientsData = await _fetchRecipientsData(Object.keys(recipients));
+      const watchersEmails = recipientsData.map(({ email }) => email);
+      const emailToBeSentToWatchers = getEmailContent('anonymousAssignmentWatching', {
+        ASSIGNEE_NAME: assignee,
+        ASSIGNER_USERNAME: client,
+        TASK: hint || '',
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      if (watchersEmails.length) {
+        await sgMail.sendMultiple({
+          to: [...watchersEmails],
+          from: 'notify@forwardslash.ch',
+          subject: emailToBeSentToWatchers.subject,
+          html: emailToBeSentToWatchers.body,
+        });
+      }
       return {
         id: taskId,
         projectId,
@@ -1098,6 +1114,34 @@ exports.handler = async (ctx) => {
         mutator: client,
       };
       await pushNotification(notificationTemplate, recipients);
+      const recipientsData = await _fetchRecipientsData(Object.keys(recipients));
+      const watchersEmails = recipientsData.map(({ email }) => email);
+      const emailToBeSentToAssignee = getEmailContent('invitation', {
+        ASSIGNEE_EMAIL: assignee,
+        ASSIGNER_USERNAME: client,
+        TASK: hint || '',
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      const emailToBeSentToWatchers = getEmailContent('invitationWatching', {
+        ASSIGNEE_EMAIL: assignee,
+        ASSIGNER_USERNAME: client,
+        TASK: hint || '',
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      await sgMail.send({
+        to: assignee,
+        from: 'notify@forwardslash.ch',
+        subject: emailToBeSentToAssignee.subject,
+        html: emailToBeSentToAssignee.body,
+      });
+      if (watchersEmails.length) {
+        await sgMail.sendMultiple({
+          to: [...watchersEmails],
+          from: 'notify@forwardslash.ch',
+          subject: emailToBeSentToWatchers.subject,
+          html: emailToBeSentToWatchers.body,
+        });
+      }
       return {
         id: taskId,
         projectId,

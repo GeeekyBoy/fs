@@ -34,7 +34,6 @@ const pool = mariadb.createPool({
 });
 
 exports.handler = async (event) => {
-  console.log(event);
   try {
     const query = 'CALL create_user(?, ?, ?, ?)';
     const params = [

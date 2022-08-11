@@ -29,6 +29,9 @@ const getTemplate = (templateID) => {
 const templates = {
   assignment: getTemplate('assignment'),
   assignmentWatching: getTemplate('assignmentWatching'),
+  anonymousAssignmentWatching: getTemplate('anonymousAssignmentWatching'),
+  invitation: getTemplate('invitation'),
+  invitationWatching: getTemplate('invitationWatching'),
   addingWatcher: getTemplate('addingWatcher'),
   addingWatcherWatching: getTemplate('addingWatcherWatching'),
   dueUpdate: getTemplate('dueUpdate'),
