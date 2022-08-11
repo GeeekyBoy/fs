@@ -1,6 +1,34 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const searchUserToAssign = /* GraphQL */ `
+  query SearchUserToAssign($searchQuery: String!, $taskId: ID!) {
+    searchUserToAssign(searchQuery: $searchQuery, taskId: $taskId) {
+      items {
+        username
+        firstName
+        lastName
+        email
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const searchUserToWatch = /* GraphQL */ `
+  query SearchUserToWatch($searchQuery: String!, $taskId: ID!) {
+    searchUserToWatch(searchQuery: $searchQuery, taskId: $taskId) {
+      items {
+        username
+        firstName
+        lastName
+        email
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 export const initializeUpload = /* GraphQL */ `
   query InitializeUpload($contentType: String!, $taskId: ID!) {
     initializeUpload(contentType: $contentType, taskId: $taskId) {
@@ -101,36 +129,6 @@ export const listNotifications = /* GraphQL */ `
     }
   }
 `;
-export const listHistoryByProjectId = /* GraphQL */ `
-  query ListHistoryByProjectId($projectId: ID!) {
-    listHistoryByProjectId(projectId: $projectId) {
-      items {
-        id
-        action
-        field
-        value
-        createdAt
-        updatedAt
-        owner
-      }
-    }
-  }
-`;
-export const listHistoryByTaskId = /* GraphQL */ `
-  query ListHistoryByTaskId($taskId: ID!) {
-    listHistoryByTaskId(taskId: $taskId) {
-      items {
-        id
-        action
-        field
-        value
-        createdAt
-        updatedAt
-        owner
-      }
-    }
-  }
-`;
 export const getUserByUsername = /* GraphQL */ `
   query GetUserByUsername($username: String!) {
     getUserByUsername(username: $username) {
@@ -140,34 +138,6 @@ export const getUserByUsername = /* GraphQL */ `
       email
       createdAt
       updatedAt
-    }
-  }
-`;
-export const searchUserToAssign = /* GraphQL */ `
-  query SearchUserToAssign($searchQuery: String!, $taskId: ID!) {
-    searchUserToAssign(searchQuery: $searchQuery, taskId: $taskId) {
-      items {
-        username
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
-export const searchUserToWatch = /* GraphQL */ `
-  query SearchUserToWatch($searchQuery: String!, $taskId: ID!) {
-    searchUserToWatch(searchQuery: $searchQuery, taskId: $taskId) {
-      items {
-        username
-        firstName
-        lastName
-        email
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
@@ -239,6 +209,21 @@ export const getProjectByPermalink = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+    }
+  }
+`;
+export const listHistoryByTaskId = /* GraphQL */ `
+  query ListHistoryByTaskId($taskId: ID!) {
+    listHistoryByTaskId(taskId: $taskId) {
+      items {
+        id
+        action
+        field
+        value
+        createdAt
+        updatedAt
+        owner
+      }
     }
   }
 `;

@@ -43,7 +43,7 @@ const SyncManager = () => {
               await dispatch(projectsActions.handleFetchAssignedProjects(true))
               const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))
               PubSub.subscribeTopic("ownedProjects")
-              let reqProject = Object.values(projects).filter(x => x.permalink === routeParams.projectPermalink)[0]
+              let reqProject = Object.values(projects).filter(x => `${x.owner}/${x.permalink}` === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
               if (!reqProject) {
                 try {
                   reqProject = (await API.execute(queries.getProjectByPermalink, {
@@ -54,7 +54,7 @@ const SyncManager = () => {
                 } catch {
                   reqProject = null
                   if (routeParams.taskPermalink) {
-                    navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, { replace: true })
+                    navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
                   }
                 }
               }
@@ -67,9 +67,11 @@ const SyncManager = () => {
                     dispatch(appActions.handleSetTask(reqTask.id, false))
                     dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
                     dispatch(appActions.handleSetRightPanel(true))
+                  } else {
+                    navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
                   }
                 } else {
-                  navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, { replace: true })
+                  navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
                 }
               }
           } else if (currUser.state === AuthState.SignedIn) {
@@ -80,7 +82,7 @@ const SyncManager = () => {
             const firstProject = sortByRank(Object.values(projects).filter(x => x.isOwned))?.[0]
             if (firstProject) {
               dispatch(appActions.handleSetProject(firstProject.id, false))
-              navigate(`/${firstProject.permalink}`, { replace: true })
+              navigate(`/${firstProject.permalink}`, true)
             }
           }
           if (store.getState().isOffline) {

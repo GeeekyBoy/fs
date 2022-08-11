@@ -207,23 +207,9 @@ type Query {
   searchUserToAssign(searchQuery: String!, taskId: ID!): UsersList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
-    @aws_iam
-    @auth(
-      rules: [
-        { allow: public, provider: iam }
-        { allow: private, provider: userPools }
-      ]
-    )
   searchUserToWatch(searchQuery: String!, taskId: ID!): UsersList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
-    @aws_iam
-    @auth(
-      rules: [
-        { allow: public, provider: iam }
-        { allow: private, provider: userPools }
-      ]
-    )
   listUsersByUsernames(usernames: [String!]!): UsersList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools
@@ -272,24 +258,23 @@ type Query {
     @aws_cognito_user_pools
   listAssignedProjects(assignee: String): ProjectsList
     @function(name: "fsCoreApiResolver-${env}")
-    @aws_iam
     @aws_cognito_user_pools
   listWatchedProjects(watcher: String): ProjectsList
     @function(name: "fsCoreApiResolver-${env}")
-    @aws_iam
     @aws_cognito_user_pools
   listNotifications: NotificationsList
     @function(name: "fsCoreApiResolver-${env}")
-    @aws_iam
-    @aws_cognito_user_pools
-  listHistoryByProjectId(projectId: ID!): IndividualHistoryList
-    @function(name: "fsCoreApiResolver-${env}")
-    @aws_iam
     @aws_cognito_user_pools
   listHistoryByTaskId(taskId: ID!): IndividualHistoryList
     @function(name: "fsCoreApiResolver-${env}")
-    @aws_iam
     @aws_cognito_user_pools
+    @aws_iam
+    @auth(
+      rules: [
+        { allow: public, provider: iam }
+        { allow: private, provider: userPools }
+      ]
+    )
   listTasksForProject(projectId: ID!): TasksList
     @function(name: "fsCoreApiResolver-${env}")
     @aws_cognito_user_pools

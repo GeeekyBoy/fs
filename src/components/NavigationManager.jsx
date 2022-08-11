@@ -38,7 +38,7 @@ const NavigationManager = () => {
           } catch {
             reqProject = null
             if (taskPermalink) {
-              navigate(`/${username}/${projectPermalink}`, { replace: true })
+              navigate(`/${username}/${projectPermalink}`, true)
             }
           }
         }
@@ -51,13 +51,15 @@ const NavigationManager = () => {
             const reqTask = Object.values(tasks).filter(x => x.permalink === parseInt(taskPermalink, 10))[0]
             if (reqTask) {
               dispatch(appActions.handleSetTask(reqTask.id, false));
+            } else {
+              navigate(`/${username}/${projectPermalink}`, true)
             }
           } else {
-            navigate(`/${username}/${projectPermalink}`, { replace: true });
+            navigate(`/${username}/${projectPermalink}`, true);
           }
         }
       } else if (userState !== AuthState.SignedIn && projectPermalink) {
-        const reqProject = Object.values(projects).filter((x) => x.permalink === projectPermalink)[0];
+        const reqProject = Object.values(projects).filter(x => `${x.owner}/${x.permalink}` === `${username}/${projectPermalink}`)[0];
         if (reqProject) {
           dispatch(appActions.handleSetProject(reqProject.id, false));
         }

@@ -138,7 +138,7 @@ const subscriptionsTemplates = {
                 mutatedAt: mutationDate
               }))
               if (app.selectedProject === incoming.id && incoming.permalink !== prevPermalink) {
-                navigate("/" + incoming.owner + "/" + incoming.permalink, { replace: true })
+                navigate("/" + incoming.owner + "/" + incoming.permalink, true)
               }
             }
           }

@@ -101,7 +101,6 @@ exports.handler = async (ctx) => {
       listTasksForProject,
       listCommentsForTask,
       listNotifications,
-      listHistoryByProjectId,
       listHistoryByTaskId,
     },
     Subscription: {
@@ -250,7 +249,7 @@ exports.handler = async (ctx) => {
 
   async function listAttachmentsByTaskId(ctx) {
     try {
-      const client = ctx.identity.username;
+      const client = ctx.identity.sub ? ctx.identity.username : '';
       const { taskId } = ctx.arguments;
       const query = 'CALL get_project_of_task(?, ?, ?, ?)';
       const params = [taskId, client, null, null];
@@ -1243,7 +1242,7 @@ exports.handler = async (ctx) => {
   }
 
   async function getProjectById(ctx) {
-    const client = ctx.identity.username;
+    const client = ctx.identity.sub ? ctx.identity.username : '';
     const query = 'CALL get_project_by_id(?, ?)';
     const params = [ctx.arguments.projectId, client];
     try {
@@ -1258,7 +1257,7 @@ exports.handler = async (ctx) => {
   }
 
   async function getProjectByPermalink(ctx) {
-    const client = ctx.identity.username;
+    const client = ctx.identity.sub ? ctx.identity.username : '';
     const { owner, permalink } = ctx.arguments;
     const query = 'CALL get_project_by_permalink(?, ?, ?)';
     const params = [permalink, owner, client];
@@ -1285,21 +1284,8 @@ exports.handler = async (ctx) => {
     }
   }
 
-  async function listHistoryByProjectId(ctx) {
-    const client = ctx.identity.username;
-    const { projectId } = ctx.arguments;
-    const query = 'CALL list_history_by_project_id(?, ?)';
-    const params = [projectId, client];
-    try {
-      const data = (await pool.execute(query, params))[0];
-      return { items: data || [] };
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-
   async function listHistoryByTaskId(ctx) {
-    const client = ctx.identity.username;
+    const client = ctx.identity.sub ? ctx.identity.username : '';
     const { taskId } = ctx.arguments;
     const query = 'CALL list_history_by_task_id(?, ?)';
     const params = [taskId, client];
@@ -1402,7 +1388,7 @@ exports.handler = async (ctx) => {
   }
 
   async function listTasksForProject(ctx) {
-    const client = ctx.identity.username;
+    const client = ctx.identity.sub ? ctx.identity.username : '';
     const { projectId } = ctx.arguments;
     const query = 'CALL list_tasks_by_project_id(?, ?)';
     const params = [projectId, client];
@@ -1415,7 +1401,7 @@ exports.handler = async (ctx) => {
   }
 
   async function listCommentsForTask(ctx) {
-    const client = ctx.identity.username;
+    const client = ctx.identity.sub ? ctx.identity.username : '';
     const { taskId } = ctx.arguments;
     const query = 'CALL list_comments_by_task_id(?, ?)';
     const params = [taskId, client];

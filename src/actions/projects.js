@@ -95,7 +95,7 @@ export const handleUpdateProject = (update) => (dispatch, getState) => {
   const prevProjectState = {...projects[update.id]}
   dispatch(updateProject(update, OWNED))
   if (app.selectedProject === update.id && Object.prototype.hasOwnProperty.call(update, "permalink")) {
-    navigate("/" + (user.state === AuthState.SignedIn ? user.data.username + "/" : "local/") + update.permalink, { replace: true })
+    navigate("/" + (user.state === AuthState.SignedIn ? user.data.username + "/" : "local/") + update.permalink, true)
   }
   if (user.state === AuthState.SignedIn) {
     return API.mutate({
@@ -106,7 +106,7 @@ export const handleUpdateProject = (update) => (dispatch, getState) => {
         if (getState().projects[update.id]) {
           dispatch(updateProject(prevProjectState))
           if (getState().app.selectedProject === update.id && Object.prototype.hasOwnProperty.call(update, "permalink")) {
-            navigate("/" + prevProjectState.permalink, { replace: true })
+            navigate("/" + prevProjectState.permalink, true)
           }
         }
       }

@@ -60,7 +60,7 @@ const Loading = (props) => {
       } catch {
         reqProject = null
         if (routeParams.taskPermalink) {
-          navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, { replace: true })
+          navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
         }
       }
       if (reqProject) {
@@ -73,9 +73,11 @@ const Loading = (props) => {
             dispatch(appActions.handleSetTask(reqTask.id, false))
             dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
             dispatch(appActions.handleSetRightPanel(true))
+          } else {
+            navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
           }
         } else {
-          navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, { replace: true })
+          navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
         }
       }
     } else if (routeParams.projectPermalink &&
@@ -93,7 +95,8 @@ const Loading = (props) => {
         const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
         setProgressValue(progressValue + 4)
         PubSub.subscribeTopic("ownedProjects")
-        let reqProject = Object.values(projects).filter(x => x.permalink === routeParams.projectPermalink)[0]
+        let reqProject = Object.values(projects).filter(x => `${x.owner}/${x.permalink}` === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
+        console.log(reqProject)
         if (!reqProject) {
           try {
             reqProject = (await API.execute(queries.getProjectByPermalink, {
@@ -104,7 +107,7 @@ const Loading = (props) => {
           } catch {
             reqProject = null
             if (routeParams.taskPermalink) {
-              navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, { replace: true })
+              navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
             }
           }
         }
@@ -118,9 +121,11 @@ const Loading = (props) => {
               dispatch(appActions.handleSetTask(reqTask.id, false))
               dispatch(appActions.setRightPanelPage(panelPages.TASK_HUB))
               dispatch(appActions.handleSetRightPanel(true))
+            } else {
+              navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
             }
           } else {
-            navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, { replace: true })
+            navigate(`/${routeParams.username}/${routeParams.projectPermalink}`, true)
           }
         }
         setProgressValue(progressValue + 5)
@@ -140,7 +145,7 @@ const Loading = (props) => {
           const firstProject = sortByRank(Object.values(projects).filter(x => x.isOwned))?.[0]
           if (firstProject) {
             dispatch(appActions.handleSetProject(firstProject.id, false))
-            navigate(`/${firstProject.owner}/${firstProject.permalink}`, { replace: true })
+            navigate(`/${firstProject.owner}/${firstProject.permalink}`, true)
           }
         } else {
           setProgressMax(1)
@@ -150,7 +155,7 @@ const Loading = (props) => {
           const firstProject = sortByRank(Object.values(projects).filter(x => x.isOwned))?.[0]
           if (firstProject) {
             dispatch(appActions.handleSetProject(firstProject.id, false))
-            navigate(`/local/${firstProject.permalink}`, { replace: true })
+            navigate(`/local/${firstProject.permalink}`, true)
           }
         }
       }
