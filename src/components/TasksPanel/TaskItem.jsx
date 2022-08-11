@@ -6,7 +6,7 @@ import generateRank from "../../utils/generateRank";
 import * as appActions from "../../actions/app";
 import * as tasksActions from "../../actions/tasks";
 import { useModal } from "../ModalManager";
-import { OK, initTaskState, AuthState, panelPages } from "../../constants";
+import { initTaskState, AuthState, panelPages, ThingStatus } from "../../constants";
 import modals from '../modals';
 import Task from "../UI/Task";
 
@@ -28,7 +28,7 @@ const TaskItem = (props) => {
   const dispatch = useDispatch()
   
   const nextTaskRank = useSelector(state => state.tasks[nextTask]?.rank)
-  const taskAddingStatus = useSelector(state => state.app.taskAddingStatus)
+  const tasksStatus = useSelector(state => state.status.tasks)
   const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
   const isSynced = useSelector(state => state.app.isSynced)
 
@@ -131,7 +131,7 @@ const TaskItem = (props) => {
   }, [nextTask]);
 
   const handleEnter = useCallback(() => {
-    if (taskAddingStatus === OK && !readOnly) {
+    if (tasksStatus === ThingStatus.READY && !readOnly) {
       dispatch(
         tasksActions.handleCreateTask(
           initTaskState(
@@ -142,7 +142,7 @@ const TaskItem = (props) => {
         )
       );
     }
-  }, [taskAddingStatus, readOnly, item.rank, nextTaskRank]);
+  }, [tasksStatus, readOnly, item.rank, nextTaskRank]);
 
   const handleEscape = useCallback(() => {
     dispatch(appActions.handleSetTask(null))

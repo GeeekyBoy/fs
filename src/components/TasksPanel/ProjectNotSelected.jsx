@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app";
 import * as projectsActions from "../../actions/projects";
-import { panelPages, initProjectState, OK } from "../../constants";
+import { panelPages, initProjectState, ThingStatus } from "../../constants";
 import { ReactComponent as NotFoundIllustartion } from "../../assets/undraw_empty_xct9.svg";
 import { ReactComponent as TasksIllustartion } from "../../assets/undraw_teamwork_hpdk.svg";
 import Illustration from "../UI/Illustration";
@@ -13,10 +13,10 @@ const ProjectNotSelected = () => {
   const { routeParams } = useRouterNoUpdates();
   const dispatch = useDispatch();
 
-  const projectAddingStatus = useSelector(state => state.app.projectAddingStatus);
+  const projectsStatus = useSelector(state => state.status.projects);
 
   const createNewProject = async () => {
-    projectAddingStatus === OK &&
+    projectsStatus === ThingStatus.READY &&
       dispatch(
         projectsActions.handleCreateProject(
           await initProjectState(generateRank())

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import * as tasksActions from "../../actions/tasks";
 import { useDispatch, useSelector } from "react-redux";
-import { AuthState, initTaskState, READY } from "../../constants";
+import { ThingStatus, AuthState, initTaskState } from "../../constants";
 import styles from "./TaskPlaceholder.module.scss";
 import sortByRank from "../../utils/sortByRank";
 import generateRank from "../../utils/generateRank";
@@ -36,7 +36,7 @@ const TaskPlaceholder = (props) => {
 
   const addNewTask = () => {
       !readOnly &&
-      tasksStatus === READY &&
+      tasksStatus === ThingStatus.READY &&
       isSynced &&
       dispatch(
         tasksActions.handleCreateTask(
@@ -49,7 +49,7 @@ const TaskPlaceholder = (props) => {
         )
       );
   };
-  return !readOnly && tasksStatus === READY && isSynced ? (
+  return !readOnly && tasksStatus === ThingStatus.READY && isSynced ? (
     <span
       name="TaskPlaceholder"
       className={[styles.TaskPlaceholder, "noselect"].join(" ")}

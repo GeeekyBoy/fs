@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import sortByRank from "../../utils/sortByRank";
 import ProjectNotSelected from "./ProjectNotSelected";
 import * as tasksActions from "../../actions/tasks";
-import { READY, LOADING, initTaskState, AuthState } from "../../constants";
+import { ThingStatus, initTaskState, AuthState } from "../../constants";
 import sortedTasks from './sortedTasks';
 import ProjectToolbar from './ProjectToolbar';
 import NoTasks from './NoTasks';
@@ -38,7 +38,7 @@ const TasksPanel = () => {
     (e.target.getAttribute("name") === "TasksPanelContainer" ||
     (document.querySelector("[name='TasksView']") === e.target) ||
     document.querySelector("[class^='Illustration_IllustrationContainer']")?.contains(e.target) && !Object.keys(tasks).length) &&
-    tasksStatus === READY &&
+    tasksStatus === ThingStatus.READY &&
     isSynced &&
     dispatch(
       tasksActions.handleCreateTask(
@@ -104,8 +104,8 @@ const TasksPanel = () => {
         name="TasksPanelContainer"
         className={[
           styles.TasksPanelContainer,
-          ...((tasksStatus === READY ||
-            tasksStatus === LOADING) && [styles.ready] || []),
+          ...((tasksStatus === ThingStatus.READY ||
+            tasksStatus === ThingStatus.FETCHING) && [styles.ready] || []),
           ...(inDropZone && [styles.inDropZone] || [])
         ].join(" ")}
         onDragEnter={handleDragEnter}
@@ -117,7 +117,7 @@ const TasksPanel = () => {
         {selectedProject ? (
           <>
             {user.state !== AuthState.SignedIn && <LoginBanner />}
-            {tasksStatus === LOADING ? (
+            {tasksStatus === ThingStatus.FETCHING ? (
               <NoTasks msgId="LOADING" />
             ) : (
               <>

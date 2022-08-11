@@ -10,8 +10,6 @@ export const SET_PROJECT = "SET_PROJECT";
 export const SET_TASK = "SET_TASK";
 export const BATCH_SELECT_TASK = "BATCH_SELECT_TASK";
 export const BATCH_DESELECT_TASK = "BATCH_DESELECT_TASK";
-export const SET_PROJECT_ADDING_STATUS = "SET_PROJECT_ADDING_STATUS";
-export const SET_TASK_ADDING_STATUS = "SET_TASK_ADDING_STATUS";
 export const SET_OFFLINE = "SET_OFFLINE";
 export const SET_SYNCED = "SET_SYNCED";
 export const SET_LEFT_PANEL = "SET_LEFT_PANEL";
@@ -79,16 +77,6 @@ export const setLeftPanelPage = (page) => ({
 export const setLockedTaskField = (fieldName) => ({
   type: SET_LOCKED_TASK_FIELD,
   fieldName
-});
-
-export const setProjectAddingStatus = (status) => ({
-  type: SET_PROJECT_ADDING_STATUS,
-  status
-});
-
-export const setTaskAddingStatus = (status) => ({
-  type: SET_TASK_ADDING_STATUS,
-  status
 });
 
 export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getState) => {

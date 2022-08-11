@@ -1,5 +1,6 @@
-import { AuthState } from '../constants';
+import { AuthState, ThingStatus } from '../constants';
 import { listHistoryByTaskId } from "../graphql/queries"
+import * as statusActions from "./status"
 import * as usersActions from "./users"
 import * as cacheController from "../controllers/cache"
 import API from '../amplify/API';
@@ -30,6 +31,7 @@ const fetchCachedHistory = (history) => ({
 });
 
 export const handleFetchHistory = (taskId) => async (dispatch, getState) => {
+  dispatch(statusActions.setHistoryStatus(ThingStatus.FETCHING))
   const { user, app, projects } = getState()
   if (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp) {
     try {
@@ -47,9 +49,13 @@ export const handleFetchHistory = (taskId) => async (dispatch, getState) => {
       }
       await dispatch(usersActions.handleAddUsers(usersToBeFetched))
       dispatch(fetchHistory(items, taskId))
+      dispatch(statusActions.setHistoryStatus(ThingStatus.READY))
     } catch (err) {
       if (err.message === 'Failed to fetch') {
         dispatch(fetchCachedHistory(cacheController.getHistoryByTaskId(taskId)))
+        dispatch(statusActions.setHistoryStatus(ThingStatus.READY))
+      } else {
+        dispatch(statusActions.setHistoryStatus(ThingStatus.ERROR))
       }
     }
     return getState().history

@@ -1,13 +1,13 @@
 import generateId from './utils/generateId'
 import generateRandomWords from './utils/generateRandomWords';
 
-export const PENDING = "PENDING"
-export const OK = "OK"
-export const CREATING = "CREATING"
-export const REMOVING = "REMOVING"
-export const LOADING = "LOADING"
-export const READY = "READY"
-export const NOT_ASSIGNED = "NOT_ASSIGNED"
+export const ThingStatus = {
+  READY: "READY",
+  FETCHING: "FETCHING",
+  CREATING: "CREATING",
+  REMOVING: "REMOVING",
+  ERROR: "ERROR",
+}
 
 export const commandIntents = {
   ASSIGN: "ASSIGN",

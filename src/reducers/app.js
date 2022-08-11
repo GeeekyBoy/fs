@@ -1,12 +1,9 @@
-import { SET_PROJECT, SET_TASK, SET_PROJECT_ADDING_STATUS, SET_TASK_ADDING_STATUS, SET_LEFT_PANEL, SET_RIGHT_PANEL, SET_PROJECT_TITLE, SET_LOCKED_TASK_FIELD, SET_RIGHT_PANEL_PAGE, SET_LEFT_PANEL_PAGE, SET_OFFLINE, SET_SYNCED, BATCH_SELECT_TASK, BATCH_DESELECT_TASK } from "../actions/app"
-import { OK } from "../constants"
+import { SET_PROJECT, SET_TASK, SET_LEFT_PANEL, SET_RIGHT_PANEL, SET_PROJECT_TITLE, SET_LOCKED_TASK_FIELD, SET_RIGHT_PANEL_PAGE, SET_LEFT_PANEL_PAGE, SET_OFFLINE, SET_SYNCED, BATCH_SELECT_TASK, BATCH_DESELECT_TASK } from "../actions/app"
 
 const initState = {
   selectedProject: null,
   selectedTask: null,
   selectedTasks: null,
-  projectAddingStatus: OK,
-  taskAddingStatus: OK,
   navigate: null,
   isOffline: false,
   isSynced: true,
@@ -47,10 +44,6 @@ export default function (state = initState, action) {
       return {...state, isRightPanelOpened: action.status}
     case SET_PROJECT_TITLE:
       return {...state, isProjectTitleSelected: action.status}
-    case SET_PROJECT_ADDING_STATUS:
-      return {...state, projectAddingStatus: action.status}
-    case SET_TASK_ADDING_STATUS:
-      return {...state, taskAddingStatus: action.status}
     case SET_LOCKED_TASK_FIELD:
       return {...state, lockedTaskField: action.fieldName}
     case SET_RIGHT_PANEL_PAGE:

@@ -1,5 +1,6 @@
-import { AuthState } from '../constants';
+import { AuthState, ThingStatus } from '../constants';
 import { listCommentsForTask } from "../graphql/queries"
+import * as statusActions from "./status"
 import * as usersActions from "./users"
 import * as cacheController from "../controllers/cache"
 import API from '../amplify/API';
@@ -107,6 +108,7 @@ export const handleRemoveComment = (commentState) => (dispatch, getState) => {
 }
 
 export const handleFetchComments = (taskId) => async (dispatch, getState) => {
+  dispatch(statusActions.setCommentsStatus(ThingStatus.FETCHING))
   const { user, app, projects } = getState()
   if (user.state === AuthState.SignedIn || projects[app.selectedProject].isTemp) {
     try {
@@ -121,9 +123,13 @@ export const handleFetchComments = (taskId) => async (dispatch, getState) => {
       }
       await dispatch(usersActions.handleAddUsers(usersToBeFetched))
       dispatch(fetchComments(items, taskId))
+      dispatch(statusActions.setCommentsStatus(ThingStatus.READY))
     } catch (err) {
       if (err.message === 'Failed to fetch') {
         dispatch(fetchCachedComments(cacheController.getCommentsByTaskId(taskId)))
+        dispatch(statusActions.setCommentsStatus(ThingStatus.READY))
+      } else {
+        dispatch(statusActions.setCommentsStatus(ThingStatus.ERROR))
       }
     }
     return getState().comments

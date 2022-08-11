@@ -1,14 +1,12 @@
-import { AuthState } from '../constants';
+import { AuthState, ThingStatus } from '../constants';
 import { listTasksForProject } from "../graphql/queries"
 import * as appActions from "./app"
 import * as statusActions from "./status"
-import * as projectsActions from "./projects"
 import * as usersActions from "./users"
 import * as commentsActions from "./comments"
 import * as attachmentsActions from "./attachments"
 import * as historyActions from "./history"
 import * as cacheController from "../controllers/cache"
-import { READY, LOADING } from "../constants";
 import prepareTaskToBeSent from "../utils/prepareTaskToBeSent";
 import API from '../amplify/API';
 import PubSub from '../amplify/PubSub';
@@ -378,13 +376,13 @@ export const handleRemoveWatcher = (taskId, username) => async (dispatch, getSta
 }
 
 export const handleFetchTasks = (projectId, isInitial = false) => async (dispatch, getState) => {
+  dispatch(statusActions.setTasksStatus(ThingStatus.FETCHING))
   const { user, projects } = getState()
   if (!isInitial) {
     dispatch(appActions.handleSetTask(null))
   }
   if (user.state === AuthState.SignedIn || projects[projectId].isTemp) {
     try {
-      dispatch(statusActions.setTasksStatus(LOADING))
       const res = await API.execute(listTasksForProject, { projectId })
       const items = res.data.listTasksForProject.items
       let usersToBeFetched = []
@@ -397,15 +395,18 @@ export const handleFetchTasks = (projectId, isInitial = false) => async (dispatc
       }
       await dispatch(usersActions.handleAddUsers(usersToBeFetched))
       dispatch(fetchTasks(items, projectId))
-      dispatch(statusActions.setTasksStatus(READY))
+      dispatch(statusActions.setTasksStatus(ThingStatus.READY))
     } catch (err) {
-      dispatch(statusActions.setTasksStatus(READY))
       if (err.message === 'Failed to fetch') {
         dispatch(fetchCachedTasks(cacheController.getTasksByProjectId(projectId)))
+        dispatch(statusActions.setTasksStatus(ThingStatus.READY))
+      } else {
+        dispatch(statusActions.setTasksStatus(ThingStatus.ERROR))
       }
     }
   } else {
     dispatch(fetchCachedTasks(cacheController.getTasksByProjectId(projectId)))
+    dispatch(statusActions.setTasksStatus(ThingStatus.READY))
   }
   return getState().tasks
 }

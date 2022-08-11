@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../../actions/app"
 import * as projectsActions from "../../actions/projects"
 import * as tasksActions from "../../actions/tasks"
-import { initTaskState, OK } from '../../constants';
+import { initTaskState, ThingStatus } from '../../constants';
 import sortByRank from '../../utils/sortByRank';
 import generateRank from '../../utils/generateRank';
 
@@ -17,7 +17,7 @@ const ProjectTitle = (props) => {
   const dispatch = useDispatch();
 
   const isProjectTitleSelected = useSelector(state => state.app.isProjectTitleSelected);
-  const taskAddingStatus = useSelector(state => state.app.taskAddingStatus);
+  const tasksStatus = useSelector(state => state.status.tasks);
 
   const selectedProject = useSelector(state => state.projects[state.app.selectedProject]);
 
@@ -33,7 +33,7 @@ const ProjectTitle = (props) => {
   const onKeyUp = (e) => {
     const firstTask = sortByRank(tasks)[0];
     if (e.key === "Enter") {
-      if (taskAddingStatus === OK) {
+      if (tasksStatus === ThingStatus.READY) {
         appActions.handleSetProjectTitle(false)
         dispatch(
           tasksActions.handleCreateTask(

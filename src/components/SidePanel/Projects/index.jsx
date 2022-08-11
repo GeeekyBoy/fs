@@ -2,7 +2,7 @@ import React, { forwardRef, useImperativeHandle, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import * as projectsActions from "../../../actions/projects"
 import * as appActions from "../../../actions/app"
-import { initProjectState, OK, PENDING, AuthState } from "../../../constants"
+import { initProjectState, AuthState, ThingStatus } from "../../../constants"
 import sortByRank from "../../../utils/sortByRank"
 import { ReactComponent as AddIcon } from "@fluentui/svg-icons/icons/add_24_regular.svg";
 import filterObj from "../../../utils/filterObj";
@@ -18,12 +18,12 @@ const Projects = forwardRef((_, ref) => {
 
   const userState = useSelector(state => state.user.state);
 
-  const projectAddingStatus = useSelector(state => state.app.projectAddingStatus);
+  const projectsStatus = useSelector(state => state.status.projects);
 
   const projects = useSelector(state => state.projects);
 
   const createNewProject = async () => {
-    if (projectAddingStatus === OK) {
+    if (projectsStatus === ThingStatus.READY) {
       dispatch(appActions.handleSetLeftPanel(false))
       dispatch(
         projectsActions.handleCreateProject(
