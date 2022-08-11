@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { AuthState } from "../../../constants";
+import { AuthState, ThingStatus } from "../../../constants";
 import DateField from "../../UI/fields/DateField";
 import * as tasksActions from "../../../actions/tasks";
 import styles from "./Details.module.scss";
@@ -26,6 +26,7 @@ const Details = () => {
 
   const selectedTask = useSelector(state => state.app.selectedTask);
   const isSynced = useSelector(state => state.app.isSynced);
+  const isAttachmentsReady = useSelector(state => state.status.attachments === ThingStatus.READY);
 
   const getReadOnly = (userState, username, selectedProject, isSynced) => {
     return (userState === AuthState.SignedIn &&
@@ -74,6 +75,7 @@ const Details = () => {
             name="attachments"
             label="Attachments"
             value={attachments}
+            loading={!isAttachmentsReady}
             readOnly={readOnly}
           />
         </>

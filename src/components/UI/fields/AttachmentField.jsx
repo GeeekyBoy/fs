@@ -6,6 +6,7 @@ import { useTabView } from '../../TabViewManager';
 import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_24_regular.svg"
 import { ReactComponent as UploadIcon } from "@fluentui/svg-icons/icons/cloud_arrow_up_16_regular.svg";
 import { ReactComponent as YoutubeIcon } from "../../../assets/brands/youtube.svg";
+import { ReactComponent as LoadingSpinner } from "../../../assets/Rolling-1s-200px.svg";
 import { ReactComponent as VimeoIcon } from "../../../assets/brands/vimeo.svg";
 import { ReactComponent as LoomIcon } from "../../../assets/brands/loom.svg";
 import { ReactComponent as FigmaIcon } from "../../../assets/brands/figma.svg";
@@ -27,6 +28,7 @@ const AttachmentField = (props) => {
     label,
     emptyMsg = "No Files Attached Yet",
     value = [],
+    loading,
     readOnly,
     style
   } = props
@@ -92,7 +94,7 @@ const AttachmentField = (props) => {
             {label}
           </label>
         )}
-        {!readOnly && (
+        {!loading && !readOnly && (
           <Button
             sm
             secondary
@@ -101,32 +103,38 @@ const AttachmentField = (props) => {
           />
         )}
       </div>
-      {(value.length) ? (
-        <ShadowScroll>
-          {value.map((x) => (
-            <Chip
-              key={x.id}
-              primaryLabel={
-                x.contentType.startsWith('embed/')
-                  ? /\[(.*?)\]\((.*)\)/.exec(x.filename)[2]
-                  : x.filename
-              }
-              secondaryLabel={
-                x.contentType.startsWith('embed/')
-                  ? null
-                  : formatSize(x.size)
-              }
-              avatarIcon={getIcon(x.contentType)}
-              actionIcon={RemoveIcon}
-              onAction={() => false}
-              onClick={() => handleOpen(x.filename, x.url, x.contentType)}
-              actionAllowed={!readOnly}
-            />
-          ))}
-        </ShadowScroll>
+      {!loading ? (
+        value.length ? (
+          <ShadowScroll>
+            {value.map((x) => (
+              <Chip
+                key={x.id}
+                primaryLabel={
+                  x.contentType.startsWith('embed/')
+                    ? /\[(.*?)\]\((.*)\)/.exec(x.filename)[2]
+                    : x.filename
+                }
+                secondaryLabel={
+                  x.contentType.startsWith('embed/')
+                    ? null
+                    : formatSize(x.size)
+                }
+                avatarIcon={getIcon(x.contentType)}
+                actionIcon={RemoveIcon}
+                onAction={() => false}
+                onClick={() => handleOpen(x.filename, x.url, x.contentType)}
+                actionAllowed={!readOnly}
+              />
+            ))}
+          </ShadowScroll>
+        ) : (
+          <div className={styles.NoAttachments}>
+            {emptyMsg}
+          </div>
+        )
       ) : (
         <div className={styles.NoAttachments}>
-          {emptyMsg}
+          <LoadingSpinner width={18} height={18} />
         </div>
       )}
     </div>

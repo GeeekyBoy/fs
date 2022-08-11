@@ -1,5 +1,6 @@
 import React, { memo, useState } from 'react';
 import styles from "./SidePanel.module.scss";
+import { ReactComponent as LoadingSpinner } from "../../assets/Rolling-1s-200px.svg";
 import { ReactComponent as BackRightArrowIcon } from "@fluentui/svg-icons/icons/chevron_right_24_regular.svg";
 import { ReactComponent as BackLeftArrowIcon } from "@fluentui/svg-icons/icons/chevron_left_24_regular.svg";
 import Button from './Button';
