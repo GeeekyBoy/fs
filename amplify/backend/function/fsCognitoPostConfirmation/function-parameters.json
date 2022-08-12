@@ -1,13 +1,18 @@
 {
-  "lambdaLayers": [],
-  "permissions": {
-    "auth": {
-      "fsCognito": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ]
-    }
-  }
+  "trigger": true,
+  "modules": [
+    "add-to-group"
+  ],
+  "parentResource": "fsCognito",
+  "functionName": "fsCognitoPostConfirmation",
+  "resourceName": "fsCognitoPostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "C:\\snapshot\\repo\\build\\node_modules\\@aws-amplify\\amplify-category-auth\\provider-utils\\awscloudformation\\triggers\\PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "fsCognitoPostConfirmation",
+  "skipEdit": true,
+  "GROUP": "free",
+  "enableCors": false
 }

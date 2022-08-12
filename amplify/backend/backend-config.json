@@ -43,7 +43,7 @@
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "fsCognitoPostConfirmationInvoker",
+          "resourceName": "fsCognitoPostConfirmation",
           "triggerProvider": "Cognito",
           "attributes": [
             "Arn",
@@ -51,15 +51,37 @@
           ]
         }
       ],
-      "customAuth": false
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL",
+          "FAMILY_NAME",
+          "GIVEN_NAME",
+          "PHONE_NUMBER"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": "8",
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_UPPERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS"
+          ]
+        },
+        "mfaConfiguration": "OPTIONAL",
+        "mfaTypes": [
+          "SMS",
+          "TOTP"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      }
     }
   },
   "function": {
-    "fsCognitoPostConfirmationInvoker": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "fsDailyReport": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -91,16 +113,7 @@
     "fsCognitoPostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "fsCognito",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
+      "service": "Lambda"
     }
   },
   "hosting": {
