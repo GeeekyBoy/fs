@@ -1,7 +1,8 @@
 import { listOwnedProjects, listAssignedProjects, listWatchedProjects } from "../graphql/queries"
 import * as appActions from "./app"
+import * as statusActions from "./status"
 import * as cacheController from "../controllers/cache"
-import { AuthState } from "../constants";
+import { AuthState, ThingStatus } from "../constants";
 import prepareProjectToBeSent from "../utils/prepareProjectToBeSent";
 import { navigate } from "../components/Router"
 import API from "../amplify/API"
@@ -151,19 +152,25 @@ export const handleRemoveProject = (projectState) => (dispatch, getState) => {
 }
 
 export const handleFetchOwnedProjects = (isSync = false) => async (dispatch, getState) => {
+  dispatch(statusActions.setProjectsStatus(ThingStatus.FETCHING))
   const { user } = getState()
   // if (!isSync) dispatch(appActions.handleSetProject(null))
   if (user.state === AuthState.SignedIn) {
     try {
       const res = await API.execute(listOwnedProjects)
       dispatch(fetchProjects(res.data.listOwnedProjects.items, OWNED))
+      dispatch(statusActions.setProjectsStatus(ThingStatus.READY))
     } catch (err) {
       if (err.message === 'Failed to fetch') {
         dispatch(fetchCachedProjects(cacheController.getProjects()))
+        dispatch(statusActions.setProjectsStatus(ThingStatus.READY))
+      } else {
+        dispatch(statusActions.setProjectsStatus(ThingStatus.ERROR))
       }
     }
   } else {
     dispatch(fetchCachedProjects(cacheController.getProjects()))
+    dispatch(statusActions.setProjectsStatus(ThingStatus.READY))
   }
   return getState().projects
 }
