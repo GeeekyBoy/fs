@@ -17,8 +17,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install
-        - npm install immutable
+        - npm install --force
     build:
       commands:
         - npm run build

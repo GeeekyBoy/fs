@@ -86,8 +86,6 @@
     "postcss-scss": "^4.0.4",
     "prettier": "^2.7.1",
     "sass": "^1.54.5",
-    "storybook-addon-breakpoints": "^1.0.0",
-    "storybook-addon-performance": "^0.16.1",
     "vite": "^3.0.9",
     "vite-plugin-pwa": "^0.12.3"
   }
