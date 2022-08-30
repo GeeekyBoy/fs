@@ -49,14 +49,23 @@ const TaskItem = (props) => {
 
   const selectedProject = useSelector(state => state.projects[item.projectId])
 
-  const defaultStatus = useSelector(state => (
-    state.projects[item.projectId]?.defaultStatus
+  const defaultStatus = useSelector(state => state.projects[item.projectId]?.defaultStatus);
+
+  const isDefaultDone = useSelector(state => (
+    state.projects[item.projectId]?.statusSet
+      ?.filter(x => x.synonym === "done")
+      ?.map(x => x.id)
+      ?.includes(defaultStatus)
+  ))
+
+  const defaultOtherStatus = useSelector(state => (
+    state.projects[item.projectId]?.statusSet
+      ?.filter(x => isDefaultDone ? x.synonym !== "done" : x.synonym === "done")
+      ?.[0]?.id
   ));
 
-  const defaultDoneStatus = useSelector(state => (
-    state.projects[item.projectId]?.statusSet
-      ?.filter(x => x.synonym === "done")?.[0]?.id
-  ));
+  const doneStatus = isDefaultDone ? defaultStatus : defaultOtherStatus;
+  const notDoneStatus = isDefaultDone ? defaultOtherStatus : defaultStatus;
 
   const [shouldAutoFocus, setShouldAutoFocus] = useState(true)
 
@@ -121,7 +130,7 @@ const TaskItem = (props) => {
         id: item.id,
         action: "update",
         field: "status",
-        value: nextStatus === "done" ? defaultDoneStatus : defaultStatus,
+        value: nextStatus === "done" ? doneStatus : notDoneStatus,
       })
     );
   }, [item.id]);
@@ -249,7 +258,7 @@ const TaskItem = (props) => {
       batchSelected={batchSelected}
       readOnly={readOnly}
       listeners={listeners}
-      isDone={item.status === defaultDoneStatus}
+      isDone={item.status === doneStatus}
       isSorting={isSorting}
       isDragging={isDragging}
       isBatchSelecting={isBatchSelecting}
