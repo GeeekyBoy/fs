@@ -46,7 +46,17 @@ const TaskItem = (props) => {
 
   const users = useSelector(state => state.users)
   const user = useSelector(state => state.user)
-  const projects = useSelector(state => state.projects)
+
+  const selectedProject = useSelector(state => state.projects[item.projectId])
+
+  const defaultStatus = useSelector(state => (
+    state.projects[item.projectId]?.defaultStatus
+  ));
+
+  const defaultDoneStatus = useSelector(state => (
+    state.projects[item.projectId]?.statusSet
+      ?.filter(x => x.synonym === "done")?.[0]?.id
+  ));
 
   const [shouldAutoFocus, setShouldAutoFocus] = useState(true)
 
@@ -73,14 +83,14 @@ const TaskItem = (props) => {
     return result
   }
 
-  const getReadOnly = (user, projects, selectedProject, isSynced) => {
+  const getReadOnly = (user, selectedProject, isSynced) => {
     return (user.state === AuthState.SignedIn &&
-    ((projects[selectedProject]?.owner !== user.data.username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
-    (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
+    ((selectedProject?.owner !== user.data.username &&
+    selectedProject?.permissions === "r") || !isSynced)) ||
+    (user.state !== AuthState.SignedIn && selectedProject?.isTemp)
   }
 
-  const readOnly = useMemo(() => getReadOnly(user, projects, item.projectId, isSynced), [user, projects, item.projectId, isSynced])
+  const readOnly = useMemo(() => getReadOnly(user, selectedProject, isSynced), [user, selectedProject, isSynced])
   
   const processedAssingees = useMemo(() => {
     const allAssignees = {
@@ -111,7 +121,7 @@ const TaskItem = (props) => {
         id: item.id,
         action: "update",
         field: "status",
-        value: nextStatus,
+        value: nextStatus === "done" ? defaultDoneStatus : defaultStatus,
       })
     );
   }, [item.id]);
@@ -137,7 +147,7 @@ const TaskItem = (props) => {
           initTaskState(
             item.projectId,
             generateRank(item.rank, nextTaskRank),
-            projects[item.projectId].defaultStatus,
+            selectedProject.defaultStatus,
           )
         )
       );
@@ -211,7 +221,6 @@ const TaskItem = (props) => {
     <Task
       id={item.id}
       task={item.task}
-      status={item.status}
       due={item.due}
       onChange={handleChange}
       onSelect={handleSelect}
@@ -240,6 +249,7 @@ const TaskItem = (props) => {
       batchSelected={batchSelected}
       readOnly={readOnly}
       listeners={listeners}
+      isDone={item.status === defaultDoneStatus}
       isSorting={isSorting}
       isDragging={isDragging}
       isBatchSelecting={isBatchSelecting}

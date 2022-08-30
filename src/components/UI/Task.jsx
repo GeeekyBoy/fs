@@ -21,7 +21,6 @@ const TaskItem = (props) => {
   const {
     id,
     task,
-    status,
     due,
     onChange,
     onSelect,
@@ -50,6 +49,7 @@ const TaskItem = (props) => {
     batchSelected,
     readOnly,
     listeners,
+    isDone,
     isSorting,
     isDragging,
     isBatchSelecting,
@@ -101,7 +101,7 @@ const TaskItem = (props) => {
 
   const handleToggleStatus = () => {
     if (onToggleStatus) {
-      onToggleStatus(status === "done" ? "todo" : "done");
+      onToggleStatus(isDone ? "todo" : "done");
     }
   };
 
@@ -354,12 +354,12 @@ const TaskItem = (props) => {
               <button
                 className={[
                   styles.TaskItemStatusToggle,
-                  ...(status === "done" && [styles.done] || [])
+                  ...(isDone && [styles.done] || [])
                 ].join(" ")}
                 onClick={handleToggleStatus}
                 disabled={readOnly}
               >
-                {status === "done" && (
+                {isDone && (
                   <CheckmarkIcon
                     fill="currentColor"
                     width={24}
@@ -387,7 +387,7 @@ const TaskItem = (props) => {
               <span
                 className={[
                   styles.TaskItemInput,
-                  ...(status === "done" && [styles.done] || [])
+                  ...(isDone && [styles.done] || [])
                 ].join(" ")}
                 ref={inputRef}
                 onClick={handleSelect}
