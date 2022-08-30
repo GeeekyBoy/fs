@@ -13,6 +13,7 @@ import { ReactComponent as FigmaIcon } from "../../../assets/brands/figma.svg";
 import { ReactComponent as RedditIcon } from "../../../assets/brands/reddit.svg";
 import { ReactComponent as TwitterIcon } from "../../../assets/brands/twitter.svg";
 import { ReactComponent as IssuuIcon } from "../../../assets/brands/issuu.svg";
+import { ReactComponent as DocumentIcon } from "../../../assets/icons/icons8-document.svg";
 import YoutubeViewer from '../../viewers/YoutubeViewer';
 import LoomViewer from '../../viewers/LoomViewer';
 import FigmaViewer from '../../viewers/FigmaViewer';
@@ -63,22 +64,22 @@ const AttachmentField = (props) => {
       case "embed/youtube":
         [_, embedId, title] = /\[(.*?)\]\((.*)\)/.exec(filename);
         tabId = `youtube-${embedId}`;
-        openTab([tabId, title, <YoutubeViewer key={tabId} embedId={embedId} />]);
+        openTab([tabId, title, YoutubeIcon, <YoutubeViewer key={tabId} embedId={embedId} />]);
         break;
       case "embed/loom":
         [_, embedId, title] = /\[(.*?)\]\((.*)\)/.exec(filename);
         tabId = `loom-${embedId}`;
-        openTab([tabId, title, <LoomViewer key={tabId} embedId={embedId} />]);
+        openTab([tabId, title, LoomIcon, <LoomViewer key={tabId} embedId={embedId} />]);
         break;
       case "embed/figma":
         [_, embedId, title] = /\[(.*?)\]\((.*)\)/.exec(filename);
         tabId = `figma-${embedId}`;
-        openTab([tabId, title, <FigmaViewer key={tabId} embedId={embedId} />]);
+        openTab([tabId, title, FigmaIcon, <FigmaViewer key={tabId} embedId={embedId} />]);
         break;
       case "text/javascript":
       case "application/json":
       case "application/xml":
-        openTab([url, filename, <CodeViewer key={url} url={url} />]);
+        openTab([url, filename, DocumentIcon, <CodeViewer key={url} url={url} />]);
         break;
       default:
         window.open(url, '_blank');

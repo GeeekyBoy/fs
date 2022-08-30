@@ -62,7 +62,7 @@ const AccountSettings = forwardRef((_, ref) => {
   const closePanel = () => {
     return dispatch(appActions.handleSetLeftPanel(false))
   }
-	const logOut = () => {
+  const logOut = () => {
     showModal(modals.CONFIRMATION, {
       title: "Log out",
       question: "Are you sure you want to log out?",
@@ -71,7 +71,7 @@ const AccountSettings = forwardRef((_, ref) => {
         dispatch(userActions.handleSignOut());
       }
     })
-	}
+  }
   const saveChanges = () => {
     setIsBusy(true)
     API.execute(mutations.updateUser, {

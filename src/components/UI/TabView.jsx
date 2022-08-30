@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import styles from "./TabView.module.scss";
-import { ReactComponent as YoutubeIcon } from "../../assets/brands/youtube.svg";
 import { ReactComponent as CloseIcon } from "@fluentui/svg-icons/icons/dismiss_16_regular.svg";
 import IconButton from "./IconButton";
+import ShadowScroll from "../ShadowScroll";
 
 const TabView = (props) => {
   const {
@@ -30,26 +30,28 @@ const TabView = (props) => {
       ].join(" ")}
     >
       <div className={styles.TabViewTabs}>
-        {tabs.map((x, i) => (
-          <div
-            className={[
-              styles.TabViewTab,
-              "noselect",
-              ...((value === x[0] && [styles.selected]) || []),
-            ].join(" ")}
-            key={x[0]}
-            onClick={() => handleChange(x[0])}
-          >
-            <YoutubeIcon width={16} height={16} />
-            <span>{x[1]}</span>
-            {i !== 0 && (
-              <IconButton
-                icon={CloseIcon}
-                onClick={() => handleCloseTab(x[0])}
-              />
-            )}
-          </div>
-        ))}
+        <ShadowScroll>
+          {tabs.map((x, i) => (
+            <div
+              className={[
+                styles.TabViewTab,
+                "noselect",
+                ...((value === x[0] && [styles.selected]) || []),
+              ].join(" ")}
+              key={x[0]}
+              onClick={() => handleChange(x[0])}
+            >
+              {React.createElement(x[2], { width: 16, height: 16 })}
+              <span>{x[1]}</span>
+              {i !== 0 && (
+                <IconButton
+                  icon={CloseIcon}
+                  onClick={() => handleCloseTab(x[0])}
+                />
+              )}
+            </div>
+          ))}
+        </ShadowScroll>
       </div>
       <div className={styles.TabsContents}>
         {tabs.map((x) => (
@@ -60,7 +62,7 @@ const TabView = (props) => {
             ].join(" ")}
             key={x[0]}
           >
-            {x[2]}
+            {x[3]}
           </div>
         ))}
       </div>

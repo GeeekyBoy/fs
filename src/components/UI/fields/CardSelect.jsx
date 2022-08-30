@@ -3,30 +3,30 @@ import styles from "./CardSelect.module.scss";
 
 const CardSelect = (props) => {
 
-	const {
+  const {
     name,
-		value,
+    value,
     values,
     options,
     descriptions,
-		onChange,
+    onChange,
     label,
     readOnly,
     disabled,
     row,
     centeredText,
-	} = props;
+  } = props;
 
-	const onSelect = (nextVal) => {
+  const onSelect = (nextVal) => {
     if (!(readOnly || disabled)) {
       onChange({ target: {
         value: nextVal,
         name: name
       }})
     }
-	};
+  };
 
-	return (
+  return (
     <div className={styles.SelectShell}>
       {label && (
         <label htmlFor={name}>
@@ -57,7 +57,7 @@ const CardSelect = (props) => {
         ))}
       </div>
     </div>
-	)
+  )
 }
 
 export default memo(CardSelect)

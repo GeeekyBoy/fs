@@ -1,6 +1,6 @@
 .BannerContainer {
   width: calc(100% + 40px);
-  margin-top: -20px;
+  margin-top: -10px;
   margin-left: -40px;
   padding: 8px 20px;
   background-color: var(--color-fill-color-accent-primary);
@@ -10,6 +10,6 @@
   cursor: pointer;
   @media only screen and (max-width: 768px) {
     width: calc(100% - 40px);
-    margin: 0;
+    margin-left: 0;
   }
 }

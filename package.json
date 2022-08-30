@@ -34,7 +34,7 @@
     "start": "vite serve",
     "dev": "vite serve",
     "build": "vite build",
-    "backend": "rm -rf amplify/backend/api/fsCoreAPI/build && rm -rf amplify/backend/api/fsCoreAPI/pipelineFunctions && rm -rf amplify/backend/api/fsCoreAPI/resolvers && amplify api gql-compile --allow-destructive-graphql-schema-updates && amplify mock api",
+    "backend": "npm install -C amplify/backend/function/fsCoreApiResolver/src && npm install -C amplify/backend/function/fsCognitoPostConfirmation/src && npm install -C amplify/backend/function/fsDailyReport/src && rm -rf amplify/backend/api/fsCoreAPI/build && rm -rf amplify/backend/api/fsCoreAPI/pipelineFunctions && rm -rf amplify/backend/api/fsCoreAPI/resolvers && amplify api gql-compile --allow-destructive-graphql-schema-updates && amplify mock api",
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -79,13 +79,13 @@
     "chromatic": "^6.7.4",
     "cross-env": "^7.0.3",
     "css-declaration-sorter": "^6.3.0",
-    "eslint": "^8.22.0",
+    "eslint": "^8.23.0",
     "eslint-config-airbnb": "^19.0.4",
     "postcss": "^8.4.16",
     "postcss-cli": "^10.0.0",
     "postcss-scss": "^4.0.4",
     "prettier": "^2.7.1",
-    "sass": "^1.54.5",
+    "sass": "^1.54.6",
     "vite": "^3.0.9",
     "vite-plugin-pwa": "^0.12.3"
   }

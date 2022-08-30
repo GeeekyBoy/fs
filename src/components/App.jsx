@@ -4,8 +4,6 @@ import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
 import store from "../store";
 import isOnline from "../utils/isOnline";
-import Home from "./Home";
-import AuthFlow from "./AuthFlow";
 import Router from "./Router";
 
 const App = () => {

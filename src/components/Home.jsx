@@ -48,21 +48,21 @@ const Home = () => {
       {isLoading ? (
         <Loading onFinish={() => setIsLoading(false)} />
       ) : (
-				<>
+        <>
           <NavigationManager />
           <SyncManager />
-					<Toolbar />
-					<div className={`${styles.MainPage} no-keyboard-portrait-padding-bottom-68`}>
-						<SidePanel />
+          <Toolbar />
+          <div className={`${styles.MainPage} no-keyboard-portrait-padding-bottom-68`}>
+            <SidePanel />
             <TabView
               tabs={tabs}
               value={currentTab}
               onChange={setCurrentTab}
               onCloseTab={closeTab}
             />
-						<SidePanel right />
-					</div>
-				</>
+            <SidePanel right />
+          </div>
+        </>
       )}
     </div>
   );

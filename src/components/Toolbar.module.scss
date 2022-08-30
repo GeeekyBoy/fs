@@ -121,7 +121,7 @@
       fill: var(--color-fill-color-text-on-accent-primary);
     }
     &:hover {
-      background-color: var(--primaryHover);
+      background-color: var(--color-fill-color-accent-secondary);
     }
   }
   @media only screen and (max-width: 768px) {

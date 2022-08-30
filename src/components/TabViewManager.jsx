@@ -1,8 +1,9 @@
 import React, { useState, createContext, useContext } from "react";
 import TasksPanel from "./TasksPanel";
+import { ReactComponent as MemoIcon } from "../assets/emojis/memo_color.svg";
 
 const initalState = {
-  tabs: [["tasks", "Tasks", <TasksPanel key="tasks" />]],
+  tabs: [["tasks", "Tasks", MemoIcon, <TasksPanel key="tasks" />]],
   currentTab: 'tasks',
   openTab: () => {},
   closeTab: () => {},

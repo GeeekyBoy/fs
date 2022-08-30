@@ -25,17 +25,17 @@
     }
     gap: 10px;
   }
-	&.secondary {
-		& > svg {
-			width: 250px;
-			height: 163px;
-		}
-		& > div {
-			& > span {
-				font-size: 1.125rem;
-			}
-		}
-	}
+  &.secondary {
+    & > svg {
+      width: 250px;
+      height: 163px;
+    }
+    & > div {
+      & > span {
+        font-size: 1.125rem;
+      }
+    }
+  }
   @media only screen and (max-width: 768px) {
     & > svg {
       width: 240px;

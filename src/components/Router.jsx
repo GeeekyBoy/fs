@@ -62,7 +62,6 @@ const RouterContext = createContext(contextValue);
 export const useRouter = () => useContext(RouterContext);
 export const useRouterNoUpdates = () => contextValue;
 export const navigate = function f(...args) {
-  console.log("navigate", args);
   return f.contents.call(this, ...args);
 };
 

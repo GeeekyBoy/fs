@@ -2,24 +2,24 @@ import React, { Fragment, memo } from "react"
 import styles from "./AvatarGroup.module.scss"
 
 const AvatarGroup = (props) => {
-	const {
-		max = Infinity,
-		users,
-		size
-	} = props
+  const {
+    max = Infinity,
+    users,
+    size
+  } = props
 
-	return (
-		<div
+  return (
+    <div
       className={styles.AvatarGroupContainer}
-			style={{
+      style={{
         minHeight: size,
         minWidth: (users.length ? size : 0) + (users.length > 1 ? ((users.length > max ? max : users.length) * (size - size * 0.398)) : 0)
       }}
-		>
-			{users.slice(0, users.length > max ? max - 1 : max).map(({ avatar, initials, name, color }, i) => (
-				<Fragment key={i}>
-					{avatar ?
-						<img
+    >
+      {users.slice(0, users.length > max ? max - 1 : max).map(({ avatar, initials, name, color }, i) => (
+        <Fragment key={i}>
+          {avatar ?
+            <img
               className={styles.ImageAvatar}
               style={{
                 borderColor: color,
@@ -32,7 +32,7 @@ const AvatarGroup = (props) => {
               alt={name}
               src={avatar}
             /> :
-						<div 
+            <div 
               className={styles.LetterAvatar}
               style={{
                 borderColor: color,
@@ -48,10 +48,10 @@ const AvatarGroup = (props) => {
             >
               {initials || name[0]}
             </div>
-					}
-				</Fragment>
-			))}
-			{users.length > max && (
+          }
+        </Fragment>
+      ))}
+      {users.length > max && (
         <div 
           className={styles.LetterAvatar}
           style={{
@@ -66,8 +66,8 @@ const AvatarGroup = (props) => {
           +{users.length - max + 1}
         </div>
       )}
-		</div>
-	)
+    </div>
+  )
 }
 
 export default memo(AvatarGroup)

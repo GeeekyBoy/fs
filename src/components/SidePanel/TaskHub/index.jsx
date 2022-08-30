@@ -23,14 +23,14 @@ const TaskHub = forwardRef((_, ref) => {
 
   const { showModal } = useModal();
 
-	const forceIdle = () => {
-		if (["task", "description"].includes(lockedTaskField)) {
-			dispatch(appActions.setLockedTaskField(null))
-		}
-		clearTimeout(idleTrigger.current)
-	}
+  const forceIdle = () => {
+    if (["task", "description"].includes(lockedTaskField)) {
+      dispatch(appActions.setLockedTaskField(null))
+    }
+    clearTimeout(idleTrigger.current)
+  }
 
-	useEffect(() => () => forceIdle(), [])
+  useEffect(() => () => forceIdle(), [])
 
   const [tab, setTab] = useState("details")
 
@@ -38,10 +38,10 @@ const TaskHub = forwardRef((_, ref) => {
     forceIdle()
     return dispatch(appActions.handleSetRightPanel(false))
   }
-	const shareTask = () => {
-		const linkToBeCopied = window.location.href
-		navigator.clipboard.writeText(linkToBeCopied)
-	}
+  const shareTask = () => {
+    const linkToBeCopied = window.location.href
+    navigator.clipboard.writeText(linkToBeCopied)
+  }
   const openAttachmentsUploader = (importedBlobs) => {
     showModal(modals.UPLOAD, { importedBlobs })
   }
