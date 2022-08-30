@@ -58,17 +58,19 @@ const TaskItem = (props) => {
   const inputRef = useRef(null);
   const grabberRef = useRef(null);
   const wasUnselected = useRef(true);
+  const wasInCommandMode = useRef(false);
   const shellLongPressTimeout = useRef(null);
-  const typingIdleTimeout = useRef(null);
   const taskCaretPos = useRef(task.length);
   const commandCaretPos = useRef(null);
 
   const [command, setCommand] = useState(null);
 
   const getSlashCommandsPos = (inputRef) => {
-    if (document.activeElement === inputRef.current) {
+    if (inputRef.current) {
       const selection = document.getSelection();
-      const caretPos = selection.getRangeAt(0).getBoundingClientRect();
+      const caretPos = inputRef.current.innerText && document.activeElement === inputRef.current
+        ? selection.getRangeAt(0).getBoundingClientRect()
+        : inputRef.current.getBoundingClientRect();
       const leftPos = caretPos.left - 160;
       return {
         top: caretPos.top + 30,
@@ -79,10 +81,7 @@ const TaskItem = (props) => {
             : leftPos,
       };
     } else {
-      return {
-        top: 0,
-        left: 0,
-      };
+      return { top: 0, left: 0 };
     }
   };
 
@@ -138,17 +137,31 @@ const TaskItem = (props) => {
     } else if (e.key === "Escape") {
       e.preventDefault();
       if (onEscape) onEscape(id);
-    } else if (e.key === "/" && !command) {
+    } else if (e.key === "/" && command === null) {
       e.preventDefault();
       commandCaretPos.current = 0;
-      clearTimeout(typingIdleTimeout.current);
       setCommand("");
     }
   };
 
   const handleCommandInput = (e) => {
     commandCaretPos.current = document.getSelection().focusOffset;
-    setCommand(e.target.innerText || null);
+    setCommand(e.target.innerText);
+  };
+
+  const handleCommandKeyDown = (e) => {
+    if (
+      e.key === "Enter" ||
+      e.key === "ArrowUp" ||
+      e.key === "ArrowDown" ||
+      e.key === "Escape"
+    ) {
+      e.preventDefault();
+    }
+    if (e.key === "Backspace" && command === '') {
+      e.preventDefault();
+      setCommand(null);
+    }
   };
 
   const handleCommandKeyUp = (e) => {
@@ -165,7 +178,10 @@ const TaskItem = (props) => {
 
   const setCommandAndMoveCaretToEnd = (nextCommand) => {
     commandCaretPos.current = nextCommand.length;
-    setCommand(nextCommand);
+    setTimeout(() => {
+      if (shouldAutoFocus) focusInput();
+      setCommand(nextCommand);
+    }, 0);
   }
 
   const handleSelect = () => {
@@ -261,17 +277,29 @@ const TaskItem = (props) => {
           setCaretPos(caretPos);
         }
         wasUnselected.current = false;
-      } else {
+        if (shouldAutoFocus) focusInput();
+      } else if (inputRef.current?.contains(document.activeElement)) {
         if (command !== null) {
           setCaretPos(commandCaretPos.current);
         } else {
           setCaretPos(taskCaretPos.current);
         }
       }
-      if (shouldAutoFocus) focusInput();
     } else {
       setCommand(null);
       wasUnselected.current = true;
+    }
+    if (command !== null) {
+      if (!wasInCommandMode.current) {
+        wasInCommandMode.current = true;
+        if (shouldAutoFocus) focusInput();
+      }
+    } else {
+      if (wasInCommandMode.current) {
+        wasInCommandMode.current = false;
+        commandCaretPos.current = null;
+        setCaretPos(taskCaretPos.current);
+      }
     }
   }, [selected, command, task]);
 
@@ -342,11 +370,12 @@ const TaskItem = (props) => {
                 <span
                   ref={inputRef}
                   onKeyUp={handleCommandKeyUp}
+                  onKeyDown={handleCommandKeyDown}
                   onInput={handleCommandInput}
                   contentEditable 
                   suppressContentEditableWarning
                 >
-                  {command}
+                  {command || " "}
                 </span>
                 <span>{task.slice(taskCaretPos.current)}</span>
               </div>

@@ -96,7 +96,6 @@ const Loading = (props) => {
         setProgressValue(progressValue + 4)
         PubSub.subscribeTopic("ownedProjects")
         let reqProject = Object.values(projects).filter(x => `${x.owner}/${x.permalink}` === `${routeParams.username}/${routeParams.projectPermalink}`)[0]
-        console.log(reqProject)
         if (!reqProject) {
           try {
             reqProject = (await API.execute(queries.getProjectByPermalink, {

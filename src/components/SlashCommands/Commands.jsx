@@ -81,7 +81,6 @@ const Commands = (props) => {
     const handleKeyUp = (e) => {
       const scrollableElem = scrollableNodeRef?.current
       const scrollableElemHeight = scrollableElem?.getBoundingClientRect().height
-      console.log(scrollableElemHeight)
       if (e.key === "Enter") {
         e.preventDefault()
         e.stopPropagation()

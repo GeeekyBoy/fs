@@ -37,7 +37,7 @@ const TasksPanel = () => {
     selectedProject &&
     (e.target.getAttribute("name") === "TasksPanelContainer" ||
     (document.querySelector("[name='TasksView']") === e.target) ||
-    document.querySelector("[class^='Illustration_IllustrationContainer']")?.contains(e.target) && !Object.keys(tasks).length) &&
+    document.querySelector("[class*='IllustrationContainer']")?.contains(e.target) && !Object.keys(tasks).length) &&
     tasksStatus === ThingStatus.READY &&
     isSynced &&
     dispatch(
