@@ -177,11 +177,15 @@ const TaskItem = (props) => {
   };
 
   const setCommandAndMoveCaretToEnd = (nextCommand) => {
-    commandCaretPos.current = nextCommand.length;
-    setTimeout(() => {
-      if (shouldAutoFocus) focusInput();
-      setCommand(nextCommand);
-    }, 0);
+    if (nextCommand !== null) {
+      commandCaretPos.current = nextCommand.length;
+      setTimeout(() => {
+        if (shouldAutoFocus) inputRef.current.focus();
+        setCommand(nextCommand);
+      }, 0);
+    } else {
+      setCommand(null);
+    }
   }
 
   const handleSelect = () => {

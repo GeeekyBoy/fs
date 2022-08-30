@@ -61,11 +61,15 @@ const Commands = (props) => {
         return dispatch(appActions.handleSetTask(null))
       case "DUPLICATE":
         onCommandChange(null)
+        const sortedTasks = sortByRank(tasks)
         dispatch(tasksActions.handleCreateTask(
           copyTask(
             tasks[selectedTask],
             selectedProject,
-            generateRank(sortByRank(tasks, true)[0]?.rank)
+            generateRank(
+              tasks[selectedTask]?.rank,
+              sortedTasks[sortedTasks.indexOf(tasks[selectedTask]) + 1]?.rank
+            )
           )
         ))
         return dispatch(appActions.handleSetTask(null))

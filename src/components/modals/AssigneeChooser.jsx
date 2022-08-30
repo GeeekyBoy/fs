@@ -147,7 +147,8 @@ const AssigneeChooser = () => {
             onSelect={() => handleAddAnonymousAssignee(keyword.trim())}
           />
         )}
-        {keyword.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/) &&
+        {userState === AuthState.SignedIn &&
+        keyword.match(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/) &&
         ((pendingUser === keyword.trim() && pendingUserType === "invitedAssignee") ||
         !tasks[selectedTask || selectedTasks[0]].invitedAssignees.includes(keyword.trim())) && (
           <ListItem
