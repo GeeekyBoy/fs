@@ -1,5 +1,7 @@
 import React, { useState, createContext, useContext } from "react";
 import TasksPanel from "./TasksPanel";
+import * as appActions from "../actions/app";
+import { useDispatch } from "react-redux";
 import { ReactComponent as MemoIcon } from "../assets/emojis/memo_color.svg";
 
 const initalState = {
@@ -17,6 +19,7 @@ export const useTabView = () => useContext(TabViewContext);
 const TabViewManager = ({ children }) => {
   const [tabs, setTabs] = useState(initalState.tabs);
   const [currentTab, setCurrentTab] = useState('tasks');
+  const dispatch = useDispatch();
 
   const openTab = (tab) => {
     if (tabs.findIndex(x => x[0] === tab[0]) === -1) {
@@ -24,6 +27,10 @@ const TabViewManager = ({ children }) => {
       setCurrentTab(tab[0]);
     } else if (currentTab !== tab[0]) {
       setCurrentTab(tab[0]);
+    }
+    if (window.innerWidth <= 768) {
+      dispatch(appActions.handleSetRightPanel(false));
+      dispatch(appActions.handleSetLeftPanel(false));
     }
   };
 
