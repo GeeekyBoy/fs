@@ -54,15 +54,18 @@ const ProjectSettings = forwardRef((_, ref) => {
     newPermalink,
     newPrivacy,
     newPermissions,
+    newStatusSet,
     title,
     permalink,
     privacy,
-    permissions
+    permissions,
+    statusSet
   ) => (
     !(newTitle === (title || "") &&
     newPermalink === permalink &&
     newPrivacy === privacy &&
-    newPermissions === permissions)
+    newPermissions === permissions &&
+    JSON.stringify(newStatusSet) === JSON.stringify(statusSet))
   )
 
   const isChanged = useMemo(() => checkIsChanaged(
@@ -70,19 +73,23 @@ const ProjectSettings = forwardRef((_, ref) => {
     newPermalink,
     newPrivacy,
     newPermissions,
+    newStatusSet,
     title,
     permalink,
     privacy,
-    permissions
+    permissions,
+    statusSet
   ), [
     newTitle,
     newPermalink,
     newPrivacy,
     newPermissions,
+    newStatusSet,
     title,
     permalink,
     privacy,
-    permissions
+    permissions,
+    statusSet
   ])
   
   const closePanel = () => {
@@ -98,7 +105,8 @@ const ProjectSettings = forwardRef((_, ref) => {
       rank,
       permalink: newPermalink,
       privacy: newPrivacy,
-      permissions: newPermissions
+      permissions: newPermissions,
+      statusSet: newStatusSet
     }))
   }
   useImperativeHandle(ref, () => ({
@@ -171,15 +179,15 @@ const ProjectSettings = forwardRef((_, ref) => {
               readOnly={readOnly}
             />
           )}
-          <StatusSet
-            name="statusSet"
-            label="Status Set"
-            value={newStatusSet}
-            onChange={(e) => setNewStatusSet(e.target.value)}
-            readOnly={readOnly}
-          />
         </>
       )}
+      <StatusSet
+        name="statusSet"
+        label="Status Set"
+        value={newStatusSet}
+        onChange={(e) => setNewStatusSet(e.target.value)}
+        readOnly={readOnly}
+      />
     </form>
   );
 });

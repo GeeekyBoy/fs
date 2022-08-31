@@ -124,7 +124,7 @@ const TaskItem = (props) => {
     );
   }, [item.id, isLocked]);
 
-  const handleToggleStatus = useCallback((nextStatus) => {
+  const handleToggleStatus = useCallback(() => {
     if (item.status === doneStatus && notDoneStatus) {
       dispatch(
         tasksActions.handleUpdateTask({
