@@ -16,11 +16,23 @@ const Import = ({ importedBlob }) => {
 
   const dispatch = useDispatch();
 
-  const selectedProject = useSelector(state => state.app.selectedProject)
+  const selectedProject = useSelector(state => state.projects[state.app.selectedProject]);
 
   const [importedTasks, setImportedTasks] = useState([]);
   const [isBusy, setIsBusy] = useState(false);
   const { modalRef, hideModal } = useModal();
+
+  const findAlternativeStatus = (statusId) => {
+    const statusSet = selectedProject.statusSet;
+    const statusIdx = statusSet.findIndex(status => status.id === statusId || status.title === statusId || status.synonym === statusId);
+    return statusIdx === -1 ? selectedProject.defaultStatus : statusSet[statusIdx].id;
+  }
+
+  const getStatusTitle = (statusId) => {
+    const statusSet = selectedProject.statusSet;
+    const statusIdx = statusSet.findIndex(status => status.id === statusId);
+    return statusSet[statusIdx].title;
+  }
 
   const handleChange = async (e) => {
     const blobs = e.target.files;
@@ -41,7 +53,7 @@ const Import = ({ importedBlob }) => {
             description: task.description || "",
             due: task.due ? new Date(task.due).toISOString() : null,
             tags: task.tags ? task.tags.split(",").map((tag) => tag.trim()) : [],
-            status: task.status,
+            status: findAlternativeStatus(task.status),
             priority: task.priority,
             assignees: [],
             anonymousAssignees: [],
@@ -73,7 +85,7 @@ const Import = ({ importedBlob }) => {
         tasksActions.handleCreateTask(
           copyTask(
             importedTask,
-            selectedProject,
+            selectedProject.id,
             generateRank(sortByRank(store.getState().tasks, true)[0]?.rank)
           )
         )
@@ -131,7 +143,7 @@ const Import = ({ importedBlob }) => {
                   </span>
                 ) : null}
                 <span>
-                  <b>Status: </b>{task.status}
+                  <b>Status: </b>{getStatusTitle(task.status)}
                 </span>
                 <span>
                   <b>Priority: </b>{task.priority}

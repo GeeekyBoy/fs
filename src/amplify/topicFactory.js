@@ -254,19 +254,8 @@ const subscriptionsTemplates = {
     {
       type: "onCreateCommentByTaskId",
       next: async (e) => {
-        const { app, comments } = store.getState()
+        const { comments } = store.getState()
         const incoming = e.value.data.onCreateCommentByTaskId
-        if (app.selectedTask === incoming.taskId) {
-          store.dispatch(historyActions.createHistory({
-            id: incoming.id,
-            action: "create",
-            field: "comment",
-            value: incoming.contents,
-            createdAt: incoming.createdAt,
-            updatedAt: incoming.updatedAt,
-            owner: incoming.owner,
-          }))
-        }
         if (!mutationId.isLocal(incoming.mutationId)) {
           if (!Object.keys(comments).includes(incoming.id)) {
             await store.dispatch(usersActions.handleAddUsers([incoming.owner]))
