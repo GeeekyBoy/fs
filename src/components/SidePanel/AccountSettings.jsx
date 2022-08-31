@@ -68,7 +68,7 @@ const AccountSettings = forwardRef((_, ref) => {
       question: "Are you sure you want to log out?",
       acceptLabel: "Log out",
       onAccept: () => {
-        dispatch(userActions.handleSignOut());
+        dispatch(userActions.handleSignOut(true));
       }
     })
   }

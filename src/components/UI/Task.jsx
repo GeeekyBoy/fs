@@ -60,7 +60,7 @@ const TaskItem = (props) => {
   const wasUnselected = useRef(true);
   const wasInCommandMode = useRef(false);
   const shellLongPressTimeout = useRef(null);
-  const taskCaretPos = useRef(task.length);
+  const taskCaretPos = useRef(task.length - 1);
   const commandCaretPos = useRef(null);
 
   const [command, setCommand] = useState(null);
@@ -272,14 +272,12 @@ const TaskItem = (props) => {
   useEffect(() => {
     if (selected) {
       if (wasUnselected.current) {
-        if (lastTaskCaretPos.current !== null) {
-          const caretPos = lastTaskCaretPos.current < task.length
-            ? lastTaskCaretPos.current
-            : task.length
-          lastTaskCaretPos.current = null;
-          taskCaretPos.current = caretPos;
-          setCaretPos(caretPos);
-        }
+        const caretPos = lastTaskCaretPos.current !== null && lastTaskCaretPos.current < task.length
+          ? lastTaskCaretPos.current
+          : task.length
+        lastTaskCaretPos.current = null;
+        taskCaretPos.current = caretPos;
+        setCaretPos(caretPos);
         wasUnselected.current = false;
         if (shouldAutoFocus) focusInput();
       } else if (inputRef.current?.contains(document.activeElement)) {

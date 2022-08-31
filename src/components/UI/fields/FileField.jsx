@@ -59,7 +59,10 @@ const FileField = (props) => {
 
   return (
     <div
-      className={styles.FileFieldContainer}
+      className={[
+        styles.FileFieldContainer,
+        "noselect"
+      ].join(" ")}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragEnter={handleDragEnter}

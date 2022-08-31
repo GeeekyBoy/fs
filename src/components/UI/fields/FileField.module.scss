@@ -1,6 +1,7 @@
 .FileFieldContainer {
   padding: 40px 0;
   border: 1px dashed;
+  cursor: pointer;
   border-color: var(--color-fill-color-text-tertiary);
   & > input {
     display: none;

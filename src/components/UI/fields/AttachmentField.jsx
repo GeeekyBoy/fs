@@ -53,8 +53,13 @@ const AttachmentField = (props) => {
         return TwitterIcon;
       case 'embed/issuu':
         return IssuuIcon;
+      case "text/javascript":
+      case "text/plain":
+      case "application/json":
+      case "application/xml":
+        return DocumentIcon;
       default:
-        return null;
+        return DocumentIcon;
     }
   }
 
@@ -77,6 +82,7 @@ const AttachmentField = (props) => {
         openTab([tabId, title, FigmaIcon, <FigmaViewer key={tabId} embedId={embedId} />]);
         break;
       case "text/javascript":
+      case "text/plain":
       case "application/json":
       case "application/xml":
         openTab([url, filename, DocumentIcon, <CodeViewer key={url} url={url} />]);
