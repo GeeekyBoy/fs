@@ -7,6 +7,7 @@ export default defineConfig({
   root: "src",
   build: {
     outDir: "../build",
+    emptyOutDir: true,
   },
   plugins: [
     svgr({ svgrOptions: { ref: true } }),

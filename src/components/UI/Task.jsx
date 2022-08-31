@@ -277,9 +277,11 @@ const TaskItem = (props) => {
           : task.length
         lastTaskCaretPos.current = null;
         taskCaretPos.current = caretPos;
-        setCaretPos(caretPos);
         wasUnselected.current = false;
-        if (shouldAutoFocus) focusInput();
+        if (shouldAutoFocus) {
+          setCaretPos(caretPos);
+          focusInput();
+        }
       } else if (inputRef.current?.contains(document.activeElement)) {
         if (command !== null) {
           setCaretPos(commandCaretPos.current);
