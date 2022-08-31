@@ -1,6 +1,6 @@
 import { bigIntToHex } from "./converters.js";
 
-export default (input) => {
+const padHex = (input) => {
   const h = typeof input === "string" ? input : bigIntToHex(input);
   return h.length % 2 === 1
     ? `0${h}`
@@ -8,3 +8,5 @@ export default (input) => {
     ? `00${h}`
     : h;
 };
+
+export default padHex;

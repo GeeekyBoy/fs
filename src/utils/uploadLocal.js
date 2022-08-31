@@ -2,7 +2,7 @@ import API from "../amplify/API";
 import * as cacheController from "../controllers/cache"
 import * as mutations from "../graphql/mutations"
 
-export default async () => {
+const uploadLocal = async () => {
   const { localCache } = cacheController.getCache()
   if (localCache) {
     const dataToBeSent = Object.values(localCache.projects);
@@ -21,3 +21,5 @@ export default async () => {
     }
   }
 }
+
+export default uploadLocal;

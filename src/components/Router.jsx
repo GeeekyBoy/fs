@@ -1,6 +1,4 @@
-import React, { useState, createContext, useContext, useRef, useEffect } from "react";
-import AuthFlow from "./AuthFlow";
-import Home from "./Home";
+import React, { useState, createContext, useContext, useEffect } from "react";
 
 const supportedRoutes = [
   "/login/*",
@@ -53,6 +51,8 @@ const getCurrentPattern = (path) => {
   return null;
 }
 
+const routes = {};
+
 const contextValue = {
   routeParams: {},
   routeLocation: getCurrentPath()
@@ -64,6 +64,9 @@ export const useRouterNoUpdates = () => contextValue;
 export const navigate = function f(...args) {
   return f.contents.call(this, ...args);
 };
+export const addRouteComponent = (name, component) => {
+  routes[name] = component;
+}
 
 const Router = () => {
   const [currentPath, setCurrentPath] = useState(getCurrentPattern(getCurrentPath()));
@@ -86,13 +89,13 @@ const Router = () => {
   return (
     <RouterContext.Provider value={contextValue}>
       {
-        currentPath === "/login/*" ? <AuthFlow />
-        : currentPath === "/signup/*" ? <AuthFlow />
-        : currentPath === "/forgot-password/*" ? <AuthFlow />
-        : currentPath === "/local/:projectPermalink/*" ? <Home />
-        : currentPath === "/:username/:projectPermalink/:taskPermalink/*" ? <Home />
-        : currentPath === "/:username/:projectPermalink/*" ? <Home />
-        : currentPath === "/" ? <Home />
+        currentPath === "/login/*" ? React.createElement(routes.AuthFlow)
+        : currentPath === "/signup/*" ? React.createElement(routes.AuthFlow)
+        : currentPath === "/forgot-password/*" ? React.createElement(routes.AuthFlow)
+        : currentPath === "/local/:projectPermalink/*" ? React.createElement(routes.Home)
+        : currentPath === "/:username/:projectPermalink/:taskPermalink/*" ? React.createElement(routes.Home)
+        : currentPath === "/:username/:projectPermalink/*" ? React.createElement(routes.Home)
+        : currentPath === "/" ? React.createElement(routes.Home)
         : <></>
       }
     </RouterContext.Provider>

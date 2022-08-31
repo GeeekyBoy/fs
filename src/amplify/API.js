@@ -87,4 +87,6 @@ class API {
   }
 }
 
-export default new API();
+const singletone = new API();
+
+export default singletone;

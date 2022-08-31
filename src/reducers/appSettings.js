@@ -29,7 +29,7 @@ const initState = { ...defaultState, ...(cachedState || {}) }
 
 window.localStorage.setItem("appSettings", JSON.stringify(initState));
 
-export default function (state = initState, action) {
+const appSettingsReducer = (state = initState, action) => {
   switch (action.type) {
     case SET_THEME:
       return { ...state, theme: action.theme };
@@ -55,3 +55,5 @@ export default function (state = initState, action) {
       return state;
   }
 }
+
+export default appSettingsReducer;

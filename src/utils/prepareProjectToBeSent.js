@@ -1,4 +1,4 @@
-export default (projectState) => {
+const prepareProjectToBeSent = (projectState) => {
   return {
     id: projectState.id,
     rank: projectState.rank,
@@ -10,3 +10,5 @@ export default (projectState) => {
     defaultStatus: projectState.defaultStatus,
   };
 };
+
+export default prepareProjectToBeSent;

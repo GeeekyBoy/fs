@@ -2,7 +2,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 // TIMESTAMP format should be EEE MMM d HH:mm:ss z yyyy in english
-export default () => {
+const getTimestamp = () => {
   const now = new Date();
 
   const day = days[now.getUTCDay()];
@@ -16,3 +16,5 @@ export default () => {
 
   return `${day} ${mon} ${dayOfMonth} ${hours}:${mins}:${secs} UTC ${year}`;
 };
+
+export default getTimestamp;

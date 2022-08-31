@@ -1,7 +1,7 @@
 import { CREATE_PROJECT, UPDATE_PROJECT, REMOVE_PROJECT, EMPTY_PROJECTS, FETCH_PROJECTS, FETCH_CACHED_PROJECTS } from "../actions/projects"
 import filterObj from "../utils/filterObj"
 
-export default function (state = {}, action) {
+const projectsReducer = (state = {}, action) => {
   let stateClone = {...state}
   switch(action.type) {
     case CREATE_PROJECT:
@@ -69,3 +69,5 @@ export default function (state = {}, action) {
       return state
   }
 }
+
+export default projectsReducer;

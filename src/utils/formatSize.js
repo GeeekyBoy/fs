@@ -1,4 +1,4 @@
-export default (size) => {
+const formatSize = (size) => {
   if (size < 1024) {
     return `${size} bytes`;
   } else if (size < 1024 * 1024) {
@@ -9,3 +9,5 @@ export default (size) => {
     return `${(size / 1024 / 1024 / 1024).toFixed(2)} GB`;
   }
 };
+
+export default formatSize;

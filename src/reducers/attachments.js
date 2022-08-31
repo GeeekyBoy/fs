@@ -1,6 +1,6 @@
 import { CREATE_ATTACHMENT, EMPTY_ATTACHMENTS, FETCH_ATTACHMENTS, FETCH_CACHED_ATTACHMENTS } from "../actions/attachments"
 
-export default function (state = [], action) {
+const attachmentsReducer = (state = [], action) => {
   let stateClone = [...state]
   switch(action.type) {
     case CREATE_ATTACHMENT:
@@ -19,3 +19,5 @@ export default function (state = [], action) {
       return state
   }
 }
+
+export default attachmentsReducer;

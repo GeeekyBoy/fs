@@ -15,7 +15,7 @@ const initState = {
   leftPanelPage: null
 }
 
-export default function (state = initState, action) {
+const appReducer = (state = initState, action) => {
   switch(action.type) {
     case SET_PROJECT:
       return {...state, selectedProject: action.id}
@@ -58,3 +58,5 @@ export default function (state = initState, action) {
       return state
   }
 }
+
+export default appReducer;

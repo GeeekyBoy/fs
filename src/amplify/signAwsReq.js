@@ -12,7 +12,7 @@ const getSignatureKey = async (key, dateStamp, regionName, serviceName) => {
   return kSigning;
 };
 
-export default async (
+const signAwsReq = async (
   method,
   service,
   endpoint,
@@ -86,3 +86,5 @@ export default async (
     Authorization: authorizationHeader,
   };
 };
+
+export default signAwsReq;

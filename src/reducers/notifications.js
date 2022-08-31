@@ -5,7 +5,7 @@ const initState = {
   pushed: []
 }
 
-export default function (state = initState, action) {
+const notificationsReducer = (state = initState, action) => {
   switch(action.type) {
     case ADD_NOTIFICATION:
       return {
@@ -47,3 +47,5 @@ export default function (state = initState, action) {
       return state
   }
 }
+
+export default notificationsReducer;

@@ -6,7 +6,7 @@ import computeKey from "./computeKey.js";
 import getSecret from "./getSecret.js";
 import signSecret from "./signSecret.js";
 
-export default async (a, groupId, userId, password, challengeParameters) => {
+const calculateClaimSig = async (a, groupId, userId, password, challengeParameters) => {
   const timestamp = getTimestamp();
   const salt = challengeParameters.SALT;
   const B = hexToBigInt(challengeParameters.SRP_B);
@@ -22,3 +22,5 @@ export default async (a, groupId, userId, password, challengeParameters) => {
 
   return { claimSig, timestamp };
 };
+
+export default calculateClaimSig;

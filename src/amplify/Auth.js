@@ -361,4 +361,6 @@ class Auth {
   }
 }
 
-export default new Auth();
+const singletone = new Auth();
+
+export default singletone;

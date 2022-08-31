@@ -6,7 +6,7 @@ import {
   abufToUint8,
 } from "../../util/converters.js";
 
-export default async (message, key) => {
+const computeKey = async (message, key) => {
   const pdk1 = await signSha256Hmac(key, message);
   const pdk2 = await signSha256Hmac(
     abufToUint8(pdk1),
@@ -15,3 +15,5 @@ export default async (message, key) => {
   const hex = uint8ToHex(abufToUint8(pdk2));
   return hex.slice(0, 32);
 };
+
+export default computeKey;

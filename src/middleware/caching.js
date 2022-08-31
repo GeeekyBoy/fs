@@ -1,14 +1,33 @@
-import { FETCH_PROJECTS, CREATE_PROJECT, UPDATE_PROJECT, REMOVE_PROJECT } from "../actions/projects"
-import { FETCH_TASKS, CREATE_TASK, UPDATE_TASK, REMOVE_TASK } from "../actions/tasks"
-import { FETCH_COMMENTS, CREATE_COMMENT, UPDATE_COMMENT, REMOVE_COMMENT } from "../actions/comments"
-import { CREATE_HISTORY, FETCH_HISTORY } from "../actions/history"
-import { ADD_USERS } from "../actions/users"
-import { SET_STATE, SET_DATA } from "../actions/user"
 import * as cacheController from "../controllers/cache"
 import filterObj from "../utils/filterObj"
-import { CREATE_ATTACHMENT, FETCH_ATTACHMENTS } from "../actions/attachments"
 
-export default store => next => action => {
+const FETCH_PROJECTS = "FETCH_PROJECTS";
+const CREATE_PROJECT = "CREATE_PROJECT";
+const UPDATE_PROJECT = "UPDATE_PROJECT";
+const REMOVE_PROJECT = "REMOVE_PROJECT";
+
+const FETCH_TASKS = "FETCH_TASKS";
+const CREATE_TASK = "CREATE_TASK";
+const UPDATE_TASK = "UPDATE_TASK";
+const REMOVE_TASK = "REMOVE_TASK";
+
+const FETCH_COMMENTS = "FETCH_COMMENTS";
+const CREATE_COMMENT = "CREATE_COMMENT";
+const UPDATE_COMMENT = "UPDATE_COMMENT";
+const REMOVE_COMMENT = "REMOVE_COMMENT";
+
+const CREATE_HISTORY = "CREATE_HISTORY";
+const FETCH_HISTORY = "FETCH_HISTORY";
+
+const ADD_USERS = "ADD_USERS";
+
+const SET_STATE = "SET_STATE";
+const SET_DATA = "SET_DATA";
+
+const CREATE_ATTACHMENT = "CREATE_ATTACHMENT";
+const FETCH_ATTACHMENTS = "FETCH_ATTACHMENTS";
+
+const cachingMiddleware = store => next => action => {
   const {
     app: {
       selectedProject, 
@@ -55,3 +74,5 @@ export default store => next => action => {
   }
   return result
 }
+
+export default cachingMiddleware;

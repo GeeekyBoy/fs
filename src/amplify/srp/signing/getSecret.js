@@ -1,6 +1,6 @@
 import { codePointToUint8, b64ToUint8 } from "../../util/converters.js";
 
-export default ({ groupId, challengeParameters, timestamp }) => {
+const getSecret = ({ groupId, challengeParameters, timestamp }) => {
   const signBuf = new Uint8Array([
     ...codePointToUint8(groupId),
     ...codePointToUint8(
@@ -14,3 +14,5 @@ export default ({ groupId, challengeParameters, timestamp }) => {
 
   return signBuf;
 };
+
+export default getSecret;

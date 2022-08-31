@@ -85,7 +85,7 @@ const SyncManager = () => {
               navigate(`/${firstProject.permalink}`, true)
             }
           }
-          if (store.getState().isOffline) {
+          if (store.getState().app.isOffline) {
             dispatch(appActions.setSynced(false))
             dispatch(usersActions.addCachedUsers(cacheController.getUsers()))
           } else {

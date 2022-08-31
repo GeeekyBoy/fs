@@ -1,6 +1,6 @@
 import { CREATE_TASK, UPDATE_TASK, REMOVE_TASK, EMPTY_TASKS, FETCH_TASKS, FETCH_CACHED_TASKS } from "../actions/tasks"
 
-export default function (state = {}, action) {
+const tasksReducer = (state = {}, action) => {
   let stateClone = {...state}
   switch(action.type) {
     case CREATE_TASK:
@@ -36,3 +36,5 @@ export default function (state = {}, action) {
       return state
   }
 }
+
+export default tasksReducer;

@@ -18,9 +18,6 @@ export const uint8ToHex = (uint8) =>
 export const uint8ToB64 = (uint8) =>
   window.btoa(String.fromCharCode(...uint8));
 
-export const hexToB64 = (hexString) =>
-  window.btoa(String.fromCharCode.apply(null, [...hexToUint8(hexString)]));
-
 export const b64ToUint8 = (b64) =>
   new Uint8Array(
     window.atob(b64)

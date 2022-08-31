@@ -1,6 +1,6 @@
 const decoder = new TextDecoder("utf-8", { fatal: true });
 
-export default async (blob) => {
+const isTextBlob = async (blob) => {
   const buffer = await blob.arrayBuffer();
   try {
     decoder.decode(buffer);
@@ -10,3 +10,5 @@ export default async (blob) => {
   }
   return true;
 };
+
+export default isTextBlob;

@@ -4,7 +4,12 @@ import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
 import store from "../store";
 import isOnline from "../utils/isOnline";
-import Router from "./Router";
+import AuthFlow from "./AuthFlow";
+import Home from "./Home";
+import Router, { addRouteComponent } from "./Router";
+
+addRouteComponent("Home", Home);
+addRouteComponent("AuthFlow", AuthFlow);
 
 const App = () => {
   const dispatch = useDispatch();

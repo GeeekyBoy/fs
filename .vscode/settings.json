@@ -12,5 +12,6 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "findUnusedExports.detectCircularImports": true
 }

@@ -4,7 +4,7 @@ const zero = BigInt.zero;
 const one = BigInt.one;
 const two = BigInt[2];
 
-export default (a, e, m) => {
+const modPow = (a, e, m) => {
   a = BigInt(a);
   e = BigInt(e);
   m = BigInt(m);
@@ -36,3 +36,5 @@ export default (a, e, m) => {
 
   return r.lesserOrEquals(zero) ? r.add(m) : r;
 };
+
+export default modPow;

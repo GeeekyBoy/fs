@@ -2,7 +2,7 @@ import API from "../amplify/API";
 import { initializeUpload } from "../graphql/queries";
 import isTextBlob from "./isTextBlob";
 
-export default async (blob, taskId, onProgress) => {
+const upload = async (blob, taskId, onProgress) => {
   const mimeType = blob.type
     ? blob.type
     : await isTextBlob(blob)
@@ -33,3 +33,5 @@ export default async (blob, taskId, onProgress) => {
 
   return await promise;
 };
+
+export default upload;

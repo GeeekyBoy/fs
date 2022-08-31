@@ -1,6 +1,6 @@
 import { CREATE_HISTORY, EMPTY_HISTORY, FETCH_HISTORY, FETCH_CACHED_HISTORY } from "../actions/history"
 
-export default function (state = [], action) {
+const historyReducer = (state = [], action) => {
   let stateClone = [...state]
   switch(action.type) {
     case CREATE_HISTORY:
@@ -19,3 +19,5 @@ export default function (state = [], action) {
       return state
   }
 }
+
+export default historyReducer;

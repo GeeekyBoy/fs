@@ -327,4 +327,4 @@ const generateRandomWords = async (wordsNo = 2) => {
   return choices
 }
 
-export default generateRandomWords
+export default generateRandomWords;

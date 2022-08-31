@@ -1,6 +1,6 @@
 import generateId from "./generateId";
 
-export default (taskState, projectId, rank) => {
+const copyTask = (taskState, projectId, rank) => {
   return {
     id: generateId(),
     projectId: projectId,
@@ -16,3 +16,5 @@ export default (taskState, projectId, rank) => {
     invitedAssignees: [],
   };
 };
+
+export default copyTask;

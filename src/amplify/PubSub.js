@@ -168,4 +168,6 @@ class PubSub {
   }
 }
 
-export default new PubSub();
+const singletone = new PubSub();
+
+export default singletone;

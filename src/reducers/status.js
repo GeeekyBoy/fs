@@ -9,7 +9,7 @@ const initState = {
   history: ThingStatus.FETCHING,
 }
 
-export default function (state = initState, action) {
+const statusReducer = (state = initState, action) => {
   switch(action.type) {
     case SET_PROJECTS_STATUS:
       return {...state, projects: action.status}
@@ -25,3 +25,5 @@ export default function (state = initState, action) {
       return state
   }
 }
+
+export default statusReducer;

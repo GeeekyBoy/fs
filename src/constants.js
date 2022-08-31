@@ -9,19 +9,6 @@ export const ThingStatus = {
   ERROR: "ERROR",
 }
 
-export const commandIntents = {
-  ASSIGN: "ASSIGN",
-  STATUS: "STATUS",
-  DESCRIPTION: "DESCRIPTION",
-  DUE: "DUE",
-  TAGS: "TAGS",
-  COPY: "COPY",
-  DUPLICATE: "DUPLICATE",
-  REORDER: "REORDER",
-  DELETE: "DELETE",
-  UNKNOWN: "UNKNOWN"
-}
-
 export const supportedCommands = {
   ASSIGN: {
     description: "Search for a user to assign him",
