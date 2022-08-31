@@ -3,6 +3,12 @@ import styles from "./Status.module.scss"
 import * as tasksActions from "../../actions/tasks"
 import { useDispatch, useSelector } from "react-redux";
 
+const statusColors = {
+  "todo": "var(--color-fill-color-system-critical)",
+  "pending": "var(--color-fill-color-system-caution)",
+  "done": "var(--color-fill-color-system-success)",
+}
+
 const Status = (props) => {
   const {
     commandParam,
@@ -14,10 +20,19 @@ const Status = (props) => {
 
   const selectedTask = useSelector(state => state.app.selectedTask);
 
-  const supportedStatus = [["Todo", "#FF1744"], ["Started", "#FF9100"], ["Finished", "#00E676"]]
+  const statusSet = useSelector(state => state.projects[state.app.selectedProject].statusSet);
+
+  const getSupportedStatus = (statusSet) => {
+    const todoStatus = statusSet.filter(status => status.synonym === "todo").sort((a, b) => a.title - b.title);
+    const pendingStatus = statusSet.filter(status => status.synonym === "pending").sort((a, b) => a.title - b.title);
+    const doneStatus = statusSet.filter(status => status.synonym === "done").sort((a, b) => a.title - b.title);
+    return [...todoStatus, ...pendingStatus, ...doneStatus];
+  }
+
+  const supportedStatus = useMemo(() => getSupportedStatus(statusSet), [statusSet]);
 
   const getSuggestedStatus = (commandParam) => {
-    return supportedStatus.filter(x => new RegExp(`^${commandParam || ".*"}`, "i").test(x[0]))
+    return supportedStatus.filter(x => new RegExp(`^${commandParam || ".*"}`, "i").test(x.title))
   }
 
   const suggestedStatus = useMemo(() => getSuggestedStatus(commandParam), [commandParam])
@@ -25,34 +40,13 @@ const Status = (props) => {
   const [selection, setSelection] = useState(0)
 
   const chooseStatus = (selectedStatus) => {
-    switch(selectedStatus) {
-      case "TODO":
-        onCommandChange(null)
-        return dispatch(tasksActions.handleUpdateTask({
-          id: selectedTask,
-          action: "update",
-          field: "status",
-          value: "todo"
-        }))
-      case "STARTED":
-        onCommandChange(null)
-        return dispatch(tasksActions.handleUpdateTask({
-          id: selectedTask,
-          action: "update",
-          field: "status",
-          value: "pending"
-        }))
-      case "FINISHED":
-        onCommandChange(null)
-        return dispatch(tasksActions.handleUpdateTask({
-          id: selectedTask,
-          action: "update",
-          field: "status",
-          value: "done"
-        }))
-      default:
-        return 0
-    }
+    onCommandChange(null)
+    return dispatch(tasksActions.handleUpdateTask({
+      id: selectedTask,
+      action: "update",
+      field: "status",
+      value: selectedStatus
+    }))
   }
 
   useEffect(() => {
@@ -62,7 +56,7 @@ const Status = (props) => {
       if (e.key === "Enter") {
         e.preventDefault()
         e.stopPropagation()
-        chooseStatus(suggestedStatus[selection][0].toUpperCase()) 
+        chooseStatus(suggestedStatus[selection].id) 
       } else if (e.key === "ArrowUp") {
         e.preventDefault()
         e.stopPropagation()
@@ -103,11 +97,11 @@ const Status = (props) => {
           ].join(" ")}
           key={x}
           onMouseEnter={() => setSelection(i)}
-          onClick={() => chooseStatus(x[0].toUpperCase())}
+          onClick={() => chooseStatus(x.id)}
         >
           <div>
-            <span style={{ color: x[1], marginRight: 10 }}>⬤</span>
-            <span>{x[0]}</span>
+            <span style={{ color: statusColors[x.synonym], marginRight: 10 }}>⬤</span>
+            <span>{x.title}</span>
           </div>
         </div>
       ))}
