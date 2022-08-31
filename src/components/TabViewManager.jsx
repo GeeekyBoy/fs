@@ -15,12 +15,12 @@ const TabViewContext = createContext(initalState);
 export const useTabView = () => useContext(TabViewContext);
 
 const TabViewManager = ({ children }) => {
-  const [tabs, setTab] = useState(initalState.tabs);
+  const [tabs, setTabs] = useState(initalState.tabs);
   const [currentTab, setCurrentTab] = useState('tasks');
 
   const openTab = (tab) => {
     if (tabs.findIndex(x => x[0] === tab[0]) === -1) {
-      setTab([...tabs, tab]);
+      setTabs([...tabs, tab]);
       setCurrentTab(tab[0]);
     } else if (currentTab !== tab[0]) {
       setCurrentTab(tab[0]);
@@ -32,7 +32,7 @@ const TabViewManager = ({ children }) => {
     if (index !== -1) {
       const newTabs = [...tabs];
       newTabs.splice(index, 1);
-      setTab(newTabs);
+      setTabs(newTabs);
       if (currentTab === tabId) {
         setCurrentTab(newTabs[index - 1][0]);
       }
@@ -40,7 +40,7 @@ const TabViewManager = ({ children }) => {
   }
 
   const clearTabs = () => {
-    setTab(tabs.slice(0, 1));
+    setTabs(tabs.slice(0, 1));
     setCurrentTab('tasks');
   }
 

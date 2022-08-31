@@ -46,7 +46,10 @@ const TabView = (props) => {
               {i !== 0 && (
                 <IconButton
                   icon={CloseIcon}
-                  onClick={() => handleCloseTab(x[0])}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCloseTab(x[0])
+                  }}
                 />
               )}
             </div>
