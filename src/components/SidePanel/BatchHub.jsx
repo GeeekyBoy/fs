@@ -16,32 +16,31 @@ const TaskHub = forwardRef((_, ref) => {
   const userState = useSelector(state => state.user.state);
   const username = useSelector(state => state.user.data?.username);
 
-  const projects = useSelector(state => state.projects);
-
   const tasks = useSelector(state => state.tasks);
 
-  const selectedProject = useSelector(state => state.app.selectedProject);
-  const selectedTasks = useSelector(state => state.app.selectedTasks);
+  const selectedProject = useSelector(state => state.projects[state.app.selectedProject]);
+
+  const selectedTasksIds = useSelector(state => state.app.selectedTasks);
   const isSynced = useSelector(state => state.app.isSynced);
 
   const closePanel = () => {
     return dispatch(appActions.handleSetRightPanel(false))
   }
 
-  const getReadOnly = (userState, username, projects, selectedProject, isSynced) => {
+  const getReadOnly = (userState, username, selectedProject, isSynced) => {
     return (userState === AuthState.SignedIn &&
-    ((projects[selectedProject]?.owner !== username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
-    (userState !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
+    ((selectedProject?.owner !== username &&
+    selectedProject?.permissions === "r") || !isSynced)) ||
+    (userState !== AuthState.SignedIn && selectedProject?.isTemp)
   }
 
   const readOnly = useMemo(
-    () => getReadOnly(userState, username, projects, selectedProject, isSynced),
-    [userState, username, projects, selectedProject, isSynced]
+    () => getReadOnly(userState, username, selectedProject, isSynced),
+    [userState, username, selectedProject, isSynced]
   );
   
   const handleChange = (e) => {
-    for (const taskId of selectedTasks) {
+    for (const taskId of selectedTasksIds) {
       dispatch(
         tasksActions.handleUpdateTask({
           id: taskId,
@@ -109,19 +108,19 @@ const TaskHub = forwardRef((_, ref) => {
     return commonProps;
   };
 
-  const commonProps = useMemo(() => getCommonProps(tasks, selectedTasks), [tasks, selectedTasks]);
+  const commonProps = useMemo(() => getCommonProps(tasks, selectedTasksIds), [tasks, selectedTasksIds]);
     
   useImperativeHandle(ref, () => ({
     panelProps: {
-      title: `${selectedTasks.length} Task${
-        selectedTasks.length > 1 ? "s" : ""
+      title: `${selectedTasksIds.length} Task${
+        selectedTasksIds.length > 1 ? "s" : ""
       } Selected`,
       onClose: () => {
         closePanel()
       },
     },
   }));
-  return selectedTasks && (
+  return selectedTasksIds && (
     <form onSubmit={(e) => e.preventDefault()} className={styles.DetailsForm}>
       <input type="submit" name="submit" value="Submit"></input>
       <AssigneeField
@@ -135,7 +134,7 @@ const TaskHub = forwardRef((_, ref) => {
         }}
         readOnly={readOnly}
       />
-      {(userState === AuthState.SignedIn || (userState !== AuthState.SignedIn && projects[selectedProject]?.isTemp)) && (
+      {(userState === AuthState.SignedIn || (userState !== AuthState.SignedIn && selectedProject?.isTemp)) && (
         <WatcherField
           name="watchers"
           label="Watched By"
@@ -174,11 +173,7 @@ const TaskHub = forwardRef((_, ref) => {
         }
         onChange={handleChange}
         value={commonProps.status}
-        options={{
-          todo: "Todo",
-          pending: "Pending",
-          done: "Done",
-        }}
+        options={selectedProject.statusSet.map(({ id, title }) => [id, title])}
         readOnly={readOnly}
       />
       <ComboBox
@@ -190,11 +185,11 @@ const TaskHub = forwardRef((_, ref) => {
         }
         onChange={handleChange}
         value={commonProps.priority}
-        options={{
-          low: "Low",
-          normal: "Normal",
-          high: "High",
-        }}
+        options={[
+          ["low", "Low"],
+          ["normal", "Normal"],
+          ["high", "High"],
+        ]}
         readOnly={readOnly}
       />
     </form>
