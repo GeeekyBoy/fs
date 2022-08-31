@@ -12,7 +12,7 @@
   & * {
     z-index: 2;
   }
-  &:hover {
+  &:hover, &.hovered {
     background-color: var(--color-fill-color-subtle-secondary);
   }
   &:active {
@@ -20,7 +20,7 @@
   }
   &.selected {
     background-color: var(--color-fill-color-subtle-secondary);
-    &:hover {
+    &:hover, &.hovered {
       background-color: var(--color-fill-color-subtle-tertiary);
     }
     &:active {

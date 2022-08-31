@@ -8,24 +8,33 @@ const ListItem = (props) => {
     secondaryLabel,
     prefix,
     onSelect,
+    onHover,
     listeners,
+    hovered,
     selected,
     disabled,
   } = props
-  const selectProject = () => {
+  const handleSelect = () => {
     if (!selected && onSelect) {
       onSelect(id)
     }
   } 
+  const handleHover = () => {
+    if (onHover) {
+      onHover(id)
+    }
+  }
   return (
     <div
       className="noselect"
-      onClick={() => selectProject(id)}
+      onClick={() => handleSelect(id)}
+      onMouseEnter={handleHover}
       // {...listeners}
     >
       <div
         className={[
           styles.ListItemContainer,
+          ...(hovered && [styles.hovered] || []),
           ...(selected && [styles.selected] || []),
           ...(disabled && [styles.disabled] || []),
         ].join(" ")}
