@@ -8,6 +8,7 @@ import formatDate from '../../utils/formatDate';
 
 const Notification = (props) => {
   const {
+    dismissable = true,
     onOpen,
     onDismiss,
     onAnimationEnd,
@@ -54,12 +55,14 @@ const Notification = (props) => {
               <ChevronDownIcon fill="currentColor" />
             )}
           </div>
-          <button
-            className={styles.NotificationCloseBtn}
-            onClick={onDismiss}
-          >
-            <CloseIcon fill="currentColor" />
-          </button>
+          {dismissable && (
+            <button
+              className={styles.NotificationCloseBtn}
+              onClick={onDismiss}
+            >
+              <CloseIcon fill="currentColor" />
+            </button>
+          )}
         </div>
         <div className={styles.NotificationContent}>
           <Avatar

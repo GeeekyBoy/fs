@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React from "react";
 import * as tasksActions from "../../actions/tasks";
 import { useDispatch, useSelector } from "react-redux";
-import { ThingStatus, AuthState, initTaskState } from "../../constants";
+import { ThingStatus, initTaskState } from "../../constants";
 import styles from "./TaskPlaceholder.module.scss";
 import sortByRank from "../../utils/sortByRank";
 import generateRank from "../../utils/generateRank";
+import { useReadOnly } from "../ReadOnlyListener";
 
 const TaskPlaceholder = (props) => {
   const {
@@ -13,6 +14,7 @@ const TaskPlaceholder = (props) => {
   } = props;
 
   const dispatch = useDispatch();
+  const readOnly = useReadOnly();
 
   const selectedProject = useSelector(state => state.app.selectedProject);
   const isSynced = useSelector(state => state.app.isSynced);
@@ -22,17 +24,6 @@ const TaskPlaceholder = (props) => {
   const tasksStatus = useSelector(state => state.status.tasks);
 
   const projects = useSelector(state => state.projects);
-
-  const user = useSelector(state => state.user);
-
-  const getReadOnly = (user, projects, selectedProject, isSynced) => {
-    return (user.state === AuthState.SignedIn &&
-    ((projects[selectedProject]?.owner !== user.data.username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
-    (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
-  }
-
-  const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
 
   const addNewTask = () => {
       !readOnly &&

@@ -8,16 +8,17 @@ import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_2
 import TextField from '../UI/fields/TextField';
 import ComboBox from '../UI/fields/ComboBox';
 import StatusSet from '../UI/fields/StatusSet';
+import { useReadOnly } from '../ReadOnlyListener';
 
 const ProjectSettings = forwardRef((_, ref) => {
 
   const dispatch = useDispatch();
+  const readOnly = useReadOnly();
 
   const selectedProject = useSelector(state => state.app.selectedProject);
   const isSynced = useSelector(state => state.app.isSynced);
 
   const userState = useSelector(state => state.user.state);
-  const username = useSelector(state => state.user.data?.username);
 
   const projects = useSelector(state => state.projects);
 
@@ -32,16 +33,6 @@ const ProjectSettings = forwardRef((_, ref) => {
       statusSet
     }
   } = projects
-
-  const getReadOnly = (user, projects, selectedProject, isSynced) => {
-    return userState === AuthState.SignedIn &&
-    ((projects[selectedProject]?.owner !== username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)
-  }
-  const readOnly = useMemo(
-    () => getReadOnly(userState, username, projects, selectedProject, isSynced),
-    [userState, username, projects, selectedProject, isSynced]
-  );
 
   const [newTitle, setNewTitle] = useState(title || "")
   const [newPermalink, setNewPermalink] = useState(/\w+\/(.*)/.exec(permalink)?.[1] || permalink)
@@ -112,7 +103,7 @@ const ProjectSettings = forwardRef((_, ref) => {
   useImperativeHandle(ref, () => ({
     panelProps: {
       title: "Project Settings",
-      actionIcon: RemoveIcon,
+      actionIcon: !readOnly ? RemoveIcon : null,
       submitLabel: isSynced
         ? "Save Changes"
         : "No Connection!",

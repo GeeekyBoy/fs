@@ -7,6 +7,7 @@ import App from "./components/App";
 import ModalManager from "./components/ModalManager";
 import WindowSizeListener from "./components/WindowSizeListener";
 import TabViewManager from './components/TabViewManager';
+import ReadOnlyListener from "./components/ReadOnlyListener";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -15,7 +16,9 @@ root.render(
     <Provider store={store}>
       <ModalManager>
         <TabViewManager>
-          <App />
+          <ReadOnlyListener>
+            <App />
+          </ReadOnlyListener>
         </TabViewManager>
       </ModalManager>
     </Provider>

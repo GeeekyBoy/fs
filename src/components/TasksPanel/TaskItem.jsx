@@ -6,9 +6,10 @@ import generateRank from "../../utils/generateRank";
 import * as appActions from "../../actions/app";
 import * as tasksActions from "../../actions/tasks";
 import { useModal } from "../ModalManager";
-import { initTaskState, AuthState, panelPages, ThingStatus } from "../../constants";
+import { initTaskState, panelPages, ThingStatus } from "../../constants";
 import modals from '../modals';
 import Task from "../UI/Task";
+import { useReadOnly } from "../ReadOnlyListener";
 
 const TaskItem = (props) => {
 
@@ -26,11 +27,11 @@ const TaskItem = (props) => {
 
   const inputRef = useRef(null)
   const dispatch = useDispatch()
+  const readOnly = useReadOnly();
   
   const nextTaskRank = useSelector(state => state.tasks[nextTask]?.rank)
   const tasksStatus = useSelector(state => state.status.tasks)
   const isRightPanelOpened = useSelector(state => state.app.isRightPanelOpened)
-  const isSynced = useSelector(state => state.app.isSynced)
 
   const showDueDate = useSelector(state => state.appSettings.showDueDate)
   const showAssignees = useSelector(state => state.appSettings.showAssignees)
@@ -91,15 +92,6 @@ const TaskItem = (props) => {
     }
     return result
   }
-
-  const getReadOnly = (user, selectedProject, isSynced) => {
-    return (user.state === AuthState.SignedIn &&
-    ((selectedProject?.owner !== user.data.username &&
-    selectedProject?.permissions === "r") || !isSynced)) ||
-    (user.state !== AuthState.SignedIn && selectedProject?.isTemp)
-  }
-
-  const readOnly = useMemo(() => getReadOnly(user, selectedProject, isSynced), [user, selectedProject, isSynced])
   
   const processedAssingees = useMemo(() => {
     const allAssignees = {

@@ -9,35 +9,23 @@ import TagField from "../UI/fields/TagField";
 import AssigneeField from "../UI/fields/AssigneeField";
 import WatcherField from '../UI/fields/WatcherField';
 import ComboBox from '../UI/fields/ComboBox';
+import { useReadOnly } from '../ReadOnlyListener';
 
 const TaskHub = forwardRef((_, ref) => {
   const dispatch = useDispatch();
+  const readOnly = useReadOnly();
 
   const userState = useSelector(state => state.user.state);
-  const username = useSelector(state => state.user.data?.username);
 
   const tasks = useSelector(state => state.tasks);
 
   const selectedProject = useSelector(state => state.projects[state.app.selectedProject]);
 
   const selectedTasksIds = useSelector(state => state.app.selectedTasks);
-  const isSynced = useSelector(state => state.app.isSynced);
 
   const closePanel = () => {
     return dispatch(appActions.handleSetRightPanel(false))
   }
-
-  const getReadOnly = (userState, username, selectedProject, isSynced) => {
-    return (userState === AuthState.SignedIn &&
-    ((selectedProject?.owner !== username &&
-    selectedProject?.permissions === "r") || !isSynced)) ||
-    (userState !== AuthState.SignedIn && selectedProject?.isTemp)
-  }
-
-  const readOnly = useMemo(
-    () => getReadOnly(userState, username, selectedProject, isSynced),
-    [userState, username, selectedProject, isSynced]
-  );
   
   const handleChange = (e) => {
     for (const taskId of selectedTasksIds) {

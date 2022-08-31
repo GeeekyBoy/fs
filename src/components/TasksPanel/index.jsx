@@ -9,17 +9,19 @@ import sortedTasks from './sortedTasks';
 import ProjectToolbar from './ProjectToolbar';
 import NoTasks from './NoTasks';
 import ProjectHeader from './ProjectHeader';
-import LoginBanner from './LoginBanner';
-import OfflineBanner from './OfflineBanner';
 import generateRank from '../../utils/generateRank';
 import { useModal } from '../ModalManager';
 import modals from '../modals';
 import BatchRibbon from './BatchRibbon';
+import Banner from '../UI/Banner';
+import { navigate } from '../Router';
+import { useReadOnly } from '../ReadOnlyListener';
 
 const TasksPanel = () => {
   const { showModal } = useModal();
   const [inDropZone, setInDropZone] = useState(false)
   const dispatch = useDispatch();
+  const readOnly = useReadOnly();
 
   const selectedProject = useSelector(state => state.app.selectedProject);
   const isSynced = useSelector(state => state.app.isSynced);
@@ -117,8 +119,24 @@ const TasksPanel = () => {
       >
         {selectedProject ? (
           <>
-            {user.state !== AuthState.SignedIn && <LoginBanner />}
-            {user.state === AuthState.SignedIn && !isSynced && <OfflineBanner />}
+            {user.state !== AuthState.SignedIn && (
+              <Banner
+                content="Login or create a free account to save your work on cloud, collaborate with others and more…"
+                onClick={() => navigate("/login")}
+              />
+            )}
+            {user.state === AuthState.SignedIn && !isSynced && (
+              <Banner
+                content="You are browsing cached version of projects because no internet connection."
+                variant="critical"
+              />
+            )}
+            {user.state === AuthState.SignedIn && isSynced && readOnly && (
+              <Banner
+                content="You are only allowed to browse this project."
+                variant="caution"
+              />
+            )}
             {tasksStatus === ThingStatus.FETCHING ? (
               <NoTasks msgId="LOADING" />
             ) : (

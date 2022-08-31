@@ -12,16 +12,17 @@ import { ReactComponent as ShareIcon } from "@fluentui/svg-icons/icons/share_16_
 import { ReactComponent as SettingsIcon } from "@fluentui/svg-icons/icons/settings_16_regular.svg"
 import { ReactComponent as ExportIcon } from "@fluentui/svg-icons/icons/cloud_arrow_down_16_regular.svg"
 import { ReactComponent as ImportIcon } from "@fluentui/svg-icons/icons/cloud_arrow_up_16_regular.svg"
-import ComboBox from '../UI/fields/ComboBox';
 import ShadowScroll from '../ShadowScroll';
 import { useModal } from '../ModalManager';
 import modals from '../modals';
 import generateRank from '../../utils/generateRank'
 import Button from '../UI/Button'
+import { useReadOnly } from '../ReadOnlyListener'
 
 const ProjectToolbar = () => {
   const { showModal } = useModal();
   const dispatch = useDispatch();
+  const readOnly = useReadOnly();
 
   const selectedProject = useSelector(state => state.app.selectedProject);
 
@@ -81,16 +82,20 @@ const ProjectToolbar = () => {
             }}
           />
         </div> */}
-        <Button
-          icon={ClipboardIcon}
-          label="Paste"
-          onClick={pasteTask}
-        />
-        <Button
-          icon={ImportIcon}
-          label="Import"
-          onClick={openImportModal}
-        />
+        {!readOnly && (
+          <>
+            <Button
+              icon={ClipboardIcon}
+              label="Paste"
+              onClick={pasteTask}
+            />
+            <Button
+              icon={ImportIcon}
+              label="Import"
+              onClick={openImportModal}
+            />
+          </>
+        )}
         <Button
           icon={ExportIcon}
           label="Export"

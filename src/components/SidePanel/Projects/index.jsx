@@ -16,6 +16,8 @@ const Projects = forwardRef((_, ref) => {
   const [scope, setScope] = useState("owned")
   const dispatch = useDispatch();
 
+  const isSynced = useSelector(state => state.app.isSynced);
+
   const userState = useSelector(state => state.user.state);
 
   const projectsStatus = useSelector(state => state.status.projects);
@@ -45,7 +47,7 @@ const Projects = forwardRef((_, ref) => {
   useImperativeHandle(ref, () => ({
     panelProps: {
       title: "Projects",
-      actionIcon: AddIcon,
+      actionIcon: isSynced ? AddIcon : null,
       header: userState === AuthState.SignedIn && (
         <center>
           <PanelTabs

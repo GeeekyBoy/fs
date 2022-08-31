@@ -14,6 +14,8 @@ const Notifications = forwardRef((_, ref) => {
   
   const dispatch = useDispatch();
 
+  const isSynced = useSelector(state => state.app.isSynced);
+
   const users = useSelector(state => state.users);
 
   const notifications = useSelector(state => state.notifications);
@@ -34,7 +36,7 @@ const Notifications = forwardRef((_, ref) => {
   useImperativeHandle(ref, () => ({
     panelProps: {
       title: "Notifications",
-      actionIcon: RemoveIcon,
+      actionIcon: isSynced ? RemoveIcon : null,
       onClose: () => {
         closePanel()
       },
@@ -55,6 +57,7 @@ const Notifications = forwardRef((_, ref) => {
     <Notification
       key={x.id}
       notificationData={x}
+      dismissable={isSynced}
       onOpen={handleOpenNotification}
       onDismiss={(e) => dismissNotification(e, x.id)}
       senderData={users[x.mutator]}

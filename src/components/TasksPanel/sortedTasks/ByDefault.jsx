@@ -22,9 +22,9 @@ import { useDispatch, useSelector } from "react-redux";
 import sortByRank from "../../../utils/sortByRank";
 import TaskItem from "../TaskItem";
 import * as tasksActions from "../../../actions/tasks";
-import { AuthState } from "../../../constants";
 import TaskPlaceholder from '../TaskPlaceholder';
 import generateRank from '../../../utils/generateRank';
+import { useReadOnly } from '../../ReadOnlyListener';
 
 const Sortable = (props) => {
 
@@ -124,15 +124,9 @@ const SortableItem = (props) => {
 
 const ByDefault = () => {
   const dispatch = useDispatch();
-
-  const selectedProject = useSelector(state => state.app.selectedProject);
-  const isSynced = useSelector(state => state.app.isSynced);
+  const readOnly = useReadOnly();
 
   const tasks = useSelector(state => state.tasks);
-
-  const projects = useSelector(state => state.projects);
-
-  const user = useSelector(state => state.user);
 
   const onSortEnd = (oldIndex, newIndex) => {
     if (oldIndex > newIndex) {
@@ -157,13 +151,6 @@ const ByDefault = () => {
       );
     }
   };
-  const getReadOnly = (user, projects, selectedProject, isSynced) => {
-    return (user.state === AuthState.SignedIn &&
-    ((projects[selectedProject]?.owner !== user.data.username &&
-    projects[selectedProject]?.permissions === "r") || !isSynced)) ||
-    (user.state !== AuthState.SignedIn && projects[selectedProject]?.isTemp)
-  }
-  const readOnly = useMemo(() => getReadOnly(user, projects, selectedProject, isSynced), [user, projects, selectedProject, isSynced])
   const getSortedTasks = (tasks) => sortByRank(tasks)
   const sortedTasks = useMemo(() => getSortedTasks(tasks), [tasks])
   return (

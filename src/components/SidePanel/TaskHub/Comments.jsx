@@ -13,10 +13,12 @@ import generateId from '../../../utils/generateId';
 import Illustration from '../../UI/Illustration';
 import formatDate from '../../../utils/formatDate';
 import Button from '../../UI/Button';
+import { useReadOnly } from '../../ReadOnlyListener';
 
 const Comments = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const readOnly = useReadOnly();
 
   const selectedProject = useSelector(state => state.projects[state.app.selectedProject])
   const selectedTask = useSelector(state => state.app.selectedTask)
@@ -57,14 +59,7 @@ const Comments = () => {
     }
     return results.length ? results : null
   }
-  const getReadOnly = (user, selectedProject, isSynced) => {
-    return (user.state === AuthState.SignedIn &&
-    ((selectedProject?.owner !== user.data.username &&
-    selectedProject?.permissions === "r") || !isSynced)) ||
-    (user.state !== AuthState.SignedIn && selectedProject?.isTemp)
-  }
   const processedComments = useMemo(() => processComments(comments, history), [comments, history])
-  const readOnly = useMemo(() => getReadOnly(user, selectedProject, isSynced), [user, selectedProject, isSynced])
   const openNewComment = () => {
     if (!isNewCommentOpened) {
       setIsNewCommentOpened(true);

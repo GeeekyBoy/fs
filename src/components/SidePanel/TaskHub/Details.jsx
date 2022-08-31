@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { AuthState, ThingStatus } from "../../../constants";
 import DateField from "../../UI/fields/DateField";
@@ -11,12 +11,13 @@ import WatcherField from '../../UI/fields/WatcherField';
 import TextField from '../../UI/fields/TextField';
 import AttachmentField from '../../UI/fields/AttachmentField';
 import ComboBox from '../../UI/fields/ComboBox';
+import { useReadOnly } from '../../ReadOnlyListener';
 
 const Details = () => {
   const dispatch = useDispatch();
+  const readOnly = useReadOnly();
 
   const userState = useSelector(state => state.user.state);
-  const username = useSelector(state => state.user.data?.username);
 
   const selectedProject = useSelector(state => state.projects[state.app.selectedProject]);
 
@@ -25,20 +26,7 @@ const Details = () => {
   const attachments = useSelector(state => state.attachments);
 
   const selectedTask = useSelector(state => state.app.selectedTask);
-  const isSynced = useSelector(state => state.app.isSynced);
   const isAttachmentsReady = useSelector(state => state.status.attachments === ThingStatus.READY);
-
-  const getReadOnly = (userState, username, selectedProject, isSynced) => {
-    return (userState === AuthState.SignedIn &&
-    ((selectedProject?.owner !== username &&
-    selectedProject?.permissions === "r") || !isSynced)) ||
-    (userState !== AuthState.SignedIn && selectedProject?.isTemp)
-  }
-
-  const readOnly = useMemo(
-    () => getReadOnly(userState, username, selectedProject, isSynced),
-    [userState, username, selectedProject, isSynced]
-  );
   
   const handleChange = (e) => {
     dispatch(
