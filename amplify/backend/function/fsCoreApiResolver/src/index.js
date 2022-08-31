@@ -1227,6 +1227,36 @@ exports.handler = async (ctx) => {
         mutator: client,
       };
       await pushNotification(notificationTemplate, recipients);
+      const recipientsData = await _fetchRecipientsData(Object.keys(recipients));
+      const watcherData = recipientsData
+        .splice(recipientsData.findIndex((recipient) => recipient.username === watcher), 1)[0];
+      const watchersEmails = recipientsData.map(({ email }) => email);
+      const emailToBeSentToWatcher = getEmailContent('addingWatcher', {
+        WATCHER_FIRST_NAME: watcherData.firstName,
+        ADDER_USERNAME: client,
+        TASK: hint || '',
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      const emailToBeSentToWatchers = getEmailContent('addingWatcherWatching', {
+        WATCHER_USERNAME: watcherData.username,
+        ADDER_USERNAME: client,
+        TASK: hint || '',
+        TASK_PERMALINK: 'https://forwardslash.ch/',
+      });
+      await sgMail.send({
+        to: watcherData.email,
+        from: 'notify@forwardslash.ch',
+        subject: emailToBeSentToWatcher.subject,
+        html: emailToBeSentToWatcher.body,
+      });
+      if (watchersEmails.length) {
+        await sgMail.sendMultiple({
+          to: [...watchersEmails],
+          from: 'notify@forwardslash.ch',
+          subject: emailToBeSentToWatchers.subject,
+          html: emailToBeSentToWatchers.body,
+        });
+      }
       return {
         id: taskId,
         projectId,

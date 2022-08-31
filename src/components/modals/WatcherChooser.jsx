@@ -31,6 +31,7 @@ const WatcherChooser = () => {
 
   const handleAddWatcher = async (username) => {
     setIsBusy(true)
+    console.log("add watcher", username)
     try {
       if (selectedTask) {
         await dispatch(tasksActions.handleAddWatcher(selectedTask, username))
@@ -96,7 +97,7 @@ const WatcherChooser = () => {
               />
             )}
             disabled={isBusy}
-            onClick={() => handleAddWatcher(x)}
+            onSelect={() => handleAddWatcher(x)}
           />
         ))}
         {!keyword && (
