@@ -143,6 +143,9 @@
   white-space: nowrap;
   cursor: text;
   transition: color 0.2s;
+  &:focus {
+    text-overflow: clip;
+  }
   &:empty::after {
     content: "Untitled Task";
     color: var(--color-fill-color-text-secondary) !important;

@@ -289,20 +289,25 @@ const TaskItem = (props) => {
           setCaretPos(taskCaretPos.current);
         }
       }
-    } else {
-      setCommand(null);
-      wasUnselected.current = true;
-    }
-    if (command !== null) {
-      if (!wasInCommandMode.current) {
-        wasInCommandMode.current = true;
-        if (shouldAutoFocus) focusInput();
+      if (command !== null) {
+        if (!wasInCommandMode.current) {
+          wasInCommandMode.current = true;
+          if (shouldAutoFocus) focusInput();
+        }
+      } else {
+        if (wasInCommandMode.current) {
+          wasInCommandMode.current = false;
+          commandCaretPos.current = null;
+          setCaretPos(taskCaretPos.current);
+        }
       }
     } else {
-      if (wasInCommandMode.current) {
+      wasUnselected.current = true;
+      inputRef.current?.scroll(0, 0);
+      if (command !== null) {
+        setCommand(null);
         wasInCommandMode.current = false;
         commandCaretPos.current = null;
-        setCaretPos(taskCaretPos.current);
       }
     }
   }, [selected, command, task]);

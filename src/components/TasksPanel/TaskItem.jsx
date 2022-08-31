@@ -191,7 +191,7 @@ const TaskItem = (props) => {
   }, [item.id]);
 
   const handleDetails = useCallback(() => {
-    if (width < 768) {
+    if (window.innerWidth < 768) {
       setShouldAutoFocus(false)
       dispatch(appActions.handleSetTask(item.id))
       showModal(modals.TASK_OPTS)
@@ -205,7 +205,7 @@ const TaskItem = (props) => {
         dispatch(appActions.handleSetRightPanel(true))
       }
     }
-  }, [item.id, width, isRightPanelOpened, isSelected]);
+  }, [item.id, isRightPanelOpened, isSelected]);
 
   const handleCopy = useCallback(() => {
     window.localStorage.setItem(
