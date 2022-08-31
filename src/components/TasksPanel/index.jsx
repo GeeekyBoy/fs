@@ -10,6 +10,7 @@ import ProjectToolbar from './ProjectToolbar';
 import NoTasks from './NoTasks';
 import ProjectHeader from './ProjectHeader';
 import LoginBanner from './LoginBanner';
+import OfflineBanner from './OfflineBanner';
 import generateRank from '../../utils/generateRank';
 import { useModal } from '../ModalManager';
 import modals from '../modals';
@@ -117,6 +118,7 @@ const TasksPanel = () => {
         {selectedProject ? (
           <>
             {user.state !== AuthState.SignedIn && <LoginBanner />}
+            {user.state === AuthState.SignedIn && !isSynced && <OfflineBanner />}
             {tasksStatus === ThingStatus.FETCHING ? (
               <NoTasks msgId="LOADING" />
             ) : (

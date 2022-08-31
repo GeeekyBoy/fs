@@ -88,7 +88,7 @@ const TaskItem = (props) => {
   const slashCommandsPos = useMemo(() => getSlashCommandsPos(inputRef), [taskCaretPos.current, commandCaretPos.current]);
   
   const handleTaskInput = (e) => {
-    if (onChange) {
+    if (!readOnly && onChange) {
       taskCaretPos.current = document.getSelection().focusOffset;
       onChange({
         target: {
@@ -96,11 +96,14 @@ const TaskItem = (props) => {
           value: e.target.innerText,
         },
       });
+    } else if (readOnly) {
+      e.target.innerText = task;
+      setCaretPos(taskCaretPos.current);
     }
   };
 
   const handleToggleStatus = () => {
-    if (onToggleStatus) {
+    if (!readOnly && onToggleStatus) {
       onToggleStatus();
     }
   };
@@ -399,8 +402,7 @@ const TaskItem = (props) => {
                 onKeyUp={handleKeyUp}
                 onKeyDown={handleKeyDown}
                 onInput={handleTaskInput}
-                contentEditable 
-                readOnly={readOnly}
+                contentEditable
                 suppressContentEditableWarning
               >
                 {task || ""}

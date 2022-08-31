@@ -19,7 +19,7 @@ const SyncManager = () => {
   const { routeParams } = useRouterNoUpdates();
   const dispatch = useDispatch()
 
-  const isOffline = useSelector(state => state.isOffline)
+  const isOffline = useSelector(state => state.app.isOffline)
   const selectedProject = useSelector(state => state.selectedProject)
   const selectedTask = useSelector(state => state.selectedTask)
 

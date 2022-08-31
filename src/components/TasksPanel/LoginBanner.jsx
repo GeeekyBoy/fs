@@ -7,7 +7,7 @@ const LoginBanner = () => {
     navigate("/login")
   }
   return (
-    <div className={styles.BannerContainer} onClick={handleClickBanner}>
+    <div className={`noselect ${styles.BannerContainer}`} onClick={handleClickBanner}>
       <span>Login or create a free account to save your work on cloud, collaborate with others and more…</span>
     </div>
   )
