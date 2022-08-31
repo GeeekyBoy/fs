@@ -47,20 +47,22 @@ const Toolbar = () => {
       <div className={styles.TopControls}>
         <span className={styles.Logo}>/.</span>
         <div className={styles.Spacer} />
-        <button
-          className={[
-            styles.ToolbarAction,
-            ...(isLeftPanelOpened && leftPanelPage === panelPages.NOTIFICATIONS ? [styles.selected] : [])
-          ].join(" ")}
-          onClick={() => openLeftPanel(panelPages.NOTIFICATIONS)}
-        >
-          {(isLeftPanelOpened && leftPanelPage === panelPages.NOTIFICATIONS) ? (
-            <NotificationFilledIcon fill="currentColor" />
-          ) : (
-            <NotificationIcon fill="currentColor" />
-          )}
-          <span>Updates</span>
-        </button>
+        {userState === AuthState.SignedIn && (
+          <button
+            className={[
+              styles.ToolbarAction,
+              ...(isLeftPanelOpened && leftPanelPage === panelPages.NOTIFICATIONS ? [styles.selected] : [])
+            ].join(" ")}
+            onClick={() => openLeftPanel(panelPages.NOTIFICATIONS)}
+          >
+            {(isLeftPanelOpened && leftPanelPage === panelPages.NOTIFICATIONS) ? (
+              <NotificationFilledIcon fill="currentColor" />
+            ) : (
+              <NotificationIcon fill="currentColor" />
+            )}
+            <span>Updates</span>
+          </button>
+        )}
         <button
           className={[
             styles.ToolbarAction,
