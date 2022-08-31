@@ -125,14 +125,25 @@ const TaskItem = (props) => {
   }, [item.id, isLocked]);
 
   const handleToggleStatus = useCallback((nextStatus) => {
-    dispatch(
-      tasksActions.handleUpdateTask({
-        id: item.id,
-        action: "update",
-        field: "status",
-        value: nextStatus === "done" ? doneStatus : notDoneStatus,
-      })
-    );
+    if (item.status === doneStatus && notDoneStatus) {
+      dispatch(
+        tasksActions.handleUpdateTask({
+          id: item.id,
+          action: "update",
+          field: "status",
+          value: notDoneStatus,
+        })
+      );
+    } else if (item.status === notDoneStatus && doneStatus) {
+      dispatch(
+        tasksActions.handleUpdateTask({
+          id: item.id,
+          action: "update",
+          field: "status",
+          value: doneStatus,
+        })
+      );
+    }
   }, [item.id]);
 
   const handleArrowUp = useCallback(() => {

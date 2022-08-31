@@ -101,7 +101,7 @@ const TaskItem = (props) => {
 
   const handleToggleStatus = () => {
     if (onToggleStatus) {
-      onToggleStatus(isDone ? "todo" : "done");
+      onToggleStatus();
     }
   };
 
