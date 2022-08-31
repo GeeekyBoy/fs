@@ -31,7 +31,6 @@ const WatcherChooser = () => {
 
   const handleAddWatcher = async (username) => {
     setIsBusy(true)
-    console.log("add watcher", username)
     try {
       if (selectedTask) {
         await dispatch(tasksActions.handleAddWatcher(selectedTask, username))
