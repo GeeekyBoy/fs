@@ -101,6 +101,7 @@ const SidePanel = (props) => {
         styles.SidePanelShell,
         ...(right && [styles.right] || []),
         ...(open && [styles.opened] || []),
+        ...(footer && [styles.hasFooter] || []),
         ...(disabled && [styles.disabled] || []),
         ...(inDropZone && [styles.inDropZone] || []),
         "no-keyboard-portrait-padding-bottom-83",
@@ -142,21 +143,21 @@ const SidePanel = (props) => {
           <div className={styles.SidePanelToolbarDumpAction} />
         )}
       </div>
-        {header}
-        <div className={`${styles.SidePanelContent} sleek-scrollbar`}>
-          {props.children}
-        </div>
-        {footer}
-        {submitLabel && (
-          <Button
-            className={styles.SidePanelSubmit}
-            label={submitLabel}
-            onClick={handleSubmit}
-            disabled={submitDisabled}
-          >
-            {submitLabel}
-          </Button>
-        )}
+      {header}
+      <div className={`${styles.SidePanelContent} sleek-scrollbar`}>
+        {props.children}
+      </div>
+      {footer}
+      {submitLabel && (
+        <Button
+          className={styles.SidePanelSubmit}
+          label={submitLabel}
+          onClick={handleSubmit}
+          disabled={submitDisabled}
+        >
+          {submitLabel}
+        </Button>
+      )}
     </div>
   );
 };
