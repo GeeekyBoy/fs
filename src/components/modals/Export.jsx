@@ -14,7 +14,7 @@ const Export = () => {
   const tasks = useSelector(state => state.tasks)
 
   const [fileType, setFileType] = useState("csv");
-  const { modalRef ,hideModal } = useModal();
+  const { modalRef, hideModal } = useModal();
   const { width } = useWindowSize();
 
   const handleExport = () => {

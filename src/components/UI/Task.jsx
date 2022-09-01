@@ -25,6 +25,7 @@ const TaskItem = (props) => {
     onChange,
     onSelect,
     onToggleStatus,
+    onClickDueDate,
     onCopy,
     onRemove,
     onDuplicate,
@@ -229,6 +230,12 @@ const TaskItem = (props) => {
       onDetails(id);
     }
   };
+
+  const handleClickDueDate = () => {
+    if (onClickDueDate) {
+      onClickDueDate(id);
+    }
+  }
 
   const handleBatchToggle = () => {
     if (batchSelected) {
@@ -443,7 +450,10 @@ const TaskItem = (props) => {
               />
             )}
             {showDueDate && !batchSelected && (
-              <span className={styles.TaskItemDueDate}>
+              <span
+                className={`noselect ${styles.TaskItemDueDate}`}
+                onClick={handleClickDueDate}
+              >
                 {due ? formatDate(due) : "No Due"}
               </span>
             )}

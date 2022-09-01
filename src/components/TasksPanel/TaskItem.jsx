@@ -46,7 +46,6 @@ const TaskItem = (props) => {
   const isBatchSelecting = useSelector(state => state.app.selectedTasks != null)
 
   const users = useSelector(state => state.users)
-  const user = useSelector(state => state.user)
 
   const selectedProject = useSelector(state => state.projects[item.projectId])
 
@@ -115,6 +114,10 @@ const TaskItem = (props) => {
       })
     );
   }, [item.id, isLocked]);
+
+  const handleClickDueDate = () => {
+    showModal(modals.DUE_DATE_CHOOSER);
+  }
 
   const handleToggleStatus = useCallback(() => {
     if (item.status === doneStatus && notDoneStatus) {
@@ -239,6 +242,7 @@ const TaskItem = (props) => {
       onBatchSelect={handleBatchSelect}
       onBatchDeselect={handleBatchDeselect}
       onToggleStatus={handleToggleStatus}
+      onClickDueDate={handleClickDueDate}
       onCopy={handleCopy}
       onRemove={handleRemove}
       onDuplicate={handleDuplicate}

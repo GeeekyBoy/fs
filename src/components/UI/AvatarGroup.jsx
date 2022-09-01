@@ -13,7 +13,7 @@ const AvatarGroup = (props) => {
       className={styles.AvatarGroupContainer}
       style={{
         minHeight: size,
-        minWidth: (users.length ? size : 0) + (users.length > 1 ? ((users.length > max ? max : users.length) * (size - size * 0.398)) : 0)
+        minWidth: (users.length ? size : 0) + (users.length > 1 ? ((users.length > max ? max : users.length) * (size - size * 0.58)) : 0)
       }}
     >
       {users.slice(0, users.length > max ? max - 1 : max).map(({ avatar, initials, name, color }, i) => (
