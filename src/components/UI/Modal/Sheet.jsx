@@ -8,13 +8,14 @@ const Sheet = forwardRef(({ content }, ref) => {
 
   const { hideModal } = useModal();
   const containerRef = useRef(null);
-  const [containerHeight, setContainerHeight] = useState(0)
+  const [containerHeight, setContainerHeight] = useState(312);
+
   useEffect(() => {
     const height = containerRef?.current.getBoundingClientRect().height;
-    setContainerHeight(height || 0) 
+    setContainerHeight(height || 312) 
   }, [containerRef]);
 
-  const [{ y }, api] = useSpring(() => ({ y: 312 }))
+  const [{ y }, api] = useSpring(() => ({ y: containerHeight }))
 
   const openSheet = ({ canceled }) => {
     api.start({ y: 0, immediate: false, config: canceled ? config.wobbly : config.stiff })
@@ -22,7 +23,7 @@ const Sheet = forwardRef(({ content }, ref) => {
   
   const closeSheet = () => new Promise((resolve) => {
     api.start({
-      y: 312,
+      y: containerHeight,
       immediate: false,
       config: { ...config.stiff },
       onResolve: () => {
@@ -43,7 +44,7 @@ const Sheet = forwardRef(({ content }, ref) => {
         cancel()
       }
       if (last) {
-        my > 312 * 0.5 || vy > 0.5 ?
+        my > containerHeight * 0.5 || vy > 0.5 ?
         hideModal() :
         openSheet({ canceled })
       } else {
@@ -58,7 +59,7 @@ const Sheet = forwardRef(({ content }, ref) => {
     }
   )
   
-  const overlayBG = y.to((py) => `rgba(0, 0, 0, ${((312 - py) / 312) * 0.5})`)
+  const overlayBG = y.to((py) => `rgba(0, 0, 0, ${((containerHeight - py) / containerHeight) * 0.5})`)
   
   useEffect(() => {
     openSheet({ canceled: null })
@@ -66,6 +67,11 @@ const Sheet = forwardRef(({ content }, ref) => {
   return (
     <animated.div
       className={styles.SheetShell}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          closeSheet().then(hideModal);
+        }
+      }}
       style={{ backgroundColor: overlayBG }}
     >
       <animated.div

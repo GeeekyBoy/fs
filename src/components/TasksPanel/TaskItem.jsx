@@ -116,7 +116,7 @@ const TaskItem = (props) => {
   }, [item.id, isLocked]);
 
   const handleClickDueDate = () => {
-    showModal(modals.DUE_DATE_CHOOSER);
+    showModal(modals.DUE_DATE_CHOOSER, { taskId: item.id });
   }
 
   const handleToggleStatus = useCallback(() => {

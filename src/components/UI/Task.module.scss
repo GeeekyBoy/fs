@@ -201,6 +201,9 @@
   font-size: 0.7rem;
   white-space: nowrap;
   transition: background-color 0.2s, color 0.2s;
+  &.clickable {
+    cursor: pointer;
+  }
   @media only screen and (max-width: 768px) {
     width: 48px;
     font-size: 0.5rem;

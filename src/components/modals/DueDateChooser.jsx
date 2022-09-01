@@ -1,18 +1,22 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import * as tasksActions from "../../actions/tasks";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../ModalManager";
 import Modal from "../UI/Modal/";
 import { Calendar } from "@hassanmojab/react-modern-calendar-datepicker";
 
-const DueDateChooser = () => {
+const DueDateChooser = (props) => {
+  const { taskId } = props;
+
   const dispatch = useDispatch();
 
-  const selectedTask = useSelector(state => state.tasks[state.app.selectedTask])
+  const task = useSelector(state => state.tasks[taskId])
 
   const { modalRef, hideModal } = useModal();
 
-  const [newDate, setNewDate] = useState(selectedTask.due);
+  const [newDate, setNewDate] = useState(task.due);
+
+  useEffect(() => { if (!task) hideModal(); }, [task]);
 
   const pickValue = ({ day, month, year }) => {
     setNewDate(new Date(`${month}/${day}/${year} GMT`).toISOString());
@@ -32,7 +36,7 @@ const DueDateChooser = () => {
   const handleApply = () => {
     dispatch(
       tasksActions.handleUpdateTask({
-        id: selectedTask.id,
+        id: task.id,
         action: "update",
         field: "due",
         value: newDate

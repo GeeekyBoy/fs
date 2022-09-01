@@ -102,6 +102,11 @@ export const handleCreateTask = (taskState) => (dispatch, getState) => {
 
 export const handleUpdateTask = (update) => (dispatch, getState) => {
   const { user, tasks } = getState()
+  if (
+    (update.action === "update" && tasks[update.id][update.field] === update.value) ||
+    (update.action === "append" && tasks[update.id][update.field].includes(update.value)) ||
+    (update.action === "remove" && !tasks[update.id][update.field].includes(update.value))
+  ) { return; }
   const snapshot = {
     id: update.id,
     action:

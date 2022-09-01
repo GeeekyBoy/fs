@@ -451,7 +451,11 @@ const TaskItem = (props) => {
             )}
             {showDueDate && !batchSelected && (
               <span
-                className={`noselect ${styles.TaskItemDueDate}`}
+                className={[
+                  "noselect",
+                  styles.TaskItemDueDate,
+                  ...(onClickDueDate ? [styles.clickable] : [])
+                ].join(" ")}
                 onClick={handleClickDueDate}
               >
                 {due ? formatDate(due) : "No Due"}
