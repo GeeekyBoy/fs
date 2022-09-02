@@ -7,6 +7,9 @@ import prepareProjectToBeSent from "../utils/prepareProjectToBeSent";
 import { navigate } from "../components/Router"
 import API from "../amplify/API"
 import PubSub from "../amplify/PubSub";
+import { getPreviousItem } from "../utils/getAdjacentItem";
+import sortByRank from "../utils/sortByRank";
+import filterObj from "../utils/filterObj";
 
 export const CREATE_PROJECT = "CREATE_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
@@ -62,7 +65,6 @@ export const handleCreateProject = (projectState) => (dispatch, getState) => {
       isVirtual: true
     }, OWNED))
     dispatch(appActions.handleSetProject(projectState.id))
-    dispatch(appActions.handleSetLeftPanel(false))
     dispatch(appActions.handleSetProjectTitle(true))
     const dataToSend = prepareProjectToBeSent(projectState)
     API.mutate({
@@ -134,9 +136,25 @@ export const handleUpdateProjectTitle = (update) => (dispatch, getState) => {
 }
 
 export const handleRemoveProject = (projectState) => (dispatch, getState) => {
-  const { user, app } = getState()
+  const { user, app, projects } = getState()
   if (app.selectedProject === projectState.id) {
-    dispatch(appActions.handleSetProject(projectState.prevProject))
+    const sortedOwnedProjects = sortByRank(filterObj(projects, x => x.isOwned));
+    const sortedAssignedProjects = sortByRank(filterObj(projects, x => x.isAssigned));
+    const sortedWatchedProjects = sortByRank(filterObj(projects, x => x.isWatched));
+    const previousItem = projectState.isOwned && sortedOwnedProjects.length > 1
+      ? getPreviousItem(sortedOwnedProjects, projectState)
+      : projectState.isAssigned && sortedAssignedProjects.length > 1
+      ? getPreviousItem(sortedAssignedProjects, projectState)
+      : projectState.isWatched && sortedWatchedProjects.length > 1
+      ? getPreviousItem(sortedWatchedProjects, projectState)
+      : sortedOwnedProjects.length
+      ? sortedOwnedProjects[0]
+      : sortedAssignedProjects.length
+      ? sortedAssignedProjects[0]
+      : sortedWatchedProjects.length
+      ? sortedWatchedProjects[0]
+      : null;
+    dispatch(appActions.handleSetProject(previousItem?.id))
   }
   dispatch(removeProject(projectState.id, OWNED))
   if (user.state === AuthState.SignedIn) {

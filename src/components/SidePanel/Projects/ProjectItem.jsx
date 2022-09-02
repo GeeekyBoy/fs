@@ -12,7 +12,6 @@ const ProjectItem = (props) => {
   const selectedProject = useSelector(state => state.app.selectedProject);
   const selectProject = (id) => {
     if (selectedProject !== project.id) {
-      dispatch(appActions.handleSetLeftPanel(false));
       dispatch(appActions.handleSetProject(id));
     }
   };

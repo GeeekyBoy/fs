@@ -3,6 +3,7 @@ import * as tasksActions from "./tasks"
 import * as commentsActions from "./comments"
 import * as attachmentsActions from "./attachments"
 import * as historyActions from "./history"
+import { clearTabs } from "../components/TabViewManager"
 import { navigate } from "../components/Router"
 import PubSub from "../amplify/PubSub"
 
@@ -82,7 +83,7 @@ export const setLockedTaskField = (fieldName) => ({
 export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getState) => {
   const { user, app, projects } = getState()
   if (app.selectedProject !== id) {
-    PubSub.unsubscribeTopic("tasks")
+    PubSub.unsubscribeTopic("tasks");
     dispatch(handleSetTask(null, shouldChangeURL));
     dispatch(tasksActions.emptyTasks());
     if (id) {
@@ -107,6 +108,11 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
         navigate("/")
       }
       dispatch(setProject(null))
+    }
+    if (shouldChangeURL) {
+      clearTabs();
+      dispatch(setRightPanel(false));
+      dispatch(setLeftPanel(false));
     }
   }
 }

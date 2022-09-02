@@ -31,7 +31,7 @@ const TabView = (props) => {
     >
       <div className={styles.TabViewTabs}>
         <ShadowScroll>
-          {tabs.map((x, i) => (
+          {tabs.map(x => (
             <div
               className={[
                 styles.TabViewTab,
@@ -43,7 +43,7 @@ const TabView = (props) => {
             >
               {React.createElement(x[2], { width: 16, height: 16 })}
               <span>{x[1]}</span>
-              {i !== 0 && (
+              {!x[3] && (
                 <IconButton
                   icon={CloseIcon}
                   onClick={(e) => {

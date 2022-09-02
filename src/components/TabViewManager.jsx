@@ -1,12 +1,10 @@
 import React, { useState, createContext, useContext } from "react";
-import TasksPanel from "./TasksPanel";
 import * as appActions from "../actions/app";
 import { useDispatch } from "react-redux";
-import { ReactComponent as MemoIcon } from "../assets/emojis/memo_color.svg";
 
 const initalState = {
-  tabs: [["tasks", "Tasks", MemoIcon, <TasksPanel key="tasks" />]],
-  currentTab: 'tasks',
+  tabs: [],
+  currentTab: null,
   openTab: () => {},
   closeTab: () => {},
   clearTabs: () => {},
@@ -15,10 +13,13 @@ const initalState = {
 
 const TabViewContext = createContext(initalState);
 export const useTabView = () => useContext(TabViewContext);
+export const clearTabs = function f(...args) {
+  return f.contents.call(this, ...args);
+};
 
 const TabViewManager = ({ children }) => {
   const [tabs, setTabs] = useState(initalState.tabs);
-  const [currentTab, setCurrentTab] = useState('tasks');
+  const [currentTab, setCurrentTab] = useState(null);
   const dispatch = useDispatch();
 
   const openTab = (tab) => {
@@ -46,8 +47,8 @@ const TabViewManager = ({ children }) => {
     }
   }
 
-  const clearTabs = () => {
-    setTabs(tabs.slice(0, 1));
+  clearTabs.contents = () => {
+    setTabs(tabs.slice(0, tabs.filter(x => x[3]).length));
     setCurrentTab('tasks');
   }
 

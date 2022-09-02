@@ -231,7 +231,7 @@ const TaskItem = (props) => {
   }, []);
 
   const handleRemove = useCallback(() => {
-    dispatch(tasksActions.handleRemoveTask(item, prevTask))
+    dispatch(tasksActions.handleRemoveTask(item, nextTask || prevTask || null))
   }, [item, prevTask]);
 
   return (

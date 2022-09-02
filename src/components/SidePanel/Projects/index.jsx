@@ -27,7 +27,6 @@ const Projects = forwardRef((_, ref) => {
   const createNewProject = async () => {
     if (projectsStatus === ThingStatus.READY) {
       const ownedProjects = filterObj(projects, (x) => x.isOwned);
-      dispatch(appActions.handleSetLeftPanel(false))
       dispatch(
         projectsActions.handleCreateProject(
           await initProjectState(

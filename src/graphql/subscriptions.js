@@ -63,31 +63,6 @@ export const onCreateOwnedProject = /* GraphQL */ `
     }
   }
 `;
-export const onImportOwnedProjects = /* GraphQL */ `
-  subscription OnImportOwnedProjects($owner: String!) {
-    onImportOwnedProjects(owner: $owner) {
-      owner
-      items {
-        id
-        permalink
-        rank
-        title
-        privacy
-        permissions
-        statusSet {
-          id
-          title
-          synonym
-        }
-        defaultStatus
-        totalTasks
-        createdAt
-        updatedAt
-        owner
-      }
-    }
-  }
-`;
 export const onUpdateOwnedProject = /* GraphQL */ `
   subscription OnUpdateOwnedProject($owner: String!) {
     onUpdateOwnedProject(owner: $owner) {
