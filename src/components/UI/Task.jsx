@@ -60,6 +60,7 @@ const TaskItem = (props) => {
   const grabberRef = useRef(null);
   const wasUnselected = useRef(true);
   const wasInCommandMode = useRef(false);
+  const wasClicked = useRef(false);
   const shellLongPressTimeout = useRef(null);
   const taskCaretPos = useRef(task.length - 1);
   const commandCaretPos = useRef(null);
@@ -193,6 +194,7 @@ const TaskItem = (props) => {
   }
 
   const handleSelect = () => {
+    wasClicked.current = true;
     if (onSelect && !selected) {
       onSelect(id);
     }
@@ -282,16 +284,18 @@ const TaskItem = (props) => {
   useEffect(() => {
     if (selected) {
       if (wasUnselected.current) {
-        const caretPos = lastTaskCaretPos.current !== null && lastTaskCaretPos.current < task.length
-          ? lastTaskCaretPos.current
-          : task.length
-        lastTaskCaretPos.current = null;
-        taskCaretPos.current = caretPos;
-        wasUnselected.current = false;
-        if (shouldAutoFocus) {
-          setCaretPos(caretPos);
-          focusInput();
+        if (!wasClicked.current) {
+          const caretPos = lastTaskCaretPos.current !== null && lastTaskCaretPos.current < task.length
+            ? lastTaskCaretPos.current
+            : task.length
+          taskCaretPos.current = caretPos;
+          if (shouldAutoFocus) {
+            setCaretPos(caretPos);
+            focusInput();
+          }
         }
+        wasUnselected.current = false;
+        lastTaskCaretPos.current = null;
       } else if (inputRef.current?.contains(document.activeElement)) {
         if (command !== null) {
           setCaretPos(commandCaretPos.current);
@@ -313,6 +317,7 @@ const TaskItem = (props) => {
       }
     } else {
       wasUnselected.current = true;
+      wasClicked.current = false;
       inputRef.current?.scroll(0, 0);
       if (command !== null) {
         setCommand(null);
