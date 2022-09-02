@@ -3,7 +3,6 @@ import styles from "./ProjectToolbar.module.scss"
 import { useDispatch, useSelector } from "react-redux"
 import * as tasksActions from "../../actions/tasks"
 import * as appActions from "../../actions/app"
-import * as appSettingsActions from "../../actions/appSettings"
 import sortByRank from "../../utils/sortByRank"
 import copyTask from "../../utils/copyTask"
 import { panelPages } from "../../constants";
@@ -27,8 +26,6 @@ const ProjectToolbar = () => {
   const selectedProject = useSelector(state => state.app.selectedProject);
 
   const tasks = useSelector(state => state.tasks);
-
-  const tasksSortingCriteria = useSelector(state => state.appSettings.tasksSortingCriteria);
 
   const openProjectSettings = () => {
     dispatch(appActions.setLeftPanelPage(panelPages.PROJECT_SETTINGS))
@@ -60,29 +57,9 @@ const ProjectToolbar = () => {
       }
     }
   }
-  const handleChangeSortingCriteria = (e) => {
-    dispatch(
-      appSettingsActions.handleSetTasksSortingCriteria(
-        e.target.value
-      )
-    )
-  }
   return (
     <div className={styles.ToolbarContainer}>
       <ShadowScroll style={{ maxWidth: "fit-content" }}>
-        {/* <div className={styles.SortingSettings}>
-          <ComboBox
-            onChange={handleChangeSortingCriteria}
-            value={tasksSortingCriteria}
-            options={{
-              BY_DEFAULT: "by default",
-              BY_DUE: "by due",
-              BY_STATUS: "by status",
-              BY_PRIORITY: "by priority",
-              BY_TAG: "by tag"
-            }}
-          />
-        </div> */}
         {!readOnly && (
           <>
             <Button
