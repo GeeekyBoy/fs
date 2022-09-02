@@ -95,6 +95,7 @@ export const initTaskState = (projectId, rank, status, existingIds, preset = {})
   assignees: [],
   anonymousAssignees: [],
   invitedAssignees: [],
+  watchers: [],
   status: preset.status || status,
   priority: preset.priority || "normal"
 })

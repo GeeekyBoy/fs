@@ -1,83 +1,54 @@
 import React, { useMemo } from 'react';
 import { useSelector } from "react-redux";
+import getTitleCase from '../../../utils/getTitleCase';
 import sortByRank from "../../../utils/sortByRank";
+import sortObj from '../../../utils/sortObj';
 import Accordion from '../../UI/Accordion';
 import TaskItem from "../TaskItem";
 import TaskPlaceholder from '../TaskPlaceholder';
 
 const ByStatus = () => {
   const tasks = useSelector(state => state.tasks);
-  const getSortedTasks = (tasks) => {
+  const statusSet = useSelector(state => state.projects[state.app.selectedProject].statusSet)
+  const getId2Title = (statusSet) => Object.fromEntries(statusSet.map(x => [x.id, x.title]));
+  const getSortedTasks = (tasks, statusSet) => {
+    let result = Object.fromEntries(statusSet.map(x => [x.id, []]))
     const defaultSorting = sortByRank(tasks)
-    return {
-      todo: [...defaultSorting].filter(x => x.status === "todo"),
-      pending: [...defaultSorting].filter(x => x.status === "pending"),
-      done: [...defaultSorting].filter(x => x.status === "done"),
+    for (const task of defaultSorting) {
+      result[task.status].push(task)
     }
+    result = sortObj(result)
+    return Object.entries(result);
   }
-  const sortedTasks = useMemo(() => getSortedTasks(tasks), [tasks])
+  const id2title = useMemo(() => getId2Title(statusSet), [statusSet]);
+  const sortedTasks = useMemo(() => getSortedTasks(tasks, statusSet), [tasks, statusSet]);
+  console.log(sortedTasks)
   return (
     <>
-      <Accordion title="Todo">
-        {sortedTasks.todo.map((value, index) => (
-          <TaskItem
-            key={value.id}
-            item={value}
-            nextTask={
-              sortedTasks.todo[index + 1]?.id ||
-              sortedTasks.pending[0]?.id ||
-              sortedTasks.done[0]?.id ||
-              null
-            }
-            prevTask={sortedTasks.todo[index - 1]?.id || null}
+      {sortedTasks.map((x, statusIndex) => (
+        <Accordion title={id2title[x[0]]} key={x[0]}>
+          {x[1].map((value, taskIndex) => (
+            <TaskItem
+              key={value.id}
+              item={value}
+              nextTask={
+                (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
+                (sortedTasks[statusIndex + 1] && [...sortedTasks[statusIndex + 1][1]].reverse().find(x => x.id !== value.id)?.id) ||
+                null
+              }
+              prevTask={
+                (x[1][taskIndex - 1]?.id !== value.id && x[1][taskIndex - 1]?.id) ||
+                (sortedTasks[statusIndex - 1] && [...sortedTasks[statusIndex - 1][1]].reverse().find(x => x.id !== value.id)?.id) ||
+                null
+              }
+            />
+          ))}
+          <TaskPlaceholder
+            content={"Tap to create new task marked as '" + id2title[x[0]] + "'"}
+            preset={{ status: x[0] }}
           />
-        ))}
-        <TaskPlaceholder
-          content="Tap to create new todo task"
-          preset={{status: "todo"}}
-        />
-      </Accordion>
-      <Accordion title="Pending">
-        {sortedTasks.pending.map((value, index) => (
-          <TaskItem
-            key={value.id}
-            item={value}
-            nextTask={
-              sortedTasks.pending[index + 1]?.id ||
-              sortedTasks.done[0]?.id ||
-              null
-            }
-            prevTask={
-              sortedTasks.pending[index - 1]?.id ||
-              sortedTasks.todo[sortedTasks.todo.length - 1]?.id ||
-              null
-            }
-          />
-        ))}
-        <TaskPlaceholder
-          content="Tap to create new pending task"
-          preset={{status: "pending"}}
-        />
-      </Accordion>
-      <Accordion title="Finished">
-        {sortedTasks.done.map((value, index) => (
-          <TaskItem
-            key={value.id}
-            item={value}
-            nextTask={sortedTasks.done[index + 1]?.id || null}
-            prevTask={
-              sortedTasks.done[index - 1]?.id ||
-              sortedTasks.pending[sortedTasks.pending.length - 1]?.id ||
-              sortedTasks.todo[sortedTasks.todo.length - 1]?.id ||
-              null
-            }
-          />
-        ))}
-        <TaskPlaceholder
-          content="Tap to create new finsihed task"
-          preset={{status: "done"}}
-        />
-      </Accordion>
+        </Accordion>
+      ))}
     </>
   )
 }

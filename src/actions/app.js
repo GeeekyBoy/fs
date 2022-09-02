@@ -164,7 +164,12 @@ export const handleSetTask = (id, shouldChangeURL = true) => (dispatch, getState
 export const handleBatchSelectTask = (id) => (dispatch, getState) => {
   const { app } = getState();
   if (app.selectedTask) {
+    const isRightPanelOpened = app.isRightPanelOpened;
     dispatch(handleSetTask(null));
+    if (isRightPanelOpened) {
+      dispatch(setRightPanel(true));
+      dispatch(setRightPanelPage(panelPages.BATCH_HUB));
+    }
   }
   dispatch(batchSelectTask(id));
 };

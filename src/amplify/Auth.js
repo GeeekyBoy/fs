@@ -102,7 +102,11 @@ class Auth {
       return true;
     } else {
       if (this.sessionToken === null) {
-        await this.anonymousSignIn();
+        try {
+          await this.anonymousSignIn();
+        } catch {
+          return false;
+        }
       }
       return false;
     }
