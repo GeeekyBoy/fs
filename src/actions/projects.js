@@ -147,11 +147,11 @@ export const handleRemoveProject = (projectState) => (dispatch, getState) => {
       ? getPreviousItem(sortedAssignedProjects, projectState)
       : projectState.isWatched && sortedWatchedProjects.length > 1
       ? getPreviousItem(sortedWatchedProjects, projectState)
-      : sortedOwnedProjects.length
+      : !projectState.isOwned && sortedOwnedProjects.length
       ? sortedOwnedProjects[0]
-      : sortedAssignedProjects.length
+      : !projectState.isAssigned && sortedAssignedProjects.length
       ? sortedAssignedProjects[0]
-      : sortedWatchedProjects.length
+      : !projectState.isWatched && sortedWatchedProjects.length
       ? sortedWatchedProjects[0]
       : null;
     dispatch(appActions.handleSetProject(previousItem?.id))

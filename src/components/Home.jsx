@@ -29,7 +29,7 @@ const Home = () => {
 
   useEffect(() => {
     openTab(["tasks", "Tasks", MemoIcon, <TasksPanel key="tasks" />, true])
-  })
+  }, [])
 
   useEffect(() => {
     if (userState === AuthState.SignedIn) {

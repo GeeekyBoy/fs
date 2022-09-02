@@ -113,6 +113,8 @@ export const handleSetProject = (id, shouldChangeURL = true) => (dispatch, getSt
       clearTabs();
       dispatch(setRightPanel(false));
       dispatch(setLeftPanel(false));
+      dispatch(setRightPanelPage(null));
+      dispatch(setLeftPanelPage(null));
     }
   }
 }
