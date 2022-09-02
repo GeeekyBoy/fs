@@ -19,7 +19,7 @@ const ProjectNotSelected = () => {
     projectsStatus === ThingStatus.READY &&
       dispatch(
         projectsActions.handleCreateProject(
-          await initProjectState(generateRank())
+          await initProjectState(generateRank(), [])
         )
       );
   };

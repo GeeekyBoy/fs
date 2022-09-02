@@ -26,16 +26,17 @@ const Projects = forwardRef((_, ref) => {
 
   const createNewProject = async () => {
     if (projectsStatus === ThingStatus.READY) {
+      const ownedProjects = filterObj(projects, (x) => x.isOwned);
       dispatch(appActions.handleSetLeftPanel(false))
       dispatch(
         projectsActions.handleCreateProject(
           await initProjectState(
-            generateRank(
-              sortByRank(
-                filterObj(projects, (x) => x.isOwned),
+            generateRank(sortByRank(
+                ownedProjects,
                 true
               )[0]?.rank
-            )
+            ),
+            Object.keys(ownedProjects)
           )
         )
       );

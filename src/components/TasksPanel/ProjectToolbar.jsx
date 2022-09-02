@@ -51,7 +51,8 @@ const ProjectToolbar = () => {
               copyTask(
                 taskState,
                 selectedProject,
-                generateRank(sortByRank(tasks, true)[0]?.rank)
+                generateRank(sortByRank(tasks, true)[0]?.rank),
+                Object.keys(tasks)
               )
             )
           )

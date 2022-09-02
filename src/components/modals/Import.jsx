@@ -86,7 +86,8 @@ const Import = ({ importedBlob }) => {
           copyTask(
             importedTask,
             selectedProject.id,
-            generateRank(sortByRank(store.getState().tasks, true)[0]?.rank)
+            generateRank(sortByRank(store.getState().tasks, true)[0]?.rank),
+            Object.keys(store.getState().tasks)
           )
         )
       )

@@ -48,7 +48,8 @@ const TasksPanel = () => {
         initTaskState(
           selectedProject,
           generateRank(sortByRank(tasks, true)[0]?.rank),
-          defaultStatus
+          defaultStatus,
+          Object.keys(tasks)
         )
       )
     )

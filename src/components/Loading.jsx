@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import styles from "./Loading.module.scss"
 import * as appActions from "../actions/app"
+import * as notificationsActions from "../actions/notifications"
 import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as userActions from "../actions/user"
@@ -29,21 +30,21 @@ const Loading = (props) => {
     (async () => {
     const currUser = await dispatch(userActions.handleFetchUser())
     if (currUser.state === AuthState.SignedIn) {
-      setLoadingMsg("We Are Importing Your Local Projects")
+      setLoadingMsg("Importing Your Local Projects")
       await uploadLocal()
     }
     if (routeParams.projectPermalink &&
         !routeParams.username &&
         currUser.state === AuthState.SignedOut) {
       setProgressMax(2)
-      setLoadingMsg("We Are Fetching Your Own Projects")
+      setLoadingMsg("Fetching Your Own Projects")
       const projects = await dispatch(projectsActions.handleFetchOwnedProjects())
       const reqProject = Object.values(projects)
         .filter(x => x.permalink === `${routeParams.projectPermalink}`)[0]
       if (reqProject) {
         dispatch(appActions.handleSetProject(reqProject.id, false))
         setProgressValue(progressValue + 1)
-        setLoadingMsg("We Are Getting The Requested Tasks")
+        setLoadingMsg("Getting The Requested Tasks")
         await dispatch(tasksActions.handleFetchTasks(reqProject.id))
       }
       setProgressValue(progressValue + 2)
@@ -65,7 +66,7 @@ const Loading = (props) => {
       }
       if (reqProject) {
         dispatch(appActions.handleSetProject(reqProject.id, false))
-        setLoadingMsg("We Are Getting The Requested Tasks")
+        setLoadingMsg("Getting The Requested Tasks")
         const tasks = await dispatch(tasksActions.handleFetchTasks(reqProject.id, true))
         if (routeParams.taskPermalink) {
           const reqTask = Object.values(tasks).filter(x => x.permalink === parseInt(routeParams.taskPermalink, 10))[0]
@@ -83,15 +84,18 @@ const Loading = (props) => {
     } else if (routeParams.projectPermalink &&
       routeParams.username &&
       currUser.state === AuthState.SignedIn) {
-        setProgressMax(5)
+        setProgressMax(6)
+        setLoadingMsg("Fetching Notifications")
+        await dispatch(notificationsActions.handleFetchNotifications())
+        PubSub.subscribeTopic("notifications")
         setProgressValue(progressValue + 1)
-        setLoadingMsg("We Are Fetching Your Own Projects")
+        setLoadingMsg("Fetching Your Own Projects")
         await dispatch(projectsActions.handleFetchOwnedProjects())
         setProgressValue(progressValue + 2)
-        setLoadingMsg("We Are Fetching Projects Assigned To You")
+        setLoadingMsg("Fetching Projects Assigned To You")
         await dispatch(projectsActions.handleFetchAssignedProjects())
         setProgressValue(progressValue + 3)
-        setLoadingMsg("We Are Fetching Projects Watched By You")
+        setLoadingMsg("Fetching Projects Watched By You")
         const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
         setProgressValue(progressValue + 4)
         PubSub.subscribeTopic("ownedProjects")
@@ -112,7 +116,7 @@ const Loading = (props) => {
         }
         if (reqProject) {
           dispatch(appActions.handleSetProject(reqProject.id, false))
-          setLoadingMsg("We Are Getting The Requested Tasks")
+          setLoadingMsg("Getting The Requested Tasks")
           const tasks = await dispatch(tasksActions.handleFetchTasks(reqProject.id, true))
           if (routeParams.taskPermalink) {
             const reqTask = Object.values(tasks).filter(x => x.permalink === parseInt(routeParams.taskPermalink, 10))[0]
@@ -130,14 +134,18 @@ const Loading = (props) => {
         setProgressValue(progressValue + 5)
       } else {
         if (currUser.state === AuthState.SignedIn) {
-          setProgressMax(3)
-          setLoadingMsg("We Are Fetching Your Own Projects")
+          setProgressMax(4)
+          setLoadingMsg("Fetching Notifications")
+          await dispatch(notificationsActions.handleFetchNotifications())
+          PubSub.subscribeTopic("notifications")
+          setProgressValue(progressValue + 1)
+          setLoadingMsg("Fetching Your Own Projects")
           await dispatch(projectsActions.handleFetchOwnedProjects())
           setProgressValue(progressValue + 1)
-          setLoadingMsg("We Are Fetching Projects Assigned To You")
+          setLoadingMsg("Fetching Projects Assigned To You")
           await dispatch(projectsActions.handleFetchAssignedProjects())
           setProgressValue(progressValue + 2)
-          setLoadingMsg("We Are Fetching Projects Watched By You")
+          setLoadingMsg("Fetching Projects Watched By You")
           const projects = await dispatch(projectsActions.handleFetchWatchedProjects())
           setProgressValue(progressValue + 3)
           PubSub.subscribeTopic("ownedProjects")
@@ -148,7 +156,7 @@ const Loading = (props) => {
           }
         } else {
           setProgressMax(1)
-          setLoadingMsg("We Are Fetching Your Own Projects")
+          setLoadingMsg("Fetching Your Own Projects")
           const projects = await dispatch(projectsActions.handleFetchOwnedProjects())
           setProgressValue(progressValue + 1)
           const firstProject = sortByRank(Object.values(projects).filter(x => x.isOwned))?.[0]

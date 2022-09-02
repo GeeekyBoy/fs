@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as appActions from "../actions/app";
 import * as appSettingsActions from "../actions/appSettings";
+import API from "../amplify/API";
 import store from "../store";
 import isOnline from "../utils/isOnline";
 import AuthFlow from "./AuthFlow";
@@ -26,10 +27,8 @@ const App = () => {
   };
 
   const checkReloadAbility = (e) => {
-    e.preventDefault();
-    if (store.getState().mutations.length > 0) {
-      e.returnValue =
-        "Dude, are you sure you want to leave? Think of the kittens!";
+    if (API.mutationQueue.length > 0) {
+      e.returnValue = "Dude, are you sure you want to leave? Think of the kittens!";
     } else {
       delete e["returnValue"];
     }

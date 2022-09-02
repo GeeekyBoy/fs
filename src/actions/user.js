@@ -33,8 +33,6 @@ export const handleSetState = (userState) => (dispatch) => {
   dispatch(setState(userState))
   if (userState === AuthState.SignedIn) {
     PubSub.subscribeTopic("user")
-    dispatch(notificationsActions.handleFetchNotifications())
-    PubSub.subscribeTopic("notifications")
   }
 }
 

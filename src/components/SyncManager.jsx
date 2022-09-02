@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import * as appActions from "../actions/app"
+import * as notificationsActions from "../actions/notifications"
 import * as projectsActions from "../actions/projects"
 import * as tasksActions from "../actions/tasks"
 import * as userActions from "../actions/user"
@@ -39,6 +40,8 @@ const SyncManager = () => {
           if (routeParams.projectPermalink &&
             routeParams.username &&
             currUser.state === AuthState.SignedIn) {
+              await dispatch(notificationsActions.handleFetchNotifications())
+              PubSub.subscribeTopic("notifications")
               await dispatch(projectsActions.handleFetchOwnedProjects(true))
               await dispatch(projectsActions.handleFetchAssignedProjects(true))
               const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))
@@ -75,6 +78,8 @@ const SyncManager = () => {
                 }
               }
           } else if (currUser.state === AuthState.SignedIn) {
+            await dispatch(notificationsActions.handleFetchNotifications())
+            PubSub.subscribeTopic("notifications")
             await dispatch(projectsActions.handleFetchOwnedProjects(true))
             await dispatch(projectsActions.handleFetchAssignedProjects(true))
             const projects = await dispatch(projectsActions.handleFetchWatchedProjects(true))

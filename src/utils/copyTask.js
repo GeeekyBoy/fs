@@ -1,8 +1,8 @@
 import generateId from "./generateId";
 
-const copyTask = (taskState, projectId, rank) => {
+const copyTask = (taskState, projectId, rank, existingIds) => {
   return {
-    id: generateId(),
+    id: generateId(existingIds),
     projectId: projectId,
     rank: rank,
     task: taskState.task,

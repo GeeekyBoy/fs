@@ -1,6 +1,7 @@
 import { AuthState } from "../constants";
 
 const initCacheValue = {
+  notifications: [],
   projects: {},
   tasks: {},
   comments: {},
@@ -36,6 +37,10 @@ export const deleteLocalCache = () => {
   window.localStorage.setItem("cachedData", JSON.stringify(cache));
 };
 
+export const getNotifications = () => {
+  return getCache().notifications;
+};
+
 export const getProjects = () => {
   return getCache().projects;
 };
@@ -62,6 +67,13 @@ export const getUser = () => {
 
 export const getUsers = () => {
   return getCache().users;
+};
+
+export const setNotifications = (notifications) => {
+  window.localStorage.setItem(
+    "cachedData",
+    JSON.stringify({ ...getCache(), notifications })
+  );
 };
 
 export const setProjects = (projects) => {

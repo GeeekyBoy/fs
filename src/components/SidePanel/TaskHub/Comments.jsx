@@ -74,7 +74,7 @@ const Comments = () => {
     e.preventDefault()
     e.stopPropagation()
     dispatch(commentsActions.handleCreateComment({
-      id: generateId(),
+      id: generateId(Object.keys(comments)),
       taskId: selectedTask,
       content: newCommentContent
     }))

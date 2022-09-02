@@ -1,6 +1,11 @@
 import * as cacheController from "../controllers/cache"
 import filterObj from "../utils/filterObj"
 
+const FETCH_NOTIFICATIONS = "FETCH_NOTIFICATIONS";
+const ADD_NOTIFICATION = "ADD_NOTIFICATION";
+const REMOVE_NOTIFICATION = "REMOVE_NOTIFICATION";
+const EMPTY_NOTIFICATIONS = "EMPTY_NOTIFICATIONS";
+
 const FETCH_PROJECTS = "FETCH_PROJECTS";
 const CREATE_PROJECT = "CREATE_PROJECT";
 const UPDATE_PROJECT = "UPDATE_PROJECT";
@@ -35,7 +40,9 @@ const cachingMiddleware = store => next => action => {
     }
   } = store.getState()
   let result = next(action)
-  if (action.type === FETCH_PROJECTS || action.type === CREATE_PROJECT || action.type === UPDATE_PROJECT || action.type === REMOVE_PROJECT) {
+  if (action.type === FETCH_NOTIFICATIONS || action.type === ADD_NOTIFICATION || action.type === REMOVE_NOTIFICATION || action.type === EMPTY_NOTIFICATIONS) {
+    cacheController.setNotifications(store.getState().notifications.stored)
+  } else if (action.type === FETCH_PROJECTS || action.type === CREATE_PROJECT || action.type === UPDATE_PROJECT || action.type === REMOVE_PROJECT) {
     cacheController.setProjects(filterObj(store.getState().projects, x => x.isOwned || x.isAssigned || x.isWatched))
   } else if (action.type === FETCH_TASKS) {
     cacheController.setTasksByProjectId(action.projectId, store.getState().tasks)

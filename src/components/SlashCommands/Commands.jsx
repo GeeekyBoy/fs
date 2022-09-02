@@ -69,7 +69,8 @@ const Commands = (props) => {
             generateRank(
               tasks[selectedTask]?.rank,
               sortedTasks[sortedTasks.indexOf(tasks[selectedTask]) + 1]?.rank
-            )
+            ),
+            Object.keys(tasks)
           )
         ))
         return dispatch(appActions.handleSetTask(null))

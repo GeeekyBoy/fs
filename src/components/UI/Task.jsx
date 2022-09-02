@@ -94,11 +94,11 @@ const TaskItem = (props) => {
       onChange({
         target: {
           id: id,
-          value: e.target.innerText,
+          value: e.target.innerText.replaceAll(String.fromCharCode(160), String.fromCharCode(32)),
         },
       });
     } else if (readOnly) {
-      e.target.innerText = task;
+      e.target.innerText = task.replaceAll(String.fromCharCode(32), String.fromCharCode(160));
       setCaretPos(taskCaretPos.current);
     }
   };
@@ -150,7 +150,7 @@ const TaskItem = (props) => {
 
   const handleCommandInput = (e) => {
     commandCaretPos.current = document.getSelection().focusOffset;
-    setCommand(e.target.innerText);
+    setCommand(e.target.innerText.replaceAll(String.fromCharCode(160), String.fromCharCode(32)));
   };
 
   const handleCommandKeyDown = (e) => {
@@ -385,7 +385,7 @@ const TaskItem = (props) => {
             )}
             {command !== null && selected ? (
               <div className={styles.TaskItemCommandInput}>
-                <span>{task.slice(0, taskCaretPos.current)}</span>
+                <span>{task.replaceAll(String.fromCharCode(32), String.fromCharCode(160)).slice(0, taskCaretPos.current)}</span>
                 <span
                   ref={inputRef}
                   onKeyUp={handleCommandKeyUp}
@@ -394,9 +394,9 @@ const TaskItem = (props) => {
                   contentEditable 
                   suppressContentEditableWarning
                 >
-                  {command || " "}
+                  {command.replaceAll(String.fromCharCode(32), String.fromCharCode(160)) || " "}
                 </span>
-                <span>{task.slice(taskCaretPos.current)}</span>
+                <span>{task.replaceAll(String.fromCharCode(32), String.fromCharCode(160)).slice(taskCaretPos.current)}</span>
               </div>
             ) : (
               <span
@@ -412,7 +412,7 @@ const TaskItem = (props) => {
                 contentEditable
                 suppressContentEditableWarning
               >
-                {task || ""}
+                {task.replaceAll(String.fromCharCode(32), String.fromCharCode(160)) || ""}
               </span>
             )}
           </div>

@@ -41,9 +41,9 @@
     font-size: 0.875rem;
   }
   &.error {
-    border-color: #ff0000 !important;
+    border-color: var(--color-fill-color-system-critical) !important;
     & > label {
-      color: #ff0000 !important;
+      color: var(--color-fill-color-system-critical) !important;
     }
   }
   &.readOnly {

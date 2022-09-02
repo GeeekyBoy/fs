@@ -9,6 +9,7 @@ import { useModal } from "../ModalManager";
 import { initTaskState, panelPages, ThingStatus } from "../../constants";
 import modals from '../modals';
 import Task from "../UI/Task";
+import store from "../../store"
 import { useReadOnly } from "../ReadOnlyListener";
 
 const TaskItem = (props) => {
@@ -163,6 +164,7 @@ const TaskItem = (props) => {
             item.projectId,
             generateRank(item.rank, nextTaskRank),
             selectedProject.defaultStatus,
+            Object.keys(store.getState().tasks)
           )
         )
       );

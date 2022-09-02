@@ -101,7 +101,7 @@ const SidePanel = (props) => {
         styles.SidePanelShell,
         ...(right && [styles.right] || []),
         ...(open && [styles.opened] || []),
-        ...(footer && [styles.hasFooter] || []),
+        ...((footer || submitLabel) && [styles.hasFooter] || []),
         ...(disabled && [styles.disabled] || []),
         ...(inDropZone && [styles.inDropZone] || []),
         "no-keyboard-portrait-padding-bottom-83",

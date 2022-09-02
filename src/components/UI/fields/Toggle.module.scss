@@ -2,7 +2,7 @@
   width: 100%;
   & > span {
     margin-left: 10px;
-    color: #FF0000;
+    color: var(--color-fill-color-system-critical);
     font-size: 0.75rem;
   }
   &.disabled {
@@ -34,9 +34,9 @@
     transition: color 0.2s;
   }
   &.error {
-    border-color: #FF0000!important;
+    border-color: var(--color-fill-color-system-critical)!important;
     & > label {
-      color: #FF0000!important;
+      color: var(--color-fill-color-system-critical)!important;
     }
   }
   &.readOnly {

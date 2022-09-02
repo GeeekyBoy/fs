@@ -394,28 +394,3 @@ export const removeWatcher = /* GraphQL */ `
     }
   }
 `;
-export const importData = /* GraphQL */ `
-  mutation ImportData($data: String!) {
-    importData(data: $data) {
-      owner
-      items {
-        id
-        permalink
-        rank
-        title
-        privacy
-        permissions
-        statusSet {
-          id
-          title
-          synonym
-        }
-        defaultStatus
-        totalTasks
-        createdAt
-        updatedAt
-        owner
-      }
-    }
-  }
-`;

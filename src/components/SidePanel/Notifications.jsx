@@ -5,16 +5,20 @@ import * as appActions from "../../actions/app";
 import * as notificationsActions from "../../actions/notifications";
 import { ReactComponent as NoNotificationsIllustration } from "../../assets/undraw_notify_re_65on.svg";
 import { ReactComponent as RemoveIcon } from "@fluentui/svg-icons/icons/delete_24_regular.svg";
+import { ReactComponent as LoadingSpinner } from "../../assets/Rolling-1s-200px.svg";
 import Notification from '../UI/Notification';
 import { navigate } from '../Router';
 import API from '../../amplify/API';
 import Illustration from '../UI/Illustration';
+import { ThingStatus } from '../../constants';
+import styles from "./Notifications.module.scss"
 
 const Notifications = forwardRef((_, ref) => {
   
   const dispatch = useDispatch();
 
   const isSynced = useSelector(state => state.app.isSynced);
+  const isReady = useSelector(state => state.status.notifications === ThingStatus.READY)
 
   const users = useSelector(state => state.users);
 
@@ -53,21 +57,27 @@ const Notifications = forwardRef((_, ref) => {
         console.log(err);
       });
   }
-  return notifications.stored.length ? notifications.stored.map(x => (
-    <Notification
-      key={x.id}
-      notificationData={x}
-      dismissable={isSynced}
-      onOpen={handleOpenNotification}
-      onDismiss={(e) => dismissNotification(e, x.id)}
-      senderData={users[x.mutator]}
-    />
-  )) : (
-    <Illustration
-      illustration={NoNotificationsIllustration}
-      title="All caught up!"
-      secondary
-    />
+  return isReady ? (
+    notifications.stored.length ? notifications.stored.map(x => (
+      <Notification
+        key={x.id}
+        notificationData={x}
+        dismissable={isSynced}
+        onOpen={handleOpenNotification}
+        onDismiss={(e) => dismissNotification(e, x.id)}
+        senderData={users[x.mutator]}
+      />
+    )) : (
+      <Illustration
+        illustration={NoNotificationsIllustration}
+        title="All caught up!"
+        secondary
+      />
+    )
+  ) : (
+    <div className={styles.LoadingContainer}>
+      <LoadingSpinner />
+    </div>
   )
 });
 

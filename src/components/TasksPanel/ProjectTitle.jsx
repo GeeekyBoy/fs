@@ -40,7 +40,8 @@ const ProjectTitle = (props) => {
             initTaskState(
               selectedProject.id,
               generateRank(undefined, firstTask?.rank),
-              selectedProject.defaultStatus
+              selectedProject.defaultStatus,
+              Object.keys(tasks)
             )
           )
         )

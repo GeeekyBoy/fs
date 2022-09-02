@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useOuterClick } from 'react-outer-click';
 import styles from "./TagField.module.scss"
 
@@ -28,7 +28,7 @@ const TagField = (props) => {
   const handleTagSubmit = (e) => {
     e.preventDefault();
     if (!(readOnly || disabled)) {
-      const elemValue = e.target.innerText;
+      const elemValue = e.target.innerText.replaceAll(String.fromCharCode(160), String.fromCharCode(32));
       const newValue = elemValue.split(',').map(tag => tag.trim()).filter(tag => tag);
       if (newValue[0] === elemValue.trim()) return;
       e.target.innerText = ""
@@ -51,7 +51,7 @@ const TagField = (props) => {
         }
       } else if (e.code === "Enter" || e.code === "NumpadEnter" || e.key === "Enter" || e.keyCode === 13 || e.which === 13) {
         e.preventDefault();
-        const newValue = e.target.innerText.trim();
+        const newValue = e.target.innerText.replaceAll(String.fromCharCode(160), String.fromCharCode(32)).trim();
         if (!newValue) return;
         e.target.innerText = ""
         onChange({ target: {
