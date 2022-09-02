@@ -57,7 +57,7 @@ const ComboBox = (props) => {
         ].join(" ")}
       >
         <span className="noselect">
-          {options.find(x => x[0] === value)[1]}
+          {options.find(x => x[0] === value)?.[1] || ""}
         </span>
         <ChevronDownIcon fill="currentColor" />
         {(isComboBoxOpened && !disabled) && (

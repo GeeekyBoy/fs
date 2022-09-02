@@ -97,7 +97,7 @@ const TaskHub = forwardRef((_, ref) => {
   };
 
   const commonProps = useMemo(() => getCommonProps(tasks, selectedTasksIds), [tasks, selectedTasksIds]);
-    
+
   useImperativeHandle(ref, () => ({
     panelProps: {
       title: `${selectedTasksIds.length} Task${
