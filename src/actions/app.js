@@ -177,9 +177,12 @@ export const handleBatchSelectTask = (id) => (dispatch, getState) => {
 export const handleBatchDeselectTask = (id) => (dispatch, getState) => {
   const { app } = getState();
   if (app.selectedTasks?.length === 1) {
+    const isRightPanelOpened = app.isRightPanelOpened;
     dispatch(handleSetTask(app.selectedTasks[0]));
-    dispatch(setRightPanel(true));
-    dispatch(setRightPanelPage(panelPages.TASK_HUB));
+    if (isRightPanelOpened) {
+      dispatch(setRightPanel(true));
+      dispatch(setRightPanelPage(panelPages.TASK_HUB));
+    }
   }
   dispatch(batchDeselectTask(id));
 };

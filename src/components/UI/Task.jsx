@@ -254,7 +254,12 @@ const TaskItem = (props) => {
   }
 
   const handleShellPointerDown = (e) => {
-    if (!isBatchSelecting && !isSorting && mobile && !grabberRef.current?.contains(e.target)) {
+    if (
+      !isBatchSelecting &&
+      !isSorting &&
+      mobile &&
+      !grabberRef.current?.contains(e.target)
+    ) {
       shellLongPressTimeout.current = setTimeout(() => {
         handleBatchToggle();
       }, 500);

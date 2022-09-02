@@ -22,7 +22,6 @@ const ByStatus = () => {
   }
   const id2title = useMemo(() => getId2Title(statusSet), [statusSet]);
   const sortedTasks = useMemo(() => getSortedTasks(tasks, statusSet), [tasks, statusSet]);
-  console.log(sortedTasks)
   return sortedTasks.map((x, statusIndex) => (
     <Accordion title={id2title[x[0]]} key={x[0]}>
       {x[1].map((value, taskIndex) => (

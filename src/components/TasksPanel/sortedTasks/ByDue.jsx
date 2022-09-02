@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { useSelector } from "react-redux";
 import formatDate from '../../../utils/formatDate';
 import sortByRank from "../../../utils/sortByRank";
-import sortObj from '../../../utils/sortObj';
 import Accordion from '../../UI/Accordion';
 import TaskItem from "../TaskItem";
 import TaskPlaceholder from '../TaskPlaceholder';
