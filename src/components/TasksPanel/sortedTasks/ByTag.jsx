@@ -33,38 +33,34 @@ const ByTag = () => {
     return Object.entries(result);
   }
   const sortedTasks = useMemo(() => getSortedTasks(tasks), [tasks])
-  return (
-    <>
-      {sortedTasks.map((x, tagIndex) => (
-        <Accordion title={x[0]} key={x[0]}>
-          {x[1].map((value, taskIndex) => (
-            <TaskItem
-              key={value.id}
-              item={value}
-              nextTask={
-                (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
-                ((sortedTasks[tagIndex + 1] && [...sortedTasks[tagIndex + 1][1]].reverse().find(x => x.id !== value.id)?.id)) ||
-                null
-              }
-              prevTask={
-                (x[1][taskIndex - 1]?.id !== value.id && x[1][taskIndex - 1]?.id) ||
-                ((sortedTasks[tagIndex - 1] && [...sortedTasks[tagIndex - 1][1]].reverse().find(x => x.id !== value.id)?.id)) ||
-                null
-              }
-            />
-          ))}
-          <TaskPlaceholder
-            content={
-              x[0] === "Untagged" ?
-              "Tap to create new untagged task" :
-              "Tap to create new task tagged with '" + x[0] + "'"
-            }
-            preset={{tags: x[0] === "Untagged" ? [] : [x[0]]}}
-          />
-        </Accordion>
-      ))}
-    </>
-  )
+  return sortedTasks.map((x, tagIndex) => (
+  <Accordion title={x[0]} key={x[0]}>
+    {x[1].map((value, taskIndex) => (
+      <TaskItem
+        key={value.id}
+        item={value}
+        nextTask={
+          (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
+          ((sortedTasks[tagIndex + 1] && [...sortedTasks[tagIndex + 1][1]].find(x => x.id !== value.id)?.id)) ||
+          null
+        }
+        prevTask={
+          (x[1][taskIndex - 1]?.id !== value.id && x[1][taskIndex - 1]?.id) ||
+          ((sortedTasks[tagIndex - 1] && [...sortedTasks[tagIndex - 1][1]].reverse().find(x => x.id !== value.id)?.id)) ||
+          null
+        }
+      />
+    ))}
+    <TaskPlaceholder
+      content={
+        x[0] === "Untagged" ?
+        "Tap to create new untagged task" :
+        "Tap to create new task tagged with '" + x[0] + "'"
+      }
+      preset={{tags: x[0] === "Untagged" ? [] : [x[0]]}}
+    />
+  </Accordion>
+))
 }
 
 export default ByTag;

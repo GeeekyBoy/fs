@@ -23,34 +23,30 @@ const ByStatus = () => {
   const id2title = useMemo(() => getId2Title(statusSet), [statusSet]);
   const sortedTasks = useMemo(() => getSortedTasks(tasks, statusSet), [tasks, statusSet]);
   console.log(sortedTasks)
-  return (
-    <>
-      {sortedTasks.map((x, statusIndex) => (
-        <Accordion title={id2title[x[0]]} key={x[0]}>
-          {x[1].map((value, taskIndex) => (
-            <TaskItem
-              key={value.id}
-              item={value}
-              nextTask={
-                (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
-                (sortedTasks[statusIndex + 1] && [...sortedTasks[statusIndex + 1][1]].reverse().find(x => x.id !== value.id)?.id) ||
-                null
-              }
-              prevTask={
-                (x[1][taskIndex - 1]?.id !== value.id && x[1][taskIndex - 1]?.id) ||
-                (sortedTasks[statusIndex - 1] && [...sortedTasks[statusIndex - 1][1]].reverse().find(x => x.id !== value.id)?.id) ||
-                null
-              }
-            />
-          ))}
-          <TaskPlaceholder
-            content={"Tap to create new task marked as '" + id2title[x[0]] + "'"}
-            preset={{ status: x[0] }}
-          />
-        </Accordion>
+  return sortedTasks.map((x, statusIndex) => (
+    <Accordion title={id2title[x[0]]} key={x[0]}>
+      {x[1].map((value, taskIndex) => (
+        <TaskItem
+          key={value.id}
+          item={value}
+          nextTask={
+            (x[1][taskIndex + 1]?.id !== value.id && x[1][taskIndex + 1]?.id) ||
+            (sortedTasks[statusIndex + 1] && sortedTasks[statusIndex + 1][1][0]?.id) ||
+            null
+          }
+          prevTask={
+            (x[1][taskIndex - 1]?.id !== value.id && x[1][taskIndex - 1]?.id) ||
+            (sortedTasks[statusIndex - 1] && sortedTasks[statusIndex - 1][1][sortedTasks[statusIndex - 1][1].length - 1]?.id) ||
+            null
+          }
+        />
       ))}
-    </>
-  )
+      <TaskPlaceholder
+        content={"Tap to create new task marked as '" + id2title[x[0]] + "'"}
+        preset={{ status: x[0] }}
+      />
+    </Accordion>
+  ))
 }
 
 export default ByStatus;
