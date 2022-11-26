@@ -121,6 +121,7 @@ export const listNotifications = /* GraphQL */ `
         value
         hint
         read
+        link
         mutator
         createdAt
         updatedAt

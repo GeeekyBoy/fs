@@ -71,6 +71,7 @@ type Notification
   value: String
   hint: String
   read: Boolean!
+  link: String!
   mutator: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!

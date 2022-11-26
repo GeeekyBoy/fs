@@ -19,7 +19,7 @@ const Notification = (props) => {
   } = props
   const openLink = (link) => {
     if (link && onOpen) {
-      onOpen("/" + onOpen);
+      onOpen("/" + link);
     }
   }
   const [isExpanded, setIsExpanded] = useState(false);

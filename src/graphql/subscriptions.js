@@ -13,6 +13,7 @@ export const onPushNotification = /* GraphQL */ `
       value
       hint
       read
+      link
       mutator
       createdAt
       updatedAt

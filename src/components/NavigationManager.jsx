@@ -46,7 +46,7 @@ const NavigationManager = () => {
           const prevSelectedProject = selectedProject
           dispatch(appActions.handleSetProject(reqProject.id, false));
           if (taskPermalink) {
-            const tasks = prevSelectedProject === selectedProject ?
+            const tasks = prevSelectedProject === reqProject.id ?
               loadedTasks : await dispatch(tasksActions.handleFetchTasks(reqProject.id, true))
             const reqTask = Object.values(tasks).filter(x => x.permalink === parseInt(taskPermalink, 10))[0]
             if (reqTask) {

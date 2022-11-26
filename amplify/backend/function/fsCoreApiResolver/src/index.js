@@ -438,6 +438,7 @@ exports.handler = async (ctx) => {
           value: content,
           hint,
           read: false,
+          link: taskPermalink,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           mutator: client,
@@ -656,6 +657,7 @@ exports.handler = async (ctx) => {
         value: newDue,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -744,6 +746,7 @@ exports.handler = async (ctx) => {
         value: newStatus,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -801,6 +804,7 @@ exports.handler = async (ctx) => {
         value: newPriority,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -905,6 +909,7 @@ exports.handler = async (ctx) => {
         value: assignee,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -968,7 +973,7 @@ exports.handler = async (ctx) => {
     const params = [taskId, assignee, client, mutationId];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -979,6 +984,7 @@ exports.handler = async (ctx) => {
         value: assignee,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -1020,6 +1026,7 @@ exports.handler = async (ctx) => {
         value: assignee,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -1069,7 +1076,7 @@ exports.handler = async (ctx) => {
     const params = [taskId, assignee, client, mutationId];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -1080,6 +1087,7 @@ exports.handler = async (ctx) => {
         value: assignee,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -1121,6 +1129,7 @@ exports.handler = async (ctx) => {
         value: assignee,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -1182,7 +1191,7 @@ exports.handler = async (ctx) => {
     const params = [taskId, assignee, client, mutationId];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -1193,6 +1202,7 @@ exports.handler = async (ctx) => {
         value: assignee,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -1234,6 +1244,7 @@ exports.handler = async (ctx) => {
         value: watcher,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,
@@ -1297,7 +1308,7 @@ exports.handler = async (ctx) => {
     const params = [taskId, watcher, client, mutationId];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -1308,6 +1319,7 @@ exports.handler = async (ctx) => {
         value: watcher,
         hint,
         read: false,
+        link: taskPermalink,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         mutator: client,

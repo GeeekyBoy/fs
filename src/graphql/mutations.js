@@ -13,6 +13,7 @@ export const pushNotification = /* GraphQL */ `
       value
       hint
       read
+      link
       mutator
       createdAt
       updatedAt
@@ -282,6 +283,7 @@ export const dismissNotifications = /* GraphQL */ `
         value
         hint
         read
+        link
         mutator
         createdAt
         updatedAt
