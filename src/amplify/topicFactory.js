@@ -68,20 +68,6 @@ const subscriptionsTemplates = {
       },
       error: error => console.warn(error)
     },
-    // {
-    //   type: "onImportOwnedProjects",
-    //   next: e => {
-    //     const { projects } = store.getState()
-    //     const ownedProjects = filterObj(projects, x => x.isOwned)
-    //     const incoming = e.value.data.onImportOwnedProjects.items
-    //     for (const project of incoming) {
-    //       if (!Object.keys(ownedProjects).includes(project.id)) {
-    //         store.dispatch(projectsActions.createProject(project))
-    //       }
-    //     }
-    //   },
-    //   error: error => console.warn(error)
-    // },
     {
       type: "onUpdateOwnedProject",
       next: e => {

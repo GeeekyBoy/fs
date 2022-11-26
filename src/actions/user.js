@@ -2,7 +2,6 @@ import { AuthState } from '../constants';
 import getGravatar from '../utils/getGravatar';
 import * as queries from "../graphql/queries"
 import * as cacheController from "../controllers/cache"
-import * as notificationsActions from "./notifications"
 import Auth from '../amplify/Auth';
 import API from '../amplify/API';
 import PubSub from '../amplify/PubSub';
@@ -53,7 +52,8 @@ export const handleSetData = (userData) => (dispatch, getState) => {
 
 export const handleFetchUser = () => async (dispatch, getState) => {
   const { app } = getState();
-  if (!app.isOffline && await Auth.isLoggedIn()) {
+  const isLoggedIn = await Auth.isLoggedIn();
+  if (!app.isOffline && isLoggedIn) {
     try {
       const userData = (
         await API.execute(queries.getUserByUsername, {
@@ -69,7 +69,13 @@ export const handleFetchUser = () => async (dispatch, getState) => {
       }
     }
   } else if (cacheController.getUser().state === AuthState.SignedIn) {
-    dispatch(fetchCachedUser(cacheController.getUser()))
+    if (isLoggedIn) {
+      dispatch(fetchCachedUser(cacheController.getUser()));
+    } else {
+      cacheController.resetCache();
+      dispatch(handleSetState(AuthState.SignedOut))
+      dispatch(handleSetData(null))
+    }
   } else {
     dispatch(handleSetState(AuthState.SignedOut))
     dispatch(handleSetData(null))

@@ -22,18 +22,31 @@ export const getCache = () => {
 };
 
 export const resetCache = (isSigningIn = false) => {
+  const localCache = getCache();
+  const localData = Object.values(localCache.projects);
+  for (const project of localData) {
+    const projectId = project.id;
+    project.tasks = Object.values(localCache.tasks[projectId] || {});
+  }
   window.localStorage.setItem(
     "cachedData",
     JSON.stringify({
       ...initCacheValue,
-      ...(isSigningIn && { localCache: { ...getCache() } }),
+      ...(isSigningIn && {
+        localData,
+      }),
     })
   );
 };
 
-export const deleteLocalCache = () => {
+
+export const getLocalData = () => {
+  return getCache().localData || null;
+}
+
+export const deleteLocalData = () => {
   const cache = getCache();
-  delete cache.localCache;
+  delete cache.localData;
   window.localStorage.setItem("cachedData", JSON.stringify(cache));
 };
 

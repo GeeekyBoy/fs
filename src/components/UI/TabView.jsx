@@ -43,7 +43,7 @@ const TabView = (props) => {
             >
               {React.createElement(x[2], { width: 16, height: 16 })}
               <span>{x[1]}</span>
-              {!x[3] && (
+              {!x[4] && (
                 <IconButton
                   icon={CloseIcon}
                   onClick={(e) => {

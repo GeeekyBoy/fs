@@ -394,3 +394,10 @@ export const removeWatcher = /* GraphQL */ `
     }
   }
 `;
+export const importLocalData = /* GraphQL */ `
+  mutation ImportLocalData($input: AWSJSON!) {
+    importLocalData(input: $input) {
+      result
+    }
+  }
+`;

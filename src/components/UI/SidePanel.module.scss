@@ -4,13 +4,13 @@
   }
 
   to {
-    margin-left: 15px;
+    margin-left: 10px;
   }
 }
 
 @keyframes closingAnimLeft {
   from {
-    margin-left: 15px;
+    margin-left: 10px;
   }
 
   to {
@@ -87,8 +87,8 @@
   width: 365px;
   min-width: 365px;
   max-width: 365px;
-  height: calc(100vh - 20px - 30px);
-  margin: 15px;
+  height: calc(100vh - 20px - 20px);
+  margin: 10px;
   padding: 20px 0 0 0;
   overflow: hidden;
   border: 1px solid var(--color-stroke-color-card-stroke-default);

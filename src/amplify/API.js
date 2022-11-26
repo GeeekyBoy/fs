@@ -36,7 +36,11 @@ class API {
       throw "Error executing query";
     } else {
       const res = await rawRes.json();
-      return res;
+      if (res.errors) {
+        throw new Error(res.errors[0].message);
+      } else {
+        return res;
+      }
     }
   }
   async mutate(template) {

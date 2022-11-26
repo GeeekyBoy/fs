@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 /* Amplify Params - DO NOT EDIT
   API_FSCOREAPI_GRAPHQLAPIENDPOINTOUTPUT
   API_FSCOREAPI_GRAPHQLAPIIDOUTPUT
@@ -29,9 +31,13 @@ const sgMail = require('@sendgrid/mail');
 const http = require('http');
 const https = require('https');
 const UrlParse = require('url').URL;
+const { customAlphabet } = require('nanoid');
 const mariadb = require('mariadb');
 const { randomUUID } = require('crypto');
 const getEmailContent = require('./email').getContent;
+
+const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const nanoid = customAlphabet(alphabet, 36);
 
 const s3 = new AWS.S3();
 
@@ -85,6 +91,7 @@ exports.handler = async (ctx) => {
       removeInvitedAssignee,
       addWatcher,
       removeWatcher,
+      importLocalData,
     },
     Query: {
       initializeUpload,
@@ -236,7 +243,7 @@ exports.handler = async (ctx) => {
           Bucket: 'fs-attachments',
           Key: `${owner}/${projectId}/${taskId}/${provider}-${contentId}`,
           ContentType: `embed/${provider}`,
-          ContentDisposition: `inline; filename="[${contentId}](${title})"`,
+          ContentDisposition: `inline; filename="[${contentId}](${encodeURIComponent(title)})"`,
           Body: '',
         }).promise();
         return { success: true };
@@ -267,7 +274,7 @@ exports.handler = async (ctx) => {
         const data = await fileData;
         return ({
           id: /\/([^/]+)$/.exec(file.Key)[1],
-          filename: /.*?filename="(.*)"$/.exec(data.ContentDisposition)[1],
+          filename: decodeURIComponent(/.*?filename="(.*)"$/.exec(data.ContentDisposition)[1]),
           contentType: data.ContentType,
           size: data.ContentLength,
           url: s3.getSignedUrl('getObject', {
@@ -1583,6 +1590,92 @@ exports.handler = async (ctx) => {
     } catch (err) {
       throw new Error(err);
     }
+  }
+
+  async function importLocalData(ctx) {
+    const client = ctx.identity.username;
+    const localData = ctx.arguments.input;
+    if (localData) {
+      const conn = await pool.getConnection();
+      try {
+        conn.beginTransaction();
+        const lastRankQuery = 'SELECT IFNULL(MAX(rank), 0) AS max_rank FROM projects WHERE owner = ?';
+        const lastRankParams = [client];
+        let lastRank = (await conn.query(lastRankQuery, lastRankParams))[0].max_rank;
+        for (const project of localData) {
+          lastRank = (lastRank + Number.MAX_SAFE_INTEGER) / 2;
+          let projectId = project.id;
+          const idQuery = 'SELECT id FROM projects WHERE id = ?';
+          while ((await conn.query(idQuery, [projectId]))[0]) {
+            projectId = nanoid();
+          }
+          const {
+            permalink,
+            title,
+            privacy,
+            permissions,
+            statusSet,
+            defaultStatus,
+            tasks,
+          } = project;
+          const statusSetWithProjectId = statusSet.map((x) => ({ ...x, project_id: projectId }));
+          const query = 'CALL create_project_unsafe(?, ?, ?, ?, ?, ?, ?, ?, ?)';
+          const params = [
+            projectId,
+            permalink,
+            lastRank,
+            title,
+            privacy,
+            permissions,
+            JSON.stringify(statusSetWithProjectId),
+            defaultStatus,
+            client,
+          ];
+          await conn.query(query, params);
+          for (const taskObj of tasks) {
+            const {
+              id: taskId,
+              rank,
+              task,
+              description,
+              due,
+              tags,
+              status,
+              priority,
+              anonymousAssignees,
+            } = taskObj;
+            const formattedDue = due ? new Date(due).toISOString().slice(0, 19).replace('T', ' ') : '0000-00-00 00:00:00';
+            const query = 'CALL create_task_unsafe(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            const params = [
+              taskId,
+              projectId,
+              rank,
+              task,
+              description,
+              formattedDue,
+              JSON.stringify(tags),
+              status,
+              priority,
+              client,
+            ];
+            await conn.query(query, params);
+            if (anonymousAssignees.length) {
+              const query = 'INSERT INTO tasks_anonymous_assignees (task_id, assignee) VALUES (?, ?)';
+              conn.batch(query, anonymousAssignees.map((x) => [taskId, x]));
+            }
+          }
+        }
+        conn.commit();
+        conn.release();
+      } catch (err) {
+        conn.rollback();
+        conn.release();
+        throw new Error('IMPORT_FAILED');
+      }
+    }
+    return {
+      result: 'IMPORT_SUCCESS',
+    };
   }
 
   async function onCreateOwnedProject(ctx) {
