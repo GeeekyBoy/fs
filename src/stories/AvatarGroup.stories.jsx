@@ -1,12 +1,11 @@
 import React from "react";
-import { withPerformance } from "storybook-addon-performance";
 
 import AvatarGroup from "../components/UI/AvatarGroup";
 
 export default {
   title: "ForwardSlash/Avatar Group",
   component: AvatarGroup,
-  decorators: [withPerformance()],
+  decorators: [],
 };
 
 const Template = (args) => <AvatarGroup {...args} />;

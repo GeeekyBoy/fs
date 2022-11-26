@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import TagField from "../components/UI/fields/TagField";
 
 export default {
   title: "ForwardSlash/Fields/Tag Field",
   component: TagField,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const Template = (args) => {

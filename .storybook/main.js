@@ -1,8 +1,11 @@
+const { mergeConfig } = require('vite');
+const svgr = require('vite-plugin-svgr');
+
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   staticDirs: ["../src/public"],
   core: {
-    builder: "webpack5",
+    builder: "@storybook/builder-vite",
   },
   addons: [
     "@storybook/addon-links",
@@ -10,7 +13,13 @@ module.exports = {
     "@storybook/preset-create-react-app",
     "@storybook/addon-interactions",
     "@storybook/addon-a11y",
-    "storybook-addon-breakpoints",
-    "storybook-addon-performance/register"
-  ]
+  ],
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      define: {
+        global: "window",
+      },
+      plugins: [svgr({ svgrOptions: { ref: true } })],
+    });
+  },
 };

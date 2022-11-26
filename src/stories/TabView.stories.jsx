@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import TabView from "../components/UI/TabView";
 
 export default {
   title: "ForwardSlash/TabView",
   component: TabView,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const Template = (args) => {

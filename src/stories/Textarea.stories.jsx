@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import Textarea from "../components/UI/fields/Textarea";
 
 export default {
   title: "ForwardSlash/Fields/Textarea",
   component: Textarea,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const Template = (args) => {

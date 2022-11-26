@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import CardSelect from "../components/UI/fields/CardSelect";
 
 export default {
   title: "ForwardSlash/Fields/Card Select",
   component: CardSelect,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const Template = (args) => {

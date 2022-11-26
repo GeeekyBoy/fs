@@ -1,12 +1,11 @@
 import React from "react";
-import { withPerformance } from "storybook-addon-performance";
 
 import ListItem from "../components/UI/ListItem";
 
 export default {
   title: "ForwardSlash/ListItem",
   component: ListItem,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const TestIcon = (props) => (

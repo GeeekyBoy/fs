@@ -1,12 +1,11 @@
 import React from "react";
-import { withPerformance } from "storybook-addon-performance";
 
 import Avatar from "../components/UI/Avatar";
 
 export default {
   title: "ForwardSlash/Avatar",
   component: Avatar,
-  decorators: [withPerformance()],
+  decorators: [],
 };
 
 const Template = (args) => <Avatar {...args} />;

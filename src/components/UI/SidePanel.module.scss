@@ -97,15 +97,6 @@
   animation: 0.2s ease-in-out forwards;
   animation-name: closingAnimLeft;
   transition: all 0.2s;
-  &.hasFooter {
-    padding: 20px 0;
-    height: calc(100vh - 40px - 30px);
-  }
-  &:not(.hasFooter) {
-    & > .SidePanelContent {
-      padding-bottom: 20px !important;
-    }
-  }
   &.opened {
     overflow: auto;
     animation-name: openingAnimLeft;

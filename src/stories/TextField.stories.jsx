@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import TextField from "../components/UI/fields/TextField";
 
 export default {
   title: "ForwardSlash/Fields/Text Field",
   component: TextField,
-  decorators: [withPerformance()],
+  decorators: [],
   argTypes: {
     type: {
       options: ["text", "password", "email", "number", "tel"],

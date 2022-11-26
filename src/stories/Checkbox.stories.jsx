@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import Checkbox from "../components/UI/fields/Checkbox";
 
 export default {
   title: "ForwardSlash/Fields/Checkbox",
   component: Checkbox,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const Template = (args) => {

@@ -1,12 +1,11 @@
 import React from "react";
-import { withPerformance } from "storybook-addon-performance";
 
 import IconButton from "../components/UI/IconButton";
 
 export default {
   title: "ForwardSlash/IconButton",
   component: IconButton,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const testIcon = (props) => (

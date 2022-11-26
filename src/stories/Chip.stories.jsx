@@ -1,12 +1,11 @@
 import React from "react";
-import { withPerformance } from "storybook-addon-performance";
 
 import Chip from "../components/UI/Chip";
 
 export default {
   title: "ForwardSlash/Chip",
   component: Chip,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const testIcon = (props) => (

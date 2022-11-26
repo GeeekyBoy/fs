@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import ColorPicker from "../components/UI/fields/ColorPicker";
 
 export default {
   title: "ForwardSlash/Fields/Color Picker",
   component: ColorPicker,
-  decorators: [withPerformance()],
+  decorators: [],
   argTypes: {
     type: {
       options: ["text", "password", "email", "number", "tel"],

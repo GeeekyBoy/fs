@@ -1,12 +1,11 @@
 import React from "react";
-import { withPerformance } from "storybook-addon-performance";
 
 import Notification from "../components/UI/Notification";
 
 export default {
   title: "ForwardSlash/Notification",
   component: Notification,
-  decorators: [withPerformance()],
+  decorators: [],
   argTypes: {
     anim: {
       control: { type: "range", min: 0, max: 1, step: 1 },

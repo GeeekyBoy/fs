@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import Toggle from "../components/UI/fields/Toggle";
 
 export default {
   title: "ForwardSlash/Fields/Toggle",
   component: Toggle,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const Template = (args) => {

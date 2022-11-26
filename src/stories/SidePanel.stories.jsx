@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import SidePanel from "../components/UI/SidePanel";
 
 export default {
   title: "ForwardSlash/Side Panel",
   component: SidePanel,
-  decorators: [withPerformance()],
+  decorators: [],
 };
 
 const Template = (args) => {

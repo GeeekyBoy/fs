@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import FileField from "../components/UI/fields/FileField";
 
 export default {
   title: "ForwardSlash/Fields/FileField",
   component: FileField,
-  decorators: [withPerformance()],
+  decorators: [],
 };
 
 const Template = (args) => {

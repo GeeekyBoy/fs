@@ -1,12 +1,11 @@
 import React from "react";
-import { withPerformance } from "storybook-addon-performance";
 
 import Illustration from "../components/UI/Illustration";
 
 export default {
   title: "ForwardSlash/Illustration",
   component: Illustration,
-  decorators: [withPerformance()],
+  decorators: [],
 };
 
 const testIllustration = () => (

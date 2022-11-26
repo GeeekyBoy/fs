@@ -1,13 +1,12 @@
 import React from "react";
 import { useArgs } from "@storybook/client-api";
-import { withPerformance } from "storybook-addon-performance";
 
 import ComboBox from "../components/UI/fields/ComboBox";
 
 export default {
   title: "ForwardSlash/Fields/ComboBox",
   component: ComboBox,
-  decorators: [withPerformance()],
+  decorators: [],
 };
 
 const Template = (args) => {

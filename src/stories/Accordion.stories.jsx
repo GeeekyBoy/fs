@@ -1,12 +1,11 @@
 import React from "react";
-import { withPerformance } from "storybook-addon-performance";
 
 import Accordion from "../components/UI/Accordion";
 
 export default {
   title: "ForwardSlash/Accordion",
   component: Accordion,
-  decorators: [withPerformance()]
+  decorators: []
 };
 
 const Template = (args) => <Accordion {...args} />;
