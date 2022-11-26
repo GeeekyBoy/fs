@@ -133,6 +133,12 @@ class Auth {
       }),
     });
     const srpAuthRes = await rawSrpAuthRes.json();
+    if (rawSrpAuthRes.status === 400) {
+      throw {
+        code: srpAuthRes.__type,
+        message: srpAuthRes.message,
+      };
+    }
     const { claimSig, timestamp } = await calculateClaimSig(
       a,
       this.groupId,

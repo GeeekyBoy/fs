@@ -26,7 +26,6 @@ const ForgotPassword = () => {
       setCurrStep(2)
       setIsBusy(false)
     } catch (error) {
-      console.error('error signing in', error);
       switch (error.code) {
         case "InvalidParameterException":
           setCurrStep(1)

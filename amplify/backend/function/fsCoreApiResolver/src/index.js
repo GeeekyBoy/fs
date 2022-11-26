@@ -427,7 +427,7 @@ exports.handler = async (ctx) => {
       const params = [commentId, taskId, content, client, mutationId];
       try {
         const data = (await pool.execute(query, params))[0];
-        const { project_id: projectId, hint } = data[0];
+        const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
         const recipients = JSON.parse(data[0].recipients);
         const notificationTemplate = {
           projectId,
@@ -449,7 +449,7 @@ exports.handler = async (ctx) => {
           UPDATER_USERNAME: client,
           TASK: hint || '',
           NEW_VALUE: content,
-          TASK_PERMALINK: 'https://forwardslash.ch/',
+          TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
         });
         if (watchersEmails.length) {
           await sgMail.sendMultiple({
@@ -640,12 +640,12 @@ exports.handler = async (ctx) => {
       due: newDue,
       mutationId,
     } = ctx.arguments.input;
-    const query = 'CALL update_task_due(?, ?, ?, ?, ?, ?, ?, ?)';
+    const query = 'CALL update_task_due(?, ?, ?, ?, ?, ?, ?, ?, ?)';
     const formattedNewDue = newDue ? new Date(newDue).toISOString().slice(0, 19).replace('T', ' ') : '0000-00-00 00:00:00';
-    const params = [taskId, formattedNewDue, client, mutationId, null, null, null, null];
+    const params = [taskId, formattedNewDue, client, mutationId, null, null, null, null, null];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -667,7 +667,7 @@ exports.handler = async (ctx) => {
         UPDATER_USERNAME: client,
         TASK: hint || '',
         NEW_VALUE: new Date(newDue).toLocaleDateString(),
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       if (watchersEmails.length) {
         await sgMail.sendMultiple({
@@ -724,11 +724,16 @@ exports.handler = async (ctx) => {
       status: newStatus,
       mutationId,
     } = ctx.arguments.input;
-    const query = 'CALL update_task_status(?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const params = [taskId, newStatus, client, mutationId, null, null, null, null, null];
+    const query = 'CALL update_task_status(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const params = [taskId, newStatus, client, mutationId, null, null, null, null, null, null];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint, new_status_title: newStatusTitle } = data[0];
+      const {
+        project_id: projectId,
+        hint,
+        task_permalink: taskPermalink,
+        new_status_title: newStatusTitle,
+      } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -750,7 +755,7 @@ exports.handler = async (ctx) => {
         UPDATER_USERNAME: client,
         TASK: hint || '',
         NEW_VALUE: newStatusTitle,
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       if (watchersEmails.length) {
         await sgMail.sendMultiple({
@@ -781,11 +786,11 @@ exports.handler = async (ctx) => {
       priority: newPriority,
       mutationId,
     } = ctx.arguments.input;
-    const query = 'CALL update_task_priority(?, ?, ?, ?, ?, ?, ?, ?)';
-    const params = [taskId, newPriority, client, mutationId, null, null, null, null];
+    const query = 'CALL update_task_priority(?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const params = [taskId, newPriority, client, mutationId, null, null, null, null, null];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -807,7 +812,7 @@ exports.handler = async (ctx) => {
         UPDATER_USERNAME: client,
         TASK: hint || '',
         NEW_VALUE: newPriority,
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       if (watchersEmails.length) {
         await sgMail.sendMultiple({
@@ -889,7 +894,7 @@ exports.handler = async (ctx) => {
     const params = [taskId, assignee, client, mutationId];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -913,13 +918,13 @@ exports.handler = async (ctx) => {
         ASSIGNEE_FIRST_NAME: assigneeData.firstName,
         ASSIGNER_USERNAME: client,
         TASK: hint || '',
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       const emailToBeSentToWatchers = getEmailContent('assignmentWatching', {
         ASSIGNEE_USERNAME: assigneeData.username,
         ASSIGNER_USERNAME: client,
         TASK: hint || '',
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       await sgMail.send({
         to: assigneeData.email,
@@ -1004,7 +1009,7 @@ exports.handler = async (ctx) => {
     const params = [taskId, assignee, client, mutationId];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -1026,7 +1031,7 @@ exports.handler = async (ctx) => {
         ASSIGNEE_NAME: assignee,
         ASSIGNER_USERNAME: client,
         TASK: hint || '',
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       if (watchersEmails.length) {
         await sgMail.sendMultiple({
@@ -1105,7 +1110,7 @@ exports.handler = async (ctx) => {
     const params = [taskId, assignee, client, mutationId];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -1127,13 +1132,13 @@ exports.handler = async (ctx) => {
         ASSIGNEE_EMAIL: assignee,
         ASSIGNER_USERNAME: client,
         TASK: hint || '',
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       const emailToBeSentToWatchers = getEmailContent('invitationWatching', {
         ASSIGNEE_EMAIL: assignee,
         ASSIGNER_USERNAME: client,
         TASK: hint || '',
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       await sgMail.send({
         to: assignee,
@@ -1218,7 +1223,7 @@ exports.handler = async (ctx) => {
     const params = [taskId, watcher, client, mutationId];
     try {
       const data = (await pool.execute(query, params))[0];
-      const { project_id: projectId, hint } = data[0];
+      const { project_id: projectId, hint, task_permalink: taskPermalink } = data[0];
       const recipients = JSON.parse(data[0].recipients);
       const notificationTemplate = {
         projectId,
@@ -1242,13 +1247,13 @@ exports.handler = async (ctx) => {
         WATCHER_FIRST_NAME: watcherData.firstName,
         ADDER_USERNAME: client,
         TASK: hint || '',
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       const emailToBeSentToWatchers = getEmailContent('addingWatcherWatching', {
         WATCHER_USERNAME: watcherData.username,
         ADDER_USERNAME: client,
         TASK: hint || '',
-        TASK_PERMALINK: 'https://forwardslash.ch/',
+        TASK_PERMALINK: `https://forwardslash.ch/${taskPermalink}`,
       });
       await sgMail.send({
         to: watcherData.email,

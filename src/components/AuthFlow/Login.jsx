@@ -30,7 +30,6 @@ const Login = () => {
       cacheController.resetCache(true)
       navigate("/");
     } catch (error) {
-      console.error('error signing in', error);
       switch(error.code) {
         case "UserNotFoundException":
           setUsernameError("User does not exist.")
