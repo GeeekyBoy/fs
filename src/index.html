@@ -12,6 +12,7 @@
     <link rel="apple-touch-icon" href="/logo192.png" />
     <link rel="manifest" href="/manifest.json" />
     <script type="text/javascript">
+      window.global = window;
       var appSettings = window.localStorage.getItem("appSettings")
       appSettings = appSettings ? JSON.parse(appSettings) : {
         theme: "blue",
